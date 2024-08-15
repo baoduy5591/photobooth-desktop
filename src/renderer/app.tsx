@@ -1,3 +1,12 @@
+import { HashRouter, Route, Routes } from "react-router-dom";
+import { Splash } from "./pages/splash";
+
 export default function App() {
-  return <div>App</div>
+  return (
+    <HashRouter>
+      <Routes>
+        <Route path='/' element={<Splash />}/>
+      </Routes>
+    </HashRouter>
+  )
 }
