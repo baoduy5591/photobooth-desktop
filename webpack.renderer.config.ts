@@ -18,6 +18,6 @@ export const rendererConfig: Configuration = {
     alias: {
       '~': path.resolve(__dirname, 'src/')
     },
-    extensions: ['.js', '.ts', '.jsx', '.tsx', '.css'],
+    extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
   },
 };
