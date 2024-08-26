@@ -12,11 +12,17 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "paths": {
-      "*": ["node_modules/*"],
-      "~/*": ["src/*"]
+      "*": [
+        "node_modules/*"
+      ],
+      "~/*": [
+        "src/*"
+      ]
     },
     "jsx": "react-jsx"
   },
   "file": "./scr/@type/global.d.ts",
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*"
+  ]
 }
