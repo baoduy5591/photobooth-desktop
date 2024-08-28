@@ -23,12 +23,12 @@ class Loggers {
   }
 
   getFolderLoggers() {
-    const path = Paths.getFolderAppData() + "/loggers";
-    if (!fs.existsSync(path)) {
-      fs.mkdirSync(path);
+    const pathLogger = Paths.getFolderAppData() + "/loggers";
+    if (!fs.existsSync(pathLogger)) {
+      fs.mkdirSync(pathLogger);
     }
 
-    return path;
+    return pathLogger;
   }
   
   configsDailyRotateTransport(pathFile: string) {
