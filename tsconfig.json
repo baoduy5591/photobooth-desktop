@@ -21,7 +21,6 @@
     },
     "jsx": "react-jsx"
   },
-  "file": "./scr/@type/global.d.ts",
   "include": [
     "src/**/*"
   ]
