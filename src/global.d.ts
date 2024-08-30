@@ -1,22 +1,46 @@
 interface Window {
   api: {
-    getPathResources: () => Promise;
+    getResources: () => Promise;
+    getSystemConfigs: () => Promise;
   }
 }
 
-type BackgroundImagesType = string[];
+interface PathResourceType {
+  name: string;
+  relPath: string;
+  isNew: boolean;
+}
+
+interface BackgroundImagesType {
+  typeA: PathResourceType[];
+  typeB: PathResourceType[];
+  typeC: PathResourceType[];
+}
+
 interface StickerType {
-  hot: string[];
-  birthday: string[];
-  flowers: string[];
-  others: string[];
+  hot: PathResourceType[];
+  birthday: PathResourceType[];
+  flowers: PathResourceType[];
+  heart: PathResourceType[];
+  others: PathResourceType[];
+}
+
+interface VideosType {
+  loading: PathResourceType[],
+  introduces: PathResourceType[]
 }
 
 interface ResourcesType {
   backgroundImages: BackgroundImagesType;
   stickers: StickerType;
+  videos: VideosType;
+}
+
+interface SystemConfigsType {
+  language: string;
 }
 
 interface StoreType {
+  systemConfigs: SystemConfigsType;
   resources: ResourcesType;
 }

@@ -1,4 +1,5 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
+import Resources from './utils/resources';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -26,6 +27,18 @@ const createWindow = (): void => {
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 };
+
+// ipcMain get resources
+ipcMain.handle('get-resources', async () => {
+  const _resources = new Resources();
+  const getResources = await _resources.resources();
+  return getResources;
+});
+
+// get system configs (call api)
+ipcMain.handle('get-system-configs', async() => {
+  return { language: 'en' };
+});
 
 app.on('ready', createWindow);
 
