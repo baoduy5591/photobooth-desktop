@@ -3,12 +3,17 @@ import React from 'react';
 interface BackgroundImageProps {
   children: React.ReactNode;
   url: string;
+  addClassName?: string;
 }
 
-export const BackgroundImage = React.memo(function BackgroundImage({ children, url }: BackgroundImageProps) {
+export const BackgroundImage = React.memo(function BackgroundImage({
+  children,
+  url,
+  addClassName = '',
+}: BackgroundImageProps) {
   return (
     <div
-      className='h-screen w-screen'
+      className={`h-full w-full ${addClassName}`}
       style={{
         backgroundImage: `url(${url})`,
         backgroundRepeat: 'no-repeat',
