@@ -7,6 +7,17 @@ interface Window {
   }
 }
 
+interface ThemeType {
+  pink: string;
+}
+
+interface ThemeContextType {
+  theme: ThemeType;
+  setTheme: React.Dispatch<React.SetStateAction<ThemeType>>
+  changeTheme: (key: string) => void;
+}
+
+
 interface PathResourceType {
   name: string;
   relPath: string;
@@ -36,6 +47,7 @@ interface ResourcesType {
   backgroundImages: BackgroundImagesType;
   stickers: StickerType;
   videos: VideosType;
+  icons: PathResourceType[];
 }
 
 interface SystemConfigsType {

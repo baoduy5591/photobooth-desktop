@@ -23,3 +23,9 @@
 body {
   font-family: Baloo;
 }
+
+@layer base {
+  [data-theme='primary'] {
+    --picker-color-fill-button: #f0969f;
+  }
+}

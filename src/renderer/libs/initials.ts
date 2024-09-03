@@ -19,8 +19,13 @@ export const INIT_STORE: StoreType = {
     videos: {
       loading: [],
       introduces: []
-    }
+    },
+    icons: []
   },
   isLoading: false,
   pathFolderAssets: ''
+}
+
+export const INIT_THEME: ThemeType = {
+  pink: 'pink',
 }
