@@ -27,12 +27,6 @@ const createWindow = (): void => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
-
-  // get width, height mainWindow
-  ipcMain.handle('get-resolution', async () => {
-    const { width, height } = mainWindow.getBounds();
-    return { width, height };
-  })
 };
 
 // ipcMain get resources
@@ -44,7 +38,7 @@ ipcMain.handle('get-resources', async () => {
 
 // get system configs (call api)
 ipcMain.handle('get-system-configs', async() => {
-  return { language: 'en', isLoading: false };
+  return { language: 'en', backgroundImageTypeA: 'backgroundImages/typeA/00100.png' };
 });
 
 // get path folder assets

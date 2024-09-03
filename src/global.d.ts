@@ -46,7 +46,6 @@ interface SystemConfigsType {
 interface StoreType {
   systemConfigs: SystemConfigsType;
   resources: ResourcesType;
-  resolution: { width: number, height: number };
   pathFolderAssets: string;
   isLoading: boolean
 }

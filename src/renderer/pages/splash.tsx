@@ -19,7 +19,7 @@ export function Splash() {
 
     const languageSystem = store.systemConfigs.language;
     const index = CONST_CONFIG_LANGUAGE[languageSystem as keyof typeof CONST_CONFIG_LANGUAGE];
-    setVideoLoading(store.pathFolderAssets + '/' + store.resources.videos.loading[index].relPath);
+    setVideoLoading(store.pathFolderAssets + store.resources.videos.loading[index].relPath);
   }, [store.systemConfigs.language]);
 
   return (

@@ -22,9 +22,5 @@ export const INIT_STORE: StoreType = {
     }
   },
   isLoading: false,
-  resolution: {
-    width: 0,
-    height: 0
-  },
   pathFolderAssets: ''
 }

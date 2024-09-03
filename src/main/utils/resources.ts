@@ -22,9 +22,9 @@ class Resources {
     this.pathFolderAssets = Paths.getFolderAssets();
   }
 
-  async getRelPathFiles(pathRel: string, extensions = ['.jpg', '.png', '.svg']) {
+  async getRelPathFiles(relPath: string, extensions = ['.jpg', '.png', '.svg']) {
     try {
-      const _path = path.join(this.pathFolderAssets, pathRel);
+      const _path = path.join(this.pathFolderAssets, relPath);
       const files = fs.readdirSync(_path);
       const filesFiltered = files.filter(file => {
         if (file.length !== 9) return false;
@@ -33,7 +33,7 @@ class Resources {
       });
 
       const pathFiles = filesFiltered.map((file: string) => {
-        return path.join(pathRel, file);
+        return path.join(relPath, file);
       });
 
       return pathFiles;

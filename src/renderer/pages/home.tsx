@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useStore } from '../context/store';
 import { CONST_CONFIG_FONTS } from '../libs/constants';
 import { changeFontByName } from '../libs/common';
+import { BackgroundImage } from '../components/backgroundImage';
 
 export default function Home() {
   const { store } = useStore();
@@ -12,5 +13,9 @@ export default function Home() {
     changeFontByName(fontName);
   }, []);
 
-  return <div>Home</div>;
+  return (
+    <BackgroundImage url={store.pathFolderAssets + store.systemConfigs.backgroundImageTypeA}>
+      <div></div>
+    </BackgroundImage>
+  );
 }
