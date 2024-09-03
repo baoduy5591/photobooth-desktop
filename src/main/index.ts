@@ -26,6 +26,12 @@ const createWindow = (): void => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+
+  // get width, height mainWindow
+  ipcMain.handle('get-resolution', async () => {
+    const { width, height } = mainWindow.getBounds();
+    return { width, height };
+  })
 };
 
 // ipcMain get resources

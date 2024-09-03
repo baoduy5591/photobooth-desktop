@@ -2,6 +2,7 @@ interface Window {
   api: {
     getResources: () => Promise;
     getSystemConfigs: () => Promise;
+    getResolution: () => Promise;
   }
 }
 
@@ -45,4 +46,5 @@ interface SystemConfigsType {
 interface StoreType {
   systemConfigs: SystemConfigsType;
   resources: ResourcesType;
+  resolution: { width: number, height: number };
 }

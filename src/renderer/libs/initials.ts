@@ -2,7 +2,7 @@ export const INIT_STORE: StoreType = {
   systemConfigs: {
     language: '',
     isLoading: false,
-    backgroundImageTypeA: '00100.png'
+    backgroundImageTypeA: '00100.png',
   },
   resources: {
     backgroundImages: {
@@ -21,5 +21,9 @@ export const INIT_STORE: StoreType = {
       loading: [],
       introduces: []
     }
+  },
+  resolution: {
+    width: 0,
+    height: 0
   }
 }

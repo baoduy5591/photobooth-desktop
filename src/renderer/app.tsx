@@ -5,12 +5,18 @@ import { useEffect } from 'react';
 import { useStore } from './context/store';
 
 export default function App() {
-  const { store, setStore } = useStore();
+  const { setStore } = useStore();
 
   const getResourcesAndSystemConfigs = async () => {
     const resources = await window.api.getResources();
     const systemConfigs = await window.api.getSystemConfigs();
-    setStore((store: StoreType) => ({ ...store, systemConfigs: systemConfigs, resources: resources }));
+    const resolution = await window.api.getResolution();
+    setStore((store: StoreType) => ({
+      ...store,
+      systemConfigs: systemConfigs,
+      resources: resources,
+      resolution: resolution,
+    }));
     setStore((store: StoreType) => ({ ...store, systemConfigs: { ...store.systemConfigs, isLoading: true } }));
   };
 
