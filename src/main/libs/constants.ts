@@ -19,3 +19,5 @@ export const CONST_CHILD_FOLDER_OF_VIDEOS: string[] = [
   'introduces'
 ];
 
+export const CONST_REL_PATH_FONTS = 'fonts';
+

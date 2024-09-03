@@ -37,7 +37,7 @@ ipcMain.handle('get-resources', async () => {
 
 // get system configs (call api)
 ipcMain.handle('get-system-configs', async() => {
-  return { language: 'en' };
+  return { language: 'vi', isLoading: false };
 });
 
 app.on('ready', createWindow);

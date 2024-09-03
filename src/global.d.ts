@@ -38,6 +38,8 @@ interface ResourcesType {
 
 interface SystemConfigsType {
   language: string;
+  isLoading: boolean;
+  backgroundImageTypeA: string;
 }
 
 interface StoreType {

@@ -1,6 +1,8 @@
 export const INIT_STORE: StoreType = {
   systemConfigs: {
-    language: ''
+    language: '',
+    isLoading: false,
+    backgroundImageTypeA: '00100.png'
   },
   resources: {
     backgroundImages: {

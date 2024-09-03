@@ -2,7 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: MoreSugar;
+  font-weight: 400;
+  src: url('assets/fonts/moreSugar/MoreSugar-Regular.ttf');
+}
+
+@font-face {
+  font-family: MoreSugar;
+  font-weight: 100;
+  src: url('assets/fonts/moreSugar/MoreSugar-Thin.ttf');
+}
+
+@font-face {
+  font-family: Baloo;
+  font-weight: 400;
+  src: url('assets/fonts/baloo/Baloo-Regular.ttf');
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-    Arial, sans-serif;
+  font-family: Baloo;
 }
