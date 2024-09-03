@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import Resources from './utils/resources';
+import Paths from './utils/paths';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -43,8 +44,14 @@ ipcMain.handle('get-resources', async () => {
 
 // get system configs (call api)
 ipcMain.handle('get-system-configs', async() => {
-  return { language: 'vi', isLoading: false };
+  return { language: 'en', isLoading: false };
 });
+
+// get path folder assets
+ipcMain.handle('get-path-folder-assets', () => {
+  const pathFolderAssets = Paths.getFolderAssetsForRenderer();
+  return pathFolderAssets;
+} )
 
 app.on('ready', createWindow);
 

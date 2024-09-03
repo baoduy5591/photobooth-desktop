@@ -3,6 +3,7 @@ interface Window {
     getResources: () => Promise;
     getSystemConfigs: () => Promise;
     getResolution: () => Promise;
+    getPathFolderAssets: () => Promise;
   }
 }
 
@@ -39,7 +40,6 @@ interface ResourcesType {
 
 interface SystemConfigsType {
   language: string;
-  isLoading: boolean;
   backgroundImageTypeA: string;
 }
 
@@ -47,4 +47,6 @@ interface StoreType {
   systemConfigs: SystemConfigsType;
   resources: ResourcesType;
   resolution: { width: number, height: number };
+  pathFolderAssets: string;
+  isLoading: boolean
 }

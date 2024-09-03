@@ -1,7 +1,6 @@
 export const INIT_STORE: StoreType = {
   systemConfigs: {
     language: '',
-    isLoading: false,
     backgroundImageTypeA: '00100.png',
   },
   resources: {
@@ -22,8 +21,10 @@ export const INIT_STORE: StoreType = {
       introduces: []
     }
   },
+  isLoading: false,
   resolution: {
     width: 0,
     height: 0
-  }
+  },
+  pathFolderAssets: ''
 }

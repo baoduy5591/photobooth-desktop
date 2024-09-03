@@ -11,13 +11,15 @@ export default function App() {
     const resources = await window.api.getResources();
     const systemConfigs = await window.api.getSystemConfigs();
     const resolution = await window.api.getResolution();
+    const pathFolderAssets = await window.api.getPathFolderAssets();
     setStore((store: StoreType) => ({
       ...store,
       systemConfigs: systemConfigs,
       resources: resources,
       resolution: resolution,
+      pathFolderAssets: pathFolderAssets,
+      isLoading: true,
     }));
-    setStore((store: StoreType) => ({ ...store, systemConfigs: { ...store.systemConfigs, isLoading: true } }));
   };
 
   useEffect(() => {

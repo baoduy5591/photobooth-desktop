@@ -2,13 +2,11 @@ import path from 'path';
 import fs from 'fs';
 import Loggers from './loggers';
 import Paths from './paths';
-import { app } from 'electron';
 import { 
   CONST_CHILD_FOLDER_OF_BACKGROUND_IMAGES,
   CONST_CHILD_FOLDER_OF_STICKERS, 
   CONST_CHILD_FOLDER_OF_VIDEOS, 
   CONST_REL_PATH_BACKGROUND_IMAGES, 
-  CONST_REL_PATH_FONTS, 
   CONST_REL_PATH_STICKERS, 
   CONST_REL_PATH_VIDEOS
 } from '../libs/constants';
@@ -19,14 +17,12 @@ const { mainLogger } = loggers.getLoggers();
 
 class Resources {
   pathFolderAssets: string;
-  isDev: boolean;
 
   constructor() {
     this.pathFolderAssets = Paths.getFolderAssets();
-    this.isDev = !app.isPackaged;
   }
 
-  async getPathFiles(pathRel: string, extensions = ['.jpg', '.png', '.svg']) {
+  async getRelPathFiles(pathRel: string, extensions = ['.jpg', '.png', '.svg']) {
     try {
       const _path = path.join(this.pathFolderAssets, pathRel);
       const files = fs.readdirSync(_path);
@@ -37,11 +33,7 @@ class Resources {
       });
 
       const pathFiles = filesFiltered.map((file: string) => {
-        if (this.isDev) {
-          return path.join('assets', pathRel, file);
-        } else {
-          return path.join(_path, file); 
-        }
+        return path.join(pathRel, file);
       });
 
       return pathFiles;
@@ -69,7 +61,7 @@ class Resources {
   }
 
   async getStickers() {
-    const listPromiseForGetPath = CONST_CHILD_FOLDER_OF_STICKERS.map(item => this.getPathFiles(path.join(CONST_REL_PATH_STICKERS, item)))
+    const listPromiseForGetPath = CONST_CHILD_FOLDER_OF_STICKERS.map(item => this.getRelPathFiles(path.join(CONST_REL_PATH_STICKERS, item)))
     const results = await Promise.all(listPromiseForGetPath);
     if (results.some(rs => !rs)) return false;
 
@@ -84,7 +76,7 @@ class Resources {
   }
 
   async getBackgroundImages() {
-    const listPromiseBackgroundImages = CONST_CHILD_FOLDER_OF_BACKGROUND_IMAGES.map(item => this.getPathFiles(path.join(CONST_REL_PATH_BACKGROUND_IMAGES, item)));
+    const listPromiseBackgroundImages = CONST_CHILD_FOLDER_OF_BACKGROUND_IMAGES.map(item => this.getRelPathFiles(path.join(CONST_REL_PATH_BACKGROUND_IMAGES, item)));
     const resultsBackgroundImages = await Promise.all(listPromiseBackgroundImages);
     if (resultsBackgroundImages.some(rs => !rs)) return false;
 
@@ -95,7 +87,7 @@ class Resources {
   }
 
   async getVideos() {
-    const listPromiseVideos = CONST_CHILD_FOLDER_OF_VIDEOS.map(item => this.getPathFiles(path.join(CONST_REL_PATH_VIDEOS, item), ['.mp4']));
+    const listPromiseVideos = CONST_CHILD_FOLDER_OF_VIDEOS.map(item => this.getRelPathFiles(path.join(CONST_REL_PATH_VIDEOS, item), ['.mp4']));
     const resultsVideos = await Promise.all(listPromiseVideos);
     if (resultsVideos.some(rs => !rs)) return false;
 

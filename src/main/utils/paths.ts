@@ -21,6 +21,15 @@ class Paths {
       return path.join(__dirname, '..', 'renderer', 'assets');
     }
   }
+
+  static getFolderAssetsForRenderer() {
+    const isPackaged = app.isPackaged;
+    if (isPackaged) {
+      return path.join(process.resourcesPath, 'assets/');
+    } else {
+      return 'assets/';
+    }
+  }
 }
 
 export default Paths;
