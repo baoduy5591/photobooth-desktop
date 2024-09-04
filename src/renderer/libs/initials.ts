@@ -1,7 +1,31 @@
 export const INIT_STORE: StoreType = {
   systemConfigs: {
-    language: '',
-    backgroundImageTypeA: '00100.png',
+    defaultLanguage: '',
+    backgroundImageTypeA: '',
+    backgroundImageTypeB: '',
+    backgroundImageTypeC: '',
+    backgroundAudio: '',
+    touchAudio: '',
+    videoIntro: '',
+    hardwareInfo: {
+      camera: {
+        name: '',
+        serial: '',
+        isOk: false,
+      },
+      network: {
+        ipV4: '',
+        mac: '',
+        monitorIP: '',
+        isOk: false,
+      },
+      screen: {
+        width: null,
+        height: null
+      },
+      disk: null
+
+    }
   },
   resources: {
     backgroundImages: {

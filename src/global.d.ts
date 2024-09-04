@@ -7,6 +7,8 @@ interface Window {
   }
 }
 
+type TouchEventAndMouseEventType = React.TouchEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>;
+
 interface ThemeType {
   pink: string;
 }
@@ -50,14 +52,27 @@ interface ResourcesType {
   icons: PathResourceType[];
 }
 
+interface HardwareInfoType {
+  camera: { name: string, serial: string, isOk: boolean };
+  network: { ipV4: string; mac: string; monitorIP: string; isOk: boolean };
+  screen: { width: number, height: number };
+  disk: number;
+}
+
 interface SystemConfigsType {
-  language: string;
+  hardwareInfo: HardwareInfoType;
+  defaultLanguage: string;
   backgroundImageTypeA: string;
+  backgroundImageTypeB: string;
+  backgroundImageTypeC: string;
+  backgroundAudio: string;
+  touchAudio: string;
+  videoIntro: string;
 }
 
 interface StoreType {
   systemConfigs: SystemConfigsType;
-  resources: ResourcesType;
+  resources: ResourcesType; 
   pathFolderAssets: string;
   isLoading: boolean
 }

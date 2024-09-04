@@ -1,3 +1,9 @@
 {
-  "hello": "Hello"
+  "languages": {
+    "en": "ENG",
+    "vi": "VIE",
+    "ja": "日本"
+  },
+
+  "companyName": "CAWAII PHOTO"
 }

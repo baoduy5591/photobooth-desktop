@@ -13,8 +13,8 @@ export default function App() {
     const pathFolderAssets = await window.api.getPathFolderAssets();
     setStore((store: StoreType) => ({
       ...store,
-      systemConfigs: systemConfigs,
-      resources: resources,
+      systemConfigs: { ...store.systemConfigs, ...systemConfigs },
+      resources: { ...store.resources, ...resources },
       pathFolderAssets: pathFolderAssets,
       isLoading: true,
     }));

@@ -7,6 +7,7 @@ import {
   CONST_CHILD_FOLDER_OF_STICKERS, 
   CONST_CHILD_FOLDER_OF_VIDEOS, 
   CONST_REL_PATH_BACKGROUND_IMAGES, 
+  CONST_REL_PATH_ICONS, 
   CONST_REL_PATH_STICKERS, 
   CONST_REL_PATH_VIDEOS
 } from '../libs/constants';
@@ -97,22 +98,30 @@ class Resources {
     return { loading, introduces };
   }
 
+  async getIcons() {
+    const results = await this.getRelPathFiles(CONST_REL_PATH_ICONS);
+    if (!results) return false;
 
+    const resultsTranslate = await this.translateToDict(results);
+    return resultsTranslate;
+  }
 
   async resources() {
     const results = await Promise.all([
       this.getBackgroundImages(),
       this.getStickers(),
       this.getVideos(),
+      this.getIcons()
     ]);
     if (results.some(rs => !rs)) return false;
 
-    const [backgroundImages, stickers, videos] = results;
+    const [backgroundImages, stickers, videos, icons] = results;
 
     return {
       backgroundImages,
       stickers,
       videos,
+      icons
     }
   }
 }

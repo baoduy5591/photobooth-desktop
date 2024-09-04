@@ -17,18 +17,14 @@ export function Splash() {
   useEffect(() => {
     if (!store.isLoading) return;
 
-    const languageSystem = store.systemConfigs.language;
-    const index = CONST_CONFIG_LANGUAGE[languageSystem as keyof typeof CONST_CONFIG_LANGUAGE];
+    const defaultLanguage = store.systemConfigs.defaultLanguage;
+    const index = CONST_CONFIG_LANGUAGE[defaultLanguage as keyof typeof CONST_CONFIG_LANGUAGE];
     setVideoLoading(store.pathFolderAssets + store.resources.videos.loading[index].relPath);
-  }, [store.systemConfigs.language]);
+  }, [store.systemConfigs.defaultLanguage]);
 
   return (
     <div className='h-screen w-screen'>
-      {store.isLoading && (
-        <video autoPlay onEnded={handleOnEnded} className='h-full w-full'>
-          <source src={videoLoading} />
-        </video>
-      )}
+      {store.isLoading && <video src={videoLoading} autoPlay onEnded={handleOnEnded} className='h-full w-full' />}
     </div>
   );
 }

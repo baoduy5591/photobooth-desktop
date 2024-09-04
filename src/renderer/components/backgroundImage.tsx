@@ -2,27 +2,34 @@ import React from 'react';
 
 interface BackgroundImageProps {
   children: React.ReactNode;
-  url: string;
-  addClassName?: string;
+  backgroundPrimary: string;
+  backgroundSecondary?: string;
+  addClassContainer?: string;
+  addClassBackgroundPrimary?: string;
+  addClassBackgroundSecondary?: string;
+  addClassChildren?: string;
 }
 
 export const BackgroundImage = React.memo(function BackgroundImage({
   children,
-  url,
-  addClassName = '',
+  backgroundPrimary,
+  backgroundSecondary,
+  addClassContainer = '',
+  addClassBackgroundPrimary = '',
+  addClassBackgroundSecondary = '',
+  addClassChildren = '',
 }: BackgroundImageProps) {
   return (
-    <div
-      className={`h-full w-full ${addClassName}`}
-      style={{
-        backgroundImage: `url(${url})`,
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-      }}
-    >
-      {children}
+    <div className={`relative h-full w-full ${addClassContainer}`}>
+      <div className={`absolute inset-0 ${addClassBackgroundPrimary}`}>
+        <img src={backgroundPrimary} alt='' />
+      </div>
+
+      <div className={`absolute inset-0 ${addClassBackgroundSecondary}`}>
+        <img src={backgroundSecondary} alt='' />
+      </div>
+
+      <div className={`absolute inset-0 ${addClassChildren}`}>{children}</div>
     </div>
   );
 });

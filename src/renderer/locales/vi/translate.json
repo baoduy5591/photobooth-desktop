@@ -1,3 +1,9 @@
 {
-  "hello": "Xin chao"
+  "languages": {
+    "en": "ENG",
+    "vi": "VIE",
+    "ja": "日本"
+  },
+
+  "companyName": "CAWAII PHOTO"
 }

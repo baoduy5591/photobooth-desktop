@@ -38,7 +38,11 @@ ipcMain.handle('get-resources', async () => {
 
 // get system configs (call api)
 ipcMain.handle('get-system-configs', async() => {
-  return { language: 'en', backgroundImageTypeA: 'backgroundImages/typeA/00100.png' };
+  return { 
+    defaultLanguage: 'en',
+    backgroundImageTypeA: 'backgroundImages/typeA/00100.png',
+    backgroundImageTypeB: 'backgroundImages/typeB/00100.png'
+  };
 });
 
 // get path folder assets

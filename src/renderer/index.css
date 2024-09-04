@@ -20,12 +20,27 @@
   src: url('assets/fonts/baloo/Baloo-Regular.ttf');
 }
 
+@font-face {
+  font-family: Rokkitt;
+  font-weight: 400;
+  src: url('assets/fonts/rokkitt/Rokkitt-VariableFont_wght.ttf');
+}
+
+@font-face {
+  font-family: Rokkitt;
+  font-weight: 400;
+  font-style: italic;
+  src: url('assets/fonts/rokkitt/Rokkitt-Italic-VariableFont_wght.ttf');
+}
+
 body {
-  font-family: Baloo;
+  font-family: MoreSugar;
 }
 
 @layer base {
-  [data-theme='primary'] {
-    --picker-color-fill-button: #f0969f;
+  [data-theme='pink'] {
+    --picker-color-text-base: #ffffff;
+    --picker-color-fill-button: #ff909d;
+    --picker-color-fill-button-muted: #a7a9ac;
   }
 }
