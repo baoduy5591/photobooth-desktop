@@ -3,6 +3,7 @@ import { Splash } from './pages/splash';
 import Home from './pages/home';
 import { useEffect } from 'react';
 import { useStore } from './context/store';
+import EnterCode from './pages/enterCode';
 
 export default function App() {
   const { setStore } = useStore();
@@ -29,6 +30,7 @@ export default function App() {
       <Routes>
         <Route path='/' element={<Splash />} />
         <Route path='/home' element={<Home />} />
+        <Route path='/enter-code' element={<EnterCode />} />
       </Routes>
     </HashRouter>
   );

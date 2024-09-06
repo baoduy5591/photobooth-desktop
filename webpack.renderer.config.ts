@@ -18,10 +18,21 @@ const copyWebpackPlugin = env === 'development' ? new CopyPlugin({
   ]
 }) : null;
 
-rules.push({
-  test: /\.css$/,
-  use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'postcss-loader' }],
-});
+rules.push(
+  {
+    test: /\.css$/,
+    use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'postcss-loader' }],
+  },
+  {
+    test: /\.(png|jpe?g|svg|mp3|mp4)$/i,
+    type: 'asset',
+    parser: {
+      dataUrlCondition: {
+        maxSize: 10 * 1024
+      }
+    }
+  }
+);
 
 export const rendererConfig: Configuration = {
   module: {

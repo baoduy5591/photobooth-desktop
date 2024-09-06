@@ -19,6 +19,9 @@ module.exports = {
         moreSugar: 'MoreSugar',
         baloo: 'Baloo',
       },
+      colors: {
+        'custom-pink': 'var(--picker-color-fill-button)',
+      },
     },
   },
   plugins: [],

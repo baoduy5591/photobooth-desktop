@@ -12,7 +12,7 @@ export const resources = {
   }
 };
 
-const defaultLng = 'vi';
+const defaultLng = 'en';
 export const defaultNS = 'translation';
 
 use(initReactI18next).init({

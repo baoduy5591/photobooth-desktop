@@ -5,5 +5,9 @@
     "ja": "日本"
   },
 
-  "companyName": "CAWAII PHOTO"
+  "home": {
+    "companyName": "CAWAII PHOTO",
+    "noteTouchAbove": "Chạm vào phía trên để Bắt đầu",
+    "closeVideo": "Nhấp vào nút X để đóng video"
+  }
 }

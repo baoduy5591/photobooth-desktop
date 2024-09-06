@@ -21,7 +21,7 @@ export const SelectLanguage = React.memo(
         {Object.keys(CONST_CONFIG_LANGUAGE).map((lang: string, index: number) => {
           return (
             <div key={index} className='flex flex-col items-center'>
-              <div className='h-9 w-9 rotate-180'>
+              <div className='h-9 w-9'>
                 {language === lang && <img src={store.pathFolderAssets + store.resources.icons[1]?.relPath} alt='' />}
               </div>
 
