@@ -55,11 +55,17 @@ interface VideosType {
   introduces: PathResourceType[]
 }
 
+interface AudiosType {
+  backgrounds: PathResourceType[],
+  touch: PathResourceType[]
+}
+
 interface ResourcesType {
   backgroundImages: BackgroundImagesType;
   stickers: StickerType;
   videos: VideosType;
   icons: PathResourceType[];
+  audios: AudiosType;
 }
 
 interface HardwareInfoType {

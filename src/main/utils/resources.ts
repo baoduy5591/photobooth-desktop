@@ -3,9 +3,11 @@ import fs from 'fs';
 import Loggers from './loggers';
 import Paths from './paths';
 import { 
+  CONST_CHILD_FOLDER_OF_AUDIOS,
   CONST_CHILD_FOLDER_OF_BACKGROUND_IMAGES,
   CONST_CHILD_FOLDER_OF_STICKERS, 
   CONST_CHILD_FOLDER_OF_VIDEOS, 
+  CONST_REL_PATH_AUDIOS, 
   CONST_REL_PATH_BACKGROUND_IMAGES, 
   CONST_REL_PATH_ICONS, 
   CONST_REL_PATH_STICKERS, 
@@ -106,22 +108,35 @@ class Resources {
     return resultsTranslate;
   }
 
+  async getAudios() {
+    const listPromiseAudios = CONST_CHILD_FOLDER_OF_AUDIOS.map(item => this.getRelPathFiles(path.join(CONST_REL_PATH_AUDIOS, item), ['.mp3']));
+    const resultsAudios = await Promise.all(listPromiseAudios);
+    if (resultsAudios.some(rs => !rs)) return false;
+
+    const listPromiseTranslate = resultsAudios.map(result => this.translateToDict(result as string[]));
+    const resultsTranslate = await Promise.all(listPromiseTranslate);
+    const [backgrounds, touch] = resultsTranslate;
+    return { backgrounds, touch };
+  }
+
   async resources() {
     const results = await Promise.all([
       this.getBackgroundImages(),
       this.getStickers(),
       this.getVideos(),
-      this.getIcons()
+      this.getIcons(),
+      this.getAudios()
     ]);
     if (results.some(rs => !rs)) return false;
 
-    const [backgroundImages, stickers, videos, icons] = results;
+    const [backgroundImages, stickers, videos, icons, audios] = results;
 
     return {
       backgroundImages,
       stickers,
       videos,
-      icons
+      icons,
+      audios
     }
   }
 }

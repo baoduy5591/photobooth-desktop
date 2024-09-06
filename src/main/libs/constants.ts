@@ -21,3 +21,9 @@ export const CONST_CHILD_FOLDER_OF_VIDEOS: string[] = [
 
 export const CONST_REL_PATH_ICONS = 'icons';
 
+export const CONST_REL_PATH_AUDIOS = 'audios';
+export const CONST_CHILD_FOLDER_OF_AUDIOS: string[] = [
+  'backgrounds',
+  'touch'
+];
+

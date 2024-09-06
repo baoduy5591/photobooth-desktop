@@ -44,7 +44,11 @@ export const INIT_STORE: StoreType = {
       loading: [],
       introduces: []
     },
-    icons: []
+    icons: [],
+    audios: {
+      backgrounds: [],
+      touch: []
+    }
   },
   isLoading: false,
   pathFolderAssets: ''
