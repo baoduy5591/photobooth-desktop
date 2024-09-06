@@ -36,12 +36,6 @@ interface PathResourceType {
   isNew: boolean;
 }
 
-interface BackgroundImagesType {
-  typeA: PathResourceType[];
-  typeB: PathResourceType[];
-  typeC: PathResourceType[];
-}
-
 interface StickerType {
   hot: PathResourceType[];
   birthday: PathResourceType[];
@@ -78,9 +72,6 @@ interface HardwareInfoType {
 interface SystemConfigsType {
   hardwareInfo: HardwareInfoType;
   defaultLanguage: string;
-  backgroundImageTypeA: string;
-  backgroundImageTypeB: string;
-  backgroundImageTypeC: string;
   backgroundAudio: string;
   touchAudio: string;
   videoIntro: string;

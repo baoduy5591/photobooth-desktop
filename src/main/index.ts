@@ -40,8 +40,6 @@ ipcMain.handle('get-resources', async () => {
 ipcMain.handle('get-system-configs', async() => {
   return { 
     defaultLanguage: 'en',
-    backgroundImageTypeA: 'backgroundImages/typeA/00000.png',
-    backgroundImageTypeB: 'backgroundImages/typeB/00000.png',
     videoIntro: 'videos/introduces/00000.mp4',
     backgroundAudio: 'audios/backgrounds/00000.mp3',
     touchAudio: 'audios/touch/00000.mp3'

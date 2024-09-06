@@ -1,9 +1,6 @@
 export const INIT_STORE: StoreType = {
   systemConfigs: {
     defaultLanguage: '',
-    backgroundImageTypeA: '',
-    backgroundImageTypeB: '',
-    backgroundImageTypeC: '',
     backgroundAudio: '',
     touchAudio: '',
     videoIntro: '',
@@ -28,11 +25,7 @@ export const INIT_STORE: StoreType = {
     }
   },
   resources: {
-    backgroundImages: {
-      typeA: [],
-      typeB: [],
-      typeC: []
-    },
+    backgroundImages: [],
     stickers: {
       hot: [],
       birthday: [],

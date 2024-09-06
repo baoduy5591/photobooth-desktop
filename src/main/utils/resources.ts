@@ -4,7 +4,6 @@ import Loggers from './loggers';
 import Paths from './paths';
 import { 
   CONST_CHILD_FOLDER_OF_AUDIOS,
-  CONST_CHILD_FOLDER_OF_BACKGROUND_IMAGES,
   CONST_CHILD_FOLDER_OF_STICKERS, 
   CONST_CHILD_FOLDER_OF_VIDEOS, 
   CONST_REL_PATH_AUDIOS, 
@@ -79,14 +78,11 @@ class Resources {
   }
 
   async getBackgroundImages() {
-    const listPromiseBackgroundImages = CONST_CHILD_FOLDER_OF_BACKGROUND_IMAGES.map(item => this.getRelPathFiles(path.join(CONST_REL_PATH_BACKGROUND_IMAGES, item)));
-    const resultsBackgroundImages = await Promise.all(listPromiseBackgroundImages);
-    if (resultsBackgroundImages.some(rs => !rs)) return false;
+    const results = await this.getRelPathFiles(CONST_REL_PATH_BACKGROUND_IMAGES);
+    if (!results) return false;
 
-    const listPromiseTranslate = resultsBackgroundImages.map(result => this.translateToDict(result as string[]));
-    const resultsTranslate = await Promise.all(listPromiseTranslate);
-    const [typeA, typeB, typeC] = resultsTranslate;
-    return { typeA, typeB, typeC };
+    const resultsTranslate = await this.translateToDict(results);
+    return resultsTranslate;
   }
 
   async getVideos() {
