@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { CONST_CONFIG_LANGUAGE } from '../libs/constants';
 import { useStore } from '../context/store';
+import { DisplayImage } from './displayImage';
 
 interface SelectLanguageProps {
   language: string;
@@ -17,20 +18,20 @@ export const SelectLanguage = React.memo(
     const { store } = useStore();
 
     return (
-      <div className='flex select-none items-center justify-center gap-x-4 text-center font-rokkitt text-2xl font-medium tracking-widest text-skin-base'>
+      <div className='flex select-none items-center justify-center gap-x-4 text-center font-rokkitt font-medium tracking-widest text-skin-base'>
         {Object.keys(CONST_CONFIG_LANGUAGE).map((lang: string, index: number) => {
           return (
             <div key={index} className='flex flex-col items-center'>
-              <div className='h-9 w-9'>
-                {language === lang && <img src={store.pathFolderAssets + store.resources.icons[1]?.relPath} alt='' />}
+              <div className='h-[26px] w-[34px]'>
+                {language === lang && <DisplayImage src={store.pathFolderAssets + store.resources.icons[1]?.relPath} />}
               </div>
 
               <div
-                className={`flex h-20 w-32 items-center justify-center rounded-[32px] bg-skin-fill-button p-3 ${language === lang ? 'bg-skin-fill-button' : 'bg-skin-fill-button-muted'}`}
+                className={`flex h-[63px] w-[100px] items-center justify-center rounded-[22px] bg-skin-fill-button p-2 ${language === lang ? 'bg-skin-fill-button' : 'bg-skin-fill-button-muted'}`}
                 onTouchStart={(event) => handleOnTouchStart(event, lang)}
                 onMouseDown={(event) => handleOnTouchStart(event, lang)}
               >
-                <div className='flex h-full w-full items-center justify-center rounded-xl border border-dashed border-white'>
+                <div className='flex h-full w-full items-center justify-center rounded-md border border-dashed border-white text-[21px]'>
                   <span>{translate(`translation:languages.${lang as keyof typeof CONST_CONFIG_LANGUAGE}`)}</span>
                 </div>
               </div>

@@ -18,6 +18,7 @@ module.exports = {
         rokkitt: 'Rokkitt',
         moreSugar: 'MoreSugar',
         baloo: 'Baloo',
+        mochiyPopOne: 'MochiyPopOne',
       },
       colors: {
         'custom-pink': 'var(--picker-color-fill-button)',

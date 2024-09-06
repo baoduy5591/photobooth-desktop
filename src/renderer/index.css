@@ -33,6 +33,12 @@
   src: url('assets/fonts/rokkitt/Rokkitt-Italic-VariableFont_wght.ttf');
 }
 
+@font-face {
+  font-family: MochiyPopOne;
+  font-weight: 400;
+  src: url('assets/fonts/mochiyPopOne//MochiyPopOne-Regular.ttf');
+}
+
 body {
   font-family: MoreSugar;
 }
