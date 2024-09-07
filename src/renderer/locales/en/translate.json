@@ -9,5 +9,11 @@
     "companyName": "CAWAII PHOTO",
     "noteTouchAbove": "Touch the button above to Start",
     "closeVideo": "Click the X button to skip video"
+  },
+
+  "enterCode": {
+    "enterHere": "Enter Here",
+    "welcome": "Welcome",
+    "enterAgain": "Enter Again"
   }
 }

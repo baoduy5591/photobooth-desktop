@@ -45,8 +45,15 @@ body {
 
 @layer base {
   [data-theme='pink'] {
-    --picker-color-text-base: #ffffff;
-    --picker-color-fill-button: #ff909d;
-    --picker-color-fill-button-muted: #a7a9ac;
+    --picker-color-style-1: #ffffff;
+    --picker-color-style-2-1: #ff909d;
+    --picker-color-style-2-2: #ffc5c9;
+    --picker-color-style-3-1: #595959;
+    --picker-color-style-3-2: #a7a9ac;
+    --picker-color-style-4-1: #ffdf8f;
+    --picker-color-style-4-2: #ffeec0;
+    --picker-color-style-5-1: #ccefa2;
+    --picker-color-style-5-2: #e9f7dc;
+    --picker-color-style-5-3: #b7e086;
   }
 }

@@ -4,14 +4,20 @@ module.exports = {
   theme: {
     extend: {
       textColor: {
-        skin: {
-          base: 'var(--picker-color-text-base)',
+        custom: {
+          'style-1': 'var(--picker-color-style-1)',
+          'style-3-1': 'var(--picker-color-style-3-1)',
+          'style-5-3': 'var(--picker-color-style-5-3)',
         },
       },
       backgroundColor: {
-        skin: {
-          'fill-button': 'var(--picker-color-fill-button)',
-          'fill-button-muted': 'var(--picker-color-fill-button-muted)',
+        custom: {
+          'style-1': 'var(--picker-color-style-1)',
+          'style-2-1': 'var(--picker-color-style-2-1)',
+          'style-3-1': 'var(--picker-color-style-3-1)',
+          'style-3-2': 'var(--picker-color-style-3-2)',
+          'style-4-1': 'var(--picker-color-style-4-1)',
+          'style-5-1': 'var(--picker-color-style-5-1)',
         },
       },
       fontFamily: {
@@ -21,7 +27,15 @@ module.exports = {
         mochiyPopOne: 'MochiyPopOne',
       },
       colors: {
-        'custom-pink': 'var(--picker-color-fill-button)',
+        custom: {
+          'style-1': 'var(--picker-color-style-1)',
+          'style-2-1': 'var(--picker-color-style-2-1)',
+          'style-2-2': 'var(--picker-color-style-2-2)',
+          'style-4-1': 'var(--picker-color-style-4-1)',
+          'style-4-2': 'var(--picker-color-style-4-2)',
+          'style-5-1': 'var(--picker-color-style-5-1)',
+          'style-5-2': 'var(--picker-color-style-5-2)',
+        },
       },
     },
   },

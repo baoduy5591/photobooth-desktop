@@ -9,3 +9,6 @@ export const CONST_CONFIG_FONTS: { en: string, ja: string; vi: string } = {
   ja: 'MochiyPopOne',
   vi: 'Baloo',
 };
+
+export const CONST_ERROR = '#ERROR#';
+export const CONST_PICTURE_TIME = 'PICTURE TIME';

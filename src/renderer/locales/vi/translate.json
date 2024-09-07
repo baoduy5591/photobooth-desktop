@@ -9,5 +9,11 @@
     "companyName": "CAWAII PHOTO",
     "noteTouchAbove": "Chạm vào phía trên để Bắt đầu",
     "closeVideo": "Nhấp vào nút X để đóng video"
+  },
+
+  "enterCode": {
+    "enterHere": "Nhập ở đây",
+    "welcome": "Chào mừng",
+    "enterAgain": "Nhập lại"
   }
 }
