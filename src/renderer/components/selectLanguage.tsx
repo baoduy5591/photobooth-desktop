@@ -18,7 +18,7 @@ export const SelectLanguage = React.memo(
     const { store } = useStore();
 
     return (
-      <div className='flex select-none items-center justify-center gap-x-4 text-center font-rokkitt font-medium tracking-widest text-skin-base'>
+      <div className='text-custom-style-1 flex select-none items-center justify-center gap-x-4 text-center font-rokkitt font-medium tracking-widest'>
         {Object.keys(CONST_CONFIG_LANGUAGE).map((lang: string, index: number) => {
           return (
             <div key={index} className='flex flex-col items-center'>
@@ -27,11 +27,11 @@ export const SelectLanguage = React.memo(
               </div>
 
               <div
-                className={`flex h-[63px] w-[100px] items-center justify-center rounded-[22px] bg-skin-fill-button p-2 ${language === lang ? 'bg-skin-fill-button' : 'bg-skin-fill-button-muted'}`}
+                className={`flex h-[63px] w-[100px] items-center justify-center rounded-[22px] p-2 ${language === lang ? 'bg-custom-style-2-1' : 'bg-custom-style-3-2'}`}
                 onTouchStart={(event) => handleOnTouchStart(event, lang)}
                 onMouseDown={(event) => handleOnTouchStart(event, lang)}
               >
-                <div className='flex h-full w-full items-center justify-center rounded-md border border-dashed border-white text-[21px]'>
+                <div className='border-custom-style-1 flex h-full w-full items-center justify-center rounded-md border border-dashed text-[21px]'>
                   <span>{translate(`translation:languages.${lang as keyof typeof CONST_CONFIG_LANGUAGE}`)}</span>
                 </div>
               </div>
