@@ -4,6 +4,7 @@ import Home from './pages/home';
 import { useEffect } from 'react';
 import { useStore } from './context/store';
 import EnterCode from './pages/enterCode';
+import ConfirmFrame from './pages/confirmFrame';
 
 export default function App() {
   const { setStore } = useStore();
@@ -31,6 +32,7 @@ export default function App() {
         <Route path='/' element={<Splash />} />
         <Route path='/home' element={<Home />} />
         <Route path='/enter-code' element={<EnterCode />} />
+        <Route path='/confirm-frame' element={<ConfirmFrame />} />
       </Routes>
     </HashRouter>
   );

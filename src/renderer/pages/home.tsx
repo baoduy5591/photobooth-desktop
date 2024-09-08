@@ -101,15 +101,15 @@ export default function Home() {
             <SelectLanguage language={userLanguage} handleOnTouchStart={handleChangeLanguage} />
           </div>
 
-          <div className='absolute bottom-1/2 left-36 h-[100px] w-[130px] -rotate-12'>
+          <div className='absolute bottom-1/2 left-28 h-[102px] w-[132px] -rotate-12'>
             <DisplayImage src={store.pathFolderAssets + store.resources.icons[4]?.relPath} />
           </div>
 
-          <div className='absolute right-32 top-56 h-[100px] w-[130px]'>
+          <div className='absolute right-28 top-56 h-[102px] w-[132px]'>
             <DisplayImage src={store.pathFolderAssets + store.resources.icons[3]?.relPath} />
           </div>
 
-          <div className='absolute bottom-32 right-48 h-[100px] w-[130px] rotate-12'>
+          <div className='absolute bottom-32 right-48 h-[102px] w-[132px] rotate-12'>
             <DisplayImage src={store.pathFolderAssets + store.resources.icons[2]?.relPath} />
           </div>
         </div>

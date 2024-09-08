@@ -42,9 +42,15 @@ ipcMain.handle('get-system-configs', async() => {
     defaultLanguage: 'en',
     videoIntro: 'videos/introduces/00000.mp4',
     backgroundAudio: 'audios/backgrounds/00000.mp3',
-    touchAudio: 'audios/touch/00000.mp3'
+    touchAudio: 'audios/touch/00000.mp3',
   };
 });
+
+ipcMain.handle('get-user-configs', async() => {
+  return {
+    frame: ''
+  }
+})
 
 // get path folder assets
 ipcMain.handle('get-path-folder-assets', () => {

@@ -15,5 +15,10 @@
     "enterHere": "Enter Here",
     "welcome": "Welcome",
     "enterAgain": "Enter Again"
+  },
+
+  "confirmFrame": {
+    "confirm": "This is your frame",
+    "chooseAgain": "Choose again"
   }
 }

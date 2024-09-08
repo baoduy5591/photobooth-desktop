@@ -4,10 +4,17 @@ import Loggers from './loggers';
 import Paths from './paths';
 import { 
   CONST_CHILD_FOLDER_OF_AUDIOS,
+  CONST_CHILD_FOLDER_OF_FRAMES_TYPE,
   CONST_CHILD_FOLDER_OF_STICKERS, 
   CONST_CHILD_FOLDER_OF_VIDEOS, 
   CONST_REL_PATH_AUDIOS, 
   CONST_REL_PATH_BACKGROUND_IMAGES, 
+  CONST_REL_PATH_FRAMES_REGULAR_TYPE_A, 
+  CONST_REL_PATH_FRAMES_REGULAR_TYPE_B, 
+  CONST_REL_PATH_FRAMES_REGULAR_TYPE_C, 
+  CONST_REL_PATH_FRAMES_REGULAR_TYPE_D, 
+  CONST_REL_PATH_FRAMES_REGULAR_TYPE_E, 
+  CONST_REL_PATH_FRAMES_REGULAR_TYPE_F, 
   CONST_REL_PATH_ICONS, 
   CONST_REL_PATH_STICKERS, 
   CONST_REL_PATH_VIDEOS
@@ -26,16 +33,16 @@ class Resources {
 
   async getRelPathFiles(relPath: string, extensions = ['.jpg', '.png', '.svg']) {
     try {
-      const _path = path.join(this.pathFolderAssets, relPath);
+      const _path = path.posix.join(this.pathFolderAssets, relPath);
       const files = fs.readdirSync(_path);
       const filesFiltered = files.filter(file => {
-        if (file.length !== 9) return false;
+        if (file.length !== 9 && file.length !== 15) return false;
 
         return extensions.some((ext: string) => file.endsWith(ext));
       });
 
       const pathFiles = filesFiltered.map((file: string) => {
-        return path.join(relPath, file);
+        return path.posix.join(relPath, file);
       });
 
       return pathFiles;
@@ -47,12 +54,23 @@ class Resources {
 
   async translateToDict(items: string[]) {
     const newData = items.map((item) => {
-      const name = item.slice(-9);
-      const isNew = name[4] === '1';
-      return { name, relPath: item, isNew };
+      if (!item.includes('_thumb')) {
+        const name = item.slice(-9);
+        const ext = name.slice(-4);
+        const path = item.slice(0, -9);
+        const isNew = name['4'] === '1';
+        let thumb = path + name.slice(0, -4) + '_thumb' + ext;
+        if (!items.includes(thumb)) {
+          thumb = '';
+        }
+
+        return { name, relPath: item, isNew, thumb };
+      }
+
+      return null;
     })
 
-    return newData;
+    return newData.filter((data) => data !== null);
   }
 
   async getHotStickers(items: string[]) {
@@ -63,7 +81,7 @@ class Resources {
   }
 
   async getStickers() {
-    const listPromiseForGetPath = CONST_CHILD_FOLDER_OF_STICKERS.map(item => this.getRelPathFiles(path.join(CONST_REL_PATH_STICKERS, item)))
+    const listPromiseForGetPath = CONST_CHILD_FOLDER_OF_STICKERS.map(item => this.getRelPathFiles(path.posix.join(CONST_REL_PATH_STICKERS, item)))
     const results = await Promise.all(listPromiseForGetPath);
     if (results.some(rs => !rs)) return false;
 
@@ -86,7 +104,7 @@ class Resources {
   }
 
   async getVideos() {
-    const listPromiseVideos = CONST_CHILD_FOLDER_OF_VIDEOS.map(item => this.getRelPathFiles(path.join(CONST_REL_PATH_VIDEOS, item), ['.mp4']));
+    const listPromiseVideos = CONST_CHILD_FOLDER_OF_VIDEOS.map(item => this.getRelPathFiles(path.posix.join(CONST_REL_PATH_VIDEOS, item), ['.mp4']));
     const resultsVideos = await Promise.all(listPromiseVideos);
     if (resultsVideos.some(rs => !rs)) return false;
 
@@ -105,7 +123,7 @@ class Resources {
   }
 
   async getAudios() {
-    const listPromiseAudios = CONST_CHILD_FOLDER_OF_AUDIOS.map(item => this.getRelPathFiles(path.join(CONST_REL_PATH_AUDIOS, item), ['.mp3']));
+    const listPromiseAudios = CONST_CHILD_FOLDER_OF_AUDIOS.map(item => this.getRelPathFiles(path.posix.join(CONST_REL_PATH_AUDIOS, item), ['.mp3']));
     const resultsAudios = await Promise.all(listPromiseAudios);
     if (resultsAudios.some(rs => !rs)) return false;
 
@@ -115,24 +133,63 @@ class Resources {
     return { backgrounds, touch };
   }
 
+  async getFramesByType(relPath: string, childPaths: string[]) {
+    const listPromiseFrames = childPaths.map(item => this.getRelPathFiles(path.posix.join(relPath, item)));
+    const resultsFrames = await Promise.all(listPromiseFrames);
+    if (resultsFrames.some(rs => !rs)) return false;
+
+    const listPromiseTranslate = resultsFrames.map(result => this.translateToDict(result as string[]));
+    const resultsTranslate = await Promise.all(listPromiseTranslate);
+    const [normal, season, special] = resultsTranslate;
+    return { normal, season, special }; 
+  }
+
   async resources() {
     const results = await Promise.all([
       this.getBackgroundImages(),
       this.getStickers(),
       this.getVideos(),
       this.getIcons(),
-      this.getAudios()
+      this.getAudios(),
+      this.getFramesByType(CONST_REL_PATH_FRAMES_REGULAR_TYPE_A, CONST_CHILD_FOLDER_OF_FRAMES_TYPE),
+      this.getFramesByType(CONST_REL_PATH_FRAMES_REGULAR_TYPE_B, CONST_CHILD_FOLDER_OF_FRAMES_TYPE),
+      this.getFramesByType(CONST_REL_PATH_FRAMES_REGULAR_TYPE_C, CONST_CHILD_FOLDER_OF_FRAMES_TYPE),
+      this.getFramesByType(CONST_REL_PATH_FRAMES_REGULAR_TYPE_D, CONST_CHILD_FOLDER_OF_FRAMES_TYPE),
+      this.getFramesByType(CONST_REL_PATH_FRAMES_REGULAR_TYPE_E, CONST_CHILD_FOLDER_OF_FRAMES_TYPE),
+      this.getFramesByType(CONST_REL_PATH_FRAMES_REGULAR_TYPE_F, CONST_CHILD_FOLDER_OF_FRAMES_TYPE),
     ]);
     if (results.some(rs => !rs)) return false;
 
-    const [backgroundImages, stickers, videos, icons, audios] = results;
-
+    const [
+      backgroundImages, 
+      stickers,
+      videos,
+      icons,
+      audios,
+      framesRegularTypeA,
+      framesRegularTypeB,
+      framesRegularTypeC,
+      framesRegularTypeD,
+      framesRegularTypeE,
+      framesRegularTypeF,
+    ] = results;
+    
     return {
       backgroundImages,
       stickers,
       videos,
       icons,
-      audios
+      audios,
+      frames: {
+        regular: {
+          typeA: framesRegularTypeA,
+          typeB: framesRegularTypeB,
+          typeC: framesRegularTypeC,
+          typeD: framesRegularTypeD,
+          typeE: framesRegularTypeE,
+          typeF: framesRegularTypeF,
+        }
+      }
     }
   }
 }

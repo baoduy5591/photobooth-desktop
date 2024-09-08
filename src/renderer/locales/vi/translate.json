@@ -15,5 +15,10 @@
     "enterHere": "Nhập ở đây",
     "welcome": "Chào mừng",
     "enterAgain": "Nhập lại"
+  },
+
+  "confirmFrame": {
+    "confirm": "Đây là frame của bạn",
+    "chooseAgain": "Chọn lại"
   }
 }

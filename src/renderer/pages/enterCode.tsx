@@ -41,10 +41,12 @@ export default function EnterCode() {
   };
 
   const handleOnTouchStartSubmit = (value: string) => {
-    console.log(value);
-    const result = true;
+    const result = value === '1111';
     if (result) {
       setValues(CONST_PICTURE_TIME);
+      setTimeout(() => {
+        navigate('/confirm-frame');
+      }, 1000);
     } else {
       setValues(CONST_ERROR);
     }
@@ -90,16 +92,16 @@ export default function EnterCode() {
         </div>
 
         <div className='mt-10'>
-          <div className='flex items-center justify-center'>
-            <div className='h-[73px] w-[85px] -rotate-3'>
+          <div className='flex items-center justify-center gap-x-2'>
+            <div className='h-[74px] w-[95px] -rotate-6'>
               <DisplayImage src={store.pathFolderAssets + store.resources.icons[3]?.relPath} />
             </div>
 
-            <div className='h-[73px] w-[85px]'>
+            <div className='h-[74px] w-[95px]'>
               <DisplayImage src={store.pathFolderAssets + store.resources.icons[4]?.relPath} />
             </div>
 
-            <div className='h-[73px] w-[85px] rotate-6'>
+            <div className='h-[74px] w-[95px] rotate-6'>
               <DisplayImage src={store.pathFolderAssets + store.resources.icons[2]?.relPath} />
             </div>
           </div>

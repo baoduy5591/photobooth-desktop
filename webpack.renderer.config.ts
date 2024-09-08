@@ -12,7 +12,7 @@ const env = process.env.NODE_ENV;
 const copyWebpackPlugin = env === 'development' ? new CopyPlugin({
   patterns: [
     {
-      from: path.join(__dirname, 'src', 'renderer', 'assets'),
+      from: path.posix.join(__dirname, 'src', 'renderer', 'assets'),
       to: 'assets/'
     }
   ]
