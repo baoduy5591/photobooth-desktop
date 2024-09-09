@@ -19,6 +19,10 @@
 
   "confirmFrame": {
     "confirm": "Đây là frame của bạn",
-    "chooseAgain": "Chọn lại"
+    "chooseAgain": "Chọn lại",
+    "isReadyText1": "Chạm vào đây để bắt đầu",
+    "isReadyText2": "nếu bạn đã sẵn sàng",
+    "isChooseAgainText1": "Chạm vào đây nếu bạn muốn",
+    "isChooseAgainText2": "chọn lại frame lần nữa"
   }
 }

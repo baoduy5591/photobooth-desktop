@@ -3,10 +3,53 @@ import { BackgroundImage } from '../components/backgroundImage';
 import { CountDown } from '../components/countDown';
 import { DisplayImage } from '../components/displayImage';
 import { useStore } from '../context/store';
+import { CONST_MODE_REGULAR, CONST_TYPE_FRAMES_FOR_DOUBLE } from '../libs/constants';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { checkIsTouch } from '../libs/common';
 
 export default function ConfirmFrame() {
-  const { store } = useStore();
+  const { store, setStore } = useStore();
   const { t: translate } = useTranslation();
+
+  const navigate = useNavigate();
+
+  const checkIsDoubleFrames = (frame: string) => {
+    const [, modeFrame, typeFrame] = frame.split('/');
+    let isDouble = false;
+    if (modeFrame === CONST_MODE_REGULAR && CONST_TYPE_FRAMES_FOR_DOUBLE.includes(typeFrame)) {
+      isDouble = true;
+    }
+
+    return isDouble;
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isDouble, setIsDouble] = useState<boolean>(checkIsDoubleFrames('frames/regular/typeF/normal/00000.png'));
+
+  const isTouchReady = useRef<boolean>(false);
+  const isTouchChooseAgain = useRef<boolean>(false);
+
+  const handleOnTouchStartReady = (event: TouchEventAndMouseEventType) => {
+    if (!checkIsTouch(event, isTouchReady)) return;
+
+    navigate('/shooting-method');
+  };
+
+  const handleOnTouchStartChooseAgain = (event: TouchEventAndMouseEventType) => {
+    if (!checkIsTouch(event, isTouchChooseAgain)) return;
+
+    navigate('/select-frame');
+  };
+
+  useEffect(() => {
+    const mockFunction = async () => {
+      const value = '2222';
+      const data = await window.api.getOrderInfoById(value);
+      setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, ...data } }));
+    };
+    mockFunction();
+  }, []);
 
   return (
     <div className='relative h-screen w-screen'>
@@ -30,7 +73,11 @@ export default function ConfirmFrame() {
         </div>
 
         <div className='flex h-full w-full items-center justify-center gap-x-24'>
-          <div className='flex flex-col items-center justify-center'>
+          <div
+            onTouchStart={(event) => handleOnTouchStartReady(event)}
+            onMouseDown={(event) => handleOnTouchStartReady(event)}
+            className='flex flex-col items-center justify-center'
+          >
             <div className='flex items-center justify-center gap-x-7'>
               <div className='h-[109px] w-[140px] translate-x-40 rotate-12'>
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[4]?.relPath} />
@@ -47,7 +94,7 @@ export default function ConfirmFrame() {
                   <DisplayImage src={store.pathFolderAssets + store.resources.icons[9]?.relPath} />
                 </div>
 
-                <div className='text-custom-style-1 absolute inset-0 flex min-w-max items-center justify-center text-4xl'>
+                <div className='absolute inset-0 flex min-w-max items-center justify-center text-4xl text-custom-style-1'>
                   <span>{translate('translation:confirmFrame.confirm')}</span>
                 </div>
               </div>
@@ -57,20 +104,60 @@ export default function ConfirmFrame() {
               </div>
 
               <div className='relative h-[432px] w-[704px]'>
-                <div className='bg-custom-style-3-1 absolute top-3 h-full w-full rounded-[50px] opacity-50'></div>
+                <div className='absolute top-3 h-full w-full rounded-[50px] bg-custom-style-3-1 opacity-50'></div>
 
-                <div className='border-custom-style-2-1 bg-custom-style-1 absolute h-full w-full rounded-[50px] border-[20px] p-3'>
-                  <div className='border-custom-style-2-1 h-full w-full rounded-2xl border-[6px] border-dashed'></div>
+                <div className='absolute h-full w-full rounded-[50px] border-[20px] border-custom-style-2-1 bg-custom-style-1 p-3'>
+                  <div className='h-full w-full rounded-2xl border-[6px] border-dashed border-custom-style-2-1 p-8'>
+                    <div className='flex h-full w-full items-center justify-center'>
+                      <div className='flex h-full w-1/2 items-center justify-center'>
+                        {isDouble ? (
+                          <div className='flex h-full w-full flex-col items-center justify-center'>
+                            <div className={`h-[146px] w-[219px]`}>
+                              <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} />
+                            </div>
+
+                            <div className={`h-[146px] w-[219px]`}>
+                              <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} />
+                            </div>
+                          </div>
+                        ) : (
+                          <div className='flex items-center justify-center'>
+                            <div className={`h-[292px] w-[195px]`}>
+                              <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className='flex grow flex-col items-center justify-center gap-y-10'>
+                        <div className='text-center font-rokkitt text-[26px] tracking-wider'>
+                          <div className='min-w-max'>
+                            <span>{translate('translation:confirmFrame.isReadyText1')}</span>
+                          </div>
+
+                          <div className='min-w-max'>
+                            <span>{translate('translation:confirmFrame.isReadyText2')}</span>
+                          </div>
+                        </div>
+
+                        <div className='h-[102px] w-[121px]'>
+                          <DisplayImage src={store.pathFolderAssets + store.resources.icons[20]?.relPath} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/*  */}
-
-          <div className='flex flex-col items-center justify-center'>
+          <div
+            onTouchStart={(event) => handleOnTouchStartChooseAgain(event)}
+            onMouseDown={(event) => handleOnTouchStartChooseAgain(event)}
+            className='flex flex-col items-center justify-center'
+          >
             <div className='flex items-center justify-center gap-x-7'>
-              <div className='h-[108px] w-[140px] translate-y-2'>
+              <div className='h-[109px] w-[140px]'>
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[2]?.relPath} />
               </div>
             </div>
@@ -78,30 +165,46 @@ export default function ConfirmFrame() {
             <div className='flex -translate-y-7 flex-col items-center justify-center gap-y-2'>
               <div className='relative h-[136px] w-[547px]'>
                 <div className='h-full w-full'>
-                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[19]?.relPath} />
+                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[17]?.relPath} />
                 </div>
 
-                <div className='text-custom-style-1 absolute inset-0 flex min-w-max items-center justify-center text-4xl'>
+                <div className='absolute inset-0 flex min-w-max items-center justify-center text-4xl text-custom-style-1'>
                   <span>{translate('translation:confirmFrame.chooseAgain')}</span>
                 </div>
               </div>
 
               <div className='h-[48px] w-[64px]'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[20]?.relPath} />
+                <DisplayImage src={store.pathFolderAssets + store.resources.icons[18]?.relPath} />
               </div>
 
-              <div className='relative h-[450px] w-[720px]'>
-                <div className='h-full w-full'>
-                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[18]?.relPath} />
-                </div>
+              <div className='relative h-[432px] w-[704px]'>
+                <div className='absolute top-3 h-full w-full rounded-[50px] bg-custom-style-3-1 opacity-50'></div>
 
-                <div className='absolute inset-0'>
-                  <div className='flex h-full w-full items-center justify-center'>
-                    <div className='h-[242px] w-[96px]'>
-                      <DisplayImage src={store.pathFolderAssets + store.resources.icons[21]?.relPath} />
+                <div className='absolute h-full w-full rounded-[50px] border-[20px] border-custom-style-4-1 bg-custom-style-1 p-3'>
+                  <div className='h-full w-full rounded-2xl border-[6px] border-dashed border-custom-style-4-1 p-8'>
+                    <div className='flex h-full w-full items-center justify-center'>
+                      <div className='flex h-full w-1/2 items-center justify-center'>
+                        <div className={`h-[292px] w-[100px]`}>
+                          <DisplayImage src={store.pathFolderAssets + store.resources.icons[19]?.relPath} />
+                        </div>
+                      </div>
+
+                      <div className='flex grow flex-col items-center justify-center gap-y-10'>
+                        <div className='text-center font-rokkitt text-[26px] tracking-wider'>
+                          <div className='min-w-max'>
+                            <span>{translate('translation:confirmFrame.isChooseAgainText1')}</span>
+                          </div>
+
+                          <div className='min-w-max'>
+                            <span>{translate('translation:confirmFrame.isChooseAgainText2')}</span>
+                          </div>
+                        </div>
+
+                        <div className='h-[102px] w-[121px]'>
+                          <DisplayImage src={store.pathFolderAssets + store.resources.icons[21]?.relPath} />
+                        </div>
+                      </div>
                     </div>
-
-                    <div className='grow'></div>
                   </div>
                 </div>
               </div>

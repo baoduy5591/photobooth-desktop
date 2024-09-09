@@ -44,7 +44,10 @@ export const INIT_STORE: StoreType = {
     }
   },
   isLoading: false,
-  pathFolderAssets: ''
+  pathFolderAssets: '',
+  orderInfo: {
+    frame: ''
+  }
 }
 
 export const INIT_THEME: ThemeType = {

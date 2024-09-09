@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { CONST_ERROR, CONST_PICTURE_TIME } from '../libs/constants';
 
 export default function EnterCode() {
-  const { store } = useStore();
+  const { store, setStore } = useStore();
   const { t: translate } = useTranslation();
 
   const navigate = useNavigate();
@@ -40,9 +40,10 @@ export default function EnterCode() {
     navigate('/home');
   };
 
-  const handleOnTouchStartSubmit = (value: string) => {
-    const result = value === '1111';
-    if (result) {
+  const handleOnTouchStartSubmit = async (value: string) => {
+    const data = await window.api.getOrderInfoById(value);
+    if (value === '2222') {
+      setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, ...data } }));
       setValues(CONST_PICTURE_TIME);
       setTimeout(() => {
         navigate('/confirm-frame');

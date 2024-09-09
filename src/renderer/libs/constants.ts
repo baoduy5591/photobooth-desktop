@@ -12,3 +12,9 @@ export const CONST_CONFIG_FONTS: { en: string, ja: string; vi: string } = {
 
 export const CONST_ERROR = '#ERROR#';
 export const CONST_PICTURE_TIME = 'PICTURE TIME';
+
+export const CONST_MODE_NORMAL = 'normal';
+export const CONST_MODE_REGULAR = 'regular';
+export const CONST_MODE_WIDE = 'wide';
+
+export const CONST_TYPE_FRAMES_FOR_DOUBLE: string[] = ['typeC', 'typeD', 'typeE', 'typeF'];

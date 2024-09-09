@@ -48,14 +48,14 @@ export const InputStyle1 = React.memo(
             readOnly
             className={`border-custom-style-2-1 pointer-events-none h-full w-full select-none rounded-s-full border-4 border-r-0 px-6 text-end font-moreSugar text-6xl tracking-wide outline-none ${value === CONST_PICTURE_TIME ? 'text-custom-style-5-3' : 'text-custom-style-2-1'}`}
           />
-          <div className='border-custom-style-2-1 bg-custom-style-2-1 flex h-full w-40 items-center justify-center rounded-r-full border-4'>
-            <div
-              onTouchStart={(event) => _handleOnTouchStartSubmit(event)}
-              onTouchEnd={(event) => handleOnTouchEnd(event)}
-              onMouseDown={(event) => _handleOnTouchStartSubmit(event)}
-              onMouseUp={(event) => handleOnTouchEnd(event)}
-              className={`h-[61px] w-[73px] ${isPressed ? 'scale-75' : ''}`}
-            >
+          <div
+            onTouchStart={(event) => _handleOnTouchStartSubmit(event)}
+            onTouchEnd={(event) => handleOnTouchEnd(event)}
+            onMouseDown={(event) => _handleOnTouchStartSubmit(event)}
+            onMouseUp={(event) => handleOnTouchEnd(event)}
+            className='border-custom-style-2-1 bg-custom-style-2-1 flex h-full w-40 items-center justify-center rounded-r-full border-4'
+          >
+            <div className={`h-[61px] w-[73px] ${isPressed ? 'scale-75' : ''}`}>
               {value === CONST_ERROR ? <DisplayImage src={iconFail} /> : <DisplayImage src={iconCamera} />}
             </div>
           </div>

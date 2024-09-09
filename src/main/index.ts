@@ -46,9 +46,9 @@ ipcMain.handle('get-system-configs', async() => {
   };
 });
 
-ipcMain.handle('get-user-configs', async() => {
+ipcMain.handle('get-order-info-by-id', async(event, value) => {
   return {
-    frame: ''
+    frame: 'frames/regular/typeF/normal/00000.png'
   }
 })
 

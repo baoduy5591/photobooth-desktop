@@ -19,6 +19,10 @@
 
   "confirmFrame": {
     "confirm": "This is your frame",
-    "chooseAgain": "Choose again"
+    "chooseAgain": "Choose again",
+    "isReadyText1": "Touch here to start",
+    "isReadyText2": "if you're ready",
+    "isChooseAgainText1": "Touch here if you want",
+    "isChooseAgainText2": "to choose frame again"
   }
 }

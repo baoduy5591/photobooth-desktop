@@ -4,6 +4,7 @@ const WINDOW_API = {
   getResources: () => ipcRenderer.invoke('get-resources'),
   getSystemConfigs: () => ipcRenderer.invoke('get-system-configs'),
   getPathFolderAssets: () => ipcRenderer.invoke('get-path-folder-assets'),
+  getOrderInfoById: (value: string) => ipcRenderer.invoke('get-order-info-by-id', value),
 }
 
 contextBridge.exposeInMainWorld('api', WINDOW_API);

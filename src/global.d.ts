@@ -14,6 +14,7 @@ interface Window {
     getSystemConfigs: () => Promise;
     getResolution: () => Promise;
     getPathFolderAssets: () => Promise;
+    getOrderInfoById: (value) => Promise;
   }
 }
 
@@ -77,9 +78,14 @@ interface SystemConfigsType {
   videoIntro: string;
 }
 
+interface OrderInfoType {
+  frame: string;
+}
+
 interface StoreType {
   systemConfigs: SystemConfigsType;
-  resources: ResourcesType; 
-  pathFolderAssets: string;
+  resources: ResourcesType;
   isLoading: boolean
+  pathFolderAssets: string;
+  orderInfo: OrderInfoType
 }
