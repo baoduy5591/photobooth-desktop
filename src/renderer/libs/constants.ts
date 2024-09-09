@@ -18,3 +18,6 @@ export const CONST_MODE_REGULAR = 'regular';
 export const CONST_MODE_WIDE = 'wide';
 
 export const CONST_TYPE_FRAMES_FOR_DOUBLE: string[] = ['typeC', 'typeD', 'typeE', 'typeF'];
+
+export const CONST_COUNTDOWN_METHOD = 'countdown';
+export const CONST_REMOTE_METHOD = 'remote';

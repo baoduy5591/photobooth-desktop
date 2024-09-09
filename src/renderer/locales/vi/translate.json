@@ -24,5 +24,15 @@
     "isReadyText2": "nếu bạn đã sẵn sàng",
     "isChooseAgainText1": "Chạm vào đây nếu bạn muốn",
     "isChooseAgainText2": "chọn lại frame lần nữa"
+  },
+
+  "shootingMethod": {
+    "countdownTitle": "Countdown",
+    "countdownText1": "A photo is taken automatically",
+    "countdownText2": "every 20 seconds!",
+    "remoteTitle": "Remote Self Shot",
+    "remoteText1": "Click the Remote control",
+    "remoteText2": "the moment you want!",
+    "shootingMethodTitle": "Shooting Method"
   }
 }

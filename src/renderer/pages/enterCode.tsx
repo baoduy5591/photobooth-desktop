@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
-import { CountDown } from '../components/countDown';
+import { Countdown } from '../components/countdown';
 import { DisplayImage } from '../components/displayImage';
 import { InputStyle1 } from '../components/input';
 import { useState } from 'react';
@@ -71,7 +71,7 @@ export default function EnterCode() {
             <DisplayImage src={store.pathFolderAssets + store.resources.icons[11]?.relPath} />
           </div>
 
-          <CountDown
+          <Countdown
             url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
             time={90}
             routeGoToBack='/home'
@@ -80,7 +80,8 @@ export default function EnterCode() {
 
         <div className='relative mt-24 h-[136px] w-[547px]'>
           <DisplayImage src={store.pathFolderAssets + store.resources.icons[9]?.relPath} />
-          <div className='text-custom-style-1 absolute left-1/2 top-1/2 min-w-max -translate-x-1/2 -translate-y-1/2 gap-x-10 text-6xl tracking-wider'>
+
+          <div className='absolute left-1/2 top-1/2 min-w-max -translate-x-1/2 -translate-y-1/2 gap-x-10 text-6xl tracking-wider text-custom-style-1'>
             {values === CONST_PICTURE_TIME ? (
               <span>{translate('translation:enterCode.welcome')}</span>
             ) : values === CONST_ERROR ? (

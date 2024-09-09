@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useStore } from './context/store';
 import EnterCode from './pages/enterCode';
 import ConfirmFrame from './pages/confirmFrame';
+import ShootingMethod from './pages/shootingMethod';
 
 export default function App() {
   const { setStore } = useStore();
@@ -33,6 +34,7 @@ export default function App() {
         <Route path='/home' element={<Home />} />
         <Route path='/enter-code' element={<EnterCode />} />
         <Route path='/confirm-frame' element={<ConfirmFrame />} />
+        <Route path='/shooting-method' element={<ShootingMethod />} />
       </Routes>
     </HashRouter>
   );

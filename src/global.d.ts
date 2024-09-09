@@ -87,5 +87,6 @@ interface StoreType {
   resources: ResourcesType;
   isLoading: boolean
   pathFolderAssets: string;
-  orderInfo: OrderInfoType
+  orderInfo: OrderInfoType;
+  shootingMethod: string;
 }

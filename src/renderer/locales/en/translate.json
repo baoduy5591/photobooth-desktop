@@ -24,5 +24,15 @@
     "isReadyText2": "if you're ready",
     "isChooseAgainText1": "Touch here if you want",
     "isChooseAgainText2": "to choose frame again"
+  },
+
+  "shootingMethod": {
+    "countdownTitle": "Countdown",
+    "countdownText1": "A photo is taken automatically",
+    "countdownText2": "every 20 seconds!",
+    "remoteTitle": "Remote Self Shot",
+    "remoteText1": "Click the Remote control",
+    "remoteText2": "the moment you want!",
+    "shootingMethodTitle": "Shooting Method"
   }
 }

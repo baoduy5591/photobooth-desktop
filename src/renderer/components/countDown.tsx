@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DisplayImage } from './displayImage';
 
-interface CountDownProps {
+interface CountdownProps {
   url: string;
   time: number;
   routeGoToBack: string;
 }
 
-export const CountDown = React.memo(
-  function CountDown({ url, time, routeGoToBack }: CountDownProps) {
+export const Countdown = React.memo(
+  function Countdown({ url, time, routeGoToBack }: CountdownProps) {
     const [timeLeft, setTimeLeft] = useState<number>(time);
 
     const navigate = useNavigate();
@@ -34,7 +34,7 @@ export const CountDown = React.memo(
       <div className='relative h-[85px] w-[160px]'>
         <DisplayImage src={url} />
 
-        <div className='text-custom-style-3-1 absolute left-1/2 top-[28px] flex -translate-x-1/2 items-center justify-center font-rokkitt text-5xl'>
+        <div className='absolute left-1/2 top-[28px] flex -translate-x-1/2 items-center justify-center font-rokkitt text-5xl text-custom-style-3-1'>
           <div className='mr-1 min-w-14 text-end'>0{minute}</div>
           <div>:</div>
           <div className='ml-1 min-w-14'>{second < 10 ? `0${second}` : second}</div>

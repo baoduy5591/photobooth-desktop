@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { BackgroundImage } from '../components/backgroundImage';
-import { CountDown } from '../components/countDown';
+import { Countdown } from '../components/countdown';
 import { DisplayImage } from '../components/displayImage';
 import { useStore } from '../context/store';
 import { CONST_MODE_REGULAR, CONST_TYPE_FRAMES_FOR_DOUBLE } from '../libs/constants';
@@ -63,9 +63,9 @@ export default function ConfirmFrame() {
         <DisplayImage src={store.pathFolderAssets + store.resources.icons[8]?.relPath} />
       </div>
 
-      <div className='absolute inset-0 flex flex-col items-center p-40'>
+      <div className='absolute inset-0 p-40'>
         <div className='absolute right-40 top-28'>
-          <CountDown
+          <Countdown
             url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
             time={90}
             routeGoToBack='/enter-code'
@@ -78,17 +78,17 @@ export default function ConfirmFrame() {
             onMouseDown={(event) => handleOnTouchStartReady(event)}
             className='flex flex-col items-center justify-center'
           >
-            <div className='flex items-center justify-center gap-x-7'>
-              <div className='h-[109px] w-[140px] translate-x-40 rotate-12'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[4]?.relPath} />
+            <div className='flex items-center justify-center'>
+              <div className='z-10 h-[109px] w-[140px] translate-x-3 -rotate-12'>
+                <DisplayImage src={store.pathFolderAssets + store.resources.icons[3]?.relPath} />
               </div>
 
-              <div className='h-[109px] w-[140px] -translate-x-32 -rotate-[8deg]'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[3]?.relPath} />
+              <div className='h-[109px] w-[140px] -translate-x-3'>
+                <DisplayImage src={store.pathFolderAssets + store.resources.icons[4]?.relPath} />
               </div>
             </div>
 
-            <div className='flex -translate-y-7 flex-col items-center justify-center gap-y-2'>
+            <div className='z-20 flex -translate-y-7 flex-col items-center justify-center gap-y-2'>
               <div className='relative h-[136px] w-[547px]'>
                 <div className='h-full w-full'>
                   <DisplayImage src={store.pathFolderAssets + store.resources.icons[9]?.relPath} />
@@ -99,8 +99,14 @@ export default function ConfirmFrame() {
                 </div>
               </div>
 
-              <div className='h-[48px] w-[64px]'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[1]?.relPath} />
+              <div className='relative h-[48px] w-[64px]'>
+                <div className='absolute right-1.5 top-0 h-full w-[61px] rotate-180'>
+                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[29]?.relPath} />
+                </div>
+
+                <div className='absolute h-full w-full'>
+                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[1]?.relPath} />
+                </div>
               </div>
 
               <div className='relative h-[432px] w-[704px]'>
@@ -173,8 +179,14 @@ export default function ConfirmFrame() {
                 </div>
               </div>
 
-              <div className='h-[48px] w-[64px]'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[18]?.relPath} />
+              <div className='relative h-[48px] w-[64px]'>
+                <div className='absolute right-1.5 top-0 h-full w-[61px] rotate-180'>
+                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[29]?.relPath} />
+                </div>
+
+                <div className='absolute h-full w-full'>
+                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[18]?.relPath} />
+                </div>
               </div>
 
               <div className='relative h-[432px] w-[704px]'>

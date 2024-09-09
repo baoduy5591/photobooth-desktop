@@ -47,7 +47,8 @@ export const INIT_STORE: StoreType = {
   pathFolderAssets: '',
   orderInfo: {
     frame: ''
-  }
+  },
+  shootingMethod: ''
 }
 
 export const INIT_THEME: ThemeType = {
