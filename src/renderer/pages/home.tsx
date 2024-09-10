@@ -50,10 +50,10 @@ export default function Home() {
       <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[0]?.relPath} />
 
       {isOpenModal && (
-        <div className='border-custom-style-2-1 absolute left-1/2 top-1/2 z-10 mt-3 h-[540px] w-[960px] -translate-x-1/2 -translate-y-1/2 rounded-md border-4 border-dashed bg-white p-2'>
+        <div className='absolute left-1/2 top-1/2 z-10 mt-3 h-[540px] w-[960px] -translate-x-1/2 -translate-y-1/2 rounded-md border-4 border-dashed border-custom-style-2-1 bg-custom-style-1 p-1'>
           <DisplayVideo src={store.pathFolderAssets + store.systemConfigs.videoIntro} />
 
-          <div className='text-custom-style-3-1 absolute -bottom-20 left-0 right-0 text-center font-rokkitt text-[27px] tracking-wider'>
+          <div className='absolute -bottom-20 left-0 right-0 text-center font-rokkitt text-[27px] tracking-wider text-custom-style-3-1'>
             <span>{translate('translation:home.closeVideo')}</span>
           </div>
 
@@ -77,7 +77,7 @@ export default function Home() {
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[0]?.relPath} />
               </div>
 
-              <div className='text-custom-style-1 absolute left-1/2 top-1/2 mt-2 min-w-max -translate-x-1/2 -translate-y-1/2 font-moreSugar text-[46px]'>
+              <div className='absolute left-1/2 top-1/2 mt-2 min-w-max -translate-x-1/2 -translate-y-1/2 font-moreSugar text-[46px] text-custom-style-1'>
                 {translate('translation:home.companyName')}
               </div>
             </div>
@@ -91,7 +91,7 @@ export default function Home() {
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[6]?.relPath} />
               </div>
 
-              <div className='text-custom-style-3-1 text-[27px]'>
+              <div className='text-[27px] text-custom-style-3-1'>
                 <span>{translate('translation:home.noteTouchAbove')}</span>
               </div>
             </div>
