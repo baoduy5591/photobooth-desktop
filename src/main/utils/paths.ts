@@ -1,5 +1,6 @@
 import { app } from "electron";
 import path from 'path';
+import fs from 'fs';
 
 class Paths {
   static getFolderAppData() {
@@ -10,6 +11,20 @@ class Paths {
       return app.getPath('appData');
     } else {
       return '';
+    }
+  }
+
+  static getFolderUserPhotosForRenderer() {
+    const isPackaged = app.isPackaged;
+    if (isPackaged) {
+      const userPhotos = path.join(this.getFolderAppData(), 'userPhotos');
+      if (!fs.existsSync(userPhotos)) {
+        fs.mkdirSync(userPhotos);
+      }
+      
+      return userPhotos;
+    } else {
+      return 'userPhotos/';
     }
   }
 

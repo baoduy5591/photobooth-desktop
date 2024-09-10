@@ -14,6 +14,7 @@ interface Window {
     getSystemConfigs: () => Promise;
     getResolution: () => Promise;
     getPathFolderAssets: () => Promise;
+    getPathFolderUserPhotos: () => Promise;
     getOrderInfoById: (value) => Promise;
     getMachineConfigs: () => Promise;
   }
@@ -159,6 +160,7 @@ interface StoreType {
   resources: ResourcesType;
   isLoading: boolean
   pathFolderAssets: string;
+  pathFolderUserPhotos: string;
   orderInfo: OrderInfoType;
   shootingMethod: string;
   machineConfigs: MachineConfigsType;

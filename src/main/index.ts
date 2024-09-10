@@ -67,6 +67,12 @@ ipcMain.handle('get-path-folder-assets', () => {
   return pathFolderAssets;
 } )
 
+// get path folder userPhotos
+ipcMain.handle('get-path-folder-userPhotos', () => {
+  const pathFolderUserPhotos = Paths.getFolderUserPhotosForRenderer();
+  return pathFolderUserPhotos;
+} )
+
 app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {

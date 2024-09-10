@@ -14,6 +14,11 @@ const copyWebpackPlugin = env === 'development' ? new CopyPlugin({
     {
       from: path.join(__dirname, 'src', 'renderer', 'assets'),
       to: 'assets/'
+    },
+    {
+      from: path.join(__dirname, 'src', 'renderer', 'userPhotos'),
+      force: true,
+      to: 'userPhotos/'
     }
   ]
 }) : null;

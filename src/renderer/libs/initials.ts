@@ -108,6 +108,7 @@ export const INIT_STORE: StoreType = {
   },
   isLoading: false,
   pathFolderAssets: '',
+  pathFolderUserPhotos: '',
   orderInfo: {
     modeFrame: '',
     typeFrame: '',

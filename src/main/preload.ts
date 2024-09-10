@@ -4,6 +4,7 @@ const WINDOW_API = {
   getResources: () => ipcRenderer.invoke('get-resources'),
   getSystemConfigs: () => ipcRenderer.invoke('get-system-configs'),
   getPathFolderAssets: () => ipcRenderer.invoke('get-path-folder-assets'),
+  getPathFolderUserPhotos: () => ipcRenderer.invoke('get-path-folder-userPhotos'),
   getOrderInfoById: (value: string) => ipcRenderer.invoke('get-order-info-by-id', value),
   getMachineConfigs: () => ipcRenderer.invoke('get-machine-configs'),
 }
