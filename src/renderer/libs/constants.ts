@@ -24,3 +24,10 @@ export const CONST_REMOTE_METHOD = 'remote';
 
 export const CONST_WINDOW_OS = 'win32';
 export const CONST_DARWIN_OS = 'darwin';
+
+export const CONST_MOCK_DATA_FRAME = {
+  modeFrame: 'regular',
+  typeFrame: 'typeB',
+  quantityImages: 2,
+  frame: 'frames/regular/typeB/normal/00000.png',
+};

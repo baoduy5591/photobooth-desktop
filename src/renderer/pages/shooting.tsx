@@ -4,15 +4,17 @@ import { Countdown } from '../components/countdown';
 import { DisplayImage } from '../components/displayImage';
 import { useStore } from '../context/store';
 import { useNavigate } from 'react-router-dom';
-import { checkIsTouch } from '../libs/common';
-import { useRef } from 'react';
-import { CONST_COUNTDOWN_METHOD, CONST_REMOTE_METHOD } from '../libs/constants';
+import { useEffect } from 'react';
 
 export default function Shooting() {
   const { store, setStore } = useStore();
   const { t: translate } = useTranslation();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate('/select-photos');
+  }, []);
 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
@@ -51,7 +53,7 @@ export default function Shooting() {
           </div>
 
           <div className='h-full grow'>
-            <div className='bg-custom-style-6-1 relative flex h-full w-full flex-col items-center overflow-hidden rounded-[40px]'>
+            <div className='relative flex h-full w-full flex-col items-center overflow-hidden rounded-[40px] bg-custom-style-6-1'>
               <div className='mb-8 mt-5 h-[69.6px] w-[69.6px]'>
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[34]?.relPath} />
               </div>

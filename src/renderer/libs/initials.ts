@@ -48,6 +48,7 @@ export const INIT_STORE: StoreType = {
   orderInfo: {
     modeFrame: '',
     typeFrame: '',
+    quantityImages: null,
     frame: '',
     
   },

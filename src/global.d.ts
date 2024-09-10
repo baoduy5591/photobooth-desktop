@@ -82,6 +82,7 @@ interface SystemConfigsType {
 interface OrderInfoType {
   modeFrame: string;
   typeFrame: string;
+  quantityImages: number;
   frame: string;
 }
 
