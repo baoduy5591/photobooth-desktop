@@ -27,10 +27,19 @@ export const CONST_CHILD_FOLDER_OF_FRAMES_TYPE: string[] = [
   'season',
   'special'
 ];
+
+export const CONST_REL_PATH_FRAMES_CUTTING_TYPE_A = 'frames/cutting/typeA';
+export const CONST_REL_PATH_FRAMES_CUTTING_TYPE_B = 'frames/cutting/typeB';
+export const CONST_REL_PATH_FRAMES_CUTTING_TYPE_C = 'frames/cutting/typeC';
+
 export const CONST_REL_PATH_FRAMES_REGULAR_TYPE_A = 'frames/regular/typeA';
 export const CONST_REL_PATH_FRAMES_REGULAR_TYPE_B = 'frames/regular/typeB';
 export const CONST_REL_PATH_FRAMES_REGULAR_TYPE_C = 'frames/regular/typeC';
 export const CONST_REL_PATH_FRAMES_REGULAR_TYPE_D = 'frames/regular/typeD';
 export const CONST_REL_PATH_FRAMES_REGULAR_TYPE_E = 'frames/regular/typeE';
 export const CONST_REL_PATH_FRAMES_REGULAR_TYPE_F = 'frames/regular/typeF';
+
+export const CONST_REL_PATH_FRAMES_WIDE_TYPE_A = 'frames/wide/typeA';
+export const CONST_REL_PATH_FRAMES_WIDE_TYPE_B = 'frames/wide/typeB';
+
 

@@ -9,6 +9,9 @@ import {
   CONST_CHILD_FOLDER_OF_VIDEOS, 
   CONST_REL_PATH_AUDIOS, 
   CONST_REL_PATH_BACKGROUND_IMAGES, 
+  CONST_REL_PATH_FRAMES_CUTTING_TYPE_A, 
+  CONST_REL_PATH_FRAMES_CUTTING_TYPE_B, 
+  CONST_REL_PATH_FRAMES_CUTTING_TYPE_C, 
   CONST_REL_PATH_FRAMES_REGULAR_TYPE_A, 
   CONST_REL_PATH_FRAMES_REGULAR_TYPE_B, 
   CONST_REL_PATH_FRAMES_REGULAR_TYPE_C, 
@@ -151,12 +154,18 @@ class Resources {
       this.getVideos(),
       this.getIcons(),
       this.getAudios(),
+      this.getFramesByType(CONST_REL_PATH_FRAMES_CUTTING_TYPE_A, CONST_CHILD_FOLDER_OF_FRAMES_TYPE),
+      this.getFramesByType(CONST_REL_PATH_FRAMES_CUTTING_TYPE_B, CONST_CHILD_FOLDER_OF_FRAMES_TYPE),
+      this.getFramesByType(CONST_REL_PATH_FRAMES_CUTTING_TYPE_C, CONST_CHILD_FOLDER_OF_FRAMES_TYPE),
       this.getFramesByType(CONST_REL_PATH_FRAMES_REGULAR_TYPE_A, CONST_CHILD_FOLDER_OF_FRAMES_TYPE),
       this.getFramesByType(CONST_REL_PATH_FRAMES_REGULAR_TYPE_B, CONST_CHILD_FOLDER_OF_FRAMES_TYPE),
       this.getFramesByType(CONST_REL_PATH_FRAMES_REGULAR_TYPE_C, CONST_CHILD_FOLDER_OF_FRAMES_TYPE),
       this.getFramesByType(CONST_REL_PATH_FRAMES_REGULAR_TYPE_D, CONST_CHILD_FOLDER_OF_FRAMES_TYPE),
       this.getFramesByType(CONST_REL_PATH_FRAMES_REGULAR_TYPE_E, CONST_CHILD_FOLDER_OF_FRAMES_TYPE),
       this.getFramesByType(CONST_REL_PATH_FRAMES_REGULAR_TYPE_F, CONST_CHILD_FOLDER_OF_FRAMES_TYPE),
+      this.getFramesByType(CONST_REL_PATH_FRAMES_CUTTING_TYPE_A, CONST_CHILD_FOLDER_OF_FRAMES_TYPE),
+      this.getFramesByType(CONST_REL_PATH_FRAMES_CUTTING_TYPE_B, CONST_CHILD_FOLDER_OF_FRAMES_TYPE),
+      this.getFramesByType(CONST_REL_PATH_FRAMES_CUTTING_TYPE_C, CONST_CHILD_FOLDER_OF_FRAMES_TYPE),
     ]);
     if (results.some(rs => !rs)) return false;
 
@@ -166,12 +175,17 @@ class Resources {
       videos,
       icons,
       audios,
+      framesCuttingTypeA,
+      framesCuttingTypeB,
+      framesCuttingTypeC,
       framesRegularTypeA,
       framesRegularTypeB,
       framesRegularTypeC,
       framesRegularTypeD,
       framesRegularTypeE,
       framesRegularTypeF,
+      framesWideTypeA,
+      framesWideTypeB,
     ] = results;
     
     return {
@@ -188,6 +202,15 @@ class Resources {
           typeD: framesRegularTypeD,
           typeE: framesRegularTypeE,
           typeF: framesRegularTypeF,
+        },
+        cutting: {
+          typeA: framesCuttingTypeA,
+          typeB: framesCuttingTypeB,
+          typeC: framesCuttingTypeC,
+        },
+        wide: {
+          typeA: framesWideTypeA,
+          typeB: framesWideTypeB,
         }
       }
     }

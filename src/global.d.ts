@@ -36,6 +36,7 @@ interface PathResourceType {
   name: string;
   relPath: string;
   isNew: boolean;
+  thumb: string;
 }
 
 interface StickerType {
@@ -62,6 +63,69 @@ interface ResourcesType {
   videos: VideosType;
   icons: PathResourceType[];
   audios: AudiosType;
+  frames: {
+    cutting: {
+      typeA: {
+        normal: PathResourceType[];
+        season: PathResourceType[];
+        special: PathResourceType[];
+      },
+      typeB: {
+        normal: PathResourceType[];
+        season: PathResourceType[];
+        special: PathResourceType[];
+      },
+      typeC: {
+        normal: PathResourceType[];
+        season: PathResourceType[];
+        special: PathResourceType[];
+      },
+    },
+    regular: {
+      typeA: {
+        normal: PathResourceType[];
+        season: PathResourceType[];
+        special: PathResourceType[];
+      },
+      typeB: {
+        normal: PathResourceType[];
+        season: PathResourceType[];
+        special: PathResourceType[];
+      },
+      typeC: {
+        normal: PathResourceType[];
+        season: PathResourceType[];
+        special: PathResourceType[];
+      },
+      typeD: {
+        normal: PathResourceType[];
+        season: PathResourceType[];
+        special: PathResourceType[];
+      },
+      typeE: {
+        normal: PathResourceType[];
+        season: PathResourceType[];
+        special: PathResourceType[];
+      },
+      typeF: {
+        normal: PathResourceType[];
+        season: PathResourceType[];
+        special: PathResourceType[];
+      }
+    },
+    wide: {
+      typeA: {
+        normal: PathResourceType[];
+        season: PathResourceType[];
+        special: PathResourceType[];
+      },
+      typeB: {
+        normal: PathResourceType[];
+        season: PathResourceType[];
+        special: PathResourceType[];
+      }
+    }
+  }
 }
 
 interface HardwareInfoType {

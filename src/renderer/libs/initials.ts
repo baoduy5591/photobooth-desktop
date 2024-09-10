@@ -41,6 +41,69 @@ export const INIT_STORE: StoreType = {
     audios: {
       backgrounds: [],
       touch: []
+    },
+    frames: {
+      cutting: {
+        typeA: {
+          normal: [],
+          season: [],
+          special: [],
+        },
+        typeB: {
+          normal: [],
+          season: [],
+          special: [],
+        },
+        typeC: {
+          normal: [],
+          season: [],
+          special: [],
+        },
+      },
+      regular: {
+        typeA: {
+          normal: [],
+          season: [],
+          special: [],
+        },
+        typeB: {
+          normal: [],
+          season: [],
+          special: [],
+        },
+        typeC: {
+          normal: [],
+          season: [],
+          special: [],
+        },
+        typeD: {
+          normal: [],
+          season: [],
+          special: [],
+        },
+        typeE: {
+          normal: [],
+          season: [],
+          special: [],
+        },
+        typeF: {
+          normal: [],
+          season: [],
+          special: [],
+        }
+      },
+      wide: {
+        typeA: {
+          normal: [],
+          season: [],
+          special: [],
+        },
+        typeB: {
+          normal: [],
+          season: [],
+          special: [],
+        }
+      }
     }
   },
   isLoading: false,
