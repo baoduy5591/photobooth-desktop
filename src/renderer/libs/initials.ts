@@ -46,7 +46,10 @@ export const INIT_STORE: StoreType = {
   isLoading: false,
   pathFolderAssets: '',
   orderInfo: {
-    frame: ''
+    modeFrame: '',
+    typeFrame: '',
+    frame: '',
+    
   },
   shootingMethod: '',
   machineConfigs: {

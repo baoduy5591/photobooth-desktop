@@ -55,6 +55,8 @@ ipcMain.handle('get-system-configs', async () => {
 
 ipcMain.handle('get-order-info-by-id', async (event, value) => {
   return {
+    modeFrame: 'regular',
+    typeFrame: 'typeF',
     frame: 'frames/regular/typeF/normal/00000.png'
   }
 })

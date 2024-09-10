@@ -14,8 +14,8 @@ export default function ConfirmFrame() {
 
   const navigate = useNavigate();
 
-  const checkIsDoubleFrames = (frame: string) => {
-    const [, modeFrame, typeFrame] = frame.split('/');
+  const checkIsDoubleFrames = () => {
+    const { modeFrame, typeFrame } = store.orderInfo;
     let isDouble = false;
     if (modeFrame === CONST_MODE_REGULAR && CONST_TYPE_FRAMES_FOR_DOUBLE.includes(typeFrame)) {
       isDouble = true;
@@ -25,7 +25,7 @@ export default function ConfirmFrame() {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isDouble, setIsDouble] = useState<boolean>(checkIsDoubleFrames('frames/regular/typeF/normal/00000.png'));
+  const [isDouble, setIsDouble] = useState<boolean>(checkIsDoubleFrames());
 
   const isTouchReady = useRef<boolean>(false);
   const isTouchChooseAgain = useRef<boolean>(false);

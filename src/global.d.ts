@@ -80,6 +80,8 @@ interface SystemConfigsType {
 }
 
 interface OrderInfoType {
+  modeFrame: string;
+  typeFrame: string;
   frame: string;
 }
 
