@@ -33,7 +33,7 @@ class Resources {
 
   async getRelPathFiles(relPath: string, extensions = ['.jpg', '.png', '.svg']) {
     try {
-      const _path = path.posix.join(this.pathFolderAssets, relPath);
+      const _path = path.join(this.pathFolderAssets, relPath);
       const files = fs.readdirSync(_path);
       const filesFiltered = files.filter(file => {
         if (file.length !== 9 && file.length !== 15) return false;
@@ -42,7 +42,7 @@ class Resources {
       });
 
       const pathFiles = filesFiltered.map((file: string) => {
-        return path.posix.join(relPath, file);
+        return path.join(relPath, file);
       });
 
       return pathFiles;
@@ -81,7 +81,7 @@ class Resources {
   }
 
   async getStickers() {
-    const listPromiseForGetPath = CONST_CHILD_FOLDER_OF_STICKERS.map(item => this.getRelPathFiles(path.posix.join(CONST_REL_PATH_STICKERS, item)))
+    const listPromiseForGetPath = CONST_CHILD_FOLDER_OF_STICKERS.map(item => this.getRelPathFiles(path.join(CONST_REL_PATH_STICKERS, item)))
     const results = await Promise.all(listPromiseForGetPath);
     if (results.some(rs => !rs)) return false;
 
@@ -104,7 +104,7 @@ class Resources {
   }
 
   async getVideos() {
-    const listPromiseVideos = CONST_CHILD_FOLDER_OF_VIDEOS.map(item => this.getRelPathFiles(path.posix.join(CONST_REL_PATH_VIDEOS, item), ['.mp4']));
+    const listPromiseVideos = CONST_CHILD_FOLDER_OF_VIDEOS.map(item => this.getRelPathFiles(path.join(CONST_REL_PATH_VIDEOS, item), ['.mp4']));
     const resultsVideos = await Promise.all(listPromiseVideos);
     if (resultsVideos.some(rs => !rs)) return false;
 
@@ -123,7 +123,7 @@ class Resources {
   }
 
   async getAudios() {
-    const listPromiseAudios = CONST_CHILD_FOLDER_OF_AUDIOS.map(item => this.getRelPathFiles(path.posix.join(CONST_REL_PATH_AUDIOS, item), ['.mp3']));
+    const listPromiseAudios = CONST_CHILD_FOLDER_OF_AUDIOS.map(item => this.getRelPathFiles(path.join(CONST_REL_PATH_AUDIOS, item), ['.mp3']));
     const resultsAudios = await Promise.all(listPromiseAudios);
     if (resultsAudios.some(rs => !rs)) return false;
 
@@ -134,7 +134,7 @@ class Resources {
   }
 
   async getFramesByType(relPath: string, childPaths: string[]) {
-    const listPromiseFrames = childPaths.map(item => this.getRelPathFiles(path.posix.join(relPath, item)));
+    const listPromiseFrames = childPaths.map(item => this.getRelPathFiles(path.join(relPath, item)));
     const resultsFrames = await Promise.all(listPromiseFrames);
     if (resultsFrames.some(rs => !rs)) return false;
 

@@ -27,6 +27,13 @@ const createWindow = (): void => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+
+  // get configs machine
+  ipcMain.handle('get-machine-configs', async () => {
+    return {
+      platform: process.platform
+    }
+  })
 };
 
 // ipcMain get resources
@@ -37,7 +44,7 @@ ipcMain.handle('get-resources', async () => {
 });
 
 // get system configs (call api)
-ipcMain.handle('get-system-configs', async() => {
+ipcMain.handle('get-system-configs', async () => {
   return { 
     defaultLanguage: 'en',
     videoIntro: 'videos/introduces/00000.mp4',
@@ -46,7 +53,7 @@ ipcMain.handle('get-system-configs', async() => {
   };
 });
 
-ipcMain.handle('get-order-info-by-id', async(event, value) => {
+ipcMain.handle('get-order-info-by-id', async (event, value) => {
   return {
     frame: 'frames/regular/typeF/normal/00000.png'
   }

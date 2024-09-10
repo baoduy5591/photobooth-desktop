@@ -15,12 +15,14 @@ export default function App() {
     const resources = await window.api.getResources();
     const systemConfigs = await window.api.getSystemConfigs();
     const pathFolderAssets = await window.api.getPathFolderAssets();
+    const machineConfigs = await window.api.getMachineConfigs();
     setStore((store: StoreType) => ({
       ...store,
       systemConfigs: { ...store.systemConfigs, ...systemConfigs },
       resources: { ...store.resources, ...resources },
       pathFolderAssets: pathFolderAssets,
       isLoading: true,
+      machineConfigs: { ...store.machineConfigs, ...machineConfigs },
     }));
   };
 

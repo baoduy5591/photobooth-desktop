@@ -16,16 +16,16 @@ class Paths {
   static getFolderAssets() {
     const isPackaged = app.isPackaged;
     if (isPackaged) {
-      return path.posix.join(process.resourcesPath, 'assets');
+      return path.join(process.resourcesPath, 'assets');
     } else {
-      return path.posix.join(__dirname, '..', 'renderer', 'assets');
+      return path.join(__dirname, '..', 'renderer', 'assets');
     }
   }
 
   static getFolderAssetsForRenderer() {
     const isPackaged = app.isPackaged;
     if (isPackaged) {
-      return path.posix.join(process.resourcesPath, 'assets/');
+      return path.join(process.resourcesPath, 'assets/');
     } else {
       return 'assets/';
     }

@@ -21,3 +21,6 @@ export const CONST_TYPE_FRAMES_FOR_DOUBLE: string[] = ['typeC', 'typeD', 'typeE'
 
 export const CONST_COUNTDOWN_METHOD = 'countdown';
 export const CONST_REMOTE_METHOD = 'remote';
+
+export const CONST_WINDOW_OS = 'win32';
+export const CONST_DARWIN_OS = 'darwin';

@@ -48,7 +48,10 @@ export const INIT_STORE: StoreType = {
   orderInfo: {
     frame: ''
   },
-  shootingMethod: ''
+  shootingMethod: '',
+  machineConfigs: {
+    platform: ''
+  }
 }
 
 export const INIT_THEME: ThemeType = {

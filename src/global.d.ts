@@ -15,6 +15,7 @@ interface Window {
     getResolution: () => Promise;
     getPathFolderAssets: () => Promise;
     getOrderInfoById: (value) => Promise;
+    getMachineConfigs: () => Promise;
   }
 }
 
@@ -82,6 +83,10 @@ interface OrderInfoType {
   frame: string;
 }
 
+interface MachineConfigsType {
+  platform: string;
+}
+
 interface StoreType {
   systemConfigs: SystemConfigsType;
   resources: ResourcesType;
@@ -89,4 +94,5 @@ interface StoreType {
   pathFolderAssets: string;
   orderInfo: OrderInfoType;
   shootingMethod: string;
+  machineConfigs: MachineConfigsType;
 }
