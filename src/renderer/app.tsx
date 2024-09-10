@@ -6,6 +6,7 @@ import { useStore } from './context/store';
 import EnterCode from './pages/enterCode';
 import ConfirmFrame from './pages/confirmFrame';
 import ShootingMethod from './pages/shootingMethod';
+import Shooting from './pages/shooting';
 
 export default function App() {
   const { setStore } = useStore();
@@ -35,6 +36,7 @@ export default function App() {
         <Route path='/enter-code' element={<EnterCode />} />
         <Route path='/confirm-frame' element={<ConfirmFrame />} />
         <Route path='/shooting-method' element={<ShootingMethod />} />
+        <Route path='/shooting' element={<Shooting />} />
       </Routes>
     </HashRouter>
   );
