@@ -3,7 +3,7 @@ import { BackgroundImage } from '../components/backgroundImage';
 import { Countdown } from '../components/countdown';
 import { DisplayImage } from '../components/displayImage';
 import { useStore } from '../context/store';
-import { CONST_MODE_REGULAR, CONST_TYPE_FRAMES_FOR_DOUBLE } from '../libs/constants';
+import { CONST_MOCK_DATA_FRAME, CONST_MODE_REGULAR, CONST_TYPE_FRAMES_FOR_DOUBLE } from '../libs/constants';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { checkIsTouch } from '../libs/common';
@@ -15,7 +15,9 @@ export default function ConfirmFrame() {
   const navigate = useNavigate();
 
   const checkIsDoubleFrames = () => {
-    const { modeFrame, typeFrame } = store.orderInfo;
+    // const { modeFrame, typeFrame } = store.orderInfo;
+    // use mock data frame
+    const { modeFrame, typeFrame } = CONST_MOCK_DATA_FRAME;
     let isDouble = false;
     if (modeFrame === CONST_MODE_REGULAR && CONST_TYPE_FRAMES_FOR_DOUBLE.includes(typeFrame)) {
       isDouble = true;
@@ -119,17 +121,17 @@ export default function ConfirmFrame() {
                         {isDouble ? (
                           <div className='flex h-full w-full flex-col items-center justify-center'>
                             <div className={`h-[146px] w-[219px]`}>
-                              <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} />
+                              <DisplayImage src={store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame} />
                             </div>
 
                             <div className={`h-[146px] w-[219px]`}>
-                              <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} />
+                              <DisplayImage src={store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame} />
                             </div>
                           </div>
                         ) : (
                           <div className='flex items-center justify-center'>
                             <div className={`h-[292px] w-[195px]`}>
-                              <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} />
+                              <DisplayImage src={store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame} />
                             </div>
                           </div>
                         )}
