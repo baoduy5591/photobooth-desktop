@@ -181,10 +181,10 @@ export default function SelectPhotos() {
               </div>
             </div>
 
-            <div className='z-10 h-[730.4px] w-[1041.6px] rounded-xl bg-custom-style-3-1'>
+            <div className='z-10 h-[750.4px] w-[1041.6px] rounded-xl bg-custom-style-3-1'>
               <div className='flex h-full w-full flex-col items-center justify-center'>
                 <div className='my-4 h-[28px] w-[150px] rounded-full bg-custom-style-1'></div>
-                <div className='relative h-full w-full px-10'>
+                <div className='relative h-full w-full px-6'>
                   <div
                     className='flex h-full w-full flex-col items-center justify-between bg-custom-style-1 px-10'
                     onTouchStart={(event) => handleOnTouchStart(event)}
@@ -236,7 +236,7 @@ export default function SelectPhotos() {
                       })}
                     </div>
 
-                    <div className='flex h-[100px] w-full items-center justify-center gap-x-4'>
+                    <div className='flex h-[100px] w-full items-center justify-center gap-x-5'>
                       {[...Array(resizedPhotos.length)]
                         .map((_, i) => i)
                         .map((item, index) => {
@@ -263,7 +263,7 @@ export default function SelectPhotos() {
                   </div>
 
                   <div
-                    className='absolute left-[46px] top-[262px] h-[50px] w-[50px] p-1'
+                    className='absolute left-[30px] top-[264px] h-[50px] w-[50px] p-1'
                     onTouchStart={(event) => handleOnTouchStartPrev(event)}
                     onMouseDown={(event) => handleOnTouchStartPrev(event)}
                   >
@@ -273,7 +273,7 @@ export default function SelectPhotos() {
                   </div>
 
                   <div
-                    className='absolute right-[46px] top-[262px] h-[50px] w-[50px] p-1'
+                    className='absolute right-[30px] top-[264px] h-[50px] w-[50px] p-1'
                     onTouchStart={(event) => handleOnTouchStartNext(event)}
                     onMouseDown={(event) => handleOnTouchStartNext(event)}
                   >
