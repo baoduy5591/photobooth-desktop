@@ -203,7 +203,7 @@ export default function SelectPhotos() {
                               return (
                                 <div
                                   key={index}
-                                  className='w-[255px h-[170px]'
+                                  className='w-[280px h-[186.7px]'
                                   onTouchStart={(event) => handleOnTouchStartTogglePhoto(event, photo)}
                                   onMouseDown={(event) => handleOnTouchStartTogglePhoto(event, photo)}
                                 >
@@ -263,7 +263,7 @@ export default function SelectPhotos() {
                   </div>
 
                   <div
-                    className='absolute left-[30px] top-[264px] h-[50px] w-[50px] p-1'
+                    className='absolute left-[23px] top-[279px] h-[50px] w-[50px] p-1'
                     onTouchStart={(event) => handleOnTouchStartPrev(event)}
                     onMouseDown={(event) => handleOnTouchStartPrev(event)}
                   >
@@ -273,7 +273,7 @@ export default function SelectPhotos() {
                   </div>
 
                   <div
-                    className='absolute right-[30px] top-[264px] h-[50px] w-[50px] p-1'
+                    className='absolute right-[23px] top-[279px] h-[50px] w-[50px] p-1'
                     onTouchStart={(event) => handleOnTouchStartNext(event)}
                     onMouseDown={(event) => handleOnTouchStartNext(event)}
                   >
