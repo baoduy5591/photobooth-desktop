@@ -33,7 +33,8 @@ export default function SelectPhotos() {
 
   const isTouchPrev = useRef<boolean>(false);
   const isTouchNext = useRef<boolean>(false);
-  const isTouchChoosePhoto = useRef<boolean>(false);
+  const isTouchTogglePhoto = useRef<boolean>(false);
+  const isTouchChangeCurrentIndex = useRef<boolean>(false);
 
   const handleOnTouchStartPrev = (event: TouchEventAndMouseEventType) => {
     if (!checkIsTouch(event, isTouchPrev)) return;
@@ -72,8 +73,8 @@ export default function SelectPhotos() {
     }
   };
 
-  const onTouchStartTogglePhoto = (event: TouchEventAndMouseEventType, photo: string) => {
-    if (!checkIsTouch(event, isTouchChoosePhoto)) return;
+  const handleOnTouchStartTogglePhoto = (event: TouchEventAndMouseEventType, photo: string) => {
+    if (!checkIsTouch(event, isTouchTogglePhoto)) return;
 
     if (selectedPhotos.includes(photo)) {
       const newSelectedPhotos = selectedPhotos.filter((_photo) => _photo !== photo);
@@ -85,6 +86,12 @@ export default function SelectPhotos() {
         return;
       }
     }
+  };
+
+  const handleOnTouchChangeCurrentIndex = (event: TouchEventAndMouseEventType, newIndex: number) => {
+    if (!checkIsTouch(event, isTouchChangeCurrentIndex)) return;
+
+    setCurrentIndex(newIndex);
   };
 
   useEffect(() => {
@@ -189,7 +196,7 @@ export default function SelectPhotos() {
                         return (
                           <div
                             key={index}
-                            className={`mt-20 grid h-full min-w-full grid-cols-3 content-start justify-items-center gap-x-6 gap-y-20 transition-transform duration-500`}
+                            className={`mt-20 grid h-full min-w-full grid-cols-3 content-start justify-items-center gap-x-6 gap-y-20 transition-transform duration-300`}
                             style={{ transform: `translate3d(-${currentIndex * 100}%, 0, 0)` }}
                           >
                             {photos?.map((photo, index) => {
@@ -197,8 +204,8 @@ export default function SelectPhotos() {
                                 <div
                                   key={index}
                                   className='w-[255px h-[170px]'
-                                  onTouchStart={(event) => onTouchStartTogglePhoto(event, photo)}
-                                  onMouseDown={(event) => onTouchStartTogglePhoto(event, photo)}
+                                  onTouchStart={(event) => handleOnTouchStartTogglePhoto(event, photo)}
+                                  onMouseDown={(event) => handleOnTouchStartTogglePhoto(event, photo)}
                                 >
                                   {selectedPhotos.includes(photo) ? (
                                     <div className='relative h-full w-full'>
@@ -242,7 +249,12 @@ export default function SelectPhotos() {
                           }
 
                           return (
-                            <div key={index} className='h-[30px] w-[30px]'>
+                            <div
+                              key={index}
+                              className='h-[30px] w-[30px]'
+                              onTouchStart={(event) => handleOnTouchChangeCurrentIndex(event, index)}
+                              onMouseDown={(event) => handleOnTouchChangeCurrentIndex(event, index)}
+                            >
                               <DisplayImage src={store.pathFolderAssets + store.resources.icons[41]?.relPath} />
                             </div>
                           );
