@@ -75,7 +75,7 @@ export default function SelectPhotos() {
   const onTouchStartTogglePhoto = (event: TouchEventAndMouseEventType, photo: string) => {
     if (!checkIsTouch(event, isTouchChoosePhoto)) return;
 
-    let newSelectedPhotos = [];
+    let newSelectedPhotos = selectedPhotos;
     if (selectedPhotos.includes(photo)) {
       newSelectedPhotos = selectedPhotos.filter((_photo) => _photo !== photo);
     } else {
