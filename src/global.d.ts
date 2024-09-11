@@ -17,6 +17,7 @@ interface Window {
     getPathFolderUserPhotos: () => Promise;
     getOrderInfoById: (value) => Promise;
     getMachineConfigs: () => Promise;
+    getUserResizedPhotos: () => Promise;
   }
 }
 

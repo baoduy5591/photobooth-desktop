@@ -14,6 +14,15 @@ class Paths {
     }
   }
 
+  static getFolderUserPhotos() {
+    const isPackaged = app.isPackaged;
+    if (isPackaged) {
+      return path.join(this.getFolderAppData(), 'userPhotos');
+    } else {
+      return path.join(__dirname, '..', 'renderer', 'userPhotos');
+    }
+  }
+
   static getFolderUserPhotosForRenderer() {
     const isPackaged = app.isPackaged;
     if (isPackaged) {

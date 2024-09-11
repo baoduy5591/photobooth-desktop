@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import Resources from './utils/resources';
 import Paths from './utils/paths';
+import UserPhotos from './utils/userPhotos';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -72,6 +73,13 @@ ipcMain.handle('get-path-folder-userPhotos', () => {
   const pathFolderUserPhotos = Paths.getFolderUserPhotosForRenderer();
   return pathFolderUserPhotos;
 } )
+
+//
+ipcMain.handle('get-user-resized-photos', () => {
+  const userPhotos = new UserPhotos();
+  const resizedPhotos = userPhotos.getPhotosResized();
+  return resizedPhotos;
+})
 
 app.on('ready', createWindow);
 

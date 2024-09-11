@@ -7,6 +7,7 @@ const WINDOW_API = {
   getPathFolderUserPhotos: () => ipcRenderer.invoke('get-path-folder-userPhotos'),
   getOrderInfoById: (value: string) => ipcRenderer.invoke('get-order-info-by-id', value),
   getMachineConfigs: () => ipcRenderer.invoke('get-machine-configs'),
+  getUserResizedPhotos: () => ipcRenderer.invoke('get-user-resized-photos'),
 }
 
 contextBridge.exposeInMainWorld('api', WINDOW_API);

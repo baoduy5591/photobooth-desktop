@@ -7,8 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 
 export default function Shooting() {
-  const { store, setStore } = useStore();
-  const { t: translate } = useTranslation();
+  const { store } = useStore();
+
+  const navigate = useNavigate();
 
   const imgRef = useRef<HTMLImageElement>(null);
 
@@ -19,7 +20,6 @@ export default function Shooting() {
       if (imgRef.current) {
         const blob = event.data;
         const url = URL.createObjectURL(blob);
-
         imgRef.current.src = url;
         imgRef.current.onload = () => {
           URL.revokeObjectURL(url);
@@ -32,7 +32,9 @@ export default function Shooting() {
     };
   }, []);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    navigate('/select-photos');
+  }, []);
 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
@@ -40,7 +42,7 @@ export default function Shooting() {
 
       <div className='absolute inset-0'>
         <div className='flex h-full w-full items-center justify-center'>
-          <div className='flex h-full w-[300px] flex-col items-center justify-end'>
+          <div className='flex h-full w-[325px] flex-col items-center justify-end'>
             <div className='relative h-[251px] w-[271px]'>
               <div className='h-full w-full scale-x-[-1]'>
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[25]?.relPath} />
@@ -60,7 +62,7 @@ export default function Shooting() {
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[3]?.relPath} />
               </div>
 
-              <div className='absolute right-[28px] top-[10px] h-[109.4px] w-[141px] rotate-6'>
+              <div className='absolute right-[10px] top-[10px] h-[109.4px] w-[141px] rotate-6'>
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[2]?.relPath} />
               </div>
             </div>
@@ -72,12 +74,12 @@ export default function Shooting() {
 
           <div className='h-full grow'>
             <div className='relative flex h-full w-full flex-col items-center overflow-hidden rounded-[40px] bg-custom-style-6-1'>
-              <div className='mb-4 mt-2 h-[69.6px] w-[69.6px]'>
+              <div className='mb-6 mt-4 h-[70px] w-[70px]'>
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[34]?.relPath} />
               </div>
 
-              <div className='relative h-[853.3333px] w-[1280px] bg-custom-style-3-2'>
-                <img ref={imgRef} src='' alt='' className='h-full w-full' />
+              <div className='relative h-[826.7px] w-[1240px] bg-custom-style-3-2'>
+                <img ref={imgRef} className='h-full w-full' />
 
                 <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
                   <div className='h-[539.4px] w-[686px]'>
@@ -86,17 +88,17 @@ export default function Shooting() {
                 </div>
               </div>
 
-              <div className='w-[570px]] absolute bottom-[20px] left-[28px] h-[90px] font-rokkitt text-[30px] text-custom-style-3-1'>
+              <div className='w-[570px]] absolute bottom-[23px] left-[28px] h-[90px] font-rokkitt text-[30px] text-custom-style-3-1'>
                 <div className='h-full w-full'>
                   <DisplayImage src={store.pathFolderAssets + store.resources.icons[36]?.relPath} />
                 </div>
 
-                <div className='absolute left-[90px] top-[23px]'>
+                <div className='absolute left-[90px] top-[20px]'>
                   <span>Tip:</span>
                 </div>
               </div>
 
-              <div className='absolute bottom-[20px] right-[180px] h-[90px]'>
+              <div className='absolute bottom-[23px] right-[180px] h-[90px]'>
                 <Countdown
                   url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
                   time={90}
@@ -106,7 +108,7 @@ export default function Shooting() {
             </div>
           </div>
 
-          <div className='flex h-full w-[300px] flex-col items-center justify-center'>
+          <div className='flex h-full w-[325px] flex-col items-center justify-center'>
             <div className='relative h-[150px] w-[276.8px]'>
               <div className='h-full w-full'>
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[31]?.relPath} />

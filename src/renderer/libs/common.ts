@@ -14,3 +14,13 @@ export const checkIsTouch = (event: React.MouseEvent<HTMLDivElement> | React.Tou
 
   return true
 }
+
+export const chunkItems = (items: string[], size: number) => {
+  const chunkList = [];
+  const _length = items.length;
+  for (let i = 0; i < _length; i += size) {
+    chunkList.push(items.slice(i, i + size));
+  }
+
+  return chunkList;
+}
