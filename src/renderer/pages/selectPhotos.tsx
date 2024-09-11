@@ -75,16 +75,16 @@ export default function SelectPhotos() {
   const onTouchStartTogglePhoto = (event: TouchEventAndMouseEventType, photo: string) => {
     if (!checkIsTouch(event, isTouchChoosePhoto)) return;
 
-    let newSelectedPhotos = selectedPhotos;
     if (selectedPhotos.includes(photo)) {
-      newSelectedPhotos = selectedPhotos.filter((_photo) => _photo !== photo);
+      const newSelectedPhotos = selectedPhotos.filter((_photo) => _photo !== photo);
+      setSelectedPhotos(newSelectedPhotos);
+      return;
     } else {
       if (selectedPhotos.length < CONST_MOCK_DATA_FRAME.quantityImages) {
-        newSelectedPhotos.push(photo);
+        setSelectedPhotos((selectedPhotos) => [...selectedPhotos, photo]);
+        return;
       }
     }
-
-    setSelectedPhotos(newSelectedPhotos);
   };
 
   useEffect(() => {
