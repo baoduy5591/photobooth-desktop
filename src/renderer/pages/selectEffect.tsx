@@ -6,6 +6,7 @@ import { CONST_MOCK_DATA_FRAME, CONST_MODE_REGULAR, CONST_TYPE_FRAMES_FOR_DOUBLE
 import { Countdown } from '../components/countdown';
 import { checkIsTouch, chunkItems } from '../libs/common';
 import { Canvas } from '../components/canvas';
+import { useNavigate } from 'react-router-dom';
 
 export default function SelectEffect() {
   const { store, setStore } = useStore();
@@ -30,11 +31,16 @@ export default function SelectEffect() {
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
   const isTouchMove = useRef<boolean>(false);
+  const isTouchEnd = useRef<boolean>(false);
 
   const isTouchPrev = useRef<boolean>(false);
   const isTouchNext = useRef<boolean>(false);
   const isTouchTogglePhoto = useRef<boolean>(false);
+  const isTouchMoveTogglePhoto = useRef<boolean>(false);
   const isTouchChangeCurrentIndex = useRef<boolean>(false);
+  const isTouchNextPage = useRef<boolean>(false);
+
+  const navigate = useNavigate();
 
   const handleOnTouchStartPrev = (event: TouchEventAndMouseEventType) => {
     if (!checkIsTouch(event, isTouchPrev)) return;
@@ -57,7 +63,9 @@ export default function SelectEffect() {
     touchEndX.current = event.touches[0].clientX;
   };
 
-  const handleOnTouchEnd = () => {
+  const handleOnTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!checkIsTouch(event, isTouchEnd)) return;
+
     if (!isTouchMove.current) return;
 
     if (touchEndX.current - touchStartX.current > 100) {
@@ -73,8 +81,23 @@ export default function SelectEffect() {
     }
   };
 
-  const handleOnTouchStartTogglePhoto = (event: TouchEventAndMouseEventType, photo: string) => {
+  const handleOnTouchEndTogglePhoto = (event: TouchEventAndMouseEventType, photo: string) => {
+    event.stopPropagation();
     if (!checkIsTouch(event, isTouchTogglePhoto)) return;
+
+    if (isTouchMove.current) {
+      if (touchEndX.current - touchStartX.current > 100) {
+        setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
+        isTouchMove.current = false;
+        return;
+      }
+
+      if (touchEndX.current - touchStartX.current < -100) {
+        setCurrentIndex((index) => (index + 1 >= resizedPhotos.length ? index : index + 1));
+        isTouchMove.current = false;
+        return;
+      }
+    }
 
     if (store.orderInfo.selectedPhotos.includes(photo)) {
       setStore((store) => ({
@@ -99,10 +122,23 @@ export default function SelectEffect() {
     }
   };
 
+  const handleOnMoveTogglePhoto = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!checkIsTouch(event, isTouchMoveTogglePhoto)) return;
+
+    isTouchMove.current = true;
+    touchEndX.current = event.touches[0].clientX;
+  };
+
   const handleOnTouchChangeCurrentIndex = (event: TouchEventAndMouseEventType, newIndex: number) => {
     if (!checkIsTouch(event, isTouchChangeCurrentIndex)) return;
 
     setCurrentIndex(newIndex);
+  };
+
+  const handleOnTouchStartNextPage = (event: TouchEventAndMouseEventType) => {
+    if (!checkIsTouch(event, isTouchNextPage)) return;
+
+    navigate('/select-effect');
   };
 
   useEffect(() => {
@@ -207,7 +243,7 @@ export default function SelectEffect() {
                   <DisplayImage src={store.pathFolderAssets + store.resources.icons[39]?.relPath} />
                 </div>
 
-                <div className='absolute left-[240px] top-[29px] font-rokkitt text-[32px] font-bold tracking-wider'>
+                <div className='absolute left-[230px] top-[29px] font-rokkitt text-[32px] font-bold tracking-wider'>
                   <span>Select Your </span>
                   <span className='text-custom-style-2-1'>Effect</span>
                 </div>
@@ -217,7 +253,7 @@ export default function SelectEffect() {
                 <Countdown
                   url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
                   time={999}
-                  routeGoToBack='/select-photos'
+                  routeGoToBack='/home'
                 />
               </div>
             </div>
@@ -230,7 +266,7 @@ export default function SelectEffect() {
                     className='flex h-full w-full flex-col items-center justify-between bg-custom-style-1 px-10'
                     onTouchStart={(event) => handleOnTouchStart(event)}
                     onTouchMove={(event) => handleOnTouchMove(event)}
-                    onTouchEnd={handleOnTouchEnd}
+                    onTouchEnd={(event) => handleOnTouchEnd(event)}
                   >
                     <div className='flex h-[520px] overflow-hidden'>
                       {resizedPhotos?.map((photos, index) => {
@@ -245,8 +281,9 @@ export default function SelectEffect() {
                                 <div
                                   key={index}
                                   className='w-[270px h-[180px]'
-                                  onTouchStart={(event) => handleOnTouchStartTogglePhoto(event, photo)}
-                                  onMouseDown={(event) => handleOnTouchStartTogglePhoto(event, photo)}
+                                  onTouchEnd={(event) => handleOnTouchEndTogglePhoto(event, photo)}
+                                  onMouseUp={(event) => handleOnTouchEndTogglePhoto(event, photo)}
+                                  onTouchMove={(event) => handleOnMoveTogglePhoto(event)}
                                 >
                                   {store.orderInfo.selectedPhotos.includes(photo) ? (
                                     <div className='relative h-full w-full'>
@@ -332,15 +369,19 @@ export default function SelectEffect() {
 
             <div className='absolute bottom-0 left-0 right-0 text-center font-rokkitt text-[24px] text-custom-style-3-1'>
               <div className='min-w-max'>
-                <span>※ Slide to see more effects</span>
+                <span>※ Slide to see more photos</span>
               </div>
               <div className='min-w-max'>
-                <span>※ To deselect, touch the effect you want to cancel</span>
+                <span>※ To deselect, touch the picture you want to cancel</span>
               </div>
             </div>
           </div>
 
-          <div className='flex h-full w-[200px] items-center justify-center'>
+          <div
+            className='flex h-full w-[200px] items-center justify-center'
+            onTouchStart={(event) => handleOnTouchStartNextPage(event)}
+            onMouseDown={(event) => handleOnTouchStartNextPage(event)}
+          >
             <div className='h-[79.8px] w-[79.8px]'>
               <DisplayImage src={store.pathFolderAssets + store.resources.icons[38]?.relPath} />
             </div>
