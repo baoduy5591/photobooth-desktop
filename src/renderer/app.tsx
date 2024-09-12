@@ -9,6 +9,8 @@ import ShootingMethod from './pages/shootingMethod';
 import Shooting from './pages/shooting';
 import SelectPhotos from './pages/selectPhotos';
 import SelectEffect from './pages/selectEffect';
+import SelectSticker from './pages/selectSticker';
+import Complete from './pages/complete';
 
 export default function App() {
   const { setStore } = useStore();
@@ -45,6 +47,8 @@ export default function App() {
         <Route path='/shooting' element={<Shooting />} />
         <Route path='/select-photos' element={<SelectPhotos />} />
         <Route path='/select-effect' element={<SelectEffect />} />
+        <Route path='/select-sticker' element={<SelectSticker />} />
+        <Route path='/complete' element={<Complete />} />
       </Routes>
     </HashRouter>
   );

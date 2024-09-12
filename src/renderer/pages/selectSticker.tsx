@@ -8,7 +8,7 @@ import { checkIsTouch, chunkItems } from '../libs/common';
 import { Canvas } from '../components/canvas';
 import { useNavigate } from 'react-router-dom';
 
-export default function SelectPhotos() {
+export default function SelectSticker() {
   const { store, setStore } = useStore();
 
   const checkIsDoubleFrames = () => {
@@ -138,7 +138,7 @@ export default function SelectPhotos() {
   const handleOnTouchStartNextPage = (event: TouchEventAndMouseEventType) => {
     if (!checkIsTouch(event, isTouchNextPage)) return;
 
-    navigate('/select-effect');
+    navigate('/complete');
   };
 
   useEffect(() => {
@@ -158,77 +158,71 @@ export default function SelectPhotos() {
       <div className='absolute inset-0 p-6'>
         <div className='flex h-full w-full items-center justify-center'>
           <div className='flex h-full w-[550px] flex-col items-center justify-center'>
-            <div className='relative h-[143.2px] w-[276.8px]'>
-              <div className='h-full w-full'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[37]?.relPath} />
-              </div>
-
-              <div className='absolute left-[110px] top-[30px] text-[32px] text-custom-style-1'>
-                <span className='text-custom-style-2-1'>{store.orderInfo.selectedPhotos.length}</span>
-                <span>/</span>
-                <span>{CONST_MOCK_DATA_FRAME.quantityImages}</span>
-              </div>
-            </div>
-
-            <div className='flex items-center justify-center gap-x-8'>
-              <div className='h-[78.6px] w-[101.3px] -rotate-6'>
+            <div className='flex items-center justify-center'>
+              <div className='z-20 h-[78.6px] w-[101.3px] translate-x-5 -rotate-6'>
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[3]?.relPath} />
               </div>
 
-              <div className='h-[78.6px] w-[101.3px] rotate-6'>
+              <div className='z-10 h-[78.6px] w-[101.3px]'>
+                <DisplayImage src={store.pathFolderAssets + store.resources.icons[4]?.relPath} />
+              </div>
+
+              <div className='h-[78.6px] w-[101.3px] -translate-x-4 rotate-[9deg]'>
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[2]?.relPath} />
               </div>
             </div>
 
-            <div className='flex min-h-[640px] w-full -translate-y-4 items-center justify-center'>
-              {!isDouble ? (
-                <div className='relative mt-3 flex h-full w-[426.7px] items-center justify-center'>
-                  <div className='absolute inset-0'>
-                    <DisplayImage src={store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame} />
-                  </div>
-
-                  <Canvas
-                    width={1200}
-                    height={1800}
-                    selectedPhotos={store.orderInfo.selectedPhotos}
-                    pathUserPhotos={store.pathFolderUserPhotos}
-                    modeFrame={CONST_MOCK_DATA_FRAME.modeFrame}
-                    typeFrame={CONST_MOCK_DATA_FRAME.typeFrame}
-                  />
-                </div>
-              ) : (
-                <div className='mt-1 flex h-full w-full flex-col items-center justify-center gap-y-1'>
-                  <div className='relative flex h-[320px] w-[480px] items-center justify-center'>
+            <div className='flex h-[740px] w-[520px] items-center justify-center border-2 border-custom-style-2-1 bg-custom-style-1'>
+              <div className='flex min-h-[640px] w-full items-center justify-center'>
+                {!isDouble ? (
+                  <div className='relative flex h-full w-[426.7px] items-center justify-center'>
                     <div className='absolute inset-0'>
                       <DisplayImage src={store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame} />
                     </div>
 
                     <Canvas
-                      width={1800}
-                      height={1200}
+                      width={1200}
+                      height={1800}
                       selectedPhotos={store.orderInfo.selectedPhotos}
                       pathUserPhotos={store.pathFolderUserPhotos}
                       modeFrame={CONST_MOCK_DATA_FRAME.modeFrame}
                       typeFrame={CONST_MOCK_DATA_FRAME.typeFrame}
                     />
                   </div>
+                ) : (
+                  <div className='flex h-full w-full flex-col items-center justify-center gap-y-1'>
+                    <div className='relative flex h-[320px] w-[480px] items-center justify-center'>
+                      <div className='absolute inset-0'>
+                        <DisplayImage src={store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame} />
+                      </div>
 
-                  <div className='relative flex h-[320px] w-[480px] items-center justify-center'>
-                    <div className='absolute inset-0'>
-                      <DisplayImage src={store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame} />
+                      <Canvas
+                        width={1800}
+                        height={1200}
+                        selectedPhotos={store.orderInfo.selectedPhotos}
+                        pathUserPhotos={store.pathFolderUserPhotos}
+                        modeFrame={CONST_MOCK_DATA_FRAME.modeFrame}
+                        typeFrame={CONST_MOCK_DATA_FRAME.typeFrame}
+                      />
                     </div>
 
-                    <Canvas
-                      width={1800}
-                      height={1200}
-                      selectedPhotos={store.orderInfo.selectedPhotos}
-                      pathUserPhotos={store.pathFolderUserPhotos}
-                      modeFrame={CONST_MOCK_DATA_FRAME.modeFrame}
-                      typeFrame={CONST_MOCK_DATA_FRAME.typeFrame}
-                    />
+                    <div className='relative flex h-[320px] w-[480px] items-center justify-center'>
+                      <div className='absolute inset-0'>
+                        <DisplayImage src={store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame} />
+                      </div>
+
+                      <Canvas
+                        width={1800}
+                        height={1200}
+                        selectedPhotos={store.orderInfo.selectedPhotos}
+                        pathUserPhotos={store.pathFolderUserPhotos}
+                        modeFrame={CONST_MOCK_DATA_FRAME.modeFrame}
+                        typeFrame={CONST_MOCK_DATA_FRAME.typeFrame}
+                      />
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
 
@@ -243,10 +237,9 @@ export default function SelectPhotos() {
                   <DisplayImage src={store.pathFolderAssets + store.resources.icons[39]?.relPath} />
                 </div>
 
-                <div className='absolute left-[170px] top-[26px] font-rokkitt text-[32px] font-bold tracking-wider'>
-                  <span>Select </span>
-                  <span className='text-custom-style-2-1'>{CONST_MOCK_DATA_FRAME.quantityImages} </span>
-                  <span>Photos To Print</span>
+                <div className='absolute left-[180px] top-[26px] font-rokkitt text-[32px] font-bold tracking-wider'>
+                  <span className='text-custom-style-2-1'>Decorate </span>
+                  <span>Your Photo More</span>
                 </div>
               </div>
 
@@ -264,58 +257,53 @@ export default function SelectPhotos() {
                 <div className='my-4 h-[22px] w-[140px] rounded-full bg-custom-style-1'></div>
                 <div className='relative h-full w-full px-6'>
                   <div
-                    className='flex h-full w-full flex-col items-center justify-between bg-custom-style-1 px-10'
+                    className='relative flex h-full w-full flex-col items-center justify-between bg-custom-style-1 px-10'
                     onTouchStart={(event) => handleOnTouchStart(event)}
                     onTouchMove={(event) => handleOnTouchMove(event)}
                     onTouchEnd={(event) => handleOnTouchEnd(event)}
                   >
-                    <div className='flex h-[520px] overflow-hidden'>
-                      {resizedPhotos?.map((photos, index) => {
-                        return (
-                          <div
-                            key={index}
-                            className={`mt-20 grid h-full min-w-full grid-cols-3 content-start justify-items-center gap-x-6 gap-y-20 transition-transform duration-300`}
-                            style={{ transform: `translate3d(-${currentIndex * 100}%, 0, 0)` }}
-                          >
-                            {photos?.map((photo, index) => {
-                              return (
-                                <div
-                                  key={index}
-                                  className='w-[270px h-[180px]'
-                                  onTouchEnd={(event) => handleOnTouchEndTogglePhoto(event, photo)}
-                                  onMouseUp={(event) => handleOnTouchEndTogglePhoto(event, photo)}
-                                  onTouchMove={(event) => handleOnMoveTogglePhoto(event)}
-                                >
-                                  {store.orderInfo.selectedPhotos.includes(photo) ? (
-                                    <div className='relative h-full w-full'>
-                                      <div
-                                        className={`absolute -top-[32px] left-1/2 h-[30.8px] w-[34.8px] -translate-x-1/2`}
-                                      >
-                                        <DisplayImage
-                                          src={store.pathFolderAssets + store.resources.icons[43]?.relPath}
-                                        />
-                                      </div>
+                    <div className='absolute left-0 right-0 top-0 h-[40px] overflow-hidden'>
+                      <div className='flex h-full w-full items-center justify-start text-center font-rokkitt text-[16px]'>
+                        <div className='class-test z-10 flex h-full min-w-[210px] -translate-x-[16px] justify-center gap-x-2 bg-custom-style-2-2 p-0.5'>
+                          <div className='h-[17px] w-[12px]'>
+                            <DisplayImage src={store.pathFolderAssets + store.resources.icons[44]?.relPath} />
+                          </div>
+                          <span>Hot</span>
+                        </div>
 
-                                      <div className='h-full w-full rounded-lg border-4 border-dashed border-custom-style-2-1 p-1'>
-                                        <div className='h-full w-full'>
-                                          <DisplayImage src={store.pathFolderUserPhotos + photo} />
-                                        </div>
-                                      </div>
-                                    </div>
-                                  ) : (
-                                    <div className='h-full w-full'>
-                                      <DisplayImage src={store.pathFolderUserPhotos + photo} />
-                                    </div>
-                                  )}
-                                </div>
-                              );
-                            })}
+                        <div className='class-test h-full min-w-[210px] -translate-x-[44px] bg-custom-style-2-1 p-0.5'>
+                          <span>Birthday</span>
+                        </div>
+
+                        <div className='class-test h-full min-w-[210px] -translate-x-[72px] bg-custom-style-2-1 p-0.5'>
+                          <span>Flower</span>
+                        </div>
+
+                        <div className='class-test h-full min-w-[210px] -translate-x-[100px] bg-custom-style-2-1 p-0.5'>
+                          <span>Heart</span>
+                        </div>
+
+                        <div className='class-test h-full min-w-[210px] -translate-x-[128px] bg-custom-style-2-1 p-0.5'>
+                          Other
+                        </div>
+                      </div>
+
+                      <div className='absolute bottom-0 left-0 right-0 h-[12px] bg-custom-style-2-2'></div>
+                    </div>
+
+                    <div className='mt-20 grid h-full w-full grid-cols-6 justify-items-center'>
+                      {store.resources.stickers.birthday.map((sticker, index) => {
+                        return (
+                          <div key={index} className='bg-custom-style-3-3 h-[90px] w-[90px] rounded-full p-4'>
+                            <div className='h-full w-full'>
+                              <DisplayImage src={store.pathFolderAssets + sticker.relPath} />
+                            </div>
                           </div>
                         );
                       })}
                     </div>
 
-                    <div className='flex h-[100px] w-full items-center justify-center gap-x-4'>
+                    <div className='absolute bottom-0 flex h-[100px] w-full items-center justify-center gap-x-4'>
                       {[...Array(resizedPhotos.length)]
                         .map((_, i) => i)
                         .map((item, index) => {
@@ -370,10 +358,10 @@ export default function SelectPhotos() {
 
             <div className='absolute bottom-0 left-0 right-0 text-center font-rokkitt text-[24px] text-custom-style-3-1'>
               <div className='h-[30px] min-w-max'>
-                <span>※ Slide to see more photos</span>
+                <span>※ Slide to see more sticker</span>
               </div>
               <div className='h-[30px] min-w-max'>
-                <span>※ To deselect, touch the picture you want to cancel</span>
+                <span>※ Move the sticker to the position you like</span>
               </div>
             </div>
           </div>

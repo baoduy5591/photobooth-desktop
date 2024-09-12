@@ -49,11 +49,18 @@ body {
     --picker-color-style-2-2: #ffc5c9;
     --picker-color-style-3-1: #595959;
     --picker-color-style-3-2: #a7a9ac;
+    --picker-color-style-3-3: #f8f6f7;
     --picker-color-style-4-1: #ffdf8f;
     --picker-color-style-4-2: #ffeec0;
     --picker-color-style-5-1: #ccefa2;
     --picker-color-style-5-2: #e9f7dc;
     --picker-color-style-5-3: #b7e086;
     --picker-color-style-6-1: #000000;
+  }
+}
+
+@layer utilities {
+  .class-test {
+    clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
   }
 }

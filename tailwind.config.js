@@ -16,6 +16,7 @@ module.exports = {
           'style-2-1': 'var(--picker-color-style-2-1)',
           'style-3-1': 'var(--picker-color-style-3-1)',
           'style-3-2': 'var(--picker-color-style-3-2)',
+          'style-3-3': 'var(--picker-color-style-3-3)',
           'style-4-1': 'var(--picker-color-style-4-1)',
           'style-5-1': 'var(--picker-color-style-5-1)',
           'style-5-3': 'var(--picker-color-style-5-3)',

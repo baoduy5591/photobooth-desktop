@@ -138,7 +138,7 @@ export default function SelectEffect() {
   const handleOnTouchStartNextPage = (event: TouchEventAndMouseEventType) => {
     if (!checkIsTouch(event, isTouchNextPage)) return;
 
-    navigate('/select-effect');
+    navigate('/select-sticker');
   };
 
   useEffect(() => {
@@ -163,7 +163,7 @@ export default function SelectEffect() {
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[37]?.relPath} />
               </div>
 
-              <div className='absolute left-[110px] top-[30px] text-[32px] text-custom-style-1'>
+              <div className='absolute left-[110px] top-[26px] text-[32px] text-custom-style-1'>
                 <span className='text-custom-style-2-1'>{store.orderInfo.selectedPhotos.length}</span>
                 <span>/</span>
                 <span>{CONST_MOCK_DATA_FRAME.quantityImages}</span>
