@@ -18,11 +18,10 @@ export const INIT_STORE: StoreType = {
       },
       screen: {
         width: null,
-        height: null
+        height: null,
       },
-      disk: null
-
-    }
+      disk: null,
+    },
   },
   resources: {
     backgroundImages: [],
@@ -31,16 +30,16 @@ export const INIT_STORE: StoreType = {
       birthday: [],
       flowers: [],
       heart: [],
-      others: []
+      others: [],
     },
     videos: {
       loading: [],
-      introduces: []
+      introduces: [],
     },
     icons: [],
     audios: {
       backgrounds: [],
-      touch: []
+      touch: [],
     },
     frames: {
       cutting: {
@@ -90,7 +89,7 @@ export const INIT_STORE: StoreType = {
           normal: [],
           season: [],
           special: [],
-        }
+        },
       },
       wide: {
         typeA: {
@@ -102,9 +101,9 @@ export const INIT_STORE: StoreType = {
           normal: [],
           season: [],
           special: [],
-        }
-      }
-    }
+        },
+      },
+    },
   },
   isLoading: false,
   pathFolderAssets: '',
@@ -114,14 +113,14 @@ export const INIT_STORE: StoreType = {
     typeFrame: '',
     quantityImages: null,
     frame: '',
-    
+    selectedPhotos: [],
   },
   shootingMethod: '',
   machineConfigs: {
-    platform: ''
-  }
-}
+    platform: '',
+  },
+};
 
 export const INIT_THEME: ThemeType = {
   pink: 'pink',
-}
+};

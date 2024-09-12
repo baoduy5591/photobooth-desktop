@@ -18,7 +18,7 @@ interface Window {
     getOrderInfoById: (value) => Promise;
     getMachineConfigs: () => Promise;
     getUserResizedPhotos: () => Promise;
-  }
+  };
 }
 
 type TouchEventAndMouseEventType = React.TouchEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>;
@@ -29,10 +29,9 @@ interface ThemeType {
 
 interface ThemeContextType {
   theme: ThemeType;
-  setTheme: React.Dispatch<React.SetStateAction<ThemeType>>
+  setTheme: React.Dispatch<React.SetStateAction<ThemeType>>;
   changeTheme: (key: string) => void;
 }
-
 
 interface PathResourceType {
   name: string;
@@ -50,13 +49,13 @@ interface StickerType {
 }
 
 interface VideosType {
-  loading: PathResourceType[],
-  introduces: PathResourceType[]
+  loading: PathResourceType[];
+  introduces: PathResourceType[];
 }
 
 interface AudiosType {
-  backgrounds: PathResourceType[],
-  touch: PathResourceType[]
+  backgrounds: PathResourceType[];
+  touch: PathResourceType[];
 }
 
 interface ResourcesType {
@@ -71,69 +70,69 @@ interface ResourcesType {
         normal: PathResourceType[];
         season: PathResourceType[];
         special: PathResourceType[];
-      },
+      };
       typeB: {
         normal: PathResourceType[];
         season: PathResourceType[];
         special: PathResourceType[];
-      },
+      };
       typeC: {
         normal: PathResourceType[];
         season: PathResourceType[];
         special: PathResourceType[];
-      },
-    },
+      };
+    };
     regular: {
       typeA: {
         normal: PathResourceType[];
         season: PathResourceType[];
         special: PathResourceType[];
-      },
+      };
       typeB: {
         normal: PathResourceType[];
         season: PathResourceType[];
         special: PathResourceType[];
-      },
+      };
       typeC: {
         normal: PathResourceType[];
         season: PathResourceType[];
         special: PathResourceType[];
-      },
+      };
       typeD: {
         normal: PathResourceType[];
         season: PathResourceType[];
         special: PathResourceType[];
-      },
+      };
       typeE: {
         normal: PathResourceType[];
         season: PathResourceType[];
         special: PathResourceType[];
-      },
+      };
       typeF: {
         normal: PathResourceType[];
         season: PathResourceType[];
         special: PathResourceType[];
-      }
-    },
+      };
+    };
     wide: {
       typeA: {
         normal: PathResourceType[];
         season: PathResourceType[];
         special: PathResourceType[];
-      },
+      };
       typeB: {
         normal: PathResourceType[];
         season: PathResourceType[];
         special: PathResourceType[];
-      }
-    }
-  }
+      };
+    };
+  };
 }
 
 interface HardwareInfoType {
-  camera: { name: string, serial: string, isOk: boolean };
+  camera: { name: string; serial: string; isOk: boolean };
   network: { ipV4: string; mac: string; monitorIP: string; isOk: boolean };
-  screen: { width: number, height: number };
+  screen: { width: number; height: number };
   disk: number;
 }
 
@@ -150,6 +149,7 @@ interface OrderInfoType {
   typeFrame: string;
   quantityImages: number;
   frame: string;
+  selectedPhotos: string[];
 }
 
 interface MachineConfigsType {
@@ -159,7 +159,7 @@ interface MachineConfigsType {
 interface StoreType {
   systemConfigs: SystemConfigsType;
   resources: ResourcesType;
-  isLoading: boolean
+  isLoading: boolean;
   pathFolderAssets: string;
   pathFolderUserPhotos: string;
   orderInfo: OrderInfoType;

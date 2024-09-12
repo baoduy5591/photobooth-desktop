@@ -7,7 +7,7 @@ import { Countdown } from '../components/countdown';
 import { checkIsTouch, chunkItems } from '../libs/common';
 import { Canvas } from '../components/canvas';
 
-export default function SelectPhotos() {
+export default function SelectEffect() {
   const { store, setStore } = useStore();
 
   const checkIsDoubleFrames = () => {

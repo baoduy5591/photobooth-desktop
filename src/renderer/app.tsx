@@ -43,6 +43,7 @@ export default function App() {
         <Route path='/shooting-method' element={<ShootingMethod />} />
         <Route path='/shooting' element={<Shooting />} />
         <Route path='/select-photos' element={<SelectPhotos />} />
+        <Route path='/select-effect' element={<SelectPhotos />} />
       </Routes>
     </HashRouter>
   );

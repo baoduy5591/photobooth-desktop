@@ -1,10 +1,10 @@
-export const CONST_CONFIG_LANGUAGE: { en: number, vi: number, ja: number } = {
+export const CONST_CONFIG_LANGUAGE: { en: number; vi: number; ja: number } = {
   en: 0,
   ja: 1,
   vi: 2,
 };
 
-export const CONST_CONFIG_FONTS: { en: string, ja: string; vi: string } = {
+export const CONST_CONFIG_FONTS: { en: string; ja: string; vi: string } = {
   en: 'MoreSugar',
   ja: 'MochiyPopOne',
   vi: 'Baloo',
@@ -26,8 +26,146 @@ export const CONST_WINDOW_OS = 'win32';
 export const CONST_DARWIN_OS = 'darwin';
 
 export const CONST_MOCK_DATA_FRAME = {
-  modeFrame: 'cutting',
-  typeFrame: 'typeA',
-  quantityImages: 4,
-  frame: 'frames/cutting/typeA/normal/00000.png',
+  modeFrame: 'regular',
+  typeFrame: 'typeD',
+  quantityImages: 3,
+  frame: 'frames/regular/typeD/normal/00000.png',
+};
+
+export const CONST_POSITION_FRAMES: {
+  cutting: {
+    typeA: { x: number; y: number; w: number; h: number }[][];
+    typeB: { x: number; y: number; w: number; h: number }[][];
+    typeC: { x: number; y: number; w: number; h: number }[][];
+  };
+  regular: {
+    typeA: { x: number; y: number; w: number; h: number }[][];
+    typeB: { x: number; y: number; w: number; h: number }[][];
+    typeC: { x: number; y: number; w: number; h: number }[][];
+    typeD: { x: number; y: number; w: number; h: number }[][];
+    typeE: { x: number; y: number; w: number; h: number }[][];
+    typeF: { x: number; y: number; w: number; h: number }[][];
+  };
+  wide: {
+    typeA: { x: number; y: number; w: number; h: number }[][];
+    typeB: { x: number; y: number; w: number; h: number }[][];
+  };
+} = {
+  cutting: {
+    typeA: [
+      [
+        { x: 41, y: 50, w: 541, h: 363 },
+        { x: 619, y: 50, w: 541, h: 363 },
+      ],
+      [
+        { x: 41, y: 430, w: 541, h: 363 },
+        { x: 619, y: 430, w: 541, h: 363 },
+      ],
+      [
+        { x: 41, y: 810, w: 541, h: 363 },
+        { x: 619, y: 810, w: 541, h: 363 },
+      ],
+      [
+        { x: 41, y: 1190, w: 541, h: 363 },
+        { x: 619, y: 1190, w: 541, h: 363 },
+      ],
+    ],
+    typeB: [
+      [
+        { x: 41, y: 50, w: 541, h: 541 },
+        { x: 619, y: 50, w: 541, h: 541 },
+      ],
+      [
+        { x: 41, y: 608, w: 541, h: 541 },
+        { x: 619, y: 608, w: 541, h: 541 },
+      ],
+      [
+        { x: 41, y: 1166, w: 541, h: 541 },
+        { x: 619, y: 1166, w: 541, h: 541 },
+      ],
+    ],
+    typeC: [
+      [
+        { x: 41, y: 50, w: 541, h: 727 },
+        { x: 619, y: 50, w: 541, h: 727 },
+      ],
+      [
+        { x: 41, y: 797, w: 541, h: 727 },
+        { x: 619, y: 797, w: 541, h: 727 },
+      ],
+    ],
+  },
+
+  regular: {
+    typeA: [
+      [{ x: 41, y: 50, w: 551, h: 763 }],
+      [{ x: 609, y: 50, w: 551, h: 763 }],
+      [{ x: 41, y: 833, w: 551, h: 763 }],
+      [{ x: 609, y: 833, w: 551, h: 763 }],
+    ],
+    typeB: [
+      [{ x: 65, y: 130, w: 535, h: 528 }],
+      [{ x: 617, y: 123, w: 535, h: 528 }],
+      [{ x: 50, y: 678, w: 535, h: 528 }],
+      [{ x: 601, y: 669, w: 536, h: 528 }],
+      [{ x: 58, y: 1223, w: 535, h: 528 }],
+      [{ x: 609, y: 1213, w: 536, h: 528 }],
+    ],
+    typeC: [
+      [{ x: 52, y: 45, w: 552, h: 779 }],
+      [{ x: 624, y: 45, w: 552, h: 779 }],
+      [{ x: 1196, y: 45, w: 552, h: 779 }],
+    ],
+    typeD: [
+      [
+        { x: 41, y: 50, w: 541, h: 727 },
+        { x: 619, y: 50, w: 541, h: 727 },
+      ],
+      [
+        { x: 41, y: 797, w: 541, h: 727 },
+        { x: 619, y: 797, w: 541, h: 727 },
+      ],
+    ],
+    typeE: [
+      [
+        { x: 41, y: 50, w: 541, h: 727 },
+        { x: 619, y: 50, w: 541, h: 727 },
+      ],
+      [
+        { x: 41, y: 797, w: 541, h: 727 },
+        { x: 619, y: 797, w: 541, h: 727 },
+      ],
+    ],
+    typeF: [
+      [
+        { x: 41, y: 50, w: 541, h: 727 },
+        { x: 619, y: 50, w: 541, h: 727 },
+      ],
+      [
+        { x: 41, y: 797, w: 541, h: 727 },
+        { x: 619, y: 797, w: 541, h: 727 },
+      ],
+    ],
+  },
+
+  wide: {
+    typeA: [
+      [{ x: 41, y: 50, w: 553, h: 392 }],
+      [{ x: 607, y: 50, w: 553, h: 392 }],
+      [{ x: 41, y: 461, w: 553, h: 392 }],
+      [{ x: 607, y: 461, w: 553, h: 392 }],
+      [{ x: 41, y: 871, w: 553, h: 392 }],
+      [{ x: 607, y: 871, w: 553, h: 392 }],
+      [{ x: 41, y: 1281, w: 553, h: 392 }],
+      [{ x: 607, y: 1281, w: 553, h: 392 }],
+    ],
+    typeB: [
+      [{ x: 41, y: 50, w: 553, h: 540 }],
+      [{ x: 607, y: 50, w: 553, h: 540 }],
+      [{ x: 41, y: 608, w: 553, h: 540 }],
+      [{ x: 607, y: 608, w: 553, h: 540 }],
+      [{ x: 41, y: 1166, w: 553, h: 540 }],
+      [{ x: 607, y: 1166, w: 553, h: 540 }],
+    ],
+  },
 };
