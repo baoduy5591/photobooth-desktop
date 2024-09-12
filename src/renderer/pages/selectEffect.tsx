@@ -368,10 +368,10 @@ export default function SelectEffect() {
             </div>
 
             <div className='absolute bottom-0 left-0 right-0 text-center font-rokkitt text-[24px] text-custom-style-3-1'>
-              <div className='min-w-max'>
+              <div className='h-[30px] min-w-max'>
                 <span>※ Slide to see more photos</span>
               </div>
-              <div className='min-w-max'>
+              <div className='h-[30px] min-w-max'>
                 <span>※ To deselect, touch the picture you want to cancel</span>
               </div>
             </div>
