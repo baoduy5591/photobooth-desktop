@@ -207,10 +207,9 @@ export default function SelectEffect() {
                   <DisplayImage src={store.pathFolderAssets + store.resources.icons[39]?.relPath} />
                 </div>
 
-                <div className='absolute left-[170px] top-[29px] font-rokkitt text-[32px] font-bold tracking-wider'>
-                  <span>Select </span>
-                  <span className='text-custom-style-2-1'>{CONST_MOCK_DATA_FRAME.quantityImages} </span>
-                  <span>Photos To Print</span>
+                <div className='absolute left-[240px] top-[29px] font-rokkitt text-[32px] font-bold tracking-wider'>
+                  <span>Select Your </span>
+                  <span className='text-custom-style-2-1'>Effect</span>
                 </div>
               </div>
 
@@ -218,7 +217,7 @@ export default function SelectEffect() {
                 <Countdown
                   url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
                   time={999}
-                  routeGoToBack='/home'
+                  routeGoToBack='/select-photos'
                 />
               </div>
             </div>
@@ -333,10 +332,10 @@ export default function SelectEffect() {
 
             <div className='absolute bottom-0 left-0 right-0 text-center font-rokkitt text-[24px] text-custom-style-3-1'>
               <div className='min-w-max'>
-                <span>※ Slide to see more photos</span>
+                <span>※ Slide to see more effects</span>
               </div>
               <div className='min-w-max'>
-                <span>※ To deselect, touch the picture you want to cancel</span>
+                <span>※ To deselect, touch the effect you want to cancel</span>
               </div>
             </div>
           </div>

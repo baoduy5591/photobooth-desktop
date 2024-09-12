@@ -8,6 +8,7 @@ import ConfirmFrame from './pages/confirmFrame';
 import ShootingMethod from './pages/shootingMethod';
 import Shooting from './pages/shooting';
 import SelectPhotos from './pages/selectPhotos';
+import SelectEffect from './pages/selectEffect';
 
 export default function App() {
   const { setStore } = useStore();
@@ -43,7 +44,7 @@ export default function App() {
         <Route path='/shooting-method' element={<ShootingMethod />} />
         <Route path='/shooting' element={<Shooting />} />
         <Route path='/select-photos' element={<SelectPhotos />} />
-        <Route path='/select-effect' element={<SelectPhotos />} />
+        <Route path='/select-effect' element={<SelectEffect />} />
       </Routes>
     </HashRouter>
   );

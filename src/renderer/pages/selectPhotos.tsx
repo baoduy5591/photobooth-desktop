@@ -6,6 +6,7 @@ import { CONST_MOCK_DATA_FRAME, CONST_MODE_REGULAR, CONST_TYPE_FRAMES_FOR_DOUBLE
 import { Countdown } from '../components/countdown';
 import { checkIsTouch, chunkItems } from '../libs/common';
 import { Canvas } from '../components/canvas';
+import { useNavigate } from 'react-router-dom';
 
 export default function SelectPhotos() {
   const { store, setStore } = useStore();
@@ -35,6 +36,9 @@ export default function SelectPhotos() {
   const isTouchNext = useRef<boolean>(false);
   const isTouchTogglePhoto = useRef<boolean>(false);
   const isTouchChangeCurrentIndex = useRef<boolean>(false);
+  const isTouchNextPage = useRef<boolean>(false);
+
+  const navigate = useNavigate();
 
   const handleOnTouchStartPrev = (event: TouchEventAndMouseEventType) => {
     if (!checkIsTouch(event, isTouchPrev)) return;
@@ -103,6 +107,12 @@ export default function SelectPhotos() {
     if (!checkIsTouch(event, isTouchChangeCurrentIndex)) return;
 
     setCurrentIndex(newIndex);
+  };
+
+  const handleOnTouchStartNextPage = (event: TouchEventAndMouseEventType) => {
+    if (!checkIsTouch(event, isTouchNextPage)) return;
+
+    navigate('/select-effect');
   };
 
   useEffect(() => {
@@ -341,7 +351,11 @@ export default function SelectPhotos() {
             </div>
           </div>
 
-          <div className='flex h-full w-[200px] items-center justify-center'>
+          <div
+            className='flex h-full w-[200px] items-center justify-center'
+            onTouchStart={(event) => handleOnTouchStartNextPage(event)}
+            onMouseDown={(event) => handleOnTouchStartNextPage(event)}
+          >
             <div className='h-[79.8px] w-[79.8px]'>
               <DisplayImage src={store.pathFolderAssets + store.resources.icons[38]?.relPath} />
             </div>

@@ -26,10 +26,10 @@ export const CONST_WINDOW_OS = 'win32';
 export const CONST_DARWIN_OS = 'darwin';
 
 export const CONST_MOCK_DATA_FRAME = {
-  modeFrame: 'regular',
-  typeFrame: 'typeD',
-  quantityImages: 3,
-  frame: 'frames/regular/typeD/normal/00000.png',
+  modeFrame: 'cutting',
+  typeFrame: 'typeA',
+  quantityImages: 4,
+  frame: 'frames/cutting/typeA/normal/00000.png',
 };
 
 export const CONST_POSITION_FRAMES: {
