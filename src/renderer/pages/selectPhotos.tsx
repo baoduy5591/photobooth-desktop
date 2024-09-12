@@ -31,10 +31,12 @@ export default function SelectPhotos() {
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
   const isTouchMove = useRef<boolean>(false);
+  const isTouchEnd = useRef<boolean>(false);
 
   const isTouchPrev = useRef<boolean>(false);
   const isTouchNext = useRef<boolean>(false);
   const isTouchTogglePhoto = useRef<boolean>(false);
+  const isTouchMoveTogglePhoto = useRef<boolean>(false);
   const isTouchChangeCurrentIndex = useRef<boolean>(false);
   const isTouchNextPage = useRef<boolean>(false);
 
@@ -61,7 +63,9 @@ export default function SelectPhotos() {
     touchEndX.current = event.touches[0].clientX;
   };
 
-  const handleOnTouchEnd = () => {
+  const handleOnTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!checkIsTouch(event, isTouchEnd)) return;
+
     if (!isTouchMove.current) return;
 
     if (touchEndX.current - touchStartX.current > 100) {
@@ -77,8 +81,23 @@ export default function SelectPhotos() {
     }
   };
 
-  const handleOnTouchStartTogglePhoto = (event: TouchEventAndMouseEventType, photo: string) => {
+  const handleOnTouchEndTogglePhoto = (event: TouchEventAndMouseEventType, photo: string) => {
+    event.stopPropagation();
     if (!checkIsTouch(event, isTouchTogglePhoto)) return;
+
+    if (isTouchMove.current) {
+      if (touchEndX.current - touchStartX.current > 100) {
+        setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
+        isTouchMove.current = false;
+        return;
+      }
+
+      if (touchEndX.current - touchStartX.current < -100) {
+        setCurrentIndex((index) => (index + 1 >= resizedPhotos.length ? index : index + 1));
+        isTouchMove.current = false;
+        return;
+      }
+    }
 
     if (store.orderInfo.selectedPhotos.includes(photo)) {
       setStore((store) => ({
@@ -101,6 +120,13 @@ export default function SelectPhotos() {
         return;
       }
     }
+  };
+
+  const handleOnMoveTogglePhoto = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!checkIsTouch(event, isTouchMoveTogglePhoto)) return;
+
+    isTouchMove.current = true;
+    touchEndX.current = event.touches[0].clientX;
   };
 
   const handleOnTouchChangeCurrentIndex = (event: TouchEventAndMouseEventType, newIndex: number) => {
@@ -241,7 +267,7 @@ export default function SelectPhotos() {
                     className='flex h-full w-full flex-col items-center justify-between bg-custom-style-1 px-10'
                     onTouchStart={(event) => handleOnTouchStart(event)}
                     onTouchMove={(event) => handleOnTouchMove(event)}
-                    onTouchEnd={handleOnTouchEnd}
+                    onTouchEnd={(event) => handleOnTouchEnd(event)}
                   >
                     <div className='flex h-[520px] overflow-hidden'>
                       {resizedPhotos?.map((photos, index) => {
@@ -256,8 +282,9 @@ export default function SelectPhotos() {
                                 <div
                                   key={index}
                                   className='w-[270px h-[180px]'
-                                  onTouchStart={(event) => handleOnTouchStartTogglePhoto(event, photo)}
-                                  onMouseDown={(event) => handleOnTouchStartTogglePhoto(event, photo)}
+                                  onTouchEnd={(event) => handleOnTouchEndTogglePhoto(event, photo)}
+                                  onMouseUp={(event) => handleOnTouchEndTogglePhoto(event, photo)}
+                                  onTouchMove={(event) => handleOnMoveTogglePhoto(event)}
                                 >
                                   {store.orderInfo.selectedPhotos.includes(photo) ? (
                                     <div className='relative h-full w-full'>
