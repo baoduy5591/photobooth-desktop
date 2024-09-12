@@ -3,10 +3,10 @@ import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
 import { CONST_MOCK_DATA_FRAME, CONST_MODE_REGULAR, CONST_TYPE_FRAMES_FOR_DOUBLE } from '../libs/constants';
-import { Countdown } from '../components/countdown';
 import { checkIsTouch, chunkItems } from '../libs/common';
 import { Canvas } from '../components/canvas';
 import { useNavigate } from 'react-router-dom';
+import { Countdown } from '../components/countdown';
 
 export default function SelectEffect() {
   const { store, setStore } = useStore();
