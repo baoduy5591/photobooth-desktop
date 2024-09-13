@@ -21,6 +21,9 @@ module.exports = {
           'style-5-1': 'var(--picker-color-style-5-1)',
           'style-5-3': 'var(--picker-color-style-5-3)',
           'style-6-1': 'var(--picker-color-style-6-1)',
+          'style-7-1': 'var(--picker-color-style-7-1)',
+          'style-8-1': 'var(--picker-color-style-8-1)',
+          'style-9-1': 'var(--picker-color-style-9-1)',
         },
       },
       fontFamily: {
