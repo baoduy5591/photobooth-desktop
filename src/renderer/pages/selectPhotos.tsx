@@ -2,7 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
-import { CONST_MOCK_DATA_FRAME, CONST_MODE_REGULAR, CONST_TYPE_FRAMES_FOR_DOUBLE } from '../libs/constants';
+import {
+  CONST_MOCK_DATA_FRAME,
+  CONST_MODE_REGULAR,
+  CONST_POSITION_FRAMES,
+  CONST_TYPE_FRAMES_FOR_DOUBLE,
+} from '../libs/constants';
 import { Countdown } from '../components/countdown';
 import { checkIsTouch, chunkItems } from '../libs/common';
 import { Canvas } from '../components/canvas';
@@ -135,9 +140,52 @@ export default function SelectPhotos() {
     setCurrentIndex(newIndex);
   };
 
-  const handleOnTouchStartNextPage = (event: TouchEventAndMouseEventType) => {
+  const handleConvertCanvasToBase64 = async (
+    width: number,
+    height: number,
+    modeFrame: string,
+    typeFrame: string,
+    selectedPhotos: string[],
+  ) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext('2d');
+
+    const object = CONST_POSITION_FRAMES[modeFrame as keyof typeof CONST_POSITION_FRAMES];
+    const listPosition = object[typeFrame as keyof typeof object];
+
+    const loadImage = (photo: string, index: number): Promise<void> => {
+      return new Promise((resolve) => {
+        const image = new Image();
+        image.src = store.pathFolderUserPhotos + photo;
+        image.onload = () => {
+          const position = listPosition[index];
+          position.forEach((p) => {
+            context.drawImage(image, p.x, p.y, p.w, p.h);
+          });
+          resolve();
+        };
+      });
+    };
+
+    const promises = selectedPhotos.map((photo, index) => loadImage(photo, index));
+    await Promise.all(promises);
+    const base64String = canvas.toDataURL('image/png');
+    return base64String;
+  };
+
+  const handleOnTouchStartNextPage = async (event: TouchEventAndMouseEventType) => {
     if (!checkIsTouch(event, isTouchNextPage)) return;
 
+    const base64String = await handleConvertCanvasToBase64(
+      CONST_MOCK_DATA_FRAME.width,
+      CONST_MOCK_DATA_FRAME.height,
+      CONST_MOCK_DATA_FRAME.modeFrame,
+      CONST_MOCK_DATA_FRAME.typeFrame,
+      store.orderInfo.selectedPhotos,
+    );
+    setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, imageSelectPhoto: base64String } }));
     navigate('/select-effect');
   };
 

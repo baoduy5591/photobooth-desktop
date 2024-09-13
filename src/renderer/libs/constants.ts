@@ -29,6 +29,8 @@ export const CONST_MOCK_DATA_FRAME = {
   modeFrame: 'cutting',
   typeFrame: 'typeA',
   quantityImages: 4,
+  width: 1200,
+  height: 1800,
   frame: 'frames/cutting/typeA/normal/00000.png',
 };
 

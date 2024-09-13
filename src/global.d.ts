@@ -150,6 +150,9 @@ interface OrderInfoType {
   quantityImages: number;
   frame: string;
   selectedPhotos: string[];
+  imageSelectPhoto: string;
+  imageSelectEffect: string;
+  imageSelectSticker: string
 }
 
 interface MachineConfigsType {

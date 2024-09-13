@@ -114,6 +114,9 @@ export const INIT_STORE: StoreType = {
     quantityImages: null,
     frame: '',
     selectedPhotos: [],
+    imageSelectPhoto: '',
+    imageSelectEffect: '',
+    imageSelectSticker: '',
   },
   shootingMethod: '',
   machineConfigs: {
