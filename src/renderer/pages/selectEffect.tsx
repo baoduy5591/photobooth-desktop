@@ -138,7 +138,7 @@ export default function SelectEffect() {
   const handleOnTouchStartNextPage = (event: TouchEventAndMouseEventType) => {
     if (!checkIsTouch(event, isTouchNextPage)) return;
 
-    navigate('/select-sticker');
+    // navigate('/select-sticker');
   };
 
   useEffect(() => {
@@ -163,10 +163,8 @@ export default function SelectEffect() {
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[37]?.relPath} />
               </div>
 
-              <div className='absolute left-[110px] top-[26px] text-[32px] text-custom-style-1'>
-                <span className='text-custom-style-2-1'>{store.orderInfo.selectedPhotos.length}</span>
-                <span>/</span>
-                <span>{CONST_MOCK_DATA_FRAME.quantityImages}</span>
+              <div className='absolute left-[74px] top-[32px] text-[32px] text-custom-style-1'>
+                <span>{store.orderInfo.typeEffect}</span>
               </div>
             </div>
 
@@ -180,52 +178,37 @@ export default function SelectEffect() {
               </div>
             </div>
 
-            <div className='flex min-h-[640px] w-full -translate-y-4 items-center justify-center'>
+            <div className='flex h-[645px] w-full -translate-y-4 items-center justify-center'>
               {!isDouble ? (
-                <div className='relative mt-3 flex h-full w-[426.7px] items-center justify-center'>
+                <div className='relative mt-3 flex h-full w-[430px] items-center justify-center'>
+                  <div className='absolute inset-0'>
+                    <DisplayImage src={store.orderInfo.imageSelectPhoto} />
+                  </div>
+
                   <div className='absolute inset-0'>
                     <DisplayImage src={store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame} />
                   </div>
-
-                  <Canvas
-                    width={1200}
-                    height={1800}
-                    selectedPhotos={store.orderInfo.selectedPhotos}
-                    pathUserPhotos={store.pathFolderUserPhotos}
-                    modeFrame={CONST_MOCK_DATA_FRAME.modeFrame}
-                    typeFrame={CONST_MOCK_DATA_FRAME.typeFrame}
-                  />
                 </div>
               ) : (
                 <div className='mt-1 flex h-full w-full flex-col items-center justify-center gap-y-1'>
-                  <div className='relative flex h-[320px] w-[480px] items-center justify-center'>
+                  <div className='relative flex h-[320.5px] w-[480.8px] items-center justify-center'>
                     <div className='absolute inset-0'>
                       <DisplayImage src={store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame} />
                     </div>
 
-                    <Canvas
-                      width={1800}
-                      height={1200}
-                      selectedPhotos={store.orderInfo.selectedPhotos}
-                      pathUserPhotos={store.pathFolderUserPhotos}
-                      modeFrame={CONST_MOCK_DATA_FRAME.modeFrame}
-                      typeFrame={CONST_MOCK_DATA_FRAME.typeFrame}
-                    />
+                    <div className='absolute inset-0'>
+                      <DisplayImage src={store.orderInfo.imageSelectPhoto} />
+                    </div>
                   </div>
 
-                  <div className='relative flex h-[320px] w-[480px] items-center justify-center'>
+                  <div className='relative flex h-[320.5px] w-[480.8px] items-center justify-center'>
                     <div className='absolute inset-0'>
                       <DisplayImage src={store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame} />
                     </div>
 
-                    <Canvas
-                      width={1800}
-                      height={1200}
-                      selectedPhotos={store.orderInfo.selectedPhotos}
-                      pathUserPhotos={store.pathFolderUserPhotos}
-                      modeFrame={CONST_MOCK_DATA_FRAME.modeFrame}
-                      typeFrame={CONST_MOCK_DATA_FRAME.typeFrame}
-                    />
+                    <div className='absolute inset-0'>
+                      <DisplayImage src={store.orderInfo.imageSelectPhoto} />
+                    </div>
                   </div>
                 </div>
               )}
@@ -252,8 +235,8 @@ export default function SelectEffect() {
               <div className='mb-3'>
                 <Countdown
                   url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
-                  time={999}
-                  routeGoToBack='/home'
+                  time={10}
+                  routeGoToBack='/select-photos'
                 />
               </div>
             </div>

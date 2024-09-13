@@ -117,6 +117,7 @@ export const INIT_STORE: StoreType = {
     imageSelectPhoto: '',
     imageSelectEffect: '',
     imageSelectSticker: '',
+    typeEffect: 'Original'
   },
   shootingMethod: '',
   machineConfigs: {
