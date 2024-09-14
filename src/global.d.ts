@@ -153,7 +153,10 @@ interface OrderInfoType {
   imageSelectPhoto: string;
   imageSelectEffect: string;
   imageSelectSticker: string
-  typeEffect: string;
+  effect: {
+    effectName: string;
+    className: string;
+  }
 }
 
 interface MachineConfigsType {

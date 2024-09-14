@@ -32,9 +32,9 @@ const createWindow = (): void => {
   // get configs machine
   ipcMain.handle('get-machine-configs', async () => {
     return {
-      platform: process.platform
-    }
-  })
+      platform: process.platform,
+    };
+  });
 };
 
 // ipcMain get resources
@@ -46,7 +46,7 @@ ipcMain.handle('get-resources', async () => {
 
 // get system configs (call api)
 ipcMain.handle('get-system-configs', async () => {
-  return { 
+  return {
     defaultLanguage: 'en',
     videoIntro: 'videos/introduces/00000.mp4',
     backgroundAudio: 'audios/backgrounds/00000.mp3',
@@ -58,21 +58,21 @@ ipcMain.handle('get-order-info-by-id', async (event, value) => {
   return {
     modeFrame: 'regular',
     typeFrame: 'typeF',
-    frame: 'frames/regular/typeF/normal/00000.png'
-  }
-})
+    frame: 'frames/regular/typeF/normal/00000.png',
+  };
+});
 
 // get path folder assets
 ipcMain.handle('get-path-folder-assets', () => {
   const pathFolderAssets = Paths.getFolderAssetsForRenderer();
   return pathFolderAssets;
-} )
+});
 
 // get path folder userPhotos
 ipcMain.handle('get-path-folder-userPhotos', () => {
   const pathFolderUserPhotos = Paths.getFolderUserPhotosForRenderer();
   return pathFolderUserPhotos;
-} )
+});
 
 //
 ipcMain.handle('get-user-resized-photos', () => {

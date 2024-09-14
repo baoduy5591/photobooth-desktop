@@ -26,12 +26,12 @@ export const CONST_WINDOW_OS = 'win32';
 export const CONST_DARWIN_OS = 'darwin';
 
 export const CONST_MOCK_DATA_FRAME = {
-  modeFrame: 'cutting',
-  typeFrame: 'typeA',
-  quantityImages: 4,
-  width: 1200,
-  height: 1800,
-  frame: 'frames/cutting/typeA/normal/00000.png',
+  modeFrame: 'regular',
+  typeFrame: 'typeC',
+  quantityImages: 3,
+  width: 1800,
+  height: 1200,
+  frame: 'frames/regular/typeC/normal/00000.png',
 };
 
 export const CONST_POSITION_FRAMES: {
@@ -171,3 +171,30 @@ export const CONST_POSITION_FRAMES: {
     ],
   },
 };
+
+export const CONST_LIST_EFFECTS = [
+  {
+    effectName: 'Cool',
+    className: 'filter-cool'
+  },
+  {
+    effectName: 'Original',
+    className: ''
+  },
+  {
+    effectName: 'Warm',
+    className: 'filter-warm'
+  },
+  {
+    effectName: 'Bright',
+    className: 'filter-bright'
+  },
+  {
+    effectName: 'Very Bright',
+    className: 'filter-very-bright'
+  },
+  {
+    effectName: 'Black & White',
+    className: 'filter-black-white'
+  },
+];
