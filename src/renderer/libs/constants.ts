@@ -34,25 +34,7 @@ export const CONST_MOCK_DATA_FRAME = {
   frame: 'frames/regular/typeC/normal/00000.png',
 };
 
-export const CONST_POSITION_FRAMES: {
-  cutting: {
-    typeA: { x: number; y: number; w: number; h: number }[][];
-    typeB: { x: number; y: number; w: number; h: number }[][];
-    typeC: { x: number; y: number; w: number; h: number }[][];
-  };
-  regular: {
-    typeA: { x: number; y: number; w: number; h: number }[][];
-    typeB: { x: number; y: number; w: number; h: number }[][];
-    typeC: { x: number; y: number; w: number; h: number }[][];
-    typeD: { x: number; y: number; w: number; h: number }[][];
-    typeE: { x: number; y: number; w: number; h: number }[][];
-    typeF: { x: number; y: number; w: number; h: number }[][];
-  };
-  wide: {
-    typeA: { x: number; y: number; w: number; h: number }[][];
-    typeB: { x: number; y: number; w: number; h: number }[][];
-  };
-} = {
+export const CONST_POSITION_FRAMES: PositionFramesType = {
   cutting: {
     typeA: [
       [
@@ -174,27 +156,40 @@ export const CONST_POSITION_FRAMES: {
 
 export const CONST_LIST_EFFECTS = [
   {
-    effectName: 'Cool',
-    className: 'filter-cool'
+    name: 'Cool',
+    className: 'filter-cool',
+    style: 'brightness(1.1) contrast(1.1) sepia(0.3) hue-rotate(220deg)',
+    
   },
   {
-    effectName: 'Original',
-    className: ''
+    name: 'Original',
+    className: '',
+    style: 'none'
   },
   {
-    effectName: 'Warm',
-    className: 'filter-warm'
+    name: 'Warm',
+    className: 'filter-warm',
+    style: 'brightness(1.1) contrast(1.1) sepia(0.5) hue-rotate(30deg)',
   },
   {
-    effectName: 'Bright',
-    className: 'filter-bright'
+    name: 'Hot',
+    className: 'filter-hot',
+    style: 'brightness(1.2) contrast(1.2) sepia(0.7) hue-rotate(15deg)',
   },
   {
-    effectName: 'Very Bright',
-    className: 'filter-very-bright'
+    name: 'Bright',
+    className: 'filter-bright',
+    style: 'brightness(1.5) contrast(1.2)',
+  },
+
+  {
+    name: 'Black & White',
+    className: 'filter-black-white',
+    style: 'grayscale(100%) contrast(1.2)',
   },
   {
-    effectName: 'Black & White',
-    className: 'filter-black-white'
+    name: 'Very Bright',
+    className: 'filter-very-bright',
+    style: 'brightness(2) contrast(1.3)',
   },
 ];

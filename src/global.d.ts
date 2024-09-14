@@ -154,8 +154,9 @@ interface OrderInfoType {
   imageSelectEffect: string;
   imageSelectSticker: string
   effect: {
-    effectName: string;
+    name: string;
     className: string;
+    style: string;
   }
 }
 
@@ -172,4 +173,24 @@ interface StoreType {
   orderInfo: OrderInfoType;
   shootingMethod: string;
   machineConfigs: MachineConfigsType;
+}
+
+interface PositionFramesType {
+  cutting: {
+    typeA: { x: number; y: number; w: number; h: number }[][];
+    typeB: { x: number; y: number; w: number; h: number }[][];
+    typeC: { x: number; y: number; w: number; h: number }[][];
+  };
+  regular: {
+    typeA: { x: number; y: number; w: number; h: number }[][];
+    typeB: { x: number; y: number; w: number; h: number }[][];
+    typeC: { x: number; y: number; w: number; h: number }[][];
+    typeD: { x: number; y: number; w: number; h: number }[][];
+    typeE: { x: number; y: number; w: number; h: number }[][];
+    typeF: { x: number; y: number; w: number; h: number }[][];
+  };
+  wide: {
+    typeA: { x: number; y: number; w: number; h: number }[][];
+    typeB: { x: number; y: number; w: number; h: number }[][];
+  };
 }

@@ -8,7 +8,7 @@ import {
   CONST_MODE_REGULAR,
   CONST_TYPE_FRAMES_FOR_DOUBLE,
 } from '../libs/constants';
-import { checkIsTouch } from '../libs/common';
+import { checkIsTouch, loadImage } from '../libs/common';
 import { useNavigate } from 'react-router-dom';
 import { Countdown } from '../components/countdown';
 
@@ -27,7 +27,7 @@ export default function SelectEffect() {
     return isDouble;
   };
 
-  const chunkPhotoEffects = (items: { effectName: string; className: string }[], size: number) => {
+  const chunkPhotoEffects = (items: { name: string; className: string; style: string }[], size: number) => {
     const _list = [];
     const _length = items.length;
     for (let i = 0; i < _length; i += size) {
@@ -39,7 +39,7 @@ export default function SelectEffect() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isDouble, setIsDouble] = useState<boolean>(checkIsDoubleFrames());
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [photoEffects, setPhotoEffects] = useState<{ effectName: string; className: string }[][]>(
+  const [photoEffects, setPhotoEffects] = useState<{ name: string; className: string; style: string }[][]>(
     chunkPhotoEffects(CONST_LIST_EFFECTS, 6),
   );
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -99,7 +99,7 @@ export default function SelectEffect() {
 
   const handleOnTouchEndTogglePhoto = (
     event: TouchEventAndMouseEventType,
-    effect: { effectName: string; className: string },
+    effect: { name: string; className: string; style: string },
   ) => {
     event.stopPropagation();
     if (!checkIsTouch(event, isTouchTogglePhoto)) return;
@@ -134,12 +134,41 @@ export default function SelectEffect() {
     setCurrentIndex(newIndex);
   };
 
-  const handleOnTouchStartNextPage = (event: TouchEventAndMouseEventType) => {
+  const handleConvertCanvasToBase64 = async (
+    pathImageEffect: string,
+    pathFrame: string,
+    effectName: string,
+    width: number,
+    height: number,
+  ) => {
+    const results = await Promise.all([loadImage(pathImageEffect), loadImage(pathFrame)]);
+    const [elementImageEffect, elementFrame] = results;
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext('2d');
+    context.filter = 'grayscale(100%)';
+    context.drawImage(elementImageEffect, 0, 0, width, height);
+    context.filter = 'none';
+    context.drawImage(elementFrame, 0, 0, width, height);
+    const base64String = canvas.toDataURL('image/png');
+    return base64String;
+  };
+
+  const handleOnTouchStartNextPage = async (event: TouchEventAndMouseEventType) => {
     if (!checkIsTouch(event, isTouchNextPage)) return;
 
+    const base64String = await handleConvertCanvasToBase64(
+      store.orderInfo.imageSelectPhoto,
+      store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame,
+      store.orderInfo.effect.name,
+      CONST_MOCK_DATA_FRAME.width,
+      CONST_MOCK_DATA_FRAME.height,
+    );
+    setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, imageSelectEffect: base64String } }));
     setTimeout(() => {
       navigate('/select-sticker');
-    }, 250);
+    }, 500);
   };
 
   return (
@@ -155,7 +184,7 @@ export default function SelectEffect() {
               </div>
 
               <div className='absolute left-0 top-[35px] flex w-full items-center justify-center text-[30px] text-custom-style-1'>
-                <span>{store.orderInfo.effect.effectName}</span>
+                <span>{store.orderInfo.effect.name}</span>
               </div>
             </div>
 
@@ -172,7 +201,7 @@ export default function SelectEffect() {
             <div className='flex h-[645px] w-full -translate-y-4 items-center justify-center'>
               {!isDouble ? (
                 <div className='relative mt-3 flex h-full w-[430px] items-center justify-center'>
-                  <div className={`absolute inset-0 ${store.orderInfo.effect.className}`}>
+                  <div className='absolute inset-0' style={{ filter: store.orderInfo.effect.style }}>
                     <DisplayImage src={store.orderInfo.imageSelectPhoto} />
                   </div>
 
@@ -242,12 +271,12 @@ export default function SelectEffect() {
                     onTouchMove={(event) => handleOnTouchMove(event)}
                     onTouchEnd={(event) => handleOnTouchEnd(event)}
                   >
-                    <div className='flex flex-1 items-center'>
+                    <div className='flex flex-1 items-center overflow-x-hidden pb-10 pt-16'>
                       {photoEffects?.map((effect, index) => {
                         return (
                           <div
                             key={index}
-                            className='grid h-full min-w-full grid-cols-3 content-center justify-items-center gap-x-6 gap-y-20 transition-transform duration-300'
+                            className='grid h-full min-w-full grid-cols-3 content-start justify-items-center gap-x-6 gap-y-20 transition-transform duration-300'
                             style={{ transform: `translate3d(-${currentIndex * 100}%, 0, 0)` }}
                           >
                             {effect?.map((eff, index) => {
@@ -259,7 +288,7 @@ export default function SelectEffect() {
                                   onMouseUp={(event) => handleOnTouchEndTogglePhoto(event, eff)}
                                   onTouchMove={(event) => handleOnMoveTogglePhoto(event)}
                                 >
-                                  {store.orderInfo.effect.effectName === eff.effectName ? (
+                                  {store.orderInfo.effect.name === eff.name ? (
                                     <div className='relative h-full w-full'>
                                       <div
                                         className={`absolute -top-[32px] left-1/2 h-[30.8px] w-[34.8px] -translate-x-1/2`}
@@ -270,7 +299,7 @@ export default function SelectEffect() {
                                       </div>
 
                                       <div className='h-full w-full rounded-lg border-4 border-dashed border-custom-style-2-1 p-1'>
-                                        <div className={`h-full w-full ${eff.className}`}>
+                                        <div className='${eff.className} h-full w-full' style={{ filter: eff.style }}>
                                           <DisplayImage
                                             src={store.pathFolderUserPhotos + store.orderInfo.selectedPhotos[0]}
                                           />
@@ -278,7 +307,7 @@ export default function SelectEffect() {
                                       </div>
                                     </div>
                                   ) : (
-                                    <div className={`h-full w-full ${eff.className}`}>
+                                    <div className='h-full w-full' style={{ filter: eff.style }}>
                                       <DisplayImage
                                         src={store.pathFolderUserPhotos + store.orderInfo.selectedPhotos[0]}
                                       />
@@ -286,7 +315,7 @@ export default function SelectEffect() {
                                   )}
 
                                   <div className='absolute -bottom-8 left-0 right-0 select-none text-center font-rokkitt text-[18px]'>
-                                    <span>{eff.effectName}</span>
+                                    <span>{eff.name}</span>
                                   </div>
                                 </div>
                               );
@@ -323,7 +352,7 @@ export default function SelectEffect() {
                   </div>
 
                   <div
-                    className='absolute left-[27px] top-[276px] h-[50px] w-[50px] p-1'
+                    className='absolute left-[27px] top-[260px] h-[50px] w-[50px] p-1'
                     onTouchStart={(event) => handleOnTouchStartPrev(event)}
                     onMouseDown={(event) => handleOnTouchStartPrev(event)}
                   >
@@ -333,7 +362,7 @@ export default function SelectEffect() {
                   </div>
 
                   <div
-                    className='absolute right-[27px] top-[276px] h-[50px] w-[50px] p-1'
+                    className='absolute right-[27px] top-[260px] h-[50px] w-[50px] p-1'
                     onTouchStart={(event) => handleOnTouchStartNext(event)}
                     onMouseDown={(event) => handleOnTouchStartNext(event)}
                   >

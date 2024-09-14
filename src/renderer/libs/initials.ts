@@ -118,8 +118,9 @@ export const INIT_STORE: StoreType = {
     imageSelectEffect: '',
     imageSelectSticker: '',
     effect: {
-      effectName: 'Original',
-      className: ''
+      name: 'Original',
+      className: '',
+      style: '',
     }
   },
   shootingMethod: '',

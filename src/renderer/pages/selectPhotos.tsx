@@ -146,13 +146,14 @@ export default function SelectPhotos() {
     modeFrame: string,
     typeFrame: string,
     selectedPhotos: string[],
+    positionFrames: PositionFramesType,
   ) => {
     const canvas = document.createElement('canvas');
     canvas.width = width;
     canvas.height = height;
     const context = canvas.getContext('2d');
 
-    const object = CONST_POSITION_FRAMES[modeFrame as keyof typeof CONST_POSITION_FRAMES];
+    const object = positionFrames[modeFrame as keyof typeof positionFrames];
     const listPosition = object[typeFrame as keyof typeof object];
 
     const loadImage = (photo: string, index: number): Promise<void> => {
@@ -184,6 +185,7 @@ export default function SelectPhotos() {
       CONST_MOCK_DATA_FRAME.modeFrame,
       CONST_MOCK_DATA_FRAME.typeFrame,
       store.orderInfo.selectedPhotos,
+      CONST_POSITION_FRAMES,
     );
     setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, imageSelectPhoto: base64String } }));
 
@@ -320,12 +322,12 @@ export default function SelectPhotos() {
                     onTouchMove={(event) => handleOnTouchMove(event)}
                     onTouchEnd={(event) => handleOnTouchEnd(event)}
                   >
-                    <div className='flex flex-1 items-center overflow-x-hidden'>
+                    <div className='flex flex-1 items-center overflow-x-hidden pb-10 pt-16'>
                       {resizedPhotos?.map((photos, index) => {
                         return (
                           <div
                             key={index}
-                            className='grid h-full min-w-full grid-cols-3 content-center justify-items-center gap-x-6 gap-y-20 transition-transform duration-300'
+                            className='grid h-full min-w-full grid-cols-3 content-start justify-items-center gap-x-6 gap-y-20 transition-transform duration-300'
                             style={{ transform: `translate3d(-${currentIndex * 100}%, 0, 0)` }}
                           >
                             {photos?.map((photo, index) => {
@@ -393,7 +395,7 @@ export default function SelectPhotos() {
                   </div>
 
                   <div
-                    className='absolute left-[27px] top-[276px] h-[50px] w-[50px] p-1'
+                    className='absolute left-[27px] top-[260px] h-[50px] w-[50px] p-1'
                     onTouchStart={(event) => handleOnTouchStartPrev(event)}
                     onMouseDown={(event) => handleOnTouchStartPrev(event)}
                   >
@@ -403,7 +405,7 @@ export default function SelectPhotos() {
                   </div>
 
                   <div
-                    className='absolute right-[27px] top-[276px] h-[50px] w-[50px] p-1'
+                    className='absolute right-[27px] top-[260px] h-[50px] w-[50px] p-1'
                     onTouchStart={(event) => handleOnTouchStartNext(event)}
                     onMouseDown={(event) => handleOnTouchStartNext(event)}
                   >

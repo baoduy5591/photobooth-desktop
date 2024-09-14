@@ -24,3 +24,13 @@ export const chunkItems = (items: string[], size: number) => {
 
   return chunkList;
 }
+
+export const loadImage = (pathImage: string): Promise<HTMLImageElement> => {
+  return new Promise((resolve) => {
+    const image = new Image();
+    image.src = pathImage;
+    image.onload = () => {
+      resolve(image);
+    };
+  });
+};
