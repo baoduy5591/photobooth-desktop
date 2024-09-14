@@ -137,7 +137,9 @@ export default function SelectEffect() {
   const handleOnTouchStartNextPage = (event: TouchEventAndMouseEventType) => {
     if (!checkIsTouch(event, isTouchNextPage)) return;
 
-    // navigate('/select-sticker');
+    setTimeout(() => {
+      navigate('/select-sticker');
+    }, 250);
   };
 
   return (
@@ -224,7 +226,7 @@ export default function SelectEffect() {
               <div className='mb-3'>
                 <Countdown
                   url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
-                  time={10}
+                  time={90}
                   routeGoToBack='/select-photos'
                 />
               </div>

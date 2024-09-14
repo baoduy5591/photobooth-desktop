@@ -186,7 +186,10 @@ export default function SelectPhotos() {
       store.orderInfo.selectedPhotos,
     );
     setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, imageSelectPhoto: base64String } }));
-    navigate('/select-effect');
+
+    setTimeout(() => {
+      navigate('/select-effect');
+    }, 250);
   };
 
   useEffect(() => {
