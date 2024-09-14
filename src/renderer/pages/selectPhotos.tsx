@@ -317,12 +317,12 @@ export default function SelectPhotos() {
                     onTouchMove={(event) => handleOnTouchMove(event)}
                     onTouchEnd={(event) => handleOnTouchEnd(event)}
                   >
-                    <div className='flex h-[520px] overflow-hidden'>
+                    <div className='flex flex-1 items-center overflow-x-hidden'>
                       {resizedPhotos?.map((photos, index) => {
                         return (
                           <div
                             key={index}
-                            className={`mt-20 grid h-full min-w-full grid-cols-3 content-start justify-items-center gap-x-6 gap-y-20 transition-transform duration-300`}
+                            className='grid h-full min-w-full grid-cols-3 content-center justify-items-center gap-x-6 gap-y-20 transition-transform duration-300'
                             style={{ transform: `translate3d(-${currentIndex * 100}%, 0, 0)` }}
                           >
                             {photos?.map((photo, index) => {
@@ -363,7 +363,7 @@ export default function SelectPhotos() {
                       })}
                     </div>
 
-                    <div className='flex h-[100px] w-full items-center justify-center gap-x-4'>
+                    <div className='flex h-[75px] w-full items-center justify-center gap-x-4'>
                       {[...Array(resizedPhotos.length)]
                         .map((_, i) => i)
                         .map((item, index) => {
