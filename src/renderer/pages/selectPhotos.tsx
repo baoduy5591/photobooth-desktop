@@ -208,9 +208,9 @@ export default function SelectPhotos() {
     <div className='relative h-screen w-screen overflow-hidden'>
       <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />
 
-      <div className='absolute inset-0 p-6'>
+      <div className='absolute inset-0 py-6'>
         <div className='flex h-full w-full items-center justify-center'>
-          <div className='flex h-full w-[550px] flex-col items-center justify-center'>
+          <div className='flex h-full w-[650px] flex-col items-center justify-center'>
             <div className='relative h-[143.2px] w-[276.8px]'>
               <div className='h-full w-full'>
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[37]?.relPath} />

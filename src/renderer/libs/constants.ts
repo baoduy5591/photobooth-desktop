@@ -26,12 +26,12 @@ export const CONST_WINDOW_OS = 'win32';
 export const CONST_DARWIN_OS = 'darwin';
 
 export const CONST_MOCK_DATA_FRAME = {
-  modeFrame: 'regular',
-  typeFrame: 'typeC',
-  quantityImages: 3,
-  width: 1800,
-  height: 1200,
-  frame: 'frames/regular/typeC/normal/00000.png',
+  modeFrame: 'cutting',
+  typeFrame: 'typeA',
+  quantityImages: 4,
+  width: 1200,
+  height: 1800,
+  frame: 'frames/cutting/typeA/normal/00000.png',
 };
 
 export const CONST_POSITION_FRAMES: PositionFramesType = {
@@ -193,3 +193,11 @@ export const CONST_LIST_EFFECTS = [
     style: 'brightness(2) contrast(1.3)',
   },
 ];
+
+export const CONST_LIST_TAB_STICKER: string[] = [
+  'Hot',
+  'Birthday',
+  'Flowers',
+  'Heart',
+  'Others'
+]
