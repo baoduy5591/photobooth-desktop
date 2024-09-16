@@ -4,16 +4,19 @@ import { Countdown } from '../components/countdown';
 import { DisplayImage } from '../components/displayImage';
 import { useStore } from '../context/store';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Shooting() {
   const { store } = useStore();
+  const [isStartLiveView, setIsStartLiveView] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
   const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
+    if (!isStartLiveView) return;
+
     const ws = new WebSocket('ws://127.0.0.1:8080/video');
     ws.binaryType = 'blob';
     ws.onmessage = (event) => {
@@ -29,6 +32,16 @@ export default function Shooting() {
 
     return () => {
       ws.close();
+    };
+  }, [isStartLiveView]);
+
+  useEffect(() => {
+    const ws = new WebSocket('ws://127.0.0.1:8080/camera');
+    ws.onopen = () => {
+      ws.send('startlv');
+    };
+    ws.onmessage = (event) => {
+      console.log(event.data);
     };
   }, []);
 
