@@ -58,21 +58,15 @@ export default function Shooting() {
 
       if (data.action === 'takephoto') {
         if (data.result === 'OK') {
-          setShootingPhoto((prevShootingPhoto) => {
-            if (!shootingPhoto.includes(data.message)) {
-              console.log('vao day khong', data.message);
-              return [...prevShootingPhoto, data.message];
-            } else {
-              console.log('vao day khong  fdfdfdfdf', data.message);
-              return [...prevShootingPhoto];
-            }
-          });
+          setShootingPhoto((prevShootingPhoto) => [...prevShootingPhoto, data.message]);
         }
       }
     };
-  }, []);
 
-  console.log('shootingPhoto', shootingPhoto);
+    return () => {
+      ws.close();
+    };
+  }, []);
 
   useEffect(() => {
     if (shootingPhoto.length >= CONST_MOCK_DATA_FRAME.quantityImages) {
