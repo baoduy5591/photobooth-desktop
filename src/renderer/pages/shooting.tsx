@@ -195,25 +195,25 @@ export default function Shooting() {
               <div className='absolute inset-0 flex justify-center p-4'>
                 {CONST_MOCK_DATA_FRAME.ratio === 0.7 && (
                   <div className='h-[220px] w-[154px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
-                    <DisplayImage src={store.pathFolderUserPhotos + 'resize_001.jpg'} />
+                    <DisplayImage src={store.pathFolderUserPhotos + shootingPhotos.slice(-1)[0]} />
                   </div>
                 )}
 
                 {CONST_MOCK_DATA_FRAME.ratio === 1 && (
                   <div className='h-[220px] w-[220px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
-                    <DisplayImage src={store.pathFolderUserPhotos + 'resize_001.jpg'} />
+                    <DisplayImage src={store.pathFolderUserPhotos + shootingPhotos.slice(-1)[0]} />
                   </div>
                 )}
 
                 {CONST_MOCK_DATA_FRAME.ratio === 1.5 && (
                   <div className='h-[180px] w-[270px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
-                    <DisplayImage src={store.pathFolderUserPhotos + 'resize_001.jpg'} />
+                    <DisplayImage src={store.pathFolderUserPhotos + shootingPhotos.slice(-1)[0]} />
                   </div>
                 )}
 
                 {CONST_MOCK_DATA_FRAME.ratio === 1.4 && (
                   <div className='h-[180px] w-[252px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
-                    <DisplayImage src={store.pathFolderUserPhotos + 'resize_001.jpg'} />
+                    <DisplayImage src={store.pathFolderUserPhotos + shootingPhotos.slice(-1)[0]} />
                   </div>
                 )}
               </div>

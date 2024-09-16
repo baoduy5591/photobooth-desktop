@@ -101,10 +101,14 @@ export default function SelectSticker() {
     setCurrentIndex(newIndex);
   };
 
-  const handleOnTouchStartNextPage = (event: TouchEventAndMouseEventType) => {
+  const handleOnTouchStartNextPage = async (event: TouchEventAndMouseEventType) => {
     if (!checkIsTouch(event, isTouchNextPage)) return;
 
-    navigate('/complete');
+    const data = { imageBase64: store.orderInfo.imageSelectEffect, modeFrame: CONST_MOCK_DATA_FRAME.modeFrame };
+    const savePhoto = await window.api.saveImage(data);
+    if (savePhoto) {
+      navigate('/complete');
+    }
   };
 
   const handleOnTouchEndChooseSticker = (event: TouchEventAndMouseEventType, sticker: PathResourceType) => {

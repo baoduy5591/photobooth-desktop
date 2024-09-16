@@ -2,6 +2,9 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import Resources from './utils/resources';
 import Paths from './utils/paths';
 import UserPhotos from './utils/userPhotos';
+import fs from 'fs';
+import path from 'path';
+import Images from './utils/images';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -79,7 +82,17 @@ ipcMain.handle('get-user-resized-photos', () => {
   const userPhotos = new UserPhotos();
   const resizedPhotos = userPhotos.getPhotosResized();
   return resizedPhotos;
-})
+});
+
+// save image
+ipcMain.handle('save-image', async (event, data) => {
+  const pathImage = path.join(Paths.getFolderUserPhotos(), `print_${data.modeFrame}.jpg`)
+  const imageBase64 = data.imageBase64.replace(/^data:image\/png;base64,/, "");
+  const images = new Images(pathImage, imageBase64);
+  const saveImage = images.saveImage();
+  return saveImage;
+  
+});
 
 app.on('ready', createWindow);
 

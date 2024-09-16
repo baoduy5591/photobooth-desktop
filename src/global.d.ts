@@ -18,6 +18,7 @@ interface Window {
     getOrderInfoById: (value) => Promise;
     getMachineConfigs: () => Promise;
     getUserResizedPhotos: () => Promise;
+    saveImage: (data: { imageBase64: string; modeFrame: string }) => Promise;
   };
 }
 
