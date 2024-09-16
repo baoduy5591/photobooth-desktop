@@ -59,6 +59,7 @@ export default function Shooting() {
       if (data.action === 'takephoto') {
         if (data.result === 'OK') {
           setShootingPhoto((prevShootingPhoto) => [...prevShootingPhoto, data.message]);
+          ws.send('record');
         }
       }
     };
