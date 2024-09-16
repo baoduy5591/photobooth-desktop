@@ -86,7 +86,7 @@ ipcMain.handle('get-user-resized-photos', () => {
 
 // save image
 ipcMain.handle('save-image', async (event, data) => {
-  const pathImage = path.join(Paths.getFolderUserPhotos(), `print_${data.modeFrame}.jpg`)
+  const pathImage = path.join(Paths.getFolderUserPhotosForRenderer(), `print_${data.modeFrame}.jpg`)
   const imageBase64 = data.imageBase64.replace(/^data:image\/png;base64,/, "");
   const images = new Images(pathImage, imageBase64);
   const saveImage = images.saveImage();
