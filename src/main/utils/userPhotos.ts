@@ -6,7 +6,7 @@ class UserPhotos {
   getPhotosResized() {
     const pathUserPhotos = Paths.getFolderUserPhotos();
     const listUserPhotos = fs.readdirSync(pathUserPhotos);
-    const filterPhotos = listUserPhotos.filter(photo => photo.endsWith('.jpg') && photo.startsWith('resize_00'));
+    const filterPhotos = listUserPhotos.filter(photo => photo.endsWith('.jpg') && photo.startsWith('converted_photo_'));
     return filterPhotos;
   }
 }
