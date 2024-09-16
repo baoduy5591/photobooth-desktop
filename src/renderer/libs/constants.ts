@@ -27,11 +27,11 @@ export const CONST_DARWIN_OS = 'darwin';
 
 export const CONST_MOCK_DATA_FRAME = {
   modeFrame: 'cutting',
-  typeFrame: 'typeA',
+  typeFrame: 'typeB',
   quantityImages: 6,
   width: 1200,
   height: 1800,
-  frame: 'frames/cutting/typeA/normal/00000.png',
+  frame: 'frames/cutting/typeB/normal/00000.png',
   ratio: 1
 };
 
