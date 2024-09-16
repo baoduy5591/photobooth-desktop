@@ -58,9 +58,11 @@ export default function Shooting() {
 
       if (data.action === 'takephoto') {
         if (data.result === 'OK') {
-          if (!shootingPhoto.includes(data.message)) {
-            setShootingPhoto((prevShootingPhoto) => [...prevShootingPhoto, data.message]);
-          }
+          setShootingPhoto((prevShootingPhoto) => {
+            if (!shootingPhoto.includes(data.message)) {
+              return [...prevShootingPhoto, data.message];
+            }
+          });
         }
       }
     };
