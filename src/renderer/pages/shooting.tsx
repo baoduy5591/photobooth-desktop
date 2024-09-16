@@ -133,7 +133,7 @@ export default function Shooting() {
                 <Countdown
                   url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
                   time={90}
-                  routeGoToBack='/enter-code'
+                  routeGoToBack='/shooting-method'
                 />
               </div>
             </div>
