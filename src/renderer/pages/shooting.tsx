@@ -60,8 +60,10 @@ export default function Shooting() {
         if (data.result === 'OK') {
           setShootingPhoto((prevShootingPhoto) => {
             if (!shootingPhoto.includes(data.message)) {
+              console.log('vao day khong', data.message);
               return [...prevShootingPhoto, data.message];
             } else {
+              console.log('vao day khong  fdfdfdfdf', data.message);
               return [...prevShootingPhoto];
             }
           });
@@ -69,6 +71,8 @@ export default function Shooting() {
       }
     };
   }, []);
+
+  console.log('shootingPhoto', shootingPhoto);
 
   useEffect(() => {
     if (shootingPhoto.length >= CONST_MOCK_DATA_FRAME.quantityImages) {
