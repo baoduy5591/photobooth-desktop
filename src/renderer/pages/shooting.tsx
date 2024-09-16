@@ -10,7 +10,7 @@ import { CONST_COUNTDOWN_METHOD, CONST_MOCK_DATA_FRAME } from '../libs/constants
 export default function Shooting() {
   const { store } = useStore();
   const [isStartLiveView, setIsStartLiveView] = useState<boolean>(false);
-  const [shootingPhoto, setShootingPhoto] = useState<{ action: string; result: string; message: string }[]>([]);
+  const [shootingPhoto, setShootingPhoto] = useState<string[]>([]);
 
   const navigate = useNavigate();
 
@@ -48,24 +48,29 @@ export default function Shooting() {
       }
     };
     ws.onmessage = (event) => {
-      if (event.data.action === 'startlv' && event.data.result === 'OK') {
+      const data = JSON.parse(event.data);
+      if (data.action === 'startlv' && data.result === 'OK') {
         setIsStartLiveView(true);
       }
 
-      if (event.data.action === 'record' && event.data.result === 'OK') {
+      if (data.action === 'record' && data.result === 'OK') {
       }
 
-      if (event.data.action === 'takephoto') {
-        if (event.data.result === 'OK') {
-          setShootingPhoto((prevShootingPhoto) => [...prevShootingPhoto, event.data]);
+      if (data.action === 'takephoto') {
+        if (data.result === 'OK') {
+          if (!shootingPhoto.includes(data.message)) {
+            setShootingPhoto((prevShootingPhoto) => [...prevShootingPhoto, data.message]);
+          }
         }
       }
     };
   }, []);
 
-  // useEffect(() => {
-  //   navigate('/select-photos');
-  // }, []);
+  useEffect(() => {
+    if (shootingPhoto.length >= CONST_MOCK_DATA_FRAME.quantityImages) {
+      navigate('/select-photos');
+    }
+  }, [shootingPhoto]);
 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
