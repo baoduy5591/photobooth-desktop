@@ -61,6 +61,8 @@ export default function Shooting() {
           setShootingPhoto((prevShootingPhoto) => {
             if (!shootingPhoto.includes(data.message)) {
               return [...prevShootingPhoto, data.message];
+            } else {
+              return [...prevShootingPhoto];
             }
           });
         }
