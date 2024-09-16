@@ -90,7 +90,7 @@ ipcMain.handle('save-image', async (event, data) => {
   const imageBase64 = data.imageBase64.replace(/^data:image\/png;base64,/, "");
   const images = new Images(pathImage, imageBase64);
   const saveImage = images.saveImage();
-  return true;
+  return saveImage;
   
 });
 
