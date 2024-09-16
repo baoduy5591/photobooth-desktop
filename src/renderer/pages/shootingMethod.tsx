@@ -20,7 +20,9 @@ export default function ShootingMethod() {
     if (!checkIsTouch(event, isTouchChooseCountdown)) return;
 
     setStore((store) => ({ ...store, shootingMethod: method }));
-    navigate('/shooting');
+    setTimeout(() => {
+      navigate('/shooting');
+    }, 500);
   };
 
   return (

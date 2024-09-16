@@ -5,10 +5,12 @@ import { DisplayImage } from '../components/displayImage';
 import { useStore } from '../context/store';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
+import { CONST_COUNTDOWN_METHOD, CONST_MOCK_DATA_FRAME } from '../libs/constants';
 
 export default function Shooting() {
   const { store } = useStore();
   const [isStartLiveView, setIsStartLiveView] = useState<boolean>(false);
+  const [shootingPhoto, setShootingPhoto] = useState<{ action: string; result: string; message: string }[]>([]);
 
   const navigate = useNavigate();
 
@@ -38,16 +40,32 @@ export default function Shooting() {
   useEffect(() => {
     const ws = new WebSocket('ws://127.0.0.1:8080/camera');
     ws.onopen = () => {
+      ws.send(`setphoto-img:r=2;w=${0.7}`);
       ws.send('startlv');
+      ws.send('record');
+      if (store.shootingMethod === CONST_COUNTDOWN_METHOD) {
+        ws.send('lock');
+      }
     };
     ws.onmessage = (event) => {
-      console.log(event.data);
+      if (event.data.action === 'startlv' && event.data.result === 'OK') {
+        setIsStartLiveView(true);
+      }
+
+      if (event.data.action === 'record' && event.data.result === 'OK') {
+      }
+
+      if (event.data.action === 'takephoto') {
+        if (event.data.result === 'OK') {
+          setShootingPhoto((prevShootingPhoto) => [...prevShootingPhoto, event.data]);
+        }
+      }
     };
   }, []);
 
-  useEffect(() => {
-    navigate('/select-photos');
-  }, []);
+  // useEffect(() => {
+  //   navigate('/select-photos');
+  // }, []);
 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
@@ -128,9 +146,9 @@ export default function Shooting() {
               </div>
 
               <div className='absolute left-[109px] top-[20px] text-[36px] text-custom-style-1'>
-                <span className='text-custom-style-2-1'>1</span>
+                <span className='text-custom-style-2-1'>{shootingPhoto.length}</span>
                 <span>/</span>
-                <span>6</span>
+                <span>{CONST_MOCK_DATA_FRAME.quantityImages}</span>
               </div>
             </div>
 
