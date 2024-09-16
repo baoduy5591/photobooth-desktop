@@ -10,7 +10,7 @@ import { CONST_COUNTDOWN_METHOD, CONST_MOCK_DATA_FRAME } from '../libs/constants
 export default function Shooting() {
   const { store } = useStore();
   const [isStartLiveView, setIsStartLiveView] = useState<boolean>(false);
-  const [shootingPhoto, setShootingPhoto] = useState<string[]>([]);
+  const [shootingPhotos, setShootingPhotos] = useState<string[]>([]);
 
   const navigate = useNavigate();
 
@@ -40,7 +40,7 @@ export default function Shooting() {
   useEffect(() => {
     const ws = new WebSocket('ws://127.0.0.1:8080/camera');
     ws.onopen = () => {
-      ws.send(`setphoto-img:r=2;w=${0.7}`);
+      ws.send(`setphoto-img:r=2;w=${CONST_MOCK_DATA_FRAME.ratio}`);
       ws.send('startlv');
       ws.send('record');
       if (store.shootingMethod === CONST_COUNTDOWN_METHOD) {
@@ -58,7 +58,15 @@ export default function Shooting() {
 
       if (data.action === 'takephoto') {
         if (data.result === 'OK') {
-          setShootingPhoto((prevShootingPhoto) => [...prevShootingPhoto, data.message]);
+          setShootingPhotos((prevShootingPhoto) => {
+            const newListShootingPhoto = [...prevShootingPhoto, data.message];
+            if (newListShootingPhoto.length >= CONST_MOCK_DATA_FRAME.quantityImages) {
+              navigate('/select-photos');
+              return newListShootingPhoto;
+            }
+
+            return newListShootingPhoto;
+          });
           ws.send('record');
         }
       }
@@ -68,12 +76,6 @@ export default function Shooting() {
       ws.close();
     };
   }, []);
-
-  useEffect(() => {
-    if (shootingPhoto.length >= CONST_MOCK_DATA_FRAME.quantityImages) {
-      navigate('/select-photos');
-    }
-  }, [shootingPhoto]);
 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
@@ -121,10 +123,31 @@ export default function Shooting() {
                 <img ref={imgRef} className='h-full w-full' />
 
                 <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
-                  <div className='h-[539.4px] w-[686px]'>
+                  <div className='h-[500px] w-[600px]'>
                     <DisplayImage src={store.pathFolderAssets + store.resources.icons[35]?.relPath} />
                   </div>
                 </div>
+
+                {CONST_MOCK_DATA_FRAME.ratio === 0.7 && (
+                  <div className='absolute inset-0 flex justify-between'>
+                    <div className='h-full w-[289.3px] bg-custom-style-6-1'></div>
+                    <div className='h-full w-[289.3px] bg-custom-style-6-1'></div>
+                  </div>
+                )}
+
+                {CONST_MOCK_DATA_FRAME.ratio === 1 && (
+                  <div className='absolute inset-0 flex justify-between'>
+                    <div className='h-full w-[206.7px] bg-custom-style-6-1'></div>
+                    <div className='h-full w-[206.7px] bg-custom-style-6-1'></div>
+                  </div>
+                )}
+
+                {CONST_MOCK_DATA_FRAME.ratio === 1.4 && (
+                  <div className='absolute inset-0 flex justify-between'>
+                    <div className='h-full w-[41.3px] bg-custom-style-6-1'></div>
+                    <div className='h-full w-[41.3px] bg-custom-style-6-1'></div>
+                  </div>
+                )}
               </div>
 
               <div className='w-[570px]] absolute bottom-[23px] left-[28px] h-[90px] font-rokkitt text-[30px] text-custom-style-3-1'>
@@ -154,7 +177,7 @@ export default function Shooting() {
               </div>
 
               <div className='absolute left-[109px] top-[20px] text-[36px] text-custom-style-1'>
-                <span className='text-custom-style-2-1'>{shootingPhoto.length}</span>
+                <span className='text-custom-style-2-1'>{shootingPhotos.length}</span>
                 <span>/</span>
                 <span>{CONST_MOCK_DATA_FRAME.quantityImages}</span>
               </div>
@@ -165,7 +188,35 @@ export default function Shooting() {
             </div>
 
             <div className='w-[276.8px]] h-[286.5px] -translate-y-5'>
-              <DisplayImage src={store.pathFolderAssets + store.resources.icons[32]?.relPath} />
+              <div className='h-full w-full'>
+                <DisplayImage src={store.pathFolderAssets + store.resources.icons[32]?.relPath} />
+              </div>
+
+              <div className='absolute inset-0 flex justify-center p-4'>
+                {CONST_MOCK_DATA_FRAME.ratio === 0.7 && (
+                  <div className='h-[220px] w-[154px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
+                    <DisplayImage src={store.pathFolderUserPhotos + 'resize_001.jpg'} />
+                  </div>
+                )}
+
+                {CONST_MOCK_DATA_FRAME.ratio === 1 && (
+                  <div className='h-[220px] w-[220px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
+                    <DisplayImage src={store.pathFolderUserPhotos + 'resize_001.jpg'} />
+                  </div>
+                )}
+
+                {CONST_MOCK_DATA_FRAME.ratio === 1.5 && (
+                  <div className='h-[180px] w-[270px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
+                    <DisplayImage src={store.pathFolderUserPhotos + 'resize_001.jpg'} />
+                  </div>
+                )}
+
+                {CONST_MOCK_DATA_FRAME.ratio === 1.4 && (
+                  <div className='h-[180px] w-[252px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
+                    <DisplayImage src={store.pathFolderUserPhotos + 'resize_001.jpg'} />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

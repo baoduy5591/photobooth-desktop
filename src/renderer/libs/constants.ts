@@ -32,6 +32,7 @@ export const CONST_MOCK_DATA_FRAME = {
   width: 1200,
   height: 1800,
   frame: 'frames/cutting/typeA/normal/00000.png',
+  ratio: 1
 };
 
 export const CONST_POSITION_FRAMES: PositionFramesType = {
