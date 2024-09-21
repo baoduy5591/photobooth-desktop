@@ -165,6 +165,7 @@ export default function SelectEffect() {
       CONST_MOCK_DATA_FRAME.width,
       CONST_MOCK_DATA_FRAME.height,
     );
+
     setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, imageSelectEffect: base64String } }));
     setTimeout(() => {
       navigate('/select-sticker');
@@ -301,7 +302,7 @@ export default function SelectEffect() {
                                       <div className='h-full w-full rounded-lg border-4 border-dashed border-custom-style-2-1 p-1'>
                                         <div className='${eff.className} h-full w-full' style={{ filter: eff.style }}>
                                           <DisplayImage
-                                            src={store.pathFolderUserPhotos + '/' + store.orderInfo.selectedPhotos[0]}
+                                            src={store.pathFolderUserPhotos + store.orderInfo.selectedPhotos[0]}
                                           />
                                         </div>
                                       </div>
@@ -309,7 +310,7 @@ export default function SelectEffect() {
                                   ) : (
                                     <div className='h-full w-full' style={{ filter: eff.style }}>
                                       <DisplayImage
-                                        src={store.pathFolderUserPhotos + '/' + store.orderInfo.selectedPhotos[0]}
+                                        src={store.pathFolderUserPhotos + store.orderInfo.selectedPhotos[0]}
                                       />
                                     </div>
                                   )}

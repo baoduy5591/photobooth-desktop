@@ -159,7 +159,7 @@ export default function SelectPhotos() {
     const loadImage = (photo: string, index: number): Promise<void> => {
       return new Promise((resolve) => {
         const image = new Image();
-        image.src = store.pathFolderUserPhotos + '/' + photo;
+        image.src = store.pathFolderUserPhotos + photo;
         image.onload = () => {
           const position = listPosition[index];
           position.forEach((p) => {
@@ -244,7 +244,7 @@ export default function SelectPhotos() {
                     width={CONST_MOCK_DATA_FRAME.width}
                     height={CONST_MOCK_DATA_FRAME.height}
                     selectedPhotos={store.orderInfo.selectedPhotos}
-                    pathUserPhotos={store.pathFolderUserPhotos + '/'}
+                    pathUserPhotos={store.pathFolderUserPhotos}
                     modeFrame={CONST_MOCK_DATA_FRAME.modeFrame}
                     typeFrame={CONST_MOCK_DATA_FRAME.typeFrame}
                   />
@@ -260,7 +260,7 @@ export default function SelectPhotos() {
                       width={CONST_MOCK_DATA_FRAME.width}
                       height={CONST_MOCK_DATA_FRAME.height}
                       selectedPhotos={store.orderInfo.selectedPhotos}
-                      pathUserPhotos={store.pathFolderUserPhotos + '/'}
+                      pathUserPhotos={store.pathFolderUserPhotos}
                       modeFrame={CONST_MOCK_DATA_FRAME.modeFrame}
                       typeFrame={CONST_MOCK_DATA_FRAME.typeFrame}
                     />
@@ -275,7 +275,7 @@ export default function SelectPhotos() {
                       width={CONST_MOCK_DATA_FRAME.width}
                       height={CONST_MOCK_DATA_FRAME.height}
                       selectedPhotos={store.orderInfo.selectedPhotos}
-                      pathUserPhotos={store.pathFolderUserPhotos + '/'}
+                      pathUserPhotos={store.pathFolderUserPhotos}
                       modeFrame={CONST_MOCK_DATA_FRAME.modeFrame}
                       typeFrame={CONST_MOCK_DATA_FRAME.typeFrame}
                     />
@@ -351,13 +351,13 @@ export default function SelectPhotos() {
 
                                       <div className='h-full w-full rounded-lg border-4 border-dashed border-custom-style-2-1 p-1'>
                                         <div className='h-full w-full'>
-                                          <DisplayImage src={store.pathFolderUserPhotos + '/' + photo} />
+                                          <DisplayImage src={store.pathFolderUserPhotos + photo} />
                                         </div>
                                       </div>
                                     </div>
                                   ) : (
                                     <div className='h-full w-full'>
-                                      <DisplayImage src={store.pathFolderUserPhotos + '/' + photo} />
+                                      <DisplayImage src={store.pathFolderUserPhotos + photo} />
                                     </div>
                                   )}
                                 </div>

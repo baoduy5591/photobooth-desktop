@@ -33,7 +33,7 @@ rules.push(
     type: 'asset',
     parser: {
       dataUrlCondition: {
-        maxSize: 10 * 1024
+        maxSize: 1000 * 1024
       }
     }
   }

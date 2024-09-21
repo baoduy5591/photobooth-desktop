@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { INIT_STORE } from '../libs/initials';
 
 export default function SelectSticker() {
-  const { store } = useStore();
+  const { store, setStore } = useStore();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [selectedSticker, setSelectedSticker] = useState<
     (PathResourceType & { top: number; left: number; offsetX: number; offsetY: number })[]
@@ -107,6 +107,23 @@ export default function SelectSticker() {
     const data = { imageBase64: store.orderInfo.imageSelectEffect, modeFrame: CONST_MOCK_DATA_FRAME.modeFrame };
     const savePhoto = await window.api.saveImage(data);
     if (savePhoto) {
+      // reset store
+      setStore((prevStore) => ({
+        ...prevStore,
+        shootingMethod: '',
+        orderInfo: {
+          ...prevStore.orderInfo,
+          imageSelectEffect: '',
+          imageSelectPhoto: '',
+          imageSelectSticker: '',
+          modeFrame: '',
+          typeFrame: '',
+          quantityImages: 0,
+          selectedPhotos: [],
+          frame: '',
+          effect: { ...prevStore.orderInfo.effect, name: 'Original', className: '', style: '' },
+        },
+      }));
       navigate('/complete');
     }
   };

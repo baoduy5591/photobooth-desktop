@@ -26,7 +26,7 @@ class Paths {
   static getFolderUserPhotosForRenderer() {
     const isPackaged = app.isPackaged;
     if (isPackaged) {
-      const userPhotos = path.join(this.getFolderAppData(), 'photobooth', 'userPhotos');
+      const userPhotos = path.join(this.getFolderAppData(), 'photobooth', 'userPhotos/');
       if (!fs.existsSync(userPhotos)) {
         fs.mkdirSync(userPhotos);
       }

@@ -77,7 +77,9 @@ export default function Shooting() {
     };
   }, []);
 
-  console.log(store.pathFolderUserPhotos);
+  useEffect(() => {
+    navigate('/select-photos');
+  }, []);
 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>

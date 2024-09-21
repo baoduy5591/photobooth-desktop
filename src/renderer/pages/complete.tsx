@@ -17,40 +17,8 @@ export default function Complete() {
 
   const [values, setValues] = useState<string>('');
 
-  const handleOnTouchGetValue = (value: string) => {
-    if (values === CONST_PICTURE_TIME) return;
-
-    let newValues = values;
-    if (values === CONST_ERROR) {
-      newValues = '';
-    }
-
-    if (value === 'trash') {
-      newValues = '';
-    } else if (value === 'back') {
-      newValues = newValues.slice(0, newValues.length - 1);
-    } else {
-      newValues += value;
-    }
-
-    setValues(newValues);
-  };
-
   const handleOnTouchStart = () => {
     navigate('/home');
-  };
-
-  const handleOnTouchStartSubmit = async (value: string) => {
-    const data = await window.api.getOrderInfoById(value);
-    if (value === '2222') {
-      setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, ...data } }));
-      setValues(CONST_PICTURE_TIME);
-      setTimeout(() => {
-        navigate('/confirm-frame');
-      }, 1000);
-    } else {
-      setValues(CONST_ERROR);
-    }
   };
 
   return (
@@ -115,7 +83,7 @@ export default function Complete() {
                 <div className='relative h-[105px] w-[911px]'>
                   <div className='absolute left-4 top-4 h-full w-full rounded-l-full rounded-r-full bg-custom-style-3-1 opacity-20'></div>
 
-                  <div className='bg-custom-style-7-1 absolute left-0 top-0 flex h-full w-full items-center justify-start rounded-l-full rounded-r-full'>
+                  <div className='absolute left-0 top-0 flex h-full w-full items-center justify-start rounded-l-full rounded-r-full bg-custom-style-7-1'>
                     <div className='absolute -left-5 top-0 h-[100px] w-[100px]'>
                       <DisplayImage src={store.pathFolderAssets + store.resources.icons[47]?.relPath} />
                     </div>
@@ -129,7 +97,7 @@ export default function Complete() {
                 <div className='relative h-[105px] w-[911px]'>
                   <div className='absolute left-4 top-4 h-full w-full rounded-l-full rounded-r-full bg-custom-style-3-1 opacity-20'></div>
 
-                  <div className='bg-custom-style-8-1 absolute left-0 top-0 flex h-full w-full items-center justify-start rounded-l-full rounded-r-full'>
+                  <div className='absolute left-0 top-0 flex h-full w-full items-center justify-start rounded-l-full rounded-r-full bg-custom-style-8-1'>
                     <div className='absolute -left-5 top-0 h-[103px] w-[103px]'>
                       <DisplayImage src={store.pathFolderAssets + store.resources.icons[48]?.relPath} />
                     </div>
@@ -143,7 +111,7 @@ export default function Complete() {
                 <div className='relative h-[105px] w-[911px]'>
                   <div className='absolute left-4 top-4 h-full w-full rounded-l-full rounded-r-full bg-custom-style-3-1 opacity-20'></div>
 
-                  <div className='bg-custom-style-9-1 absolute left-0 top-0 flex h-full w-full items-center justify-start rounded-l-full rounded-r-full'>
+                  <div className='absolute left-0 top-0 flex h-full w-full items-center justify-start rounded-l-full rounded-r-full bg-custom-style-9-1'>
                     <div className='absolute -left-5 top-0 h-[100px] w-[100px]'>
                       <DisplayImage src={store.pathFolderAssets + store.resources.icons[49]?.relPath} />
                     </div>
