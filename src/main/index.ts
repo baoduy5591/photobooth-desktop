@@ -79,7 +79,7 @@ ipcMain.handle('get-order-info-by-id', async (event, value) => {
       quantitySelectedImages: 4,
       width: 1200,
       height: 1800,
-      frame: 'frames/cutting/typeA/special/00100.png',
+      frame: 'frames/cutting/typeA/special/00200.png',
       ratio: 1.5
     };
   }
@@ -126,7 +126,10 @@ ipcMain.handle('save-image', async (event, data) => {
   const images = new Images(pathImage, imageBase64);
   const saveImage = images.saveImage();
   // delete all file not folder
-  fs.rmSync(path.join(Paths.getFolderAppData(), 'photobooth', 'userPhotos'));
+  const files = fs.readdirSync(Paths.getFolderUserPhotos())
+  files.forEach((file) => {
+    fs.unlinkSync(path.join(Paths.getFolderUserPhotos(), file));
+  });
   return saveImage;
   
 });

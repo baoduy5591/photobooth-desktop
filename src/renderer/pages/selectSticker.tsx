@@ -397,8 +397,8 @@ export default function SelectSticker() {
             <div className='z-30 flex h-[800px] w-[580px] -translate-y-4 items-center justify-center rounded-3xl border-2 border-dashed border-custom-style-2-1 bg-custom-style-1'>
               <div ref={frameRef} className='relative flex h-[645px] w-[430px] items-center justify-center'>
                 <div className='h-full w-full'>
-                  <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} />
-                  {/* <DisplayImage src={store.orderInfo.imageSelectEffect} /> */}
+                  {/* <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} /> */}
+                  <DisplayImage src={store.orderInfo.imageSelectEffect} />
                 </div>
 
                 {selectedSticker?.map((sticker, index) => {
