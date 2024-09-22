@@ -17,9 +17,9 @@ export default function SelectPhotos() {
   const { store, setStore } = useStore();
 
   const checkIsDoubleFrames = () => {
-    // const { modeFrame, typeFrame } = store.orderInfo;
+    const { modeFrame, typeFrame } = store.orderInfo;
     // use mock data frame
-    const { modeFrame, typeFrame } = CONST_MOCK_DATA_FRAME;
+    // const { modeFrame, typeFrame } = CONST_MOCK_DATA_FRAME;
     let isDouble = false;
     if (modeFrame === CONST_MODE_REGULAR && CONST_TYPE_FRAMES_FOR_DOUBLE.includes(typeFrame)) {
       isDouble = true;
@@ -114,7 +114,7 @@ export default function SelectPhotos() {
       }));
       return;
     } else {
-      if (store.orderInfo.selectedPhotos.length < CONST_MOCK_DATA_FRAME.quantitySelectedImages) {
+      if (store.orderInfo.selectedPhotos.length < store.orderInfo.quantitySelectedImages) {
         setStore((store) => ({
           ...store,
           orderInfo: {
@@ -181,10 +181,10 @@ export default function SelectPhotos() {
     if (!checkIsTouch(event, isTouchNextPage)) return;
 
     const base64String = await handleConvertCanvasToBase64(
-      CONST_MOCK_DATA_FRAME.width,
-      CONST_MOCK_DATA_FRAME.height,
-      CONST_MOCK_DATA_FRAME.modeFrame,
-      CONST_MOCK_DATA_FRAME.typeFrame,
+      store.orderInfo.width,
+      store.orderInfo.height,
+      store.orderInfo.modeFrame,
+      store.orderInfo.typeFrame,
       store.orderInfo.selectedPhotos,
       CONST_POSITION_FRAMES,
     );
@@ -220,7 +220,7 @@ export default function SelectPhotos() {
               <div className='absolute left-[110px] top-[30px] text-[32px] text-custom-style-1'>
                 <span className='text-custom-style-2-1'>{store.orderInfo.selectedPhotos.length}</span>
                 <span>/</span>
-                <span>{CONST_MOCK_DATA_FRAME.quantitySelectedImages}</span>
+                <span>{store.orderInfo.quantitySelectedImages}</span>
               </div>
             </div>
 
@@ -238,47 +238,47 @@ export default function SelectPhotos() {
               {!isDouble ? (
                 <div className='relative mt-3 flex h-full w-[430px] items-center justify-center'>
                   <div className='absolute inset-0'>
-                    <DisplayImage src={store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame} />
+                    <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} />
                   </div>
 
                   <Canvas
-                    width={CONST_MOCK_DATA_FRAME.width}
-                    height={CONST_MOCK_DATA_FRAME.height}
+                    width={store.orderInfo.width}
+                    height={store.orderInfo.height}
                     selectedPhotos={store.orderInfo.selectedPhotos}
                     pathUserPhotos={store.pathFolderUserPhotos}
-                    modeFrame={CONST_MOCK_DATA_FRAME.modeFrame}
-                    typeFrame={CONST_MOCK_DATA_FRAME.typeFrame}
+                    modeFrame={store.orderInfo.modeFrame}
+                    typeFrame={store.orderInfo.typeFrame}
                   />
                 </div>
               ) : (
                 <div className='mt-1 flex h-full w-full flex-col items-center justify-center gap-y-1'>
                   <div className='relative flex h-[320.5px] w-[480.8px] items-center justify-center'>
                     <div className='absolute inset-0'>
-                      <DisplayImage src={store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame} />
+                      <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} />
                     </div>
 
                     <Canvas
-                      width={CONST_MOCK_DATA_FRAME.width}
-                      height={CONST_MOCK_DATA_FRAME.height}
+                      width={store.orderInfo.width}
+                      height={store.orderInfo.height}
                       selectedPhotos={store.orderInfo.selectedPhotos}
                       pathUserPhotos={store.pathFolderUserPhotos}
-                      modeFrame={CONST_MOCK_DATA_FRAME.modeFrame}
-                      typeFrame={CONST_MOCK_DATA_FRAME.typeFrame}
+                      modeFrame={store.orderInfo.modeFrame}
+                      typeFrame={store.orderInfo.typeFrame}
                     />
                   </div>
 
                   <div className='relative flex h-[320.5px] w-[480.8px] items-center justify-center'>
                     <div className='absolute inset-0'>
-                      <DisplayImage src={store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame} />
+                      <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} />
                     </div>
 
                     <Canvas
-                      width={CONST_MOCK_DATA_FRAME.width}
-                      height={CONST_MOCK_DATA_FRAME.height}
+                      width={store.orderInfo.width}
+                      height={store.orderInfo.height}
                       selectedPhotos={store.orderInfo.selectedPhotos}
                       pathUserPhotos={store.pathFolderUserPhotos}
-                      modeFrame={CONST_MOCK_DATA_FRAME.modeFrame}
-                      typeFrame={CONST_MOCK_DATA_FRAME.typeFrame}
+                      modeFrame={store.orderInfo.modeFrame}
+                      typeFrame={store.orderInfo.typeFrame}
                     />
                   </div>
                 </div>
@@ -299,7 +299,7 @@ export default function SelectPhotos() {
 
                 <div className='absolute left-[170px] top-[26px] font-rokkitt text-[32px] font-bold tracking-wider'>
                   <span>Select </span>
-                  <span className='text-custom-style-2-1'>{CONST_MOCK_DATA_FRAME.quantitySelectedImages} </span>
+                  <span className='text-custom-style-2-1'>{store.orderInfo.quantitySelectedImages} </span>
                   <span>Photos To Print</span>
                 </div>
               </div>

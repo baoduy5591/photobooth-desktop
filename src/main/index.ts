@@ -58,11 +58,46 @@ ipcMain.handle('get-system-configs', async () => {
 });
 
 ipcMain.handle('get-order-info-by-id', async (event, value) => {
-  return {
-    modeFrame: 'regular',
-    typeFrame: 'typeF',
-    frame: 'frames/regular/typeF/normal/00000.png',
-  };
+  if (value === '95824') {
+    return {
+      modeFrame: 'cutting',
+      typeFrame: 'typeA',
+      quantityImages: 6,
+      quantitySelectedImages: 4,
+      width: 1200,
+      height: 1800,
+      frame: 'frames/cutting/typeA/normal/00100.png',
+      ratio: 1.5
+    };
+  }
+
+  if (value === '12346') {
+    return {
+      modeFrame: 'cutting',
+      typeFrame: 'typeA',
+      quantityImages: 6,
+      quantitySelectedImages: 4,
+      width: 1200,
+      height: 1800,
+      frame: 'frames/cutting/typeA/special/00100.png',
+      ratio: 1.5
+    };
+  }
+
+  if (value === '56783') {
+    return {
+      modeFrame: 'regular',
+      typeFrame: 'typeA',
+      quantityImages: 6,
+      quantitySelectedImages: 4,
+      width: 1200,
+      height: 1800,
+      frame: 'frames/regular/typeA/season/00100.png',
+      ratio: 0.7
+    };
+  }
+
+  return false;
 });
 
 // get path folder assets

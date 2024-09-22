@@ -15,9 +15,9 @@ export default function ConfirmFrame() {
   const navigate = useNavigate();
 
   const checkIsDoubleFrames = () => {
-    // const { modeFrame, typeFrame } = store.orderInfo;
+    const { modeFrame, typeFrame } = store.orderInfo;
     // use mock data frame
-    const { modeFrame, typeFrame } = CONST_MOCK_DATA_FRAME;
+    // const { modeFrame, typeFrame } = CONST_MOCK_DATA_FRAME;
     let isDouble = false;
     if (modeFrame === CONST_MODE_REGULAR && CONST_TYPE_FRAMES_FOR_DOUBLE.includes(typeFrame)) {
       isDouble = true;
@@ -43,15 +43,6 @@ export default function ConfirmFrame() {
 
     navigate('/select-frame');
   };
-
-  useEffect(() => {
-    const mockFunction = async () => {
-      const value = '2222';
-      const data = await window.api.getOrderInfoById(value);
-      setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, ...data } }));
-    };
-    mockFunction();
-  }, []);
 
   return (
     <div className='relative h-screen w-screen'>
@@ -121,17 +112,17 @@ export default function ConfirmFrame() {
                         {isDouble ? (
                           <div className='flex h-full w-full flex-col items-center justify-center'>
                             <div className={`h-[146px] w-[219px]`}>
-                              <DisplayImage src={store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame} />
+                              <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} />
                             </div>
 
                             <div className={`h-[146px] w-[219px]`}>
-                              <DisplayImage src={store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame} />
+                              <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} />
                             </div>
                           </div>
                         ) : (
                           <div className='flex items-center justify-center'>
                             <div className={`h-[292px] w-[195px]`}>
-                              <DisplayImage src={store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame} />
+                              <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} />
                             </div>
                           </div>
                         )}

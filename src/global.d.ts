@@ -149,7 +149,11 @@ interface OrderInfoType {
   modeFrame: string;
   typeFrame: string;
   quantityImages: number;
+  quantitySelectedImages: number;
   frame: string;
+  ratio: number;
+  width: number;
+  height: number;
   selectedPhotos: string[];
   imageSelectPhoto: string;
   imageSelectEffect: string;

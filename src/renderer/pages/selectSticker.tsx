@@ -348,10 +348,10 @@ export default function SelectSticker() {
     const imageBase64 = await handleConvertCanvasToBase64(
       store.orderInfo.imageSelectEffect,
       selectedSticker,
-      CONST_MOCK_DATA_FRAME.width,
-      CONST_MOCK_DATA_FRAME.height,
+      store.orderInfo.width,
+      store.orderInfo.height,
     );
-    const savePhoto = await window.api.saveImage({ imageBase64, modeFrame: CONST_MOCK_DATA_FRAME.modeFrame });
+    const savePhoto = await window.api.saveImage({ imageBase64, modeFrame: store.orderInfo.modeFrame });
     if (savePhoto) {
       // reset store
       setStore((prevStore) => ({
@@ -397,7 +397,7 @@ export default function SelectSticker() {
             <div className='z-30 flex h-[800px] w-[580px] -translate-y-4 items-center justify-center rounded-3xl border-2 border-dashed border-custom-style-2-1 bg-custom-style-1'>
               <div ref={frameRef} className='relative flex h-[645px] w-[430px] items-center justify-center'>
                 <div className='h-full w-full'>
-                  <DisplayImage src={store.pathFolderAssets + CONST_MOCK_DATA_FRAME.frame} />
+                  <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} />
                   {/* <DisplayImage src={store.orderInfo.imageSelectEffect} /> */}
                 </div>
 
@@ -480,7 +480,7 @@ export default function SelectSticker() {
                           onMouseDown={(event) => handleOnTouchStartZoomOut(event, index)}
                         >
                           <div className='h-full w-full rounded-full bg-custom-style-1'>
-                            <DisplayImage src={store.pathFolderAssets + store.resources.icons[57  ]?.relPath} />
+                            <DisplayImage src={store.pathFolderAssets + store.resources.icons[57]?.relPath} />
                           </div>
                         </div>
                       )}

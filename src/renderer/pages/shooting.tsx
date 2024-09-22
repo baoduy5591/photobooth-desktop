@@ -42,7 +42,7 @@ export default function Shooting() {
   useEffect(() => {
     wsCamera.current = new WebSocket('ws://127.0.0.1:8080/camera');
     wsCamera.current.onopen = () => {
-      wsCamera.current.send(`setphoto-img:r=2;w=${CONST_MOCK_DATA_FRAME.ratio}`);
+      wsCamera.current.send(`setphoto-img:r=2;w=${store.orderInfo.ratio}`);
       wsCamera.current.send('startlv');
       wsCamera.current.send('record');
       if (store.shootingMethod === CONST_COUNTDOWN_METHOD) {
@@ -59,7 +59,7 @@ export default function Shooting() {
         if (data.result === 'OK') {
           setShootingPhotos((prevShootingPhoto) => {
             const newListShootingPhoto = [...prevShootingPhoto, data.message];
-            if (newListShootingPhoto.length >= CONST_MOCK_DATA_FRAME.quantityImages) {
+            if (newListShootingPhoto.length >= store.orderInfo.quantityImages) {
               navigate('/select-photos');
               return newListShootingPhoto;
             }
@@ -90,8 +90,6 @@ export default function Shooting() {
     setIsShootting(false);
   }, [isShootting]);
 
-  useEffect(() => {navigate('/select-photos')}, []);
- 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
       <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />
@@ -143,21 +141,21 @@ export default function Shooting() {
                   </div>
                 </div>
 
-                {CONST_MOCK_DATA_FRAME.ratio === 0.7 && (
+                {store.orderInfo.ratio === 0.7 && (
                   <div className='absolute inset-0 flex justify-between'>
                     <div className='h-full w-[289.3px] bg-custom-style-6-1'></div>
                     <div className='h-full w-[289.3px] bg-custom-style-6-1'></div>
                   </div>
                 )}
 
-                {CONST_MOCK_DATA_FRAME.ratio === 1 && (
+                {store.orderInfo.ratio === 1 && (
                   <div className='absolute inset-0 flex justify-between'>
                     <div className='h-full w-[206.7px] bg-custom-style-6-1'></div>
                     <div className='h-full w-[206.7px] bg-custom-style-6-1'></div>
                   </div>
                 )}
 
-                {CONST_MOCK_DATA_FRAME.ratio === 1.4 && (
+                {store.orderInfo.ratio === 1.4 && (
                   <div className='absolute inset-0 flex justify-between'>
                     <div className='h-full w-[41.3px] bg-custom-style-6-1'></div>
                     <div className='h-full w-[41.3px] bg-custom-style-6-1'></div>
@@ -202,7 +200,7 @@ export default function Shooting() {
               <div className='absolute left-[109px] top-[20px] text-[36px] text-custom-style-1'>
                 <span className='text-custom-style-2-1'>{shootingPhotos.length}</span>
                 <span>/</span>
-                <span>{CONST_MOCK_DATA_FRAME.quantityImages}</span>
+                <span>{store.orderInfo.quantityImages}</span>
               </div>
             </div>
 
@@ -216,25 +214,25 @@ export default function Shooting() {
               </div>
 
               <div className='absolute inset-0 flex justify-center p-4'>
-                {CONST_MOCK_DATA_FRAME.ratio === 0.7 && shootingPhotos.length > 0 && (
+                {store.orderInfo.ratio === 0.7 && shootingPhotos.length > 0 && (
                   <div className='h-[220px] w-[154px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
                     <DisplayImage src={store.pathFolderUserPhotos + '/' + shootingPhotos.slice(-1)[0]} />
                   </div>
                 )}
 
-                {CONST_MOCK_DATA_FRAME.ratio === 1 && shootingPhotos.length > 0 && (
+                {store.orderInfo.ratio === 1 && shootingPhotos.length > 0 && (
                   <div className='h-[220px] w-[220px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
                     <DisplayImage src={store.pathFolderUserPhotos + '/' + shootingPhotos.slice(-1)[0]} />
                   </div>
                 )}
 
-                {CONST_MOCK_DATA_FRAME.ratio === 1.5 && shootingPhotos.length > 0 && (
+                {store.orderInfo.ratio === 1.5 && shootingPhotos.length > 0 && (
                   <div className='h-[180px] w-[270px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
                     <DisplayImage src={store.pathFolderUserPhotos + '/' + shootingPhotos.slice(-1)[0]} />
                   </div>
                 )}
 
-                {CONST_MOCK_DATA_FRAME.ratio === 1.4 && shootingPhotos.length > 0 && (
+                {store.orderInfo.ratio === 1.4 && shootingPhotos.length > 0 && (
                   <div className='h-[180px] w-[252px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
                     <DisplayImage src={store.pathFolderUserPhotos + '/' + shootingPhotos.slice(-1)[0]} />
                   </div>

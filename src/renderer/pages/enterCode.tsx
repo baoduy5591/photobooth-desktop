@@ -42,7 +42,7 @@ export default function EnterCode() {
 
   const handleOnTouchStartSubmit = async (value: string) => {
     const data = await window.api.getOrderInfoById(value);
-    if (value === '2222') {
+    if (data) {
       setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, ...data } }));
       setValues(CONST_PICTURE_TIME);
       setTimeout(() => {
