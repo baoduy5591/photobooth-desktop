@@ -114,7 +114,7 @@ export default function SelectPhotos() {
       }));
       return;
     } else {
-      if (store.orderInfo.selectedPhotos.length < CONST_MOCK_DATA_FRAME.quantityImages) {
+      if (store.orderInfo.selectedPhotos.length < CONST_MOCK_DATA_FRAME.quantitySelectedImages) {
         setStore((store) => ({
           ...store,
           orderInfo: {
@@ -122,6 +122,7 @@ export default function SelectPhotos() {
             selectedPhotos: [...store.orderInfo.selectedPhotos, photo],
           },
         }));
+
         return;
       }
     }
@@ -162,7 +163,7 @@ export default function SelectPhotos() {
         image.src = store.pathFolderUserPhotos + photo;
         image.onload = () => {
           const position = listPosition[index];
-          position.forEach((p) => {
+          position?.forEach((p) => {
             context.drawImage(image, p.x, p.y, p.w, p.h);
           });
           resolve();
@@ -219,7 +220,7 @@ export default function SelectPhotos() {
               <div className='absolute left-[110px] top-[30px] text-[32px] text-custom-style-1'>
                 <span className='text-custom-style-2-1'>{store.orderInfo.selectedPhotos.length}</span>
                 <span>/</span>
-                <span>{CONST_MOCK_DATA_FRAME.quantityImages}</span>
+                <span>{CONST_MOCK_DATA_FRAME.quantitySelectedImages}</span>
               </div>
             </div>
 
@@ -298,7 +299,7 @@ export default function SelectPhotos() {
 
                 <div className='absolute left-[170px] top-[26px] font-rokkitt text-[32px] font-bold tracking-wider'>
                   <span>Select </span>
-                  <span className='text-custom-style-2-1'>{CONST_MOCK_DATA_FRAME.quantityImages} </span>
+                  <span className='text-custom-style-2-1'>{CONST_MOCK_DATA_FRAME.quantitySelectedImages} </span>
                   <span>Photos To Print</span>
                 </div>
               </div>

@@ -28,8 +28,6 @@ export default function SelectSticker() {
   const [currentChooseStickerIndex, setCurrentChooseStickerIndex] = useState<number>(null);
   const [enableMoveSticker, setEnableMoveSticker] = useState<boolean>(false);
   const [isTouchControlSticker, setIsTouchControlSticker] = useState<boolean>(false);
-  const [isDraw, setIsDraw] = useState<boolean>(false);
-  const [imageDone, setImageDone] = useState<string>('');
 
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
@@ -223,7 +221,6 @@ export default function SelectSticker() {
 
     setEnableMoveSticker(false);
     setIsTouchControlSticker(false);
-    setIsDraw(true);
   };
 
   const handleOnTouchStartChangeTab = (event: TouchEventAndMouseEventType, index: number) => {
@@ -427,54 +424,64 @@ export default function SelectSticker() {
                       </div>
 
                       {currentChooseStickerIndex === index && (
-                        <div className='absolute -top-20 left-1/2 h-20 border-l-2 border-dashed border-custom-style-2-1'>
+                        <div className='absolute -top-[48px] left-1/2 h-12 border-l-2 border-dashed border-custom-style-2-1'>
                           <div
-                            className='absolute -left-4 top-0 h-[30px] w-[30px] rounded-full bg-custom-style-1'
+                            className='absolute -left-[26px] -top-[30px] h-[50px] w-[50px] p-2'
                             onTouchStart={(event) => handleOnTouchStartRotate(event, index)}
                             onMouseDown={(event) => handleOnTouchStartRotate(event, index)}
                           >
-                            <DisplayImage src={store.pathFolderAssets + store.resources.icons[56]?.relPath} />
+                            <div className='h-full w-full rounded-full bg-custom-style-1'>
+                              <DisplayImage src={store.pathFolderAssets + store.resources.icons[56]?.relPath} />
+                            </div>
                           </div>
                         </div>
                       )}
 
                       {currentChooseStickerIndex === index && (
                         <div
-                          className='absolute -left-3 -top-3 h-[30px] w-[30px] rounded-full bg-custom-style-1'
+                          className='absolute -left-6 -top-6 h-[50px] w-[50px] p-2'
                           onTouchStart={(event) => handleOnTouchStartApply(event, index)}
                           onMouseDown={(event) => handleOnTouchStartApply(event, index)}
                         >
-                          <DisplayImage src={store.pathFolderAssets + store.resources.icons[54]?.relPath} />
+                          <div className='h-full w-full rounded-full bg-custom-style-1'>
+                            <DisplayImage src={store.pathFolderAssets + store.resources.icons[54]?.relPath} />
+                          </div>
                         </div>
                       )}
 
                       {currentChooseStickerIndex === index && (
                         <div
-                          className='absolute -right-3 -top-3 h-[30px] w-[30px] rounded-full bg-custom-style-1'
+                          className='absolute -right-6 -top-6 h-[50px] w-[50px] p-2'
                           onTouchStart={(event) => handleOnTouchStartCancel(event, index)}
                           onMouseDown={(event) => handleOnTouchStartCancel(event, index)}
                         >
-                          <DisplayImage src={store.pathFolderAssets + store.resources.icons[55]?.relPath} />
+                          <div className='h-full w-full rounded-full bg-custom-style-1'>
+                            <DisplayImage src={store.pathFolderAssets + store.resources.icons[55]?.relPath} />
+                          </div>
                         </div>
                       )}
 
                       {currentChooseStickerIndex === index && (
                         <div
-                          className='absolute -bottom-3 -left-3 h-[30px] w-[30px] rounded-full bg-custom-style-1'
+                          className='absolute -bottom-6 -left-6 h-[50px] w-[50px] p-2'
                           onTouchStart={(event) => handleOnTouchStartZoomIn(event, index)}
                           onMouseDown={(event) => handleOnTouchStartZoomIn(event, index)}
                         >
-                          <DisplayImage src={store.pathFolderAssets + store.resources.icons[58]?.relPath} />
+                          <div className='h-full w-full rounded-full bg-custom-style-1'>
+                            <DisplayImage src={store.pathFolderAssets + store.resources.icons[58]?.relPath} />
+                          </div>
                         </div>
                       )}
 
                       {currentChooseStickerIndex === index && (
                         <div
-                          className='absolute -bottom-3 -right-3 h-[30px] w-[30px] rounded-full bg-custom-style-1'
+                          className='absolute -bottom-6 -right-6 h-[50px] w-[50px] p-2'
                           onTouchStart={(event) => handleOnTouchStartZoomOut(event, index)}
                           onMouseDown={(event) => handleOnTouchStartZoomOut(event, index)}
                         >
-                          <DisplayImage src={store.pathFolderAssets + store.resources.icons[57]?.relPath} />
+                          <div className='h-full w-full rounded-full bg-custom-style-1'>
+                            <DisplayImage src={store.pathFolderAssets + store.resources.icons[57  ]?.relPath} />
+                          </div>
                         </div>
                       )}
                     </div>

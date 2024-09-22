@@ -55,9 +55,6 @@ export default function Shooting() {
         setIsStartLiveView(true);
       }
 
-      if (data.action === 'record' && data.result === 'OK') {
-      }
-
       if (data.action === 'takephoto') {
         if (data.result === 'OK') {
           setShootingPhotos((prevShootingPhoto) => {
@@ -84,8 +81,8 @@ export default function Shooting() {
   };
 
   useEffect(() => {
-    if (wsCamera.current && wsCamera.current.readyState === WebSocket.OPEN) {
-      if (isShootting) {
+    if (isShootting) {
+      if (wsCamera.current && wsCamera.current.readyState === WebSocket.OPEN) {
         wsCamera.current.send('takephoto');
       }
     }
@@ -93,6 +90,8 @@ export default function Shooting() {
     setIsShootting(false);
   }, [isShootting]);
 
+  useEffect(() => {navigate('/select-photos')}, []);
+ 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
       <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />
@@ -180,7 +179,7 @@ export default function Shooting() {
                 {store.shootingMethod === CONST_COUNTDOWN_METHOD ? (
                   <CountdownForShooting
                     url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
-                    time={20}
+                    time={3}
                     handleActionShootingByMethod={handleActionShootingByMethod}
                   />
                 ) : (
