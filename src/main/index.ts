@@ -84,7 +84,7 @@ ipcMain.handle('get-order-info-by-id', async (event, value) => {
     };
   }
 
-  if (value === '56783') {
+  if (value === '56738') {
     return {
       modeFrame: 'regular',
       typeFrame: 'typeA',
