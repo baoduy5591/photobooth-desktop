@@ -202,3 +202,7 @@ export const CONST_LIST_TAB_STICKER: string[] = [
   'Heart',
   'Others'
 ]
+
+export const CONST_THRESHOLD = 10;
+
+export const CONST_RATIO_SCALE = 10;

@@ -3,7 +3,7 @@ export const changeFontByName = (fontName: string) => {
 }
 
 export const checkIsTouch = (event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>, isTouch: React.MutableRefObject<boolean>) => {
-  if (event.type === 'touchstart' || event.type === 'touchend') {
+  if (event.type === 'touchstart' || event.type === 'touchend' || event.type === 'touchmove') {
     isTouch.current = true;
   } else {
     if (isTouch.current) {
