@@ -358,7 +358,7 @@ export default function SelectPhotos() {
                                       </div>
                                     </div>
                                   ) : (
-                                    <div className='h-full w-full'>
+                                    <div className='h-full w-full border-4 border-transparent'>
                                       <DisplayImage src={store.pathFolderUserPhotos + photo} />
                                     </div>
                                   )}
