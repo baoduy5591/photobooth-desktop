@@ -3,15 +3,17 @@ import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
 import { InputStyle1 } from '../components/input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { KeyboardNumber } from '../components/keyboardNumber';
 import { useNavigate } from 'react-router-dom';
 import { CONST_ERROR, CONST_PICTURE_TIME } from '../libs/constants';
 import { Countdown } from '../components/countdown';
+import { useSound } from '../context/sound';
 
 export default function EnterCode() {
   const { store, setStore } = useStore();
   const { t: translate } = useTranslation();
+  const { playSoundBackground, playSoundTouch } = useSound();
 
   const navigate = useNavigate();
 
@@ -52,6 +54,10 @@ export default function EnterCode() {
       setValues(CONST_ERROR);
     }
   };
+
+  useEffect(() => {
+    playSoundBackground(true);
+  }, []);
 
   return (
     <div className='relative h-screen w-screen'>

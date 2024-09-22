@@ -35,13 +35,15 @@ export default function ConfirmFrame() {
   const handleOnTouchStartReady = (event: TouchEventAndMouseEventType) => {
     if (!checkIsTouch(event, isTouchReady)) return;
 
-    navigate('/shooting-method');
+    setTimeout(() => {
+      navigate('/shooting-method');
+    }, 300);
   };
 
   const handleOnTouchStartChooseAgain = (event: TouchEventAndMouseEventType) => {
     if (!checkIsTouch(event, isTouchChooseAgain)) return;
 
-    navigate('/select-frame');
+    // navigate('/select-frame');
   };
 
   return (

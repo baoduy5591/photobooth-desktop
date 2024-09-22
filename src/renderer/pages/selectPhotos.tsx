@@ -180,6 +180,8 @@ export default function SelectPhotos() {
   const handleOnTouchStartNextPage = async (event: TouchEventAndMouseEventType) => {
     if (!checkIsTouch(event, isTouchNextPage)) return;
 
+    if (store.orderInfo.selectedPhotos.length < store.orderInfo.quantitySelectedImages) return;
+
     const base64String = await handleConvertCanvasToBase64(
       store.orderInfo.width,
       store.orderInfo.height,
@@ -189,10 +191,9 @@ export default function SelectPhotos() {
       CONST_POSITION_FRAMES,
     );
     setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, imageSelectPhoto: base64String } }));
-
     setTimeout(() => {
       navigate('/select-effect');
-    }, 250);
+    }, 300);
   };
 
   useEffect(() => {

@@ -30,7 +30,9 @@ export default function Home() {
   const handleOnTouchStart = (event: TouchEventAndMouseEventType) => {
     if (!checkIsTouch(event, isTouchShooting)) return;
 
-    navigate('/enter-code');
+    setTimeout(() => {
+      navigate('/enter-code');
+    }, 300);
   };
 
   const handleOnTouchCloseModal = (event: TouchEventAndMouseEventType) => {
