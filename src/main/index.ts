@@ -86,14 +86,14 @@ ipcMain.handle('get-order-info-by-id', async (event, value) => {
 
   if (value === '56738') {
     return {
-      modeFrame: 'regular',
+      modeFrame: 'wide',
       typeFrame: 'typeA',
-      quantityImages: 6,
-      quantitySelectedImages: 4,
+      quantityImages: 10,
+      quantitySelectedImages: 8,
       width: 1200,
       height: 1800,
-      frame: 'frames/regular/typeA/season/00100.png',
-      ratio: 0.7
+      frame: 'frames/wide/typeA/special/00100.png',
+      ratio: 1.5
     };
   }
 
