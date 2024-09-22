@@ -348,7 +348,6 @@ export default function SelectSticker() {
   const handleOnTouchStartNextPage = async (event: TouchEventAndMouseEventType) => {
     if (!checkIsTouch(event, isTouchNextPage)) return;
 
-    // const data = { imageBase64: store.orderInfo.imageSelectEffect, modeFrame: CONST_MOCK_DATA_FRAME.modeFrame };
     const imageBase64 = await handleConvertCanvasToBase64(
       store.orderInfo.imageSelectEffect,
       selectedSticker,

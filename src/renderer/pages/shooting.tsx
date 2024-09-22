@@ -1,6 +1,5 @@
-import { useTranslation } from 'react-i18next';
 import { BackgroundImage } from '../components/backgroundImage';
-import { Countdown } from '../components/countdown';
+import { Countdown, CountdownForShooting } from '../components/countdown';
 import { DisplayImage } from '../components/displayImage';
 import { useStore } from '../context/store';
 import { useNavigate } from 'react-router-dom';
@@ -11,17 +10,20 @@ export default function Shooting() {
   const { store } = useStore();
   const [isStartLiveView, setIsStartLiveView] = useState<boolean>(false);
   const [shootingPhotos, setShootingPhotos] = useState<string[]>([]);
+  const [isShootting, setIsShootting] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
   const imgRef = useRef<HTMLImageElement>(null);
+  const wsVideo = useRef<WebSocket | null>(null);
+  const wsCamera = useRef<WebSocket | null>(null);
 
   useEffect(() => {
     if (!isStartLiveView) return;
 
-    const ws = new WebSocket('ws://127.0.0.1:8080/video');
-    ws.binaryType = 'blob';
-    ws.onmessage = (event) => {
+    wsVideo.current = new WebSocket('ws://127.0.0.1:8080/video');
+    wsVideo.current.binaryType = 'blob';
+    wsVideo.current.onmessage = (event) => {
       if (imgRef.current) {
         const blob = event.data;
         const url = URL.createObjectURL(blob);
@@ -33,21 +35,21 @@ export default function Shooting() {
     };
 
     return () => {
-      ws.close();
+      wsVideo.current.close();
     };
   }, [isStartLiveView]);
 
   useEffect(() => {
-    const ws = new WebSocket('ws://127.0.0.1:8080/camera');
-    ws.onopen = () => {
-      ws.send(`setphoto-img:r=2;w=${CONST_MOCK_DATA_FRAME.ratio}`);
-      ws.send('startlv');
-      ws.send('record');
+    wsCamera.current = new WebSocket('ws://127.0.0.1:8080/camera');
+    wsCamera.current.onopen = () => {
+      wsCamera.current.send(`setphoto-img:r=2;w=${CONST_MOCK_DATA_FRAME.ratio}`);
+      wsCamera.current.send('startlv');
+      wsCamera.current.send('record');
       if (store.shootingMethod === CONST_COUNTDOWN_METHOD) {
-        ws.send('lock');
+        wsCamera.current.send('lock');
       }
     };
-    ws.onmessage = (event) => {
+    wsCamera.current.onmessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.action === 'startlv' && data.result === 'OK') {
         setIsStartLiveView(true);
@@ -67,19 +69,29 @@ export default function Shooting() {
 
             return newListShootingPhoto;
           });
-          ws.send('record');
+          wsCamera.current.send('record');
         }
       }
     };
 
     return () => {
-      ws.close();
+      wsCamera.current.close();
     };
   }, []);
 
+  const handleActionShootingByMethod = () => {
+    setIsShootting(true);
+  };
+
   useEffect(() => {
-    navigate('/select-photos');
-  }, []);
+    if (wsCamera.current && wsCamera.current.readyState === WebSocket.OPEN) {
+      if (isShootting) {
+        wsCamera.current.send('takephoto');
+      }
+    }
+
+    setIsShootting(false);
+  }, [isShootting]);
 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
@@ -165,11 +177,19 @@ export default function Shooting() {
               </div>
 
               <div className='absolute bottom-[23px] right-[180px] h-[90px]'>
-                <Countdown
-                  url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
-                  time={90}
-                  routeGoToBack='/shooting-method'
-                />
+                {store.shootingMethod === CONST_COUNTDOWN_METHOD ? (
+                  <CountdownForShooting
+                    url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
+                    time={20}
+                    handleActionShootingByMethod={handleActionShootingByMethod}
+                  />
+                ) : (
+                  <Countdown
+                    url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
+                    time={90}
+                    routeGoToBack='/shooting-method'
+                  />
+                )}
               </div>
             </div>
           </div>
