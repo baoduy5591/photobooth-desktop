@@ -4,7 +4,7 @@ import Paths from './utils/paths';
 import UserPhotos from './utils/userPhotos';
 import fs from 'fs';
 import path from 'path';
-import Images from './utils/images';
+import axios from 'axios';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -58,46 +58,34 @@ ipcMain.handle('get-system-configs', async () => {
 });
 
 ipcMain.handle('get-order-info-by-id', async (event, value) => {
-  if (value === '95824') {
-    return {
-      modeFrame: 'cutting',
-      typeFrame: 'typeA',
-      quantityImages: 6,
-      quantitySelectedImages: 4,
-      width: 1200,
-      height: 1800,
-      frame: 'frames/cutting/typeA/normal/00100.png',
-      ratio: 1.5
-    };
-  }
+  try {
+    const response = await axios.get(`http://localhost:3001/api/clientOrders/${value}`);
+    return response.data.order;
 
-  if (value === '12346') {
-    return {
-      modeFrame: 'cutting',
-      typeFrame: 'typeA',
-      quantityImages: 6,
-      quantitySelectedImages: 4,
-      width: 1200,
-      height: 1800,
-      frame: 'frames/cutting/typeA/special/00200.png',
-      ratio: 1.5
-    };
+    // _id: '66ffa0acc15de955d43cbe19',
+    //   printCount: 4,
+    //   grayScale: false,
+    //   frameType: 'typeA',
+    //   grayscaleBase64: '',
+    //   colorBase64: '',
+    //   frameMode: 'cutting',
+    //   framePrice: 80000,
+    //   frameStyle: 'normal',
+    //   frameOrder: 0,
+    //   quantityShootingPhotos: 6,
+    //   quantitySelectedPhotos: 4,
+    //   width: 1200,
+    //   height: 1800,
+    //   ratio: 1.5,
+    //   frameRelPath: '',
+    //   orderNumber: '123456',
+    //   createdAt: '2024-10-04T08:00:44.930Z',
+    //   updatedAt: '2024-10-04T08:00:44.930Z',
+    //   __v: 0
+  } catch (error) {
+    console.log('ERROR = ', error);
+    return false;
   }
-
-  if (value === '56738') {
-    return {
-      modeFrame: 'wide',
-      typeFrame: 'typeA',
-      quantityImages: 10,
-      quantitySelectedImages: 8,
-      width: 1200,
-      height: 1800,
-      frame: 'frames/wide/typeA/special/00100.png',
-      ratio: 1.5
-    };
-  }
-
-  return false;
 });
 
 // get path folder assets
@@ -121,17 +109,30 @@ ipcMain.handle('get-user-resized-photos', () => {
 
 // save image
 ipcMain.handle('save-image', async (event, data) => {
-  const pathImage = path.join(Paths.getFolderAppData(), 'photobooth', 'print', `print_${data.modeFrame}.jpg`)
-  const imageBase64 = data.imageBase64.replace(/^data:image\/png;base64,/, "");
-  const images = new Images(pathImage, imageBase64);
-  const saveImage = images.saveImage();
-  // delete all file not folder
-  const files = fs.readdirSync(Paths.getFolderUserPhotos())
-  files.forEach((file) => {
-    fs.unlinkSync(path.join(Paths.getFolderUserPhotos(), file));
-  });
-  return saveImage;
-  
+  try {
+    const imageBase64 = data.imageBase64;
+    const orderInfo = data.orderInfo;
+    orderInfo['colorBase64'] = imageBase64;
+    orderInfo['orderStatus'] = 'COMPLETED';
+    delete orderInfo['imageSelectEffect'];
+    delete orderInfo['imageSelectPhoto'];
+    delete orderInfo['selectedPhotos'];
+    const response = await axios.post('http://localhost:3001/api/clientOrders/update', orderInfo, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    // delete all file not folder
+    const files = fs.readdirSync(Paths.getFolderUserPhotos());
+    files.forEach((file) => {
+      fs.unlinkSync(path.join(Paths.getFolderUserPhotos(), file));
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
 });
 
 app.on('ready', createWindow);

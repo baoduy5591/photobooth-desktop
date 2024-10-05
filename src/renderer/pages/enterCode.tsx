@@ -39,6 +39,7 @@ export default function EnterCode() {
   };
 
   const handleOnTouchStart = () => {
+    playSoundTouch(false);
     navigate('/home');
   };
 
@@ -48,7 +49,7 @@ export default function EnterCode() {
       setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, ...data } }));
       setValues(CONST_PICTURE_TIME);
       setTimeout(() => {
-        navigate('/confirm-frame');
+        navigate('/shooting-method');
       }, 1000);
     } else {
       setValues(CONST_ERROR);
@@ -57,6 +58,10 @@ export default function EnterCode() {
 
   useEffect(() => {
     playSoundBackground(true);
+  }, []);
+
+  useEffect(() => {
+    navigate('/select-photos');
   }, []);
 
   return (
@@ -73,7 +78,7 @@ export default function EnterCode() {
 
       <div className='absolute inset-0 flex flex-col items-center'>
         <div className='absolute right-40 top-28 flex items-center justify-center gap-x-4'>
-          <div onTouchStart={handleOnTouchStart} onMouseDown={handleOnTouchStart} className='mt-3 h-[85px] w-[85px]'>
+          <div onTouchStart={handleOnTouchStart} className='mt-3 h-[85px] w-[85px]'>
             <DisplayImage src={store.pathFolderAssets + store.resources.icons[11]?.relPath} />
           </div>
 

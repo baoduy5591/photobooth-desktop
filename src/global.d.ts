@@ -18,7 +18,7 @@ interface Window {
     getOrderInfoById: (value) => Promise;
     getMachineConfigs: () => Promise;
     getUserResizedPhotos: () => Promise;
-    saveImage: (data: { imageBase64: string; modeFrame: string }) => Promise;
+    saveImage: (data: { imageBase64: string; orderInfo: {} }) => Promise;
   };
 }
 
@@ -146,24 +146,48 @@ interface SystemConfigsType {
 }
 
 interface OrderInfoType {
-  modeFrame: string;
-  typeFrame: string;
-  quantityImages: number;
-  quantitySelectedImages: number;
-  frame: string;
+  frameMode: string;
+  frameType: string;
+  frameStyle: string;
+  frameOrder: number;
+  quantityShootingPhotos: number;
+  quantitySelectedPhotos: number;
+  frameRelPath: string;
   ratio: number;
   width: number;
   height: number;
+  printCount: number;
+  colorBase64: string;
+  framePrice: number;
+  grayscaleBase64: string;
   selectedPhotos: string[];
   imageSelectPhoto: string;
   imageSelectEffect: string;
-  imageSelectSticker: string
+  imageSelectSticker: string;
+  orderNumber: string;
   effect: {
     name: string;
     className: string;
     style: string;
-  }
+  };
 }
+
+// interface OrderInfoType {
+//   frameMode: string;
+//   frameType: string;
+//   frameStyle: string;
+//   quantityShootingPhotos: number;
+//   quantitySelectedPhotos: number;
+//   frameOrder: number;
+//   frameRelPath: string;
+//   ratio: number;
+//   width: number;
+//   height: number;
+//   printCount: number;
+//   grayscaleBase64: string;
+//   colorBase64: string;
+//   framePrice: number;
+// }
 
 interface MachineConfigsType {
   platform: string;

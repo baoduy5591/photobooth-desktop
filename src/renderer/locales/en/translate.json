@@ -29,7 +29,7 @@
   "shootingMethod": {
     "countdownTitle": "Countdown",
     "countdownText1": "A photo is taken automatically",
-    "countdownText2": "every 20 seconds!",
+    "countdownText2": "every 10 seconds!",
     "remoteTitle": "Remote Self Shot",
     "remoteText1": "Click the Remote control",
     "remoteText2": "the moment you want!",

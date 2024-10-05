@@ -4,10 +4,10 @@ module.exports = {
   theme: {
     extend: {
       filter: {
-        'cool': 'brightness(1.1) contrast(1.1) sepia(0.3) hue-rotate(220deg)',
-        'warm': 'brightness(1.1) contrast(1.1) sepia(0.5) hue-rotate(30deg)',
-        'hot': 'brightness(1.2) contrast(1.2) sepia(0.7) hue-rotate(15deg)',
-        'bright': 'brightness(1.5) contrast(1.2)',
+        cool: 'brightness(1.1) contrast(1.1) sepia(0.3) hue-rotate(220deg)',
+        warm: 'brightness(1.1) contrast(1.1) sepia(0.5) hue-rotate(30deg)',
+        hot: 'brightness(1.2) contrast(1.2) sepia(0.7) hue-rotate(15deg)',
+        bright: 'brightness(1.5) contrast(1.2)',
         'very-bright': 'brightness(2) contrast(1.3)',
         'black-white': 'grayscale(100%) contrast(1.2)',
       },
@@ -54,7 +54,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require('tailwindcss-filters'),
-  ],
+  plugins: [require('tailwindcss-filters')],
 };

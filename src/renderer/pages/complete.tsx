@@ -1,24 +1,39 @@
-import { useTranslation } from 'react-i18next';
 import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
-import { InputStyle1 } from '../components/input';
 import { useState } from 'react';
-import { KeyboardNumber } from '../components/keyboardNumber';
 import { useNavigate } from 'react-router-dom';
-import { CONST_ERROR, CONST_PICTURE_TIME } from '../libs/constants';
 import { Countdown } from '../components/countdown';
+import { useSound } from '../context/sound';
+import { INIT_STORE } from '../libs/initials';
 
 export default function Complete() {
   const { store, setStore } = useStore();
-  const { t: translate } = useTranslation();
+  const { playSoundTouch } = useSound();
 
   const navigate = useNavigate();
 
   const [values, setValues] = useState<string>('');
 
   const handleOnTouchStart = () => {
+    playSoundTouch(false);
     navigate('/home');
+  };
+
+  const handleTimeout = () => {
+    setStore((prevStore) => ({
+      ...prevStore,
+      orderInfo: {
+        ...prevStore.orderInfo,
+        imageSelectEffect: '',
+        imageSelectPhoto: '',
+        imageSelectSticker: '',
+        colorBase64: '',
+        grayscaleBase64: '',
+        selectedPhotos: [],
+        effect: { ...prevStore.orderInfo.effect, name: 'Original', className: '', style: '' },
+      },
+    }));
   };
 
   return (
@@ -31,7 +46,7 @@ export default function Complete() {
 
       <div className='absolute inset-0 flex flex-col items-center'>
         <div className='absolute right-24 top-28 flex items-center justify-center gap-x-4'>
-          <div onTouchStart={handleOnTouchStart} onMouseDown={handleOnTouchStart} className='mt-3 h-[85px] w-[85px]'>
+          <div onTouchStart={handleOnTouchStart} className='mt-3 h-[85px] w-[85px]'>
             <DisplayImage src={store.pathFolderAssets + store.resources.icons[11]?.relPath} />
           </div>
 
@@ -39,6 +54,7 @@ export default function Complete() {
             url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
             time={90}
             routeGoToBack='/home'
+            handleTimeout={handleTimeout}
           />
         </div>
 

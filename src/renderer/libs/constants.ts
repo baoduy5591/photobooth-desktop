@@ -33,7 +33,7 @@ export const CONST_MOCK_DATA_FRAME = {
   width: 1200,
   height: 1800,
   frame: 'frames/cutting/typeA/normal/00000.png',
-  ratio: 1.5
+  ratio: 1.5,
 };
 
 export const CONST_POSITION_FRAMES: PositionFramesType = {
@@ -103,34 +103,28 @@ export const CONST_POSITION_FRAMES: PositionFramesType = {
       [{ x: 1196, y: 45, w: 552, h: 779 }],
     ],
     typeD: [
-      [
-        { x: 41, y: 50, w: 541, h: 727 },
-        { x: 619, y: 50, w: 541, h: 727 },
-      ],
-      [
-        { x: 41, y: 797, w: 541, h: 727 },
-        { x: 619, y: 797, w: 541, h: 727 },
-      ],
+      [{ x: 43, y: 53, w: 548, h: 750 }],
+      [{ x: 610, y: 225, w: 548, h: 750 }],
+      [{ x: 43, y: 825, w: 548, h: 750 }],
+      [{ x: 610, y: 997, w: 548, h: 750 }],
     ],
     typeE: [
-      [
-        { x: 41, y: 50, w: 541, h: 727 },
-        { x: 619, y: 50, w: 541, h: 727 },
-      ],
-      [
-        { x: 41, y: 797, w: 541, h: 727 },
-        { x: 619, y: 797, w: 541, h: 727 },
-      ],
+      [{ x: 51, y: 43, w: 554, h: 431 }],
+      [{ x: 623, y: 43, w: 554, h: 431 }],
+      [{ x: 1195, y: 43, w: 554, h: 431 }],
+      [{ x: 51, y: 496, w: 554, h: 431 }],
+      [{ x: 623, y: 496, w: 554, h: 431 }],
+      [{ x: 1195, y: 496, w: 554, h: 431 }],
     ],
     typeF: [
-      [
-        { x: 41, y: 50, w: 541, h: 727 },
-        { x: 619, y: 50, w: 541, h: 727 },
-      ],
-      [
-        { x: 41, y: 797, w: 541, h: 727 },
-        { x: 619, y: 797, w: 541, h: 727 },
-      ],
+      [{ x: 51, y: 43, w: 504, h: 358 }],
+      [{ x: 573, y: 43, w: 504, h: 358 }],
+      [{ x: 1095, y: 43, w: 504, h: 358 }],
+      [{ x: 51, y: 420, w: 504, h: 358 }],
+      [{ x: 1095, y: 420, w: 504, h: 358 }],
+      [{ x: 51, y: 798, w: 504, h: 358 }],
+      [{ x: 573, y: 798, w: 504, h: 358 }],
+      [{ x: 1095, y: 798, w: 504, h: 358 }],
     ],
   },
 
@@ -161,12 +155,11 @@ export const CONST_LIST_EFFECTS = [
     name: 'Cool',
     className: 'filter-cool',
     style: 'brightness(1.1) contrast(1.1) sepia(0.3) hue-rotate(220deg)',
-    
   },
   {
     name: 'Original',
     className: '',
-    style: 'none'
+    style: 'none',
   },
   {
     name: 'Warm',
@@ -196,13 +189,7 @@ export const CONST_LIST_EFFECTS = [
   },
 ];
 
-export const CONST_LIST_TAB_STICKER: string[] = [
-  'Hot',
-  'Birthday',
-  'Flowers',
-  'Heart',
-  'Others'
-]
+export const CONST_LIST_TAB_STICKER: string[] = ['Hot', 'Birthday', 'Flowers', 'Heart', 'Others'];
 
 export const CONST_THRESHOLD = 10;
 

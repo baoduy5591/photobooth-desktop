@@ -1,15 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
-import { CONST_LIST_TAB_STICKER, CONST_MOCK_DATA_FRAME, CONST_RATIO_SCALE, CONST_THRESHOLD } from '../libs/constants';
+import { CONST_LIST_TAB_STICKER, CONST_RATIO_SCALE, CONST_THRESHOLD } from '../libs/constants';
 import { Countdown } from '../components/countdown';
 import { checkIsTouch, loadImage } from '../libs/common';
 import { useNavigate } from 'react-router-dom';
 import { INIT_STORE } from '../libs/initials';
+import { useSound } from '../context/sound';
 
 export default function SelectSticker() {
   const { store, setStore } = useStore();
+  const { playSoundTouch } = useSound();
+
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [selectedSticker, setSelectedSticker] = useState<
     (PathResourceType & {
@@ -70,15 +73,17 @@ export default function SelectSticker() {
     24,
   );
 
-  const handleOnTouchStartPrev = (event: TouchEventAndMouseEventType) => {
+  const handleOnTouchStartPrev = (event: React.TouchEvent<HTMLDivElement>) => {
     if (!checkIsTouch(event, isTouchPrev)) return;
 
+    playSoundTouch(false);
     setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
   };
 
-  const handleOnTouchStartNext = (event: TouchEventAndMouseEventType) => {
+  const handleOnTouchStartNext = (event: React.TouchEvent<HTMLDivElement>) => {
     if (!checkIsTouch(event, isTouchNext)) return;
 
+    playSoundTouch(false);
     setCurrentIndex((index) => (index + 1 >= itemsSticker.length ? index : index + 1));
   };
 
@@ -109,16 +114,18 @@ export default function SelectSticker() {
     }
   };
 
-  const handleOnTouchChangeCurrentIndex = (event: TouchEventAndMouseEventType, newIndex: number) => {
+  const handleOnTouchChangeCurrentIndex = (event: React.TouchEvent<HTMLDivElement>, newIndex: number) => {
     if (!checkIsTouch(event, isTouchChangeCurrentIndex)) return;
 
+    playSoundTouch(false);
     setCurrentIndex(newIndex);
   };
 
-  const handleOnTouchEndChooseSticker = (event: TouchEventAndMouseEventType, sticker: PathResourceType) => {
+  const handleOnTouchEndChooseSticker = (event: React.TouchEvent<HTMLDivElement>, sticker: PathResourceType) => {
     event.stopPropagation();
     if (!checkIsTouch(event, isTouchChooseSticker)) return;
 
+    playSoundTouch(false);
     if (isTouchMove.current) {
       if (touchEndX.current - touchStartX.current > 100) {
         setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
@@ -152,19 +159,15 @@ export default function SelectSticker() {
     setIsTouchControlSticker(false);
   };
 
-  const handleOnTouchStartSticker = (event: TouchEventAndMouseEventType, index: number) => {
+  const handleOnTouchStartSticker = (event: React.TouchEvent<HTMLDivElement>, index: number) => {
     if (!checkIsTouch(event, isTouchStartSticker) || isTouchControlSticker) return;
 
+    playSoundTouch(false);
     let pageX: number;
     let pageY: number;
-    if ('touches' in event) {
-      const touch = event.touches[0];
-      pageX = touch.pageX;
-      pageY = touch.pageY;
-    } else {
-      pageX = event.pageX;
-      pageY = event.pageY;
-    }
+    const touch = event.touches[0];
+    pageX = touch.pageX;
+    pageY = touch.pageY;
 
     const stickerRect = event.currentTarget.getBoundingClientRect();
     const offsetX = pageX - stickerRect.left;
@@ -181,19 +184,14 @@ export default function SelectSticker() {
     setEnableMoveSticker(true);
   };
 
-  const handleOnTouchMoveSticker = (event: TouchEventAndMouseEventType, index: number) => {
+  const handleOnTouchMoveSticker = (event: React.TouchEvent<HTMLDivElement>, index: number) => {
     if (!checkIsTouch(event, isTouchMoveSticker) || !enableMoveSticker) return;
 
     let pageX;
     let pageY;
-    if ('touches' in event) {
-      const touch = event.touches[0];
-      pageX = touch.pageX;
-      pageY = touch.pageY;
-    } else {
-      pageX = event.pageX;
-      pageY = event.pageY;
-    }
+    const touch = event.touches[0];
+    pageX = touch.pageX;
+    pageY = touch.pageY;
 
     // check move is valid
     const deltaX = pageX - selectedSticker[index].currentPageX;
@@ -216,24 +214,26 @@ export default function SelectSticker() {
     );
   };
 
-  const handleOnTouchEndSticker = (event: TouchEventAndMouseEventType) => {
+  const handleOnTouchEndSticker = (event: React.TouchEvent<HTMLDivElement>) => {
     if (!checkIsTouch(event, isTouchEndSticker)) return;
 
     setEnableMoveSticker(false);
     setIsTouchControlSticker(false);
   };
 
-  const handleOnTouchStartChangeTab = (event: TouchEventAndMouseEventType, index: number) => {
+  const handleOnTouchStartChangeTab = (event: React.TouchEvent<HTMLDivElement>, index: number) => {
     if (!checkIsTouch(event, isTouchChangeTab)) return;
 
+    playSoundTouch(false);
     setCurrentIndex(0);
     setCurrentTabIndex(index);
   };
 
-  const handleOnTouchStartRotate = (event: TouchEventAndMouseEventType, index: number) => {
+  const handleOnTouchStartRotate = (event: React.TouchEvent<HTMLDivElement>, index: number) => {
     event.stopPropagation();
     if (!checkIsTouch(event, isTouchRotate)) return;
 
+    playSoundTouch(false);
     setSelectedSticker((prevSticker) =>
       prevSticker.map((sticker, _index) => {
         if (index === _index) {
@@ -247,19 +247,21 @@ export default function SelectSticker() {
     setEnableMoveSticker(false);
   };
 
-  const handleOnTouchStartApply = (event: TouchEventAndMouseEventType, index: number) => {
+  const handleOnTouchStartApply = (event: React.TouchEvent<HTMLDivElement>, index: number) => {
     event.stopPropagation();
     if (!checkIsTouch(event, isTouchApply)) return;
 
+    playSoundTouch(false);
     setCurrentChooseStickerIndex(null);
     setIsTouchControlSticker(true);
     setEnableMoveSticker(false);
   };
 
-  const handleOnTouchStartCancel = (event: TouchEventAndMouseEventType, index: number) => {
+  const handleOnTouchStartCancel = (event: React.TouchEvent<HTMLDivElement>, index: number) => {
     event.stopPropagation();
     if (!checkIsTouch(event, isTouchCancel)) return;
 
+    playSoundTouch(false);
     const newSelectedSticker = selectedSticker.filter((sticker, _index) => _index !== index);
     setSelectedSticker(newSelectedSticker);
     setCurrentChooseStickerIndex(null);
@@ -267,10 +269,11 @@ export default function SelectSticker() {
     setEnableMoveSticker(false);
   };
 
-  const handleOnTouchStartZoomIn = (event: TouchEventAndMouseEventType, index: number) => {
+  const handleOnTouchStartZoomIn = (event: React.TouchEvent<HTMLDivElement>, index: number) => {
     event.stopPropagation();
     if (!checkIsTouch(event, isTouchZoomIn)) return;
 
+    playSoundTouch(false);
     setSelectedSticker((prevSticker) =>
       prevSticker.map((sticker, _index) => {
         if (index === _index) {
@@ -284,10 +287,11 @@ export default function SelectSticker() {
     setEnableMoveSticker(false);
   };
 
-  const handleOnTouchStartZoomOut = (event: TouchEventAndMouseEventType, index: number) => {
+  const handleOnTouchStartZoomOut = (event: React.TouchEvent<HTMLDivElement>, index: number) => {
     event.stopPropagation();
     if (!checkIsTouch(event, isTouchZoomOut)) return;
 
+    playSoundTouch(false);
     setSelectedSticker((prevSticker) =>
       prevSticker.map((sticker, _index) => {
         if (index === _index) {
@@ -342,16 +346,18 @@ export default function SelectSticker() {
     return base64String;
   };
 
-  const handleOnTouchStartNextPage = async (event: TouchEventAndMouseEventType) => {
+  const handleOnTouchStartNextPage = async (event: React.TouchEvent<HTMLDivElement>) => {
     if (!checkIsTouch(event, isTouchNextPage)) return;
 
+    playSoundTouch(false);
     const imageBase64 = await handleConvertCanvasToBase64(
       store.orderInfo.imageSelectEffect,
       selectedSticker,
       store.orderInfo.width,
       store.orderInfo.height,
     );
-    const savePhoto = await window.api.saveImage({ imageBase64, modeFrame: store.orderInfo.modeFrame });
+
+    const savePhoto = await window.api.saveImage({ imageBase64, orderInfo: store.orderInfo });
     if (savePhoto) {
       // reset store
       setStore((prevStore) => ({
@@ -362,11 +368,12 @@ export default function SelectSticker() {
           imageSelectEffect: '',
           imageSelectPhoto: '',
           imageSelectSticker: '',
-          modeFrame: '',
-          typeFrame: '',
-          quantityImages: 0,
+          frameMode: '',
+          frameType: '',
+          quantityShootingPhotos: null,
+          quantitySelectedPhotos: null,
           selectedPhotos: [],
-          frame: '',
+          frameRelPath: '',
           effect: { ...prevStore.orderInfo.effect, name: 'Original', className: '', style: '' },
         },
       }));
@@ -394,10 +401,14 @@ export default function SelectSticker() {
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[2]?.relPath} />
               </div>
             </div>
-            <div className='z-30 flex h-[800px] w-[580px] -translate-y-4 items-center justify-center rounded-3xl border-2 border-dashed border-custom-style-2-1 bg-custom-style-1'>
-              <div ref={frameRef} className='relative flex h-[645px] w-[430px] items-center justify-center'>
+            <div className='z-30 flex h-[800px] min-w-[545px] -translate-y-4 items-center justify-center rounded-3xl border-2 border-dashed border-custom-style-2-1 bg-custom-style-1 p-1'>
+              <div
+                ref={frameRef}
+                className='relative flex items-center justify-center'
+                style={{ height: `${store.orderInfo.height / 2.8}px`, width: `${store.orderInfo.width / 2.8}px` }}
+              >
                 <div className='h-full w-full'>
-                  {/* <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} /> */}
+                  {/* <DisplayImage src={store.pathFolderAssets + store.orderInfo.frameRelPath} /> */}
                   <DisplayImage src={store.orderInfo.imageSelectEffect} />
                 </div>
 
@@ -413,11 +424,11 @@ export default function SelectSticker() {
                         height: `${sticker.height}px`,
                       }}
                       onTouchStart={(event) => handleOnTouchStartSticker(event, index)}
-                      onMouseDown={(event) => handleOnTouchStartSticker(event, index)}
+                      // onMouseDown={(event) => handleOnTouchStartSticker(event, index)}
                       onTouchMove={(event) => handleOnTouchMoveSticker(event, index)}
-                      onMouseMove={(event) => handleOnTouchMoveSticker(event, index)}
+                      // onMouseMove={(event) => handleOnTouchMoveSticker(event, index)}
                       onTouchEnd={(event) => handleOnTouchEndSticker(event)}
-                      onMouseUp={(event) => handleOnTouchEndSticker(event)}
+                      // onMouseUp={(event) => handleOnTouchEndSticker(event)}
                     >
                       <div className='h-full w-full' style={{ transform: `rotate(${sticker.rotate}deg)` }}>
                         <DisplayImage src={store.pathFolderAssets + sticker.relPath} />
@@ -428,7 +439,7 @@ export default function SelectSticker() {
                           <div
                             className='absolute -left-[26px] -top-[30px] h-[50px] w-[50px] p-2'
                             onTouchStart={(event) => handleOnTouchStartRotate(event, index)}
-                            onMouseDown={(event) => handleOnTouchStartRotate(event, index)}
+                            // onMouseDown={(event) => handleOnTouchStartRotate(event, index)}
                           >
                             <div className='h-full w-full rounded-full bg-custom-style-1'>
                               <DisplayImage src={store.pathFolderAssets + store.resources.icons[56]?.relPath} />
@@ -441,7 +452,7 @@ export default function SelectSticker() {
                         <div
                           className='absolute -left-6 -top-6 h-[50px] w-[50px] p-2'
                           onTouchStart={(event) => handleOnTouchStartApply(event, index)}
-                          onMouseDown={(event) => handleOnTouchStartApply(event, index)}
+                          // onMouseDown={(event) => handleOnTouchStartApply(event, index)}
                         >
                           <div className='h-full w-full rounded-full bg-custom-style-1'>
                             <DisplayImage src={store.pathFolderAssets + store.resources.icons[54]?.relPath} />
@@ -453,7 +464,7 @@ export default function SelectSticker() {
                         <div
                           className='absolute -right-6 -top-6 h-[50px] w-[50px] p-2'
                           onTouchStart={(event) => handleOnTouchStartCancel(event, index)}
-                          onMouseDown={(event) => handleOnTouchStartCancel(event, index)}
+                          // onMouseDown={(event) => handleOnTouchStartCancel(event, index)}
                         >
                           <div className='h-full w-full rounded-full bg-custom-style-1'>
                             <DisplayImage src={store.pathFolderAssets + store.resources.icons[55]?.relPath} />
@@ -465,7 +476,7 @@ export default function SelectSticker() {
                         <div
                           className='absolute -bottom-6 -left-6 h-[50px] w-[50px] p-2'
                           onTouchStart={(event) => handleOnTouchStartZoomIn(event, index)}
-                          onMouseDown={(event) => handleOnTouchStartZoomIn(event, index)}
+                          // onMouseDown={(event) => handleOnTouchStartZoomIn(event, index)}
                         >
                           <div className='h-full w-full rounded-full bg-custom-style-1'>
                             <DisplayImage src={store.pathFolderAssets + store.resources.icons[58]?.relPath} />
@@ -477,7 +488,7 @@ export default function SelectSticker() {
                         <div
                           className='absolute -bottom-6 -right-6 h-[50px] w-[50px] p-2'
                           onTouchStart={(event) => handleOnTouchStartZoomOut(event, index)}
-                          onMouseDown={(event) => handleOnTouchStartZoomOut(event, index)}
+                          // onMouseDown={(event) => handleOnTouchStartZoomOut(event, index)}
                         >
                           <div className='h-full w-full rounded-full bg-custom-style-1'>
                             <DisplayImage src={store.pathFolderAssets + store.resources.icons[57]?.relPath} />
@@ -528,7 +539,7 @@ export default function SelectSticker() {
                         <div
                           className={`polygonTab flex h-full min-w-[210px] -translate-x-[16px] justify-center gap-x-2 p-0.5 ${currentTabIndex === 0 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
                           onTouchStart={(event) => handleOnTouchStartChangeTab(event, 0)}
-                          onMouseDown={(event) => handleOnTouchStartChangeTab(event, 0)}
+                          // onMouseDown={(event) => handleOnTouchStartChangeTab(event, 0)}
                         >
                           <div className='h-[17px] w-[12px]'>
                             <DisplayImage src={store.pathFolderAssets + store.resources.icons[44]?.relPath} />
@@ -539,7 +550,7 @@ export default function SelectSticker() {
                         <div
                           className={`polygonTab h-full min-w-[210px] -translate-x-[44px] p-0.5 ${currentTabIndex === 1 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
                           onTouchStart={(event) => handleOnTouchStartChangeTab(event, 1)}
-                          onMouseDown={(event) => handleOnTouchStartChangeTab(event, 1)}
+                          // onMouseDown={(event) => handleOnTouchStartChangeTab(event, 1)}
                         >
                           <span>{CONST_LIST_TAB_STICKER[1]}</span>
                         </div>
@@ -547,7 +558,7 @@ export default function SelectSticker() {
                         <div
                           className={`polygonTab h-full min-w-[210px] -translate-x-[72px] p-0.5 ${currentTabIndex === 2 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
                           onTouchStart={(event) => handleOnTouchStartChangeTab(event, 2)}
-                          onMouseDown={(event) => handleOnTouchStartChangeTab(event, 2)}
+                          // onMouseDown={(event) => handleOnTouchStartChangeTab(event, 2)}
                         >
                           <span>{CONST_LIST_TAB_STICKER[2]}</span>
                         </div>
@@ -555,7 +566,7 @@ export default function SelectSticker() {
                         <div
                           className={`polygonTab h-full min-w-[210px] -translate-x-[100px] p-0.5 ${currentTabIndex === 3 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
                           onTouchStart={(event) => handleOnTouchStartChangeTab(event, 3)}
-                          onMouseDown={(event) => handleOnTouchStartChangeTab(event, 3)}
+                          // onMouseDown={(event) => handleOnTouchStartChangeTab(event, 3)}
                         >
                           <span>{CONST_LIST_TAB_STICKER[3]}</span>
                         </div>
@@ -563,7 +574,7 @@ export default function SelectSticker() {
                         <div
                           className={`polygonTab h-full min-w-[210px] -translate-x-[128px] p-0.5 ${currentTabIndex === 4 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
                           onTouchStart={(event) => handleOnTouchStartChangeTab(event, 4)}
-                          onMouseDown={(event) => handleOnTouchStartChangeTab(event, 4)}
+                          // onMouseDown={(event) => handleOnTouchStartChangeTab(event, 4)}
                         >
                           <span>{CONST_LIST_TAB_STICKER[4]}</span>
                         </div>
@@ -586,7 +597,7 @@ export default function SelectSticker() {
                                   key={index}
                                   className='h-[90px] w-[90px] rounded-full bg-custom-style-3-3 p-4'
                                   onTouchEnd={(event) => handleOnTouchEndChooseSticker(event, sticker)}
-                                  onMouseUp={(event) => handleOnTouchEndChooseSticker(event, sticker)}
+                                  // onMouseUp={(event) => handleOnTouchEndChooseSticker(event, sticker)}
                                 >
                                   <div className='h-full w-full'>
                                     <DisplayImage src={store.pathFolderAssets + sticker.relPath} />
@@ -616,7 +627,7 @@ export default function SelectSticker() {
                               key={index}
                               className='h-[30px] w-[30px]'
                               onTouchStart={(event) => handleOnTouchChangeCurrentIndex(event, index)}
-                              onMouseDown={(event) => handleOnTouchChangeCurrentIndex(event, index)}
+                              // onMouseDown={(event) => handleOnTouchChangeCurrentIndex(event, index)}
                             >
                               <DisplayImage src={store.pathFolderAssets + store.resources.icons[41]?.relPath} />
                             </div>
@@ -628,7 +639,7 @@ export default function SelectSticker() {
                   <div
                     className='absolute left-[27px] top-[260px] h-[50px] w-[50px] p-1'
                     onTouchStart={(event) => handleOnTouchStartPrev(event)}
-                    onMouseDown={(event) => handleOnTouchStartPrev(event)}
+                    // onMouseDown={(event) => handleOnTouchStartPrev(event)}
                   >
                     <div className='h-full w-full'>
                       <DisplayImage src={store.pathFolderAssets + store.resources.icons[42]?.relPath} />
@@ -638,7 +649,7 @@ export default function SelectSticker() {
                   <div
                     className='absolute right-[27px] top-[260px] h-[50px] w-[50px] p-1'
                     onTouchStart={(event) => handleOnTouchStartNext(event)}
-                    onMouseDown={(event) => handleOnTouchStartNext(event)}
+                    // onMouseDown={(event) => handleOnTouchStartNext(event)}
                   >
                     <div className='h-full w-full'>
                       <DisplayImage src={store.pathFolderAssets + store.resources.icons[38]?.relPath} />
@@ -665,7 +676,7 @@ export default function SelectSticker() {
           <div
             className='flex h-full w-[200px] items-center justify-center'
             onTouchStart={(event) => handleOnTouchStartNextPage(event)}
-            onMouseDown={(event) => handleOnTouchStartNextPage(event)}
+            // onMouseDown={(event) => handleOnTouchStartNextPage(event)}
           >
             <div className='h-[79.8px] w-[79.8px]'>
               <DisplayImage src={store.pathFolderAssets + store.resources.icons[38]?.relPath} />

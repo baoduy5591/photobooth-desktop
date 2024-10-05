@@ -6,17 +6,17 @@ interface CanvasProps {
   height: number;
   selectedPhotos: string[];
   pathUserPhotos: string;
-  modeFrame: string;
-  typeFrame: string;
+  frameMode: string;
+  frameType: string;
 }
 
 export const Canvas = React.memo(
-  function Canvas({ width, height, selectedPhotos, pathUserPhotos, modeFrame, typeFrame }: CanvasProps) {
+  function Canvas({ width, height, selectedPhotos, pathUserPhotos, frameMode, frameType }: CanvasProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     const getListPositions = () => {
-      const object = CONST_POSITION_FRAMES[modeFrame as keyof typeof CONST_POSITION_FRAMES];
-      const listPosition = object[typeFrame as keyof typeof object];
+      const object = CONST_POSITION_FRAMES[frameMode as keyof typeof CONST_POSITION_FRAMES];
+      const listPosition = object[frameType as keyof typeof object];
       return listPosition;
     };
 

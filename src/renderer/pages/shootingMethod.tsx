@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { checkIsTouch } from '../libs/common';
 import { useRef } from 'react';
 import { CONST_COUNTDOWN_METHOD, CONST_REMOTE_METHOD } from '../libs/constants';
+import { useSound } from '../context/sound';
 
 export default function ShootingMethod() {
   const { store, setStore } = useStore();
@@ -14,11 +15,14 @@ export default function ShootingMethod() {
 
   const navigate = useNavigate();
 
+  const { playSoundTouch } = useSound();
+
   const isTouchChooseCountdown = useRef<boolean>(false);
 
   const handleOnTouchStartChooseShootingMethod = (event: TouchEventAndMouseEventType, method: string) => {
     if (!checkIsTouch(event, isTouchChooseCountdown)) return;
 
+    playSoundTouch(false);
     setStore((store) => ({ ...store, shootingMethod: method }));
     setTimeout(() => {
       navigate('/shooting');
@@ -84,7 +88,7 @@ export default function ShootingMethod() {
           <div className='ml-5 mt-9 flex h-full grow flex-col items-start justify-center gap-y-16'>
             <div
               onTouchStart={(event) => handleOnTouchStartChooseShootingMethod(event, CONST_COUNTDOWN_METHOD)}
-              onMouseDown={(event) => handleOnTouchStartChooseShootingMethod(event, CONST_COUNTDOWN_METHOD)}
+              // onMouseDown={(event) => handleOnTouchStartChooseShootingMethod(event, CONST_COUNTDOWN_METHOD)}
               className='flex flex-col items-center justify-center'
             >
               <div className='flex items-center justify-center gap-y-2'>
@@ -128,7 +132,7 @@ export default function ShootingMethod() {
 
             <div
               onTouchStart={(event) => handleOnTouchStartChooseShootingMethod(event, CONST_REMOTE_METHOD)}
-              onMouseDown={(event) => handleOnTouchStartChooseShootingMethod(event, CONST_REMOTE_METHOD)}
+              // onMouseDown={(event) => handleOnTouchStartChooseShootingMethod(event, CONST_REMOTE_METHOD)}
               className='flex flex-col items-center justify-center'
             >
               <div className='flex items-center justify-center gap-y-2'>

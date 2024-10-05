@@ -6,10 +6,11 @@ interface CountdownProps {
   url: string;
   time: number;
   routeGoToBack: string;
+  handleTimeout?: () => void;
 }
 
 export const Countdown = React.memo(
-  function Countdown({ url, time, routeGoToBack }: CountdownProps) {
+  function Countdown({ url, time, routeGoToBack, handleTimeout }: CountdownProps) {
     const [timeLeft, setTimeLeft] = useState<number>(time);
 
     const navigate = useNavigate();
@@ -19,6 +20,9 @@ export const Countdown = React.memo(
 
     useEffect(() => {
       if (timeLeft < 1) {
+        if (handleTimeout) {
+          handleTimeout();
+        }
         navigate(routeGoToBack);
       }
 

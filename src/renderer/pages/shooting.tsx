@@ -10,7 +10,7 @@ export default function Shooting() {
   const { store } = useStore();
   const [isStartLiveView, setIsStartLiveView] = useState<boolean>(false);
   const [shootingPhotos, setShootingPhotos] = useState<string[]>([]);
-  const [isShootting, setIsShootting] = useState<boolean>(false);
+  const [isShooting, setIsShooting] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -59,7 +59,7 @@ export default function Shooting() {
         if (data.result === 'OK') {
           setShootingPhotos((prevShootingPhoto) => {
             const newListShootingPhoto = [...prevShootingPhoto, data.message];
-            if (newListShootingPhoto.length >= store.orderInfo.quantityImages) {
+            if (newListShootingPhoto.length >= store.orderInfo.quantityShootingPhotos) {
               wsCamera.current.send('stoplv');
               navigate('/select-photos');
               return newListShootingPhoto;
@@ -78,18 +78,22 @@ export default function Shooting() {
   }, []);
 
   const handleActionShootingByMethod = () => {
-    setIsShootting(true);
+    setIsShooting(true);
   };
 
   useEffect(() => {
-    if (isShootting) {
+    if (isShooting) {
       if (wsCamera.current && wsCamera.current.readyState === WebSocket.OPEN) {
         wsCamera.current.send('takephoto');
       }
     }
 
-    setIsShootting(false);
-  }, [isShootting]);
+    setIsShooting(false);
+  }, [isShooting]);
+
+  useEffect(() => {
+    navigate('/select-photos');
+  }, []);
 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
@@ -178,7 +182,7 @@ export default function Shooting() {
                 {store.shootingMethod === CONST_COUNTDOWN_METHOD ? (
                   <CountdownForShooting
                     url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
-                    time={3}
+                    time={10}
                     handleActionShootingByMethod={handleActionShootingByMethod}
                   />
                 ) : (
@@ -201,7 +205,7 @@ export default function Shooting() {
               <div className='absolute left-[109px] top-[20px] text-[36px] text-custom-style-1'>
                 <span className='text-custom-style-2-1'>{shootingPhotos.length}</span>
                 <span>/</span>
-                <span>{store.orderInfo.quantityImages}</span>
+                <span>{store.orderInfo.quantityShootingPhotos}</span>
               </div>
             </div>
 

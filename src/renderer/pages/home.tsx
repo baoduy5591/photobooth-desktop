@@ -8,9 +8,11 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { DisplayImage } from '../components/displayImage';
 import { DisplayVideo } from '../components/displayVideo';
+import { useSound } from '../context/sound';
 
 export default function Home() {
   const { store } = useStore();
+  const { playSoundTouch } = useSound();
   const { t: translate, i18n } = useTranslation();
   const [userLanguage, setUserLanguage] = useState<string>(store.systemConfigs.defaultLanguage);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(true);
@@ -24,12 +26,14 @@ export default function Home() {
   const handleChangeLanguage = (event: TouchEventAndMouseEventType, lang: string) => {
     if (!checkIsTouch(event, isTouchLanguage)) return;
 
+    playSoundTouch(false);
     setUserLanguage(lang);
   };
 
   const handleOnTouchStart = (event: TouchEventAndMouseEventType) => {
     if (!checkIsTouch(event, isTouchShooting)) return;
 
+    playSoundTouch(false);
     setTimeout(() => {
       navigate('/enter-code');
     }, 300);
@@ -38,6 +42,7 @@ export default function Home() {
   const handleOnTouchCloseModal = (event: TouchEventAndMouseEventType) => {
     if (!checkIsTouch(event, isTouchCloseModal)) return;
 
+    playSoundTouch(false);
     setIsOpenModal(false);
   };
 

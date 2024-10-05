@@ -2,34 +2,30 @@ import React, { useEffect, useRef, useState } from 'react';
 import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
-import {
-  CONST_MOCK_DATA_FRAME,
-  CONST_MODE_REGULAR,
-  CONST_POSITION_FRAMES,
-  CONST_TYPE_FRAMES_FOR_DOUBLE,
-} from '../libs/constants';
+import { CONST_POSITION_FRAMES } from '../libs/constants';
 import { Countdown } from '../components/countdown';
 import { checkIsTouch, chunkItems } from '../libs/common';
 import { Canvas } from '../components/canvas';
 import { useNavigate } from 'react-router-dom';
+import { useSound } from '../context/sound';
 
 export default function SelectPhotos() {
   const { store, setStore } = useStore();
 
-  const checkIsDoubleFrames = () => {
-    const { modeFrame, typeFrame } = store.orderInfo;
-    // use mock data frame
-    // const { modeFrame, typeFrame } = CONST_MOCK_DATA_FRAME;
-    let isDouble = false;
-    if (modeFrame === CONST_MODE_REGULAR && CONST_TYPE_FRAMES_FOR_DOUBLE.includes(typeFrame)) {
-      isDouble = true;
-    }
+  const { playSoundTouch } = useSound();
 
-    return isDouble;
-  };
+  // const checkIsDoubleFrames = () => {
+  //   const { frameMode, frameType } = store.orderInfo;
+  //   let isDouble = false;
+  //   if (frameMode === CONST_MODE_REGULAR && CONST_TYPE_FRAMES_FOR_DOUBLE.includes(frameType)) {
+  //     isDouble = true;
+  //   }
+
+  //   return isDouble;
+  // };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isDouble, setIsDouble] = useState<boolean>(checkIsDoubleFrames());
+  // const [isDouble, setIsDouble] = useState<boolean>(checkIsDoubleFrames());
   const [resizedPhotos, setResizedPhotos] = useState<string[][]>([[]]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
@@ -47,15 +43,17 @@ export default function SelectPhotos() {
 
   const navigate = useNavigate();
 
-  const handleOnTouchStartPrev = (event: TouchEventAndMouseEventType) => {
+  const handleOnTouchStartPrev = (event: React.TouchEvent<HTMLDivElement>) => {
     if (!checkIsTouch(event, isTouchPrev)) return;
 
+    playSoundTouch(false);
     setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
   };
 
-  const handleOnTouchStartNext = (event: TouchEventAndMouseEventType) => {
+  const handleOnTouchStartNext = (event: React.TouchEvent<HTMLDivElement>) => {
     if (!checkIsTouch(event, isTouchNext)) return;
 
+    playSoundTouch(false);
     setCurrentIndex((index) => (index + 1 >= resizedPhotos.length ? index : index + 1));
   };
 
@@ -86,10 +84,11 @@ export default function SelectPhotos() {
     }
   };
 
-  const handleOnTouchEndTogglePhoto = (event: TouchEventAndMouseEventType, photo: string) => {
+  const handleOnTouchEndTogglePhoto = (event: React.TouchEvent<HTMLDivElement>, photo: string) => {
     event.stopPropagation();
     if (!checkIsTouch(event, isTouchTogglePhoto)) return;
 
+    playSoundTouch(false);
     if (isTouchMove.current) {
       if (touchEndX.current - touchStartX.current > 100) {
         setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
@@ -114,7 +113,7 @@ export default function SelectPhotos() {
       }));
       return;
     } else {
-      if (store.orderInfo.selectedPhotos.length < store.orderInfo.quantitySelectedImages) {
+      if (store.orderInfo.selectedPhotos.length < store.orderInfo.quantitySelectedPhotos) {
         setStore((store) => ({
           ...store,
           orderInfo: {
@@ -135,17 +134,18 @@ export default function SelectPhotos() {
     touchEndX.current = event.touches[0].clientX;
   };
 
-  const handleOnTouchChangeCurrentIndex = (event: TouchEventAndMouseEventType, newIndex: number) => {
+  const handleOnTouchChangeCurrentIndex = (event: React.TouchEvent<HTMLDivElement>, newIndex: number) => {
     if (!checkIsTouch(event, isTouchChangeCurrentIndex)) return;
 
+    playSoundTouch(false);
     setCurrentIndex(newIndex);
   };
 
   const handleConvertCanvasToBase64 = async (
     width: number,
     height: number,
-    modeFrame: string,
-    typeFrame: string,
+    frameMode: string,
+    frameType: string,
     selectedPhotos: string[],
     positionFrames: PositionFramesType,
   ) => {
@@ -154,8 +154,8 @@ export default function SelectPhotos() {
     canvas.height = height;
     const context = canvas.getContext('2d');
 
-    const object = positionFrames[modeFrame as keyof typeof positionFrames];
-    const listPosition = object[typeFrame as keyof typeof object];
+    const object = positionFrames[frameMode as keyof typeof positionFrames];
+    const listPosition = object[frameType as keyof typeof object];
 
     const loadImage = (photo: string, index: number): Promise<void> => {
       return new Promise((resolve) => {
@@ -177,16 +177,17 @@ export default function SelectPhotos() {
     return base64String;
   };
 
-  const handleOnTouchStartNextPage = async (event: TouchEventAndMouseEventType) => {
+  const handleOnTouchStartNextPage = async (event: React.TouchEvent<HTMLDivElement>) => {
     if (!checkIsTouch(event, isTouchNextPage)) return;
 
-    if (store.orderInfo.selectedPhotos.length < store.orderInfo.quantitySelectedImages) return;
+    playSoundTouch(false);
+    if (store.orderInfo.selectedPhotos.length < store.orderInfo.quantitySelectedPhotos) return;
 
     const base64String = await handleConvertCanvasToBase64(
       store.orderInfo.width,
       store.orderInfo.height,
-      store.orderInfo.modeFrame,
-      store.orderInfo.typeFrame,
+      store.orderInfo.frameMode,
+      store.orderInfo.frameType,
       store.orderInfo.selectedPhotos,
       CONST_POSITION_FRAMES,
     );
@@ -221,7 +222,7 @@ export default function SelectPhotos() {
               <div className='absolute left-[110px] top-[30px] text-[32px] text-custom-style-1'>
                 <span className='text-custom-style-2-1'>{store.orderInfo.selectedPhotos.length}</span>
                 <span>/</span>
-                <span>{store.orderInfo.quantitySelectedImages}</span>
+                <span>{store.orderInfo.quantitySelectedPhotos}</span>
               </div>
             </div>
 
@@ -235,55 +236,24 @@ export default function SelectPhotos() {
               </div>
             </div>
 
-            <div className='flex h-[645px] w-full -translate-y-4 items-center justify-center'>
-              {!isDouble ? (
-                <div className='relative mt-3 flex h-full w-[430px] items-center justify-center'>
-                  <div className='absolute inset-0'>
-                    <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} />
-                  </div>
-
-                  <Canvas
-                    width={store.orderInfo.width}
-                    height={store.orderInfo.height}
-                    selectedPhotos={store.orderInfo.selectedPhotos}
-                    pathUserPhotos={store.pathFolderUserPhotos}
-                    modeFrame={store.orderInfo.modeFrame}
-                    typeFrame={store.orderInfo.typeFrame}
-                  />
+            <div className='flex w-full -translate-y-4 items-center justify-center'>
+              <div
+                className='relative mt-3 flex items-center justify-center'
+                style={{ height: `${store.orderInfo.height / 2.8}px`, width: `${store.orderInfo.width / 2.8}px` }}
+              >
+                <div className='absolute inset-0'>
+                  <DisplayImage src={store.pathFolderAssets + store.orderInfo.frameRelPath} />
                 </div>
-              ) : (
-                <div className='mt-1 flex h-full w-full flex-col items-center justify-center gap-y-1'>
-                  <div className='relative flex h-[320.5px] w-[480.8px] items-center justify-center'>
-                    <div className='absolute inset-0'>
-                      <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} />
-                    </div>
 
-                    <Canvas
-                      width={store.orderInfo.width}
-                      height={store.orderInfo.height}
-                      selectedPhotos={store.orderInfo.selectedPhotos}
-                      pathUserPhotos={store.pathFolderUserPhotos}
-                      modeFrame={store.orderInfo.modeFrame}
-                      typeFrame={store.orderInfo.typeFrame}
-                    />
-                  </div>
-
-                  <div className='relative flex h-[320.5px] w-[480.8px] items-center justify-center'>
-                    <div className='absolute inset-0'>
-                      <DisplayImage src={store.pathFolderAssets + store.orderInfo.frame} />
-                    </div>
-
-                    <Canvas
-                      width={store.orderInfo.width}
-                      height={store.orderInfo.height}
-                      selectedPhotos={store.orderInfo.selectedPhotos}
-                      pathUserPhotos={store.pathFolderUserPhotos}
-                      modeFrame={store.orderInfo.modeFrame}
-                      typeFrame={store.orderInfo.typeFrame}
-                    />
-                  </div>
-                </div>
-              )}
+                <Canvas
+                  width={store.orderInfo.width}
+                  height={store.orderInfo.height}
+                  selectedPhotos={store.orderInfo.selectedPhotos}
+                  pathUserPhotos={store.pathFolderUserPhotos}
+                  frameMode={store.orderInfo.frameMode}
+                  frameType={store.orderInfo.frameType}
+                />
+              </div>
             </div>
           </div>
 
@@ -300,7 +270,7 @@ export default function SelectPhotos() {
 
                 <div className='absolute left-[170px] top-[26px] font-rokkitt text-[32px] font-bold tracking-wider'>
                   <span>Select </span>
-                  <span className='text-custom-style-2-1'>{store.orderInfo.quantitySelectedImages} </span>
+                  <span className='text-custom-style-2-1'>{store.orderInfo.quantitySelectedPhotos} </span>
                   <span>Photos To Print</span>
                 </div>
               </div>
@@ -338,7 +308,7 @@ export default function SelectPhotos() {
                                   key={index}
                                   className='w-[270px h-[180px]'
                                   onTouchEnd={(event) => handleOnTouchEndTogglePhoto(event, photo)}
-                                  onMouseUp={(event) => handleOnTouchEndTogglePhoto(event, photo)}
+                                  // onMouseUp={(event) => handleOnTouchEndTogglePhoto(event, photo)}
                                   onTouchMove={(event) => handleOnMoveTogglePhoto(event)}
                                 >
                                   {store.orderInfo.selectedPhotos.includes(photo) ? (
@@ -387,7 +357,7 @@ export default function SelectPhotos() {
                               key={index}
                               className='h-[30px] w-[30px]'
                               onTouchStart={(event) => handleOnTouchChangeCurrentIndex(event, index)}
-                              onMouseDown={(event) => handleOnTouchChangeCurrentIndex(event, index)}
+                              // onMouseDown={(event) => handleOnTouchChangeCurrentIndex(event, index)}
                             >
                               <DisplayImage src={store.pathFolderAssets + store.resources.icons[41]?.relPath} />
                             </div>
@@ -399,7 +369,7 @@ export default function SelectPhotos() {
                   <div
                     className='absolute left-[27px] top-[260px] h-[50px] w-[50px] p-1'
                     onTouchStart={(event) => handleOnTouchStartPrev(event)}
-                    onMouseDown={(event) => handleOnTouchStartPrev(event)}
+                    // onMouseDown={(event) => handleOnTouchStartPrev(event)}
                   >
                     <div className='h-full w-full'>
                       <DisplayImage src={store.pathFolderAssets + store.resources.icons[42]?.relPath} />
@@ -409,7 +379,7 @@ export default function SelectPhotos() {
                   <div
                     className='absolute right-[27px] top-[260px] h-[50px] w-[50px] p-1'
                     onTouchStart={(event) => handleOnTouchStartNext(event)}
-                    onMouseDown={(event) => handleOnTouchStartNext(event)}
+                    // onMouseDown={(event) => handleOnTouchStartNext(event)}
                   >
                     <div className='h-full w-full'>
                       <DisplayImage src={store.pathFolderAssets + store.resources.icons[38]?.relPath} />
@@ -436,7 +406,7 @@ export default function SelectPhotos() {
           <div
             className='flex h-full w-[200px] items-center justify-center'
             onTouchStart={(event) => handleOnTouchStartNextPage(event)}
-            onMouseDown={(event) => handleOnTouchStartNextPage(event)}
+            // onMouseDown={(event) => handleOnTouchStartNextPage(event)}
           >
             <div className='h-[79.8px] w-[79.8px]'>
               <DisplayImage src={store.pathFolderAssets + store.resources.icons[38]?.relPath} />
