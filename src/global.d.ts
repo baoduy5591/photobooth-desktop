@@ -184,6 +184,8 @@ interface StoreType {
   pathFolderUserPhotos: string;
   orderInfo: OrderInfoType;
   shootingMethod: string;
+  shootingMode: string;
+  shootingTime: number;
   machineConfigs: MachineConfigsType;
 }
 

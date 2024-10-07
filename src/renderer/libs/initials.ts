@@ -135,6 +135,8 @@ export const INIT_STORE: StoreType = {
     },
   },
   shootingMethod: '',
+  shootingMode: 'default',
+  shootingTime: 10,
   machineConfigs: {
     platform: '',
   },

@@ -25,17 +25,6 @@ export const CONST_REMOTE_METHOD = 'remote';
 export const CONST_WINDOW_OS = 'win32';
 export const CONST_DARWIN_OS = 'darwin';
 
-export const CONST_MOCK_DATA_FRAME = {
-  modeFrame: 'cutting',
-  typeFrame: 'typeA',
-  quantityImages: 6,
-  quantitySelectedImages: 4,
-  width: 1200,
-  height: 1800,
-  frame: 'frames/cutting/typeA/normal/00000.png',
-  ratio: 1.5,
-};
-
 export const CONST_POSITION_FRAMES: PositionFramesType = {
   cutting: {
     typeA: [
@@ -196,3 +185,10 @@ export const CONST_THRESHOLD = 10;
 export const CONST_RATIO_SCALE = 10;
 
 export const CONST_SCALE_PHOTOS = 2.8;
+export const CONST_SHOOTING_MODE: string[] = ['default', 'burst', 'custom'];
+
+export const CONST_FRAME_MODES = {
+  cutting: 'cutting',
+  regular: 'regular',
+  wide: 'wide',
+};

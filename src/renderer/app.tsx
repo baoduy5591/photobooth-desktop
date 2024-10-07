@@ -11,6 +11,7 @@ import SelectPhotos from './pages/selectPhotos';
 import SelectEffect from './pages/selectEffect';
 import SelectSticker from './pages/selectSticker';
 import Complete from './pages/complete';
+import SelectShootingMode from './pages/shootingMode';
 
 export default function App() {
   const { setStore } = useStore();
@@ -44,6 +45,7 @@ export default function App() {
         <Route path='/enter-code' element={<EnterCode />} />
         <Route path='/confirm-frame' element={<ConfirmFrame />} />
         <Route path='/shooting-method' element={<ShootingMethod />} />
+        <Route path='/select-shooting-mode' element={<SelectShootingMode />} />
         <Route path='/shooting' element={<Shooting />} />
         <Route path='/select-photos' element={<SelectPhotos />} />
         <Route path='/select-effect' element={<SelectEffect />} />

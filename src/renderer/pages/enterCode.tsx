@@ -49,6 +49,7 @@ export default function EnterCode() {
     if (data) {
       const { frameMode, frameType } = data;
       const ratio = getRatioByFrameModeAndFrameType(frameMode, frameType);
+      console.log('ratio', ratio);
       setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, ...data, ratio: ratio } }));
       setValues(CONST_PICTURE_TIME);
       setTimeout(() => {
