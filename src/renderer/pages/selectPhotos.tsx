@@ -3,7 +3,7 @@ import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
 import { CONST_POSITION_FRAMES } from '../libs/constants';
-import { Countdown } from '../components/countdown';
+import { Countdown } from '../components/countDown1';
 import { checkIsTouch, chunkItems } from '../libs/common';
 import { Canvas } from '../components/canvas';
 import { useNavigate } from 'react-router-dom';

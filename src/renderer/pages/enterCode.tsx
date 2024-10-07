@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { KeyboardNumber } from '../components/keyboardNumber';
 import { useNavigate } from 'react-router-dom';
 import { CONST_ERROR, CONST_PICTURE_TIME } from '../libs/constants';
-import { Countdown } from '../components/countdown';
+import { Countdown } from '../components/countDown1';
 import { useSound } from '../context/sound';
 import { getRatioByFrameModeAndFrameType } from '../libs/common';
 

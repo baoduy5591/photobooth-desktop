@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { BackgroundImage } from '../components/backgroundImage';
-import { Countdown } from '../components/countdown';
+import { Countdown } from '../components/countDown1';
 import { DisplayImage } from '../components/displayImage';
 import { useStore } from '../context/store';
 import { CONST_MODE_REGULAR, CONST_TYPE_FRAMES_FOR_DOUBLE } from '../libs/constants';
