@@ -133,35 +133,25 @@ export default function Shooting() {
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[34]?.relPath} />
               </div>
 
-              <div className='relative h-[826.7px] w-[1240px] bg-custom-style-3-2'>
+              <div className='relative h-[828px] w-[1242px] bg-custom-style-3-2'>
                 <img ref={imgRef} className='h-full w-full' />
 
                 <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
-                  <div className='h-[500px] w-[600px]'>
+                  <div className='h-[500px] w-[550px]'>
                     <DisplayImage src={store.pathFolderAssets + store.resources.icons[35]?.relPath} />
                   </div>
                 </div>
 
-                {store.orderInfo.ratio === 0.7 && (
-                  <div className='absolute inset-0 flex justify-between'>
-                    <div className='h-full w-[289.3px] bg-custom-style-6-1'></div>
-                    <div className='h-full w-[289.3px] bg-custom-style-6-1'></div>
-                  </div>
-                )}
-
-                {store.orderInfo.ratio === 1 && (
-                  <div className='absolute inset-0 flex justify-between'>
-                    <div className='h-full w-[206.7px] bg-custom-style-6-1'></div>
-                    <div className='h-full w-[206.7px] bg-custom-style-6-1'></div>
-                  </div>
-                )}
-
-                {store.orderInfo.ratio === 1.4 && (
-                  <div className='absolute inset-0 flex justify-between'>
-                    <div className='h-full w-[41.3px] bg-custom-style-6-1'></div>
-                    <div className='h-full w-[41.3px] bg-custom-style-6-1'></div>
-                  </div>
-                )}
+                <div className='absolute inset-0 flex justify-between'>
+                  <div
+                    className='h-full bg-custom-style-6-1'
+                    style={{ width: `${(1242 - 828 * store.orderInfo.ratio) / 2}px` }}
+                  ></div>
+                  <div
+                    className='h-full bg-custom-style-6-1'
+                    style={{ width: `${(1242 - 828 * store.orderInfo.ratio) / 2}px` }}
+                  ></div>
+                </div>
               </div>
 
               <div className='w-[570px]] absolute bottom-[23px] left-[28px] h-[90px] font-rokkitt text-[30px] text-custom-style-3-1'>
@@ -209,35 +199,18 @@ export default function Shooting() {
               <DisplayImage src={store.pathFolderAssets + store.resources.icons[4]?.relPath} />
             </div>
 
-            <div className='w-[276.8px]] h-[286.5px] -translate-y-5'>
+            <div className='w-[277px]] h-[287px] -translate-y-5'>
               <div className='h-full w-full'>
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[32]?.relPath} />
               </div>
 
               <div className='absolute inset-0 flex justify-center p-4'>
-                {store.orderInfo.ratio === 0.7 && shootingPhotos.length > 0 && (
-                  <div className='h-[220px] w-[154px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
-                    <DisplayImage src={store.pathFolderUserPhotos + '/' + shootingPhotos.slice(-1)[0]} />
-                  </div>
-                )}
-
-                {store.orderInfo.ratio === 1 && shootingPhotos.length > 0 && (
-                  <div className='h-[220px] w-[220px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
-                    <DisplayImage src={store.pathFolderUserPhotos + '/' + shootingPhotos.slice(-1)[0]} />
-                  </div>
-                )}
-
-                {store.orderInfo.ratio === 1.5 && shootingPhotos.length > 0 && (
-                  <div className='h-[180px] w-[270px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
-                    <DisplayImage src={store.pathFolderUserPhotos + '/' + shootingPhotos.slice(-1)[0]} />
-                  </div>
-                )}
-
-                {store.orderInfo.ratio === 1.4 && shootingPhotos.length > 0 && (
-                  <div className='h-[180px] w-[252px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
-                    <DisplayImage src={store.pathFolderUserPhotos + '/' + shootingPhotos.slice(-1)[0]} />
-                  </div>
-                )}
+                <div
+                  className='h-[220px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'
+                  style={{ width: `${220 * store.orderInfo.ratio}` }}
+                >
+                  <DisplayImage src={store.pathFolderUserPhotos + '/' + shootingPhotos.slice(-1)[0]} />
+                </div>
               </div>
             </div>
           </div>
