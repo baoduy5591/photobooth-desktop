@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { CONST_ERROR, CONST_PICTURE_TIME } from '../libs/constants';
 import { Countdown } from '../components/countdown';
 import { useSound } from '../context/sound';
+import { getRatioByFrameModeAndFrameType } from '../libs/common';
 
 export default function EnterCode() {
   const { store, setStore } = useStore();
@@ -46,7 +47,9 @@ export default function EnterCode() {
   const handleOnTouchStartSubmit = async (value: string) => {
     const data = await window.api.getOrderInfoById(value);
     if (data) {
-      setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, ...data } }));
+      const { frameMode, frameType } = data;
+      const ratio = getRatioByFrameModeAndFrameType(frameMode, frameType);
+      setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, ...data, ratio: ratio } }));
       setValues(CONST_PICTURE_TIME);
       setTimeout(() => {
         navigate('/shooting-method');
@@ -58,10 +61,6 @@ export default function EnterCode() {
 
   useEffect(() => {
     playSoundBackground(true);
-  }, []);
-
-  useEffect(() => {
-    navigate('/select-photos');
   }, []);
 
   return (

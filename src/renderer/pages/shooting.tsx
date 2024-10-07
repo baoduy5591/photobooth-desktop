@@ -91,10 +91,6 @@ export default function Shooting() {
     setIsShooting(false);
   }, [isShooting]);
 
-  useEffect(() => {
-    navigate('/select-photos');
-  }, []);
-
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
       <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />
