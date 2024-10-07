@@ -1,4 +1,4 @@
-import { CONST_FRAME_MODES, CONST_POSITION_FRAMES } from './constants';
+import { CONST_POSITION_FRAMES } from './constants';
 
 export const changeFontByName = (fontName: string) => {
   document.body.style.fontFamily = fontName;
