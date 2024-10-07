@@ -1,5 +1,5 @@
 import { BackgroundImage } from '../components/backgroundImage';
-import { Countdown, CountdownForShooting } from '../components/countDown1';
+import { Countdown, CountdownForShooting } from '../components/countdown';
 import { DisplayImage } from '../components/displayImage';
 import { useStore } from '../context/store';
 import { useNavigate } from 'react-router-dom';

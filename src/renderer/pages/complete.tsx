@@ -3,7 +3,7 @@ import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Countdown } from '../components/countDown1';
+import { Countdown } from '../components/countdown';
 import { useSound } from '../context/sound';
 import { INIT_STORE } from '../libs/initials';
 

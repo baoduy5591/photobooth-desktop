@@ -5,7 +5,7 @@ import { DisplayImage } from '../components/displayImage';
 import { CONST_LIST_EFFECTS } from '../libs/constants';
 import { checkIsTouch, loadImage } from '../libs/common';
 import { useNavigate } from 'react-router-dom';
-import { Countdown } from '../components/countDown1';
+import { Countdown } from '../components/countdown';
 import { useSound } from '../context/sound';
 
 export default function SelectEffect() {

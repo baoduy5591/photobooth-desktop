@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { BackgroundImage } from '../components/backgroundImage';
-import { Countdown } from '../components/countDown1';
+import { Countdown } from '../components/countdown';
 import { DisplayImage } from '../components/displayImage';
 import { useStore } from '../context/store';
 import { useNavigate } from 'react-router-dom';

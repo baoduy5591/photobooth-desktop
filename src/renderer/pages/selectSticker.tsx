@@ -3,7 +3,7 @@ import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
 import { CONST_LIST_TAB_STICKER, CONST_RATIO_SCALE, CONST_THRESHOLD } from '../libs/constants';
-import { Countdown } from '../components/countDown1';
+import { Countdown } from '../components/countdown';
 import { checkIsTouch, loadImage } from '../libs/common';
 import { useNavigate } from 'react-router-dom';
 import { INIT_STORE } from '../libs/initials';
