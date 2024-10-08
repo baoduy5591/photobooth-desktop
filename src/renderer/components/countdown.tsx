@@ -56,17 +56,13 @@ export const Countdown = React.memo(
 );
 
 interface CountdownForShootingProps {
-  url: string;
   time: number;
   handleActionShootingByMethod: () => void;
 }
 
 export const CountdownForShooting = React.memo(
-  function CountdownForShooting({ url, time, handleActionShootingByMethod }: CountdownForShootingProps) {
+  function CountdownForShooting({ time, handleActionShootingByMethod }: CountdownForShootingProps) {
     const [timeLeft, setTimeLeft] = useState<number>(time);
-
-    const minute = Math.floor(timeLeft / 60);
-    const second = timeLeft % 60;
 
     useEffect(() => {
       if (timeLeft < 1) {
@@ -85,13 +81,9 @@ export const CountdownForShooting = React.memo(
     }, [timeLeft]);
 
     return (
-      <div className='relative h-[85px] w-[160px]'>
-        <DisplayImage src={url} />
-
-        <div className='absolute left-1/2 top-[28px] flex -translate-x-1/2 items-center justify-center font-rokkitt text-5xl text-custom-style-3-1'>
-          <div className='mr-1 min-w-14 text-end'>0{minute}</div>
-          <div>:</div>
-          <div className='ml-1 min-w-14'>{second < 10 ? `0${second}` : second}</div>
+      <div className='h-full w-full'>
+        <div className='text-7xl text-custom-style-1'>
+          <span>{timeLeft}</span>
         </div>
       </div>
     );

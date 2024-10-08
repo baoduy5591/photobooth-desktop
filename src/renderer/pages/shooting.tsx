@@ -164,13 +164,9 @@ export default function Shooting() {
                 </div>
               </div>
 
-              <div className='absolute bottom-[23px] right-[180px] h-[90px]'>
+              <div className='absolute inset-0'>
                 {store.shootingMethod === CONST_COUNTDOWN_METHOD ? (
-                  <CountdownForShooting
-                    url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
-                    time={10}
-                    handleActionShootingByMethod={handleActionShootingByMethod}
-                  />
+                  <CountdownForShooting time={10} handleActionShootingByMethod={handleActionShootingByMethod} />
                 ) : (
                   <Countdown
                     url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
