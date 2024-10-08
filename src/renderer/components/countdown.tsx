@@ -90,7 +90,6 @@ export const CountdownForShooting = React.memo(
   },
   (prevProps, nextProps) => {
     return (
-      prevProps.url === nextProps.url &&
       prevProps.time === nextProps.time &&
       prevProps.handleActionShootingByMethod === nextProps.handleActionShootingByMethod
     );
