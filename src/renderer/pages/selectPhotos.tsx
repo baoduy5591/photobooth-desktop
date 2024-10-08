@@ -177,6 +177,7 @@ export default function SelectPhotos() {
   };
 
   const handleOnTouchStartCleanPhoto = (event: React.TouchEvent<HTMLDivElement>) => {
+    playSoundTouch(false);
     const touches = event.touches;
     if (!allowWithQuantityTouches(Array.from(touches), 1)) return;
 
@@ -247,10 +248,6 @@ export default function SelectPhotos() {
                   width: `${store.orderInfo.width / CONST_SCALE_PHOTOS}px`,
                 }}
               >
-                <div className='absolute inset-0 z-10 select-none'>
-                  <DisplayImage src={store.pathFolderAssets + store.orderInfo.frameRelPath} />
-                </div>
-
                 <div className='absolute inset-0' onTouchStart={(event) => handleOnTouchStartCleanPhoto(event)}>
                   <Canvas
                     width={store.orderInfo.width}
@@ -261,6 +258,10 @@ export default function SelectPhotos() {
                     frameType={store.orderInfo.frameType}
                     indexForClean={indexForClean}
                   />
+                </div>
+
+                <div className='pointer-events-none absolute inset-0'>
+                  <DisplayImage src={store.pathFolderAssets + store.orderInfo.frameRelPath} />
                 </div>
               </div>
             </div>
