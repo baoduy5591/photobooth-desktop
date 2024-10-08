@@ -79,7 +79,7 @@ export default function SelectShootingMode() {
 
           <div
             className='relative h-72 w-96 rounded-2xl bg-custom-style-2-1 p-3'
-            onTouchStart={() => handleChooseShootingMode(CONST_SHOOTING_MODE[1])}
+            onTouchStart={() => handleChooseShootingMode(CONST_SHOOTING_MODE[2])}
           >
             <div className='flex h-full items-center justify-center rounded-xl bg-custom-style-1 p-2'>
               <div className='flex h-full flex-col items-center justify-center gap-y-2 rounded-xl border-2 border-dashed border-custom-style-2-1 p-1'>
