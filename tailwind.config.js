@@ -50,6 +50,7 @@ module.exports = {
           'style-5-1': 'var(--picker-color-style-5-1)',
           'style-5-2': 'var(--picker-color-style-5-2)',
           'style-5-3': 'var(--picker-color-style-5-3)',
+          'style-6-1': 'var(--picker-color-style-6-1)',
         },
       },
     },
