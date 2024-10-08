@@ -37,8 +37,8 @@ export default function SelectShootingMode() {
     let shootingTime = 10;
     if (shootingModeName === CONST_SHOOTING_MODE[0]) {
       shootingTime = 3;
-    } else if (shootingModeName === CONST_SHOOTING_MODE[1]) {
-      shootingTime = 5;
+    } else if (shootingModeName === CONST_SHOOTING_MODE[2]) {
+      shootingTime = 15;
     }
 
     setStore((prevStore) => ({ ...prevStore, shootingMode: shootingModeName, shootingTime: shootingTime }));
