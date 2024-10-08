@@ -65,8 +65,8 @@ export default function SelectShootingMode() {
           >
             <div className='flex h-full items-center justify-center rounded-xl bg-custom-style-1 p-2'>
               <div className='flex h-full flex-col items-center justify-center gap-y-2 rounded-xl border-2 border-dashed border-custom-style-2-1 p-1'>
-                <span className='text-3xl font-bold'>Default</span>
-                <span>Automatic shooting at intervals of 10 seconds</span>
+                <span className='text-3xl font-bold'>Fast</span>
+                <span>Continuous shooting every 1 second after a 15-second preparation period</span>
               </div>
             </div>
 
@@ -83,8 +83,8 @@ export default function SelectShootingMode() {
           >
             <div className='flex h-full items-center justify-center rounded-xl bg-custom-style-1 p-2'>
               <div className='flex h-full flex-col items-center justify-center gap-y-2 rounded-xl border-2 border-dashed border-custom-style-2-1 p-1'>
-                <span className='text-3xl font-bold'>Burst</span>
-                <span>Continuous shooting every 1 second after a 15-second preparation period</span>
+                <span className='text-3xl font-bold'>Medium</span>
+                <span>Automatic shooting at intervals of 5 seconds</span>
               </div>
             </div>
 
@@ -96,6 +96,25 @@ export default function SelectShootingMode() {
           </div>
 
           <div
+            className='relative h-72 w-96 rounded-2xl bg-custom-style-2-1 p-3'
+            onTouchStart={() => handleChooseShootingMode(CONST_SHOOTING_MODE[1])}
+          >
+            <div className='flex h-full items-center justify-center rounded-xl bg-custom-style-1 p-2'>
+              <div className='flex h-full flex-col items-center justify-center gap-y-2 rounded-xl border-2 border-dashed border-custom-style-2-1 p-1'>
+                <span className='text-3xl font-bold'>Slow</span>
+                <span>Automatic shooting at intervals of 10 seconds</span>
+              </div>
+            </div>
+
+            {store.shootingMode === CONST_SHOOTING_MODE[1] && (
+              <div className='absolute -top-16 left-1/2 h-16 w-16 -translate-x-1/2'>
+                <DisplayImage src={store.pathFolderAssets + store.resources.icons[1].relPath} />
+              </div>
+            )}
+          </div>
+
+          {/* not use custom now */}
+          {/* <div
             className='relative h-72 w-96 rounded-2xl bg-custom-style-2-1 p-3'
             onTouchStart={() => handleChooseShootingMode(CONST_SHOOTING_MODE[2])}
           >
@@ -123,7 +142,7 @@ export default function SelectShootingMode() {
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[1].relPath} />
               </div>
             )}
-          </div>
+          </div> */}
         </div>
 
         <div

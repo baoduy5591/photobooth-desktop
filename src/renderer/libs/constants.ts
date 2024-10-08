@@ -185,7 +185,7 @@ export const CONST_THRESHOLD = 10;
 export const CONST_RATIO_SCALE = 10;
 
 export const CONST_SCALE_PHOTOS = 2.8;
-export const CONST_SHOOTING_MODE: string[] = ['default', 'burst', 'custom'];
+export const CONST_SHOOTING_MODE: string[] = ['Fast', 'Medium', 'Slow'];
 
 export const CONST_FRAME_MODES = {
   cutting: 'cutting',
