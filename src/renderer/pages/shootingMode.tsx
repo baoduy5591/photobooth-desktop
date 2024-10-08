@@ -119,7 +119,7 @@ export default function SelectShootingMode() {
             </div>
 
             {store.shootingMode === CONST_SHOOTING_MODE[2] && (
-              <div className='absolute -top-10 left-1/2 h-10 w-10 -translate-x-1/2'>
+              <div className='absolute -top-10 left-1/2 h-16 w-16 -translate-x-1/2'>
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[1].relPath} />
               </div>
             )}
