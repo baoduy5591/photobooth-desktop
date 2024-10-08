@@ -207,7 +207,7 @@ export default function Shooting() {
               </div>
 
               <div className='absolute inset-0 flex justify-center p-3 pt-6'>
-                <div className='relative h-[200px] w-[300px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
+                <div className='border-custom-style-6-1 relative h-[200px] w-[300px] overflow-hidden rounded-xl border-2'>
                   {shootingPhotos.length > 0 && (
                     <DisplayImage src={store.pathFolderUserPhotos + '/' + shootingPhotos.slice(-1)[0]} />
                   )}
