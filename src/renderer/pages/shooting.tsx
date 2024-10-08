@@ -205,13 +205,21 @@ export default function Shooting() {
               </div>
 
               <div className='absolute inset-0 flex justify-center p-4'>
-                <div
-                  className='h-[220px] rounded-xl border-2 border-custom-style-2-1'
-                  style={{ width: `${220 * store.orderInfo.ratio}px` }}
-                >
+                <div className='h-[220px] w-[330px] rounded-xl border-2 border-custom-style-2-1'>
                   {shootingPhotos.length > 0 && (
                     <DisplayImage src={store.pathFolderUserPhotos + '/' + shootingPhotos.slice(-1)[0]} />
                   )}
+
+                  <div className='absolute inset-0 flex justify-between'>
+                    <div
+                      className='h-full bg-custom-style-6-1'
+                      style={{ width: `${(330 - 220 * store.orderInfo.ratio) / 2}px` }}
+                    ></div>
+                    <div
+                      className='h-full bg-custom-style-6-1'
+                      style={{ width: `${(330 - 220 * store.orderInfo.ratio) / 2}px` }}
+                    ></div>
+                  </div>
                 </div>
               </div>
             </div>
