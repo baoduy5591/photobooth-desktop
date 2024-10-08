@@ -168,7 +168,7 @@ export default function SelectPhotos() {
     if (!allowWithQuantityTouches(Array.from(touches), 1)) return;
 
     const element = event.currentTarget;
-    console.log(element);
+    console.log(touches[0]);
     const elementBounding = element.getBoundingClientRect();
     console.log(elementBounding);
   };
