@@ -74,7 +74,14 @@ export const CountdownForShooting = React.memo(
       }
 
       const id = setInterval(() => {
-        setTimeLeft((timeLeft) => (timeLeft - 1 < 1 ? time : timeLeft - 1));
+        setTimeLeft((timeLeft) => {
+          if (timeLeft - 1 < 2) {
+            setTimeout(() => {
+              return time;
+            }, 1000);
+          }
+          return timeLeft - 1;
+        });
       }, 1000);
       return () => {
         clearInterval(id);
