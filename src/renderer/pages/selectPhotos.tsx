@@ -4,7 +4,7 @@ import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
 import { CONST_POSITION_FRAMES, CONST_SCALE_PHOTOS } from '../libs/constants';
 import { Countdown } from '../components/countdown';
-import { allowWithQuantityTouches, chunkItems } from '../libs/common';
+import { allowWithQuantityTouches, chunkItems, getPhotoOnCanvas } from '../libs/common';
 import { Canvas } from '../components/canvas';
 import { useNavigate } from 'react-router-dom';
 import { useSound } from '../context/sound';
@@ -172,9 +172,10 @@ export default function SelectPhotos() {
     const element = event.currentTarget;
     const elementBounding = element.getBoundingClientRect();
     const { x, y } = elementBounding;
-
-    console.log((clientX - x) * 2.8);
-    console.log((clientY - y) * 2.8);
+    const _x = (clientX - x) * CONST_SCALE_PHOTOS;
+    const _y = (clientX - y) * CONST_SCALE_PHOTOS;
+    const index = getPhotoOnCanvas(store.orderInfo.frameMode, store.orderInfo.frameType, _x, _y);
+    console.log(index);
   };
 
   useEffect(() => {
