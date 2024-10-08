@@ -87,7 +87,7 @@ export default function SelectShootingMode() {
 
           <div
             className='relative h-72 w-96 rounded-2xl bg-custom-style-2-1 p-3'
-            onTouchStart={() => handleChooseShootingMode(CONST_SHOOTING_MODE[2])}
+            onTouchStart={() => handleChooseShootingMode(CONST_SHOOTING_MODE[1])}
           >
             <div className='flex h-full items-center justify-center rounded-xl bg-custom-style-1 p-2'>
               <div className='flex h-full flex-col items-center justify-center gap-y-2 rounded-xl border-2 border-dashed border-custom-style-2-1 p-1'>
@@ -105,7 +105,7 @@ export default function SelectShootingMode() {
 
           <div
             className='relative h-72 w-96 rounded-2xl bg-custom-style-2-1 p-3'
-            onTouchStart={() => handleChooseShootingMode(CONST_SHOOTING_MODE[1])}
+            onTouchStart={() => handleChooseShootingMode(CONST_SHOOTING_MODE[2])}
           >
             <div className='flex h-full items-center justify-center rounded-xl bg-custom-style-1 p-2'>
               <div className='flex h-full flex-col items-center justify-center gap-y-2 rounded-xl border-2 border-dashed border-custom-style-2-1 p-1'>
@@ -114,7 +114,7 @@ export default function SelectShootingMode() {
               </div>
             </div>
 
-            {store.shootingMode === CONST_SHOOTING_MODE[1] && (
+            {store.shootingMode === CONST_SHOOTING_MODE[2] && (
               <div className='absolute -top-16 left-1/2 h-16 w-16 -translate-x-1/2'>
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[1].relPath} />
               </div>
@@ -154,7 +154,7 @@ export default function SelectShootingMode() {
         </div>
 
         <div
-          className='absolute right-5 top-1/2 flex -translate-y-1/2 items-center justify-center'
+          className='absolute right-14 top-1/2 flex -translate-y-1/2 items-center justify-center'
           onTouchStart={handleOnTouchStartNextPage}
         >
           <div className='h-[79.8px] w-[79.8px]'>
