@@ -73,7 +73,7 @@ export default function SelectPhotos() {
     const getAllIndexSelectedPhotos = selectedPhotos.map((item) => item.index);
     const getAllIndexPositionList = _frameType.map((_, index) => index);
     for (let i = 0; i < getAllIndexPositionList.length; i++) {
-      if (getAllIndexSelectedPhotos.includes(getAllIndexPositionList[i])) return i;
+      if (!getAllIndexSelectedPhotos.includes(getAllIndexPositionList[i])) return i;
     }
 
     return null;
