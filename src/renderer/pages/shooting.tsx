@@ -202,7 +202,7 @@ export default function Shooting() {
                         )
                       ) : (
                         <div className='absolute inset-0 flex flex-col items-center justify-center gap-y-5 font-sans text-6xl text-custom-style-1'>
-                          <span>Get ready to take a picture in:</span>
+                          <span>Ready to capture in:</span>
 
                           <div className='flex items-center justify-center gap-x-4'>
                             <CountdownForShooting
