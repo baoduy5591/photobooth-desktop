@@ -215,11 +215,11 @@ export default function SelectPhotos() {
                 className='relative mt-3 flex items-center justify-center'
                 style={{ height: `${store.orderInfo.height / 2.8}px`, width: `${store.orderInfo.width / 2.8}px` }}
               >
-                <div className='absolute inset-0'>
+                <div className='absolute inset-0 select-none'>
                   <DisplayImage src={store.pathFolderAssets + store.orderInfo.frameRelPath} />
                 </div>
 
-                <div className='h-full w-full' onTouchStart={(event) => handleChoosePhotoOnCanvas(event)}>
+                <div className='absolute inset-0' onTouchStart={(event) => handleChoosePhotoOnCanvas(event)}>
                   <Canvas
                     width={store.orderInfo.width}
                     height={store.orderInfo.height}
