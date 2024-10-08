@@ -201,12 +201,12 @@ export default function Shooting() {
               <DisplayImage src={store.pathFolderAssets + store.resources.icons[4]?.relPath} />
             </div>
 
-            <div className='h-[217px] w-[325px] -translate-y-5'>
+            <div className='h-[320px] w-[320px] -translate-y-5'>
               <div className='h-full w-full'>
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[32]?.relPath} />
               </div>
 
-              <div className='absolute inset-0 flex justify-center p-3'>
+              <div className='absolute inset-0 flex justify-center p-3 pt-6'>
                 <div className='relative h-[200px] w-[300px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
                   {shootingPhotos.length > 0 && (
                     <DisplayImage src={store.pathFolderUserPhotos + '/' + shootingPhotos.slice(-1)[0]} />
@@ -215,7 +215,7 @@ export default function Shooting() {
                   <div className='absolute inset-0 flex justify-between'>
                     <div
                       className='h-full bg-custom-style-6-1'
-                      style={{ width: `${(300 - 168 * store.orderInfo.ratio) / 2}px` }}
+                      style={{ width: `${(300 - 200 * store.orderInfo.ratio) / 2}px` }}
                     ></div>
                     <div
                       className='h-full bg-custom-style-6-1'
