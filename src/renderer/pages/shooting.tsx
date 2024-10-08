@@ -185,7 +185,7 @@ export default function Shooting() {
                   ) : (
                     <div>
                       {isPrepared ? (
-                        <div className='h-full w-full'>
+                        <div className='flex h-full w-full items-center justify-center text-custom-style-1'>
                           <span
                             className={`duration-400 transition-opacity ${isPrepared ? 'opacity-100' : 'opacity-0'}`}
                           >
