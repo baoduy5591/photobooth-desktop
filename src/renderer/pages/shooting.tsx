@@ -61,7 +61,7 @@ export default function Shooting() {
             const newListShootingPhoto = [...prevShootingPhoto, data.message];
             if (newListShootingPhoto.length >= store.orderInfo.quantityShootingPhotos) {
               wsCamera.current.send('stoplv');
-              navigate('/select-photos');
+              navigate('/enter-code');
               return newListShootingPhoto;
             }
 
