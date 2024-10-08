@@ -206,22 +206,22 @@ export default function Shooting() {
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[32]?.relPath} />
               </div>
 
-              <div className='absolute inset-0 flex justify-center p-4'>
-                <div className='relative h-[220px] w-[330px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
+              <div className='absolute inset-0 flex justify-center p-3'>
+                <div className='relative h-[168px] w-[252px] overflow-hidden rounded-xl border-2 border-custom-style-2-1'>
                   {shootingPhotos.length > 0 && (
                     <DisplayImage src={store.pathFolderUserPhotos + '/' + shootingPhotos.slice(-1)[0]} />
                   )}
 
-                  {/* <div className='absolute inset-0 flex justify-between'>
+                  <div className='absolute inset-0 flex justify-between'>
                     <div
                       className='h-full bg-custom-style-6-1'
-                      style={{ width: `${(330 - 220 * store.orderInfo.ratio) / 2}px` }}
+                      style={{ width: `${(252 - 168 * store.orderInfo.ratio) / 2}px` }}
                     ></div>
                     <div
                       className='h-full bg-custom-style-6-1'
-                      style={{ width: `${(330 - 220 * store.orderInfo.ratio) / 2}px` }}
+                      style={{ width: `${(252 - 168 * store.orderInfo.ratio) / 2}px` }}
                     ></div>
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </div>
