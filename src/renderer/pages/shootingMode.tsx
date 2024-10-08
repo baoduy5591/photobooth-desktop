@@ -15,20 +15,33 @@ export default function SelectShootingMode() {
 
   const { playSoundTouch } = useSound();
 
+  // not use custom now
+  // const handleChooseShootingMode = (shootingModeName: string) => {
+  //   playSoundTouch(false);
+  //   let shootingTime = 3;
+  //   if (shootingModeName === CONST_SHOOTING_MODE[0]) {
+  //     shootingTime = 10;
+  //   } else if (shootingModeName === CONST_SHOOTING_MODE[1]) {
+  //     shootingTime = 1;
+  //   }
+
+  //   if (time > 3) {
+  //     setStore((prevStore) => ({ ...prevStore, shootingMode: shootingModeName, shootingTime: time }));
+  //   } else {
+  //     setStore((prevStore) => ({ ...prevStore, shootingMode: shootingModeName, shootingTime: shootingTime }));
+  //   }
+  // };
+
   const handleChooseShootingMode = (shootingModeName: string) => {
     playSoundTouch(false);
-    let shootingTime = 3;
+    let shootingTime = 10;
     if (shootingModeName === CONST_SHOOTING_MODE[0]) {
-      shootingTime = 10;
-    } else if (shootingModeName === CONST_SHOOTING_MODE[1]) {
       shootingTime = 1;
+    } else if (shootingModeName === CONST_SHOOTING_MODE[1]) {
+      shootingTime = 5;
     }
 
-    if (time > 3) {
-      setStore((prevStore) => ({ ...prevStore, shootingMode: shootingModeName, shootingTime: time }));
-    } else {
-      setStore((prevStore) => ({ ...prevStore, shootingMode: shootingModeName, shootingTime: shootingTime }));
-    }
+    return shootingTime;
   };
 
   const handleChoosePrevTime = () => {
