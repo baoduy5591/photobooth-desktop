@@ -58,10 +58,11 @@ export const Countdown = React.memo(
 interface CountdownForShootingProps {
   time: number;
   handleActionShootingByMethod: () => void;
+  customClass?: string;
 }
 
 export const CountdownForShooting = React.memo(
-  function CountdownForShooting({ time, handleActionShootingByMethod }: CountdownForShootingProps) {
+  function CountdownForShooting({ time, handleActionShootingByMethod, customClass = '' }: CountdownForShootingProps) {
     const [timeLeft, setTimeLeft] = useState<number>(time);
 
     useEffect(() => {
@@ -81,7 +82,9 @@ export const CountdownForShooting = React.memo(
     }, [timeLeft]);
 
     return (
-      <div className='text-18xl flex h-full w-full items-center justify-center font-sans font-thin text-custom-style-1'>
+      <div
+        className={`text-18xl flex h-full w-full items-center justify-center font-sans font-thin text-custom-style-1 ${customClass}`}
+      >
         <span>{timeLeft}</span>
       </div>
     );

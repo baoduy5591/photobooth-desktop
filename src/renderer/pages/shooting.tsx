@@ -4,13 +4,14 @@ import { DisplayImage } from '../components/displayImage';
 import { useStore } from '../context/store';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { CONST_COUNTDOWN_METHOD, CONST_REMOTE_METHOD } from '../libs/constants';
+import { CONST_COUNTDOWN_METHOD, CONST_REMOTE_METHOD, CONST_SHOOTING_MODE } from '../libs/constants';
 
 export default function Shooting() {
   const { store } = useStore();
   const [isStartLiveView, setIsStartLiveView] = useState<boolean>(false);
   const [shootingPhotos, setShootingPhotos] = useState<string[]>([]);
   const [isShooting, setIsShooting] = useState<boolean>(false);
+  const [isPrepared, setIsPrepared] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -168,7 +169,35 @@ export default function Shooting() {
 
               <div className='absolute inset-0'>
                 {store.shootingMethod === CONST_COUNTDOWN_METHOD ? (
-                  <CountdownForShooting time={10} handleActionShootingByMethod={handleActionShootingByMethod} />
+                  store.shootingMode !== CONST_SHOOTING_MODE[0] ? (
+                    <CountdownForShooting
+                      time={store.shootingTime}
+                      handleActionShootingByMethod={handleActionShootingByMethod}
+                    />
+                  ) : (
+                    <div>
+                      {isPrepared ? (
+                        <CountdownForShooting
+                          time={store.shootingTime}
+                          handleActionShootingByMethod={handleActionShootingByMethod}
+                        />
+                      ) : (
+                        <div className='absolute inset-0 flex flex-col items-center justify-center gap-y-4 font-sans text-4xl'>
+                          <span>Auto capture after 10</span>
+
+                          <div className='flex items-center justify-center gap-x-4'>
+                            <CountdownForShooting
+                              time={store.shootingTime}
+                              handleActionShootingByMethod={handleActionShootingByMethod}
+                              customClass='text-5xl'
+                            />
+
+                            <span>seconds</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )
                 ) : (
                   <Countdown
                     url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
