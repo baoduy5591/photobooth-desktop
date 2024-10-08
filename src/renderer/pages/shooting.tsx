@@ -84,10 +84,11 @@ export default function Shooting() {
   };
 
   const handleStartShooting = () => {
-    setIsPrepared(true);
+    setIsStart(true);
     setTimeout(() => {
-      setIsStart(true);
-    }, 500);
+      setIsPrepared(true);
+      setIsStart(false);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -185,20 +186,18 @@ export default function Shooting() {
                   ) : (
                     <div>
                       {isPrepared ? (
-                        <div className='flex h-full w-full items-center justify-center text-custom-style-1'>
-                          <span
-                            className={`duration-400 transition-opacity ${isPrepared ? 'opacity-100' : 'opacity-0'}`}
-                          >
-                            Start!
-                          </span>
-
-                          {isStart && (
+                        isStart ? (
+                          <div className='text-18xl flex h-full w-full items-center justify-center font-sans text-custom-style-1'>
+                            <span>Start!</span>
+                          </div>
+                        ) : (
+                          <div className='flex h-full w-full items-center justify-center text-custom-style-1'>
                             <CountdownForShooting
                               time={store.shootingTime}
-                              handleActionShootingByMethod={handleActionShootingByMethod}
+                              handleActionShootingByMethod={handleStartShooting}
                             />
-                          )}
-                        </div>
+                          </div>
+                        )
                       ) : (
                         <div className='absolute inset-0 flex flex-col items-center justify-center gap-y-4 font-sans text-6xl text-custom-style-1'>
                           <span>Automatic capture after:</span>
