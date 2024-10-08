@@ -60,7 +60,7 @@ export default function SelectShootingMode() {
 
         <div className='flex h-full items-center justify-center gap-x-10 text-center font-rokkitt'>
           <div
-            className='relative h-56 w-72 rounded-2xl bg-custom-style-2-1 p-3'
+            className='relative h-72 w-96 rounded-2xl bg-custom-style-2-1 p-3'
             onTouchStart={() => handleChooseShootingMode(CONST_SHOOTING_MODE[0])}
           >
             <div className='flex h-full items-center justify-center rounded-xl bg-custom-style-1 p-2'>
@@ -78,7 +78,7 @@ export default function SelectShootingMode() {
           </div>
 
           <div
-            className='relative h-56 w-72 rounded-2xl bg-custom-style-2-1 p-3'
+            className='relative h-72 w-96 rounded-2xl bg-custom-style-2-1 p-3'
             onTouchStart={() => handleChooseShootingMode(CONST_SHOOTING_MODE[1])}
           >
             <div className='flex h-full items-center justify-center rounded-xl bg-custom-style-1 p-2'>
@@ -96,7 +96,7 @@ export default function SelectShootingMode() {
           </div>
 
           <div
-            className='relative h-56 w-72 rounded-2xl bg-custom-style-2-1 p-3'
+            className='relative h-72 w-96 rounded-2xl bg-custom-style-2-1 p-3'
             onTouchStart={() => handleChooseShootingMode(CONST_SHOOTING_MODE[2])}
           >
             <div className='flex h-full items-center justify-center rounded-xl bg-custom-style-1 p-2'>
