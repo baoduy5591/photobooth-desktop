@@ -4,7 +4,7 @@ import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
 import { CONST_POSITION_FRAMES } from '../libs/constants';
 import { Countdown } from '../components/countdown';
-import { chunkItems } from '../libs/common';
+import { allowWithQuantityTouches, chunkItems } from '../libs/common';
 import { Canvas } from '../components/canvas';
 import { useNavigate } from 'react-router-dom';
 import { useSound } from '../context/sound';
@@ -163,6 +163,14 @@ export default function SelectPhotos() {
     }, 300);
   };
 
+  const handleChoosePhotoOnCanvas = (event: React.TouchEvent<HTMLDivElement>) => {
+    const touches = event.touches;
+    if (!allowWithQuantityTouches(Array.from(touches), 1)) return;
+
+    const touch = touches[0];
+    console.log(touch);
+  };
+
   useEffect(() => {
     const getResizedPhotos = async () => {
       const resizedPhotos = await window.api.getUserResizedPhotos();
@@ -211,7 +219,7 @@ export default function SelectPhotos() {
                   <DisplayImage src={store.pathFolderAssets + store.orderInfo.frameRelPath} />
                 </div>
 
-                <div className='h-full w-full'>
+                <div className='h-full w-full' onTouchStart={(event) => handleChoosePhotoOnCanvas(event)}>
                   <Canvas
                     width={store.orderInfo.width}
                     height={store.orderInfo.height}
