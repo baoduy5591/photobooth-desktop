@@ -70,6 +70,11 @@ module.exports = {
         14: '14px',
         15: '15px',
       },
+      fontSize: {
+        '16xl': '16rem',
+        '17xl': '17rem',
+        '18xl': '18rem',
+      },
     },
   },
   plugins: [require('tailwindcss-filters')],

@@ -81,7 +81,7 @@ export const CountdownForShooting = React.memo(
     }, [timeLeft]);
 
     return (
-      <div className='flex h-full w-full items-center justify-center font-rokkitt text-9xl font-light text-custom-style-1'>
+      <div className='text-16xl flex h-full w-full items-center justify-center font-rokkitt font-thin text-custom-style-1'>
         <span>{timeLeft}</span>
       </div>
     );
