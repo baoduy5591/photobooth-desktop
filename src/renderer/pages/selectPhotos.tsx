@@ -110,6 +110,7 @@ export default function SelectPhotos() {
         selectedPhotos: [...prevStore.orderInfo.selectedPhotos, { photo: photo, index: _index }],
       },
     }));
+    setIndexForClean(-1);
   };
 
   const handleOnMoveTogglePhoto = (event: React.TouchEvent<HTMLDivElement>) => {
