@@ -100,7 +100,8 @@ export default function SelectPhotos() {
     if (checkIsPhotoExist(selectedPhotos, photo)) return;
 
     const _index = getIndex(selectedPhotos, store.orderInfo.frameMode, store.orderInfo.frameType);
-    if (!_index) return;
+    console.log(_index);
+    if (_index === null) return;
 
     setStore((prevStore) => ({
       ...prevStore,
