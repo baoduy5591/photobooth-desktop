@@ -189,7 +189,7 @@ export default function Shooting() {
                     <div>
                       {isPrepared ? (
                         isStart ? (
-                          <div className='text-18xl absolute inset-0 flex items-center justify-center font-sans text-custom-style-1'>
+                          <div className='text-16xl absolute inset-0 flex items-center justify-center font-sans text-custom-style-1'>
                             <span>Start!</span>
                           </div>
                         ) : (
