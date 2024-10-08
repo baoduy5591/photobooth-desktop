@@ -173,9 +173,8 @@ export default function SelectPhotos() {
     const elementBounding = element.getBoundingClientRect();
     const { x, y } = elementBounding;
     const _x = (clientX - x) * CONST_SCALE_PHOTOS;
-    const _y = (clientX - y) * CONST_SCALE_PHOTOS;
+    const _y = (clientY - y) * CONST_SCALE_PHOTOS;
     const index = getPhotoOnCanvas(store.orderInfo.frameMode, store.orderInfo.frameType, _x, _y);
-    console.log(_x, _y);
     console.log('index', index);
   };
 
