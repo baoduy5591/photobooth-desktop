@@ -68,8 +68,6 @@ export default function SelectPhotos() {
   };
 
   const getIndex = (selectedPhotos: { photo: string; index: number }[], frameMode: string, frameType: string) => {
-    if (selectedPhotos.length === 0) return 0;
-
     const _frameMode = CONST_POSITION_FRAMES[frameMode as keyof typeof CONST_POSITION_FRAMES];
     const _frameType = _frameMode[frameType as keyof typeof _frameMode];
     const getAllIndexSelectedPhotos = selectedPhotos.map((item) => item.index);
@@ -102,6 +100,8 @@ export default function SelectPhotos() {
     if (checkIsPhotoExist(selectedPhotos, photo)) return;
 
     const _index = getIndex(selectedPhotos, store.orderInfo.frameMode, store.orderInfo.frameType);
+    if (!_index) return;
+
     setStore((prevStore) => ({
       ...prevStore,
       orderInfo: {
