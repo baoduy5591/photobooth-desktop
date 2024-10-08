@@ -16,6 +16,12 @@
 
 @font-face {
   font-family: Baloo;
+  font-weight: 100;
+  src: url('assets/fonts/baloo/Baloo-Regular.ttf');
+}
+
+@font-face {
+  font-family: Baloo;
   font-weight: 400;
   src: url('assets/fonts/baloo/Baloo-Regular.ttf');
 }
