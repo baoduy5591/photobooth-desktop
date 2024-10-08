@@ -52,7 +52,7 @@ export default function EnterCode() {
       setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, ...data, ratio: ratio } }));
       setValues(CONST_PICTURE_TIME);
       setTimeout(() => {
-        navigate('/shooting-method');
+        navigate('/select-photos');
       }, 1000);
     } else {
       setValues(CONST_ERROR);
