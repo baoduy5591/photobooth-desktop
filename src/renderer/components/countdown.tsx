@@ -70,7 +70,7 @@ export const CountdownForShooting = React.memo(
         setTimeout(() => {
           handleActionShootingByMethod();
           setTimeLeft(time);
-        }, 500);
+        }, 1000);
       }
 
       const id = setInterval(() => {
