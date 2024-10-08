@@ -41,7 +41,7 @@ export default function SelectShootingMode() {
       shootingTime = 5;
     }
 
-    return shootingTime;
+    setStore((prevStore) => ({ ...prevStore, shootingMode: shootingModeName, shootingTime: shootingTime }));
   };
 
   const handleChoosePrevTime = () => {
