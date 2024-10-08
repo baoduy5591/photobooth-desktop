@@ -187,11 +187,11 @@ export default function Shooting() {
                     <div>
                       {isPrepared ? (
                         isStart ? (
-                          <div className='text-18xl flex h-full w-full items-center justify-center font-sans text-custom-style-1'>
+                          <div className='text-18xl absolute inset-0 flex items-center justify-center font-sans text-custom-style-1'>
                             <span>Start!</span>
                           </div>
                         ) : (
-                          <div className='flex h-full w-full items-center justify-center text-custom-style-1'>
+                          <div className='absolute inset-0 flex items-center justify-center text-custom-style-1'>
                             <CountdownForShooting
                               time={store.shootingTime}
                               handleActionShootingByMethod={handleActionShootingByMethod}
@@ -199,8 +199,8 @@ export default function Shooting() {
                           </div>
                         )
                       ) : (
-                        <div className='absolute inset-0 flex flex-col items-center justify-center gap-y-4 font-sans text-6xl text-custom-style-1'>
-                          <span>Automatic capture after:</span>
+                        <div className='absolute inset-0 flex flex-col items-center justify-center gap-y-5 font-sans text-6xl text-custom-style-1'>
+                          <span>Get ready to take a picture in:</span>
 
                           <div className='flex items-center justify-center gap-x-4'>
                             <CountdownForShooting
