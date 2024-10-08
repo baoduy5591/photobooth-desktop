@@ -50,11 +50,11 @@ export default function SelectShootingMode() {
       <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[0]?.relPath} />
 
       <div className='absolute inset-0 px-40 py-16'>
-        <div className='absolute right-40 top-28'>
+        <div className='absolute right-52 top-28'>
           <Countdown
             url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
             time={900}
-            routeGoToBack='/confirm-frame'
+            routeGoToBack='/home'
           />
         </div>
 
@@ -105,13 +105,13 @@ export default function SelectShootingMode() {
                 <span>Option to set the time interval between each shot</span>
 
                 <div className='flex w-full items-center justify-between px-8'>
-                  <div className='h-10 w-10 rotate-90 p-1' onTouchEnd={handleChoosePrevTime}>
+                  <div className='h-14 w-14 rotate-90 p-1' onTouchEnd={handleChoosePrevTime}>
                     <DisplayImage src={store.pathFolderAssets + store.resources.icons[1].relPath} />
                   </div>
 
-                  <span className='text-xl font-bold'>{time}</span>
+                  <span className='text-2xl font-bold'>{time}</span>
 
-                  <div className='h-10 w-10 -rotate-90 p-1' onTouchEnd={handleChooseNextTime}>
+                  <div className='h-14 w-14 -rotate-90 p-1' onTouchEnd={handleChooseNextTime}>
                     <DisplayImage src={store.pathFolderAssets + store.resources.icons[1].relPath} />
                   </div>
                 </div>
