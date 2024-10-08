@@ -46,7 +46,7 @@ export default function SelectShootingMode() {
   };
 
   return (
-    <div className='relative h-screen w-screen overflow-hidden'>
+    <div className='relative h-screen w-screen overflow-hidden text-2xl'>
       <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />
 
       <div className='absolute inset-0 px-40 py-16'>
@@ -65,7 +65,7 @@ export default function SelectShootingMode() {
           >
             <div className='flex h-full items-center justify-center rounded-xl bg-custom-style-1 p-2'>
               <div className='flex h-full flex-col items-center justify-center gap-y-2 rounded-xl border-2 border-dashed border-custom-style-2-1 p-1'>
-                <span className='text-xl font-bold'>Default</span>
+                <span className='text-3xl font-bold'>Default</span>
                 <span>Automatic shooting at intervals of 10 seconds</span>
               </div>
             </div>
@@ -83,7 +83,7 @@ export default function SelectShootingMode() {
           >
             <div className='flex h-full items-center justify-center rounded-xl bg-custom-style-1 p-2'>
               <div className='flex h-full flex-col items-center justify-center gap-y-2 rounded-xl border-2 border-dashed border-custom-style-2-1 p-1'>
-                <span className='text-xl font-bold'>Burst</span>
+                <span className='text-3xl font-bold'>Burst</span>
                 <span>Continuous shooting every 1 second after a 15-second preparation period</span>
               </div>
             </div>
@@ -101,7 +101,7 @@ export default function SelectShootingMode() {
           >
             <div className='flex h-full items-center justify-center rounded-xl bg-custom-style-1 p-2'>
               <div className='flex h-full flex-col items-center justify-center gap-y-2 rounded-xl border-2 border-dashed border-custom-style-2-1 p-1'>
-                <span className='text-xl font-bold'>Custom</span>
+                <span className='text-3xl font-bold'>Custom</span>
                 <span>Option to set the time interval between each shot</span>
 
                 <div className='flex w-full items-center justify-between px-8'>
@@ -109,7 +109,7 @@ export default function SelectShootingMode() {
                     <DisplayImage src={store.pathFolderAssets + store.resources.icons[1].relPath} />
                   </div>
 
-                  <span className='text-lg font-bold'>{time}</span>
+                  <span className='text-xl font-bold'>{time}</span>
 
                   <div className='h-10 w-10 -rotate-90 p-1' onTouchEnd={handleChooseNextTime}>
                     <DisplayImage src={store.pathFolderAssets + store.resources.icons[1].relPath} />

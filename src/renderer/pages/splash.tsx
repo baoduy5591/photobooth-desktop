@@ -11,7 +11,7 @@ export function Splash() {
 
   const handleOnEnded = () => {
     setStore((store: StoreType) => ({ ...store, isLoading: false }));
-    navigate('/select-shooting-mode');
+    navigate('/home');
   };
 
   useEffect(() => {
