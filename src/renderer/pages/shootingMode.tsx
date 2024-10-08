@@ -71,7 +71,7 @@ export default function SelectShootingMode() {
             </div>
 
             {store.shootingMode === CONST_SHOOTING_MODE[0] && (
-              <div className='absolute -top-10 left-1/2 h-10 w-10 -translate-x-1/2'>
+              <div className='absolute -top-16 left-1/2 h-16 w-16 -translate-x-1/2'>
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[1].relPath} />
               </div>
             )}
@@ -89,7 +89,7 @@ export default function SelectShootingMode() {
             </div>
 
             {store.shootingMode === CONST_SHOOTING_MODE[1] && (
-              <div className='absolute -top-10 left-1/2 h-10 w-10 -translate-x-1/2'>
+              <div className='absolute -top-16 left-1/2 h-16 w-16 -translate-x-1/2'>
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[1].relPath} />
               </div>
             )}
@@ -109,7 +109,7 @@ export default function SelectShootingMode() {
                     <DisplayImage src={store.pathFolderAssets + store.resources.icons[1].relPath} />
                   </div>
 
-                  <span className='text-2xl font-bold'>{time}</span>
+                  <span className='text-3xl font-bold'>{time}</span>
 
                   <div className='h-14 w-14 -rotate-90 p-1' onTouchEnd={handleChooseNextTime}>
                     <DisplayImage src={store.pathFolderAssets + store.resources.icons[1].relPath} />
@@ -119,7 +119,7 @@ export default function SelectShootingMode() {
             </div>
 
             {store.shootingMode === CONST_SHOOTING_MODE[2] && (
-              <div className='absolute -top-10 left-1/2 h-16 w-16 -translate-x-1/2'>
+              <div className='absolute -top-16 left-1/2 h-16 w-16 -translate-x-1/2'>
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[1].relPath} />
               </div>
             )}
