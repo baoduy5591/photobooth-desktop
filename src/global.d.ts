@@ -172,23 +172,6 @@ interface OrderInfoType {
   };
 }
 
-// interface OrderInfoType {
-//   frameMode: string;
-//   frameType: string;
-//   frameStyle: string;
-//   quantityShootingPhotos: number;
-//   quantitySelectedPhotos: number;
-//   frameOrder: number;
-//   frameRelPath: string;
-//   ratio: number;
-//   width: number;
-//   height: number;
-//   printCount: number;
-//   grayscaleBase64: string;
-//   colorBase64: string;
-//   framePrice: number;
-// }
-
 interface MachineConfigsType {
   platform: string;
 }
