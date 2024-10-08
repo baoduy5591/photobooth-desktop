@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { CONST_POSITION_FRAMES } from './constants';
 
 export const changeFontByName = (fontName: string) => {
@@ -53,16 +54,20 @@ export const allowWithQuantityTouches = (touches: React.Touch[], quantityTouches
   return true;
 };
 
-export const getPhotoOnCanvas = (frameMode: string, frameType: string, x: number, y: number) => {
+export const getPhotoOnCanvas = (frameMode: string, frameType: string, x: number, y: number): FC => {
   const _frameMode = CONST_POSITION_FRAMES[frameMode as keyof typeof CONST_POSITION_FRAMES];
   const _frameType = _frameMode[frameType as keyof typeof _frameMode];
   _frameType.forEach((positionList) => {
+    console.log('list', positionList);
     positionList.forEach((position, index) => {
       const { x: minX, w: maxX, y: minY, h: maxY } = position;
+      console.log(minX, maxX, minY, maxY);
       if (x >= minX && x <= maxX && y >= minY && y <= maxY) {
+        console.log('xxxxx');
         return index;
       }
     });
     return null;
   });
+  return null;
 };

@@ -175,7 +175,8 @@ export default function SelectPhotos() {
     const _x = (clientX - x) * CONST_SCALE_PHOTOS;
     const _y = (clientX - y) * CONST_SCALE_PHOTOS;
     const index = getPhotoOnCanvas(store.orderInfo.frameMode, store.orderInfo.frameType, _x, _y);
-    console.log(index);
+    console.log(_x, _y);
+    console.log('index', index);
   };
 
   useEffect(() => {
