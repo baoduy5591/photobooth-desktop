@@ -209,7 +209,7 @@ export default function Shooting() {
                               customClass='text-7xl max-w-max max-h-max'
                             />
 
-                            <span>seconds</span>
+                            <span className='w-[200px]'>seconds</span>
                           </div>
                         </div>
                       )}
