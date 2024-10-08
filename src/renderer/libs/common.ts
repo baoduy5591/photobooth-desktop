@@ -52,3 +52,10 @@ export const allowWithQuantityTouches = (touches: React.Touch[], quantityTouches
 
   return true;
 };
+
+export const getPosition = (frameMode: string, frameType: string) => {
+  const _frameMode = CONST_POSITION_FRAMES[frameMode as keyof typeof CONST_POSITION_FRAMES];
+  const _frameType = _frameMode[frameType as keyof typeof _frameMode];
+  const { w, h } = _frameType[0][0];
+  return Math.round((w / h) * 10) / 10;
+};

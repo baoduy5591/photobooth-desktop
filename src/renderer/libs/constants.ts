@@ -194,3 +194,5 @@ export const CONST_LIST_TAB_STICKER: string[] = ['Hot', 'Birthday', 'Flowers', '
 export const CONST_THRESHOLD = 10;
 
 export const CONST_RATIO_SCALE = 10;
+
+export const CONST_SCALE_PHOTOS = 2.8;

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
-import { CONST_POSITION_FRAMES } from '../libs/constants';
+import { CONST_POSITION_FRAMES, CONST_SCALE_PHOTOS } from '../libs/constants';
 import { Countdown } from '../components/countdown';
 import { allowWithQuantityTouches, chunkItems } from '../libs/common';
 import { Canvas } from '../components/canvas';
@@ -167,10 +167,14 @@ export default function SelectPhotos() {
     const touches = event.touches;
     if (!allowWithQuantityTouches(Array.from(touches), 1)) return;
 
+    const touch = touches[0];
+    const { clientX, clientY } = touch;
     const element = event.currentTarget;
-    console.log(touches[0]);
     const elementBounding = element.getBoundingClientRect();
-    console.log(elementBounding);
+    const { x, y } = elementBounding;
+
+    console.log((clientX - x) * 2.8);
+    console.log((clientY - y) * 2.8);
   };
 
   useEffect(() => {
@@ -215,7 +219,10 @@ export default function SelectPhotos() {
             <div className='flex w-full -translate-y-4 items-center justify-center'>
               <div
                 className='relative mt-3 flex items-center justify-center'
-                style={{ height: `${store.orderInfo.height / 2.8}px`, width: `${store.orderInfo.width / 2.8}px` }}
+                style={{
+                  height: `${store.orderInfo.height / CONST_SCALE_PHOTOS}px`,
+                  width: `${store.orderInfo.width / CONST_SCALE_PHOTOS}px`,
+                }}
               >
                 <div className='absolute inset-0 select-none'>
                   <DisplayImage src={store.pathFolderAssets + store.orderInfo.frameRelPath} />
