@@ -91,6 +91,8 @@ export default function Shooting() {
     setIsShooting(false);
   }, [isShooting]);
 
+  console.log(store.orderInfo.ratio);
+
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
       <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />
@@ -210,7 +212,7 @@ export default function Shooting() {
                     <DisplayImage src={store.pathFolderUserPhotos + '/' + shootingPhotos.slice(-1)[0]} />
                   )}
 
-                  <div className='absolute inset-0 flex justify-between'>
+                  {/* <div className='absolute inset-0 flex justify-between'>
                     <div
                       className='h-full bg-custom-style-6-1'
                       style={{ width: `${(330 - 220 * store.orderInfo.ratio) / 2}px` }}
@@ -219,7 +221,7 @@ export default function Shooting() {
                       className='h-full bg-custom-style-6-1'
                       style={{ width: `${(330 - 220 * store.orderInfo.ratio) / 2}px` }}
                     ></div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
