@@ -60,7 +60,11 @@ export const getPhotoOnCanvas = (frameMode: string, frameType: string, x: number
   for (const positionList of _frameType) {
     for (let index = 0; index < positionList.length; index++) {
       console.log('list =', positionList[index]);
-      const { x: minX, w: maxX, y: minY, h: maxY } = positionList[index];
+      const { x, y, w, h } = positionList[index];
+      const minX = x;
+      const maxX = x + w;
+      const minY = y;
+      const maxY = y + h;
       if (x >= minX && x <= maxX && y >= minY && y <= maxY) {
         console.log('index', index);
         return index;
