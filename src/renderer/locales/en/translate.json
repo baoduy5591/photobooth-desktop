@@ -28,8 +28,8 @@
 
   "shootingMethod": {
     "countdownTitle": "Countdown",
-    "countdownText1": "Automatic capture with a specified time for each shot",
-    "countdownText2": "including three modes: fast, medium, and slow",
+    "countdownText1": "Automatic capture with set timing for each shot",
+    "countdownText2": "featuring three modes: fast, slow, and medium",
     "remoteTitle": "Remote Self Shot",
     "remoteText1": "Click the Remote control",
     "remoteText2": "the moment you want!",
