@@ -182,7 +182,7 @@ export default function Shooting() {
                           handleActionShootingByMethod={handleActionShootingByMethod}
                         />
                       ) : (
-                        <div className='absolute inset-0 flex flex-col items-center justify-center gap-y-4 font-sans text-4xl'>
+                        <div className='absolute inset-0 flex flex-col items-center justify-center gap-y-4 font-sans text-4xl text-custom-style-1'>
                           <span>Auto capture after:</span>
 
                           <div className='flex items-center justify-center gap-x-4'>
