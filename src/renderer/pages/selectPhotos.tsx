@@ -127,7 +127,7 @@ export default function SelectPhotos() {
     height: number,
     frameMode: string,
     frameType: string,
-    selectedPhotos: string[],
+    selectedPhotos: { photo: string; index: number }[],
     positionFrames: PositionFramesType,
   ) => {
     const canvas = document.createElement('canvas');
@@ -152,7 +152,7 @@ export default function SelectPhotos() {
       });
     };
 
-    const promises = selectedPhotos.map((photo, index) => loadImage(photo, index));
+    const promises = selectedPhotos.map((item) => loadImage(item.photo, item.index));
     await Promise.all(promises);
     const base64String = canvas.toDataURL('image/png');
     return base64String;
@@ -160,20 +160,21 @@ export default function SelectPhotos() {
 
   const handleOnTouchStartNextPage = async (event: React.TouchEvent<HTMLDivElement>) => {
     playSoundTouch(false);
-    // if (store.orderInfo.selectedPhotos.length < store.orderInfo.quantitySelectedPhotos) return;
+    if (store.orderInfo.selectedPhotos.length < store.orderInfo.quantitySelectedPhotos) return;
 
-    // const base64String = await handleConvertCanvasToBase64(
-    //   store.orderInfo.width,
-    //   store.orderInfo.height,
-    //   store.orderInfo.frameMode,
-    //   store.orderInfo.frameType,
-    //   store.orderInfo.selectedPhotos,
-    //   CONST_POSITION_FRAMES,
-    // );
-    // setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, imageSelectPhoto: base64String } }));
-    // setTimeout(() => {
-    //   navigate('/select-effect');
-    // }, 300);
+    const base64String = await handleConvertCanvasToBase64(
+      store.orderInfo.width,
+      store.orderInfo.height,
+      store.orderInfo.frameMode,
+      store.orderInfo.frameType,
+      store.orderInfo.selectedPhotos,
+      CONST_POSITION_FRAMES,
+    );
+    console.log(base64String);
+    setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, imageSelectPhoto: base64String } }));
+    setTimeout(() => {
+      navigate('/select-effect');
+    }, 300);
   };
 
   const handleOnTouchStartCleanPhoto = (event: React.TouchEvent<HTMLDivElement>) => {
