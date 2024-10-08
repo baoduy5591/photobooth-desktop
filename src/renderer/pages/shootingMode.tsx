@@ -4,7 +4,7 @@ import { useStore } from '../context/store';
 import { useNavigate } from 'react-router-dom';
 import { useSound } from '../context/sound';
 import { CONST_SHOOTING_MODE } from '../libs/constants';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { DisplayImage } from '../components/displayImage';
 
 export default function SelectShootingMode() {
