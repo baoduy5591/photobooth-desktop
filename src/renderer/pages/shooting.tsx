@@ -194,7 +194,7 @@ export default function Shooting() {
                           <div className='flex h-full w-full items-center justify-center text-custom-style-1'>
                             <CountdownForShooting
                               time={store.shootingTime}
-                              handleActionShootingByMethod={handleStartShooting}
+                              handleActionShootingByMethod={handleActionShootingByMethod}
                             />
                           </div>
                         )
