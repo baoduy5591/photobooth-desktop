@@ -36,7 +36,7 @@ export default function SelectShootingMode() {
     playSoundTouch(false);
     let shootingTime = 10;
     if (shootingModeName === CONST_SHOOTING_MODE[0]) {
-      shootingTime = 1;
+      shootingTime = 3;
     } else if (shootingModeName === CONST_SHOOTING_MODE[1]) {
       shootingTime = 5;
     }

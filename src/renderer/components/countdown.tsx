@@ -66,7 +66,7 @@ export const CountdownForShooting = React.memo(
     const [timeLeft, setTimeLeft] = useState<number>(time);
 
     useEffect(() => {
-      if (timeLeft < 1) {
+      if (timeLeft < 2) {
         setTimeout(() => {
           handleActionShootingByMethod();
           setTimeLeft(time);

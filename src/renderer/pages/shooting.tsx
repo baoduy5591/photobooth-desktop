@@ -84,9 +84,9 @@ export default function Shooting() {
   };
 
   const handleStartShooting = () => {
+    setIsPrepared(true);
     setIsStart(true);
     setTimeout(() => {
-      setIsPrepared(true);
       setIsStart(false);
     }, 1000);
   };
