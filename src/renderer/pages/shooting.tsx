@@ -88,7 +88,7 @@ export default function Shooting() {
     setIsStart(true);
     setTimeout(() => {
       setIsStart(false);
-    }, 1000);
+    }, 2000);
   };
 
   useEffect(() => {
