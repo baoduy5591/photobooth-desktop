@@ -54,7 +54,7 @@ export const allowWithQuantityTouches = (touches: React.Touch[], quantityTouches
   return true;
 };
 
-export const getPhotoOnCanvas = (frameMode: string, frameType: string, x: number, y: number) => {
+export const getPhotoOnCanvas = (frameMode: string, frameType: string, _x: number, _y: number) => {
   const _frameMode = CONST_POSITION_FRAMES[frameMode as keyof typeof CONST_POSITION_FRAMES];
   const _frameType = _frameMode[frameType as keyof typeof _frameMode];
   for (const positionList of _frameType) {
@@ -65,7 +65,7 @@ export const getPhotoOnCanvas = (frameMode: string, frameType: string, x: number
       const maxX = x + w;
       const minY = y;
       const maxY = y + h;
-      if (x >= minX && x <= maxX && y >= minY && y <= maxY) {
+      if (_x >= minX && _x <= maxX && _y >= minY && _y <= maxY) {
         console.log('index', index);
         return index;
       }
