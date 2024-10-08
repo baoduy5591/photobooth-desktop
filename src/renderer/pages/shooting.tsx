@@ -201,7 +201,7 @@ export default function Shooting() {
               <DisplayImage src={store.pathFolderAssets + store.resources.icons[4]?.relPath} />
             </div>
 
-            <div className='w-[277px]] h-[287px] -translate-y-5'>
+            <div className='w-[277px]] h-[250px] -translate-y-5'>
               <div className='h-full w-full'>
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[32]?.relPath} />
               </div>
