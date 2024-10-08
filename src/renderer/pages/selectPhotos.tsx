@@ -79,7 +79,7 @@ export default function SelectPhotos() {
     return null;
   };
 
-  const handleOnTouchEndTogglePhoto = (event: React.TouchEvent<HTMLDivElement>, photo: string) => {
+  const handleOnTouchEndChoosePhoto = (event: React.TouchEvent<HTMLDivElement>, photo: string) => {
     event.stopPropagation();
     playSoundTouch(false);
     if (isTouchMove.current) {
@@ -176,7 +176,7 @@ export default function SelectPhotos() {
     // }, 300);
   };
 
-  const handleChoosePhotoOnCanvas = (event: React.TouchEvent<HTMLDivElement>) => {
+  const handleOnTouchStartCleanPhoto = (event: React.TouchEvent<HTMLDivElement>) => {
     const touches = event.touches;
     if (!allowWithQuantityTouches(Array.from(touches), 1)) return;
 
@@ -187,15 +187,15 @@ export default function SelectPhotos() {
     const { x, y } = elementBounding;
     const _x = (clientX - x) * CONST_SCALE_PHOTOS;
     const _y = (clientY - y) * CONST_SCALE_PHOTOS;
-    const index = getPhotoOnCanvas(store.orderInfo.frameMode, store.orderInfo.frameType, _x, _y);
-    if (!index) return;
+    const _index = getPhotoOnCanvas(store.orderInfo.frameMode, store.orderInfo.frameType, _x, _y);
+    if (_index === null) return;
 
-    setIndexForClean(index);
+    setIndexForClean(_index);
     setStore((prevStore) => ({
       ...prevStore,
       orderInfo: {
         ...prevStore.orderInfo,
-        selectedPhotos: prevStore.orderInfo.selectedPhotos.filter((item) => item.index !== index),
+        selectedPhotos: prevStore.orderInfo.selectedPhotos.filter((item) => item.index !== _index),
       },
     }));
   };
@@ -251,7 +251,7 @@ export default function SelectPhotos() {
                   <DisplayImage src={store.pathFolderAssets + store.orderInfo.frameRelPath} />
                 </div>
 
-                <div className='absolute inset-0' onTouchStart={(event) => handleChoosePhotoOnCanvas(event)}>
+                <div className='absolute inset-0' onTouchStart={(event) => handleOnTouchStartCleanPhoto(event)}>
                   <Canvas
                     width={store.orderInfo.width}
                     height={store.orderInfo.height}
@@ -316,7 +316,7 @@ export default function SelectPhotos() {
                                 <div
                                   key={index}
                                   className='w-[270px h-[180px]'
-                                  onTouchEnd={(event) => handleOnTouchEndTogglePhoto(event, photo)}
+                                  onTouchEnd={(event) => handleOnTouchEndChoosePhoto(event, photo)}
                                   onTouchMove={(event) => handleOnMoveTogglePhoto(event)}
                                 >
                                   {store.orderInfo.selectedPhotos.map((item) => item.photo).includes(photo) ? (
