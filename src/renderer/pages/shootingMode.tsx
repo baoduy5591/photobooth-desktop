@@ -47,7 +47,7 @@ export default function SelectShootingMode() {
 
   return (
     <div className='relative h-screen w-screen overflow-hidden text-2xl'>
-      <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />
+      <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[0]?.relPath} />
 
       <div className='absolute inset-0 px-40 py-16'>
         <div className='absolute right-40 top-28'>
