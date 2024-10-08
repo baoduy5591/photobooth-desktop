@@ -209,7 +209,7 @@ export default function Shooting() {
                   className='h-[220px] rounded-xl border-2 border-custom-style-2-1'
                   style={{ width: `${220 * store.orderInfo.ratio}px` }}
                 >
-                  {shootingPhotos && (
+                  {shootingPhotos.length > 0 && (
                     <DisplayImage src={store.pathFolderUserPhotos + '/' + shootingPhotos.slice(-1)[0]} />
                   )}
                 </div>
