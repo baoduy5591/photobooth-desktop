@@ -44,13 +44,14 @@ export default function SelectShootingMode() {
     setStore((prevStore) => ({ ...prevStore, shootingMode: shootingModeName, shootingTime: shootingTime }));
   };
 
-  const handleChoosePrevTime = () => {
-    setTime((prevTime) => (prevTime - 1 < 3 ? 3 : prevTime - 1));
-  };
+  // not use custom now
+  // const handleChoosePrevTime = () => {
+  //   setTime((prevTime) => (prevTime - 1 < 3 ? 3 : prevTime - 1));
+  // };
 
-  const handleChooseNextTime = () => {
-    setTime((prevTime) => (prevTime + 1 > 30 ? 30 : prevTime + 1));
-  };
+  // const handleChooseNextTime = () => {
+  //   setTime((prevTime) => (prevTime + 1 > 30 ? 30 : prevTime + 1));
+  // };
 
   const handleOnTouchStartNextPage = () => {
     setTimeout(() => {
@@ -97,7 +98,7 @@ export default function SelectShootingMode() {
             onTouchStart={() => handleChooseShootingMode(CONST_SHOOTING_MODE[0])}
           >
             <div className='flex h-full items-center justify-center rounded-xl bg-custom-style-1 p-2'>
-              <div className='flex h-full flex-col items-center justify-center gap-y-2 rounded-xl border-2 border-dashed border-custom-style-2-1 p-1'>
+              <div className='flex h-full flex-col items-center justify-center gap-y-2 rounded-xl border-2 border-dashed border-custom-style-2-1 p-1 pt-7'>
                 <span className='text-3xl font-bold'>Fast</span>
                 <span>After a 10-second prep, continuous shooting every 3 seconds</span>
               </div>
