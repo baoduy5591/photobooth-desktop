@@ -80,7 +80,9 @@ export default function Shooting() {
   }, []);
 
   const handleActionShootingByMethod = () => {
-    setIsShooting(true);
+    setTimeout(() => {
+      setIsShooting(true);
+    }, 1000);
   };
 
   const handleStartShooting = () => {
