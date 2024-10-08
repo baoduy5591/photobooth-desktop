@@ -79,7 +79,7 @@ export default function SelectShootingMode() {
           />
         </div>
 
-        <div className='absolute left-52 top-40 h-[102px] w-[132px] -rotate-12'>
+        <div className='absolute left-80 top-36 h-[102px] w-[132px] -rotate-12'>
           <DisplayImage src={store.pathFolderAssets + store.resources.icons[4]?.relPath} />
         </div>
 
@@ -87,7 +87,7 @@ export default function SelectShootingMode() {
           <DisplayImage src={store.pathFolderAssets + store.resources.icons[3]?.relPath} />
         </div>
 
-        <div className='absolute bottom-32 right-60 h-[102px] w-[132px] rotate-12'>
+        <div className='absolute bottom-32 right-96 h-[102px] w-[132px] rotate-12'>
           <DisplayImage src={store.pathFolderAssets + store.resources.icons[2]?.relPath} />
         </div>
 
