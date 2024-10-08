@@ -99,7 +99,7 @@ export default function SelectShootingMode() {
             <div className='flex h-full items-center justify-center rounded-xl bg-custom-style-1 p-2'>
               <div className='flex h-full flex-col items-center justify-center gap-y-2 rounded-xl border-2 border-dashed border-custom-style-2-1 p-1'>
                 <span className='text-3xl font-bold'>Fast</span>
-                <span>Continuous shooting every 1 second after a 15-second preparation period</span>
+                <span>After a 10-second prep, continuous shooting every 3 seconds</span>
               </div>
             </div>
 
