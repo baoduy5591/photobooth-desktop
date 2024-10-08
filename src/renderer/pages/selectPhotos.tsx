@@ -100,7 +100,6 @@ export default function SelectPhotos() {
     if (checkIsPhotoExist(selectedPhotos, photo)) return;
 
     const _index = getIndex(selectedPhotos, store.orderInfo.frameMode, store.orderInfo.frameType);
-    console.log(_index);
     if (_index === null) return;
 
     setStore((prevStore) => ({
@@ -248,7 +247,7 @@ export default function SelectPhotos() {
                   width: `${store.orderInfo.width / CONST_SCALE_PHOTOS}px`,
                 }}
               >
-                <div className='absolute inset-0 select-none'>
+                <div className='absolute inset-0 z-10 select-none'>
                   <DisplayImage src={store.pathFolderAssets + store.orderInfo.frameRelPath} />
                 </div>
 

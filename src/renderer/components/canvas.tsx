@@ -15,7 +15,6 @@ export const Canvas = React.memo(
   function Canvas({ width, height, selectedPhotos, pathUserPhotos, frameMode, frameType, indexForClean }: CanvasProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
-    console.log(selectedPhotos);
     const getPositionList = () => {
       const object = CONST_POSITION_FRAMES[frameMode as keyof typeof CONST_POSITION_FRAMES];
       const positionList = object[frameType as keyof typeof object];
