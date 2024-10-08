@@ -183,13 +183,13 @@ export default function Shooting() {
                         />
                       ) : (
                         <div className='absolute inset-0 flex flex-col items-center justify-center gap-y-4 font-sans text-4xl'>
-                          <span>Auto capture after 10</span>
+                          <span>Auto capture after:</span>
 
                           <div className='flex items-center justify-center gap-x-4'>
                             <CountdownForShooting
-                              time={store.shootingTime}
+                              time={15}
                               handleActionShootingByMethod={handleActionShootingByMethod}
-                              customClass='text-5xl'
+                              customClass='text-6xl max-w-max max-h-max'
                             />
 
                             <span>seconds</span>
