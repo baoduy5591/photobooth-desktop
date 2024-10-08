@@ -12,6 +12,7 @@ export default function Shooting() {
   const [shootingPhotos, setShootingPhotos] = useState<string[]>([]);
   const [isShooting, setIsShooting] = useState<boolean>(false);
   const [isPrepared, setIsPrepared] = useState<boolean>(false);
+  const [isStart, setIsStart] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -80,6 +81,13 @@ export default function Shooting() {
 
   const handleActionShootingByMethod = () => {
     setIsShooting(true);
+  };
+
+  const handleStartShooting = () => {
+    setIsPrepared(true);
+    setTimeout(() => {
+      setIsStart(true);
+    }, 500);
   };
 
   useEffect(() => {
@@ -177,19 +185,29 @@ export default function Shooting() {
                   ) : (
                     <div>
                       {isPrepared ? (
-                        <CountdownForShooting
-                          time={store.shootingTime}
-                          handleActionShootingByMethod={handleActionShootingByMethod}
-                        />
+                        <div className='h-full w-full'>
+                          <span
+                            className={`duration-400 transition-opacity ${isPrepared ? 'opacity-100' : 'opacity-0'}`}
+                          >
+                            Start!
+                          </span>
+
+                          {isStart && (
+                            <CountdownForShooting
+                              time={store.shootingTime}
+                              handleActionShootingByMethod={handleActionShootingByMethod}
+                            />
+                          )}
+                        </div>
                       ) : (
-                        <div className='absolute inset-0 flex flex-col items-center justify-center gap-y-4 font-sans text-4xl text-custom-style-1'>
-                          <span>Auto capture after:</span>
+                        <div className='absolute inset-0 flex flex-col items-center justify-center gap-y-4 font-sans text-6xl text-custom-style-1'>
+                          <span>Automatic capture after:</span>
 
                           <div className='flex items-center justify-center gap-x-4'>
                             <CountdownForShooting
                               time={15}
-                              handleActionShootingByMethod={handleActionShootingByMethod}
-                              customClass='text-6xl max-w-max max-h-max'
+                              handleActionShootingByMethod={handleStartShooting}
+                              customClass='text-7xl max-w-max max-h-max'
                             />
 
                             <span>seconds</span>
