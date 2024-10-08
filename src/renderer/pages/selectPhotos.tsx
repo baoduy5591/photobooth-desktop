@@ -4,7 +4,7 @@ import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
 import { CONST_POSITION_FRAMES } from '../libs/constants';
 import { Countdown } from '../components/countdown';
-import { checkIsTouch, chunkItems } from '../libs/common';
+import { chunkItems } from '../libs/common';
 import { Canvas } from '../components/canvas';
 import { useNavigate } from 'react-router-dom';
 import { useSound } from '../context/sound';
@@ -14,45 +14,21 @@ export default function SelectPhotos() {
 
   const { playSoundTouch } = useSound();
 
-  // const checkIsDoubleFrames = () => {
-  //   const { frameMode, frameType } = store.orderInfo;
-  //   let isDouble = false;
-  //   if (frameMode === CONST_MODE_REGULAR && CONST_TYPE_FRAMES_FOR_DOUBLE.includes(frameType)) {
-  //     isDouble = true;
-  //   }
-
-  //   return isDouble;
-  // };
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const [isDouble, setIsDouble] = useState<boolean>(checkIsDoubleFrames());
   const [resizedPhotos, setResizedPhotos] = useState<string[][]>([[]]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
   const isTouchMove = useRef<boolean>(false);
-  const isTouchEnd = useRef<boolean>(false);
-
-  const isTouchPrev = useRef<boolean>(false);
-  const isTouchNext = useRef<boolean>(false);
-  const isTouchTogglePhoto = useRef<boolean>(false);
-  const isTouchMoveTogglePhoto = useRef<boolean>(false);
-  const isTouchChangeCurrentIndex = useRef<boolean>(false);
-  const isTouchNextPage = useRef<boolean>(false);
 
   const navigate = useNavigate();
 
   const handleOnTouchStartPrev = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!checkIsTouch(event, isTouchPrev)) return;
-
     playSoundTouch(false);
     setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
   };
 
   const handleOnTouchStartNext = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!checkIsTouch(event, isTouchNext)) return;
-
     playSoundTouch(false);
     setCurrentIndex((index) => (index + 1 >= resizedPhotos.length ? index : index + 1));
   };
@@ -67,8 +43,6 @@ export default function SelectPhotos() {
   };
 
   const handleOnTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!checkIsTouch(event, isTouchEnd)) return;
-
     if (!isTouchMove.current) return;
 
     if (touchEndX.current - touchStartX.current > 100) {
@@ -86,8 +60,6 @@ export default function SelectPhotos() {
 
   const handleOnTouchEndTogglePhoto = (event: React.TouchEvent<HTMLDivElement>, photo: string) => {
     event.stopPropagation();
-    if (!checkIsTouch(event, isTouchTogglePhoto)) return;
-
     playSoundTouch(false);
     if (isTouchMove.current) {
       if (touchEndX.current - touchStartX.current > 100) {
@@ -128,15 +100,11 @@ export default function SelectPhotos() {
   };
 
   const handleOnMoveTogglePhoto = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!checkIsTouch(event, isTouchMoveTogglePhoto)) return;
-
     isTouchMove.current = true;
     touchEndX.current = event.touches[0].clientX;
   };
 
   const handleOnTouchChangeCurrentIndex = (event: React.TouchEvent<HTMLDivElement>, newIndex: number) => {
-    if (!checkIsTouch(event, isTouchChangeCurrentIndex)) return;
-
     playSoundTouch(false);
     setCurrentIndex(newIndex);
   };
@@ -178,8 +146,6 @@ export default function SelectPhotos() {
   };
 
   const handleOnTouchStartNextPage = async (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!checkIsTouch(event, isTouchNextPage)) return;
-
     playSoundTouch(false);
     if (store.orderInfo.selectedPhotos.length < store.orderInfo.quantitySelectedPhotos) return;
 
@@ -245,14 +211,16 @@ export default function SelectPhotos() {
                   <DisplayImage src={store.pathFolderAssets + store.orderInfo.frameRelPath} />
                 </div>
 
-                <Canvas
-                  width={store.orderInfo.width}
-                  height={store.orderInfo.height}
-                  selectedPhotos={store.orderInfo.selectedPhotos}
-                  pathUserPhotos={store.pathFolderUserPhotos}
-                  frameMode={store.orderInfo.frameMode}
-                  frameType={store.orderInfo.frameType}
-                />
+                <div className='h-full w-full'>
+                  <Canvas
+                    width={store.orderInfo.width}
+                    height={store.orderInfo.height}
+                    selectedPhotos={store.orderInfo.selectedPhotos}
+                    pathUserPhotos={store.pathFolderUserPhotos}
+                    frameMode={store.orderInfo.frameMode}
+                    frameType={store.orderInfo.frameType}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -308,7 +276,6 @@ export default function SelectPhotos() {
                                   key={index}
                                   className='w-[270px h-[180px]'
                                   onTouchEnd={(event) => handleOnTouchEndTogglePhoto(event, photo)}
-                                  // onMouseUp={(event) => handleOnTouchEndTogglePhoto(event, photo)}
                                   onTouchMove={(event) => handleOnMoveTogglePhoto(event)}
                                 >
                                   {store.orderInfo.selectedPhotos.includes(photo) ? (
@@ -357,7 +324,6 @@ export default function SelectPhotos() {
                               key={index}
                               className='h-[30px] w-[30px]'
                               onTouchStart={(event) => handleOnTouchChangeCurrentIndex(event, index)}
-                              // onMouseDown={(event) => handleOnTouchChangeCurrentIndex(event, index)}
                             >
                               <DisplayImage src={store.pathFolderAssets + store.resources.icons[41]?.relPath} />
                             </div>
@@ -369,7 +335,6 @@ export default function SelectPhotos() {
                   <div
                     className='absolute left-[27px] top-[260px] h-[50px] w-[50px] p-1'
                     onTouchStart={(event) => handleOnTouchStartPrev(event)}
-                    // onMouseDown={(event) => handleOnTouchStartPrev(event)}
                   >
                     <div className='h-full w-full'>
                       <DisplayImage src={store.pathFolderAssets + store.resources.icons[42]?.relPath} />
@@ -379,7 +344,6 @@ export default function SelectPhotos() {
                   <div
                     className='absolute right-[27px] top-[260px] h-[50px] w-[50px] p-1'
                     onTouchStart={(event) => handleOnTouchStartNext(event)}
-                    // onMouseDown={(event) => handleOnTouchStartNext(event)}
                   >
                     <div className='h-full w-full'>
                       <DisplayImage src={store.pathFolderAssets + store.resources.icons[38]?.relPath} />
@@ -406,7 +370,6 @@ export default function SelectPhotos() {
           <div
             className='flex h-full w-[200px] items-center justify-center'
             onTouchStart={(event) => handleOnTouchStartNextPage(event)}
-            // onMouseDown={(event) => handleOnTouchStartNextPage(event)}
           >
             <div className='h-[79.8px] w-[79.8px]'>
               <DisplayImage src={store.pathFolderAssets + store.resources.icons[38]?.relPath} />
