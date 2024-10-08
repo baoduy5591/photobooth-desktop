@@ -4,25 +4,24 @@ import { CONST_POSITION_FRAMES } from '../libs/constants';
 interface CanvasProps {
   width: number;
   height: number;
-  selectedPhotos: string[];
+  selectedPhotos: { photo: string; index: number }[];
   pathUserPhotos: string;
   frameMode: string;
   frameType: string;
+  indexForClean: number;
 }
 
 export const Canvas = React.memo(
-  function Canvas({ width, height, selectedPhotos, pathUserPhotos, frameMode, frameType }: CanvasProps) {
+  function Canvas({ width, height, selectedPhotos, pathUserPhotos, frameMode, frameType, indexForClean }: CanvasProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
-    const getListPositions = () => {
+    const getPositionList = () => {
       const object = CONST_POSITION_FRAMES[frameMode as keyof typeof CONST_POSITION_FRAMES];
-      const listPosition = object[frameType as keyof typeof object];
-      return listPosition;
+      const positionList = object[frameType as keyof typeof object];
+      return positionList;
     };
 
-    const listPositionRef = useRef(getListPositions());
-
-    const quantityPhotos = useRef<number>(0);
+    const positionListRef = useRef(getPositionList());
 
     const configCanvas = () => {
       const canvas = canvasRef.current;
@@ -42,23 +41,13 @@ export const Canvas = React.memo(
       const context = canvas.getContext('2d');
       if (!context) return;
 
-      const listPosition = listPositionRef.current;
-      if (selectedPhotos.length - quantityPhotos.current > 0) {
-        quantityPhotos.current += 1;
-      } else {
-        const position = listPosition[selectedPhotos.length];
-        position.forEach((p) => {
-          context.clearRect(p.x, p.y, p.w, p.h);
-        });
+      const positionList = positionListRef.current;
 
-        quantityPhotos.current -= 1;
-      }
-
-      selectedPhotos.forEach((photo, index) => {
+      selectedPhotos.forEach((item) => {
         const image = new Image();
-        image.src = pathUserPhotos + photo;
+        image.src = pathUserPhotos + item.photo;
         image.onload = () => {
-          const position = listPosition[index];
+          const position = positionList[item.index];
           position.forEach((p) => {
             context.drawImage(image, p.x, p.y, p.w, p.h);
           });
@@ -66,7 +55,26 @@ export const Canvas = React.memo(
       });
     };
 
+    const cleanPhotoByIndex = (indexForClean: number) => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      const context = canvas.getContext('2d');
+      if (!context) return;
+
+      const positionList = positionListRef.current;
+      const position = positionList[indexForClean];
+      position.forEach((p) => {
+        context.clearRect(p.x, p.y, p.w, p.h);
+      });
+    };
+
     useEffect(() => {
+      if (indexForClean !== -1) {
+        cleanPhotoByIndex(indexForClean);
+        return;
+      }
+
       drawImageUserPhoto();
     }, [selectedPhotos]);
 

@@ -16,6 +16,7 @@ export default function SelectPhotos() {
 
   const [resizedPhotos, setResizedPhotos] = useState<string[][]>([[]]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [indexForClean, setIndexForClean] = useState<number>(-1);
 
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
@@ -58,6 +59,28 @@ export default function SelectPhotos() {
     }
   };
 
+  const checkIsPhotoExist = (selectedPhotos: { photo: string; index: number }[], photo: string) => {
+    for (let i = 0; i < selectedPhotos.length; i++) {
+      if (selectedPhotos[i].photo === photo) return true;
+    }
+
+    return false;
+  };
+
+  const getIndex = (selectedPhotos: { photo: string; index: number }[], frameMode: string, frameType: string) => {
+    if (selectedPhotos.length === 0) return 0;
+
+    const _frameMode = CONST_POSITION_FRAMES[frameMode as keyof typeof CONST_POSITION_FRAMES];
+    const _frameType = _frameMode[frameType as keyof typeof _frameMode];
+    const getAllIndexSelectedPhotos = selectedPhotos.map((item) => item.index);
+    const getAllIndexPositionList = _frameType.map((_, index) => index);
+    for (let i = 0; i < getAllIndexPositionList.length; i++) {
+      if (getAllIndexSelectedPhotos.includes(getAllIndexPositionList[i])) return i;
+    }
+
+    return null;
+  };
+
   const handleOnTouchEndTogglePhoto = (event: React.TouchEvent<HTMLDivElement>, photo: string) => {
     event.stopPropagation();
     playSoundTouch(false);
@@ -75,28 +98,17 @@ export default function SelectPhotos() {
       }
     }
 
-    if (store.orderInfo.selectedPhotos.includes(photo)) {
-      setStore((store) => ({
-        ...store,
-        orderInfo: {
-          ...store.orderInfo,
-          selectedPhotos: store.orderInfo.selectedPhotos.filter((_photo) => _photo !== photo),
-        },
-      }));
-      return;
-    } else {
-      if (store.orderInfo.selectedPhotos.length < store.orderInfo.quantitySelectedPhotos) {
-        setStore((store) => ({
-          ...store,
-          orderInfo: {
-            ...store.orderInfo,
-            selectedPhotos: [...store.orderInfo.selectedPhotos, photo],
-          },
-        }));
+    const { selectedPhotos } = store.orderInfo;
+    if (!checkIsPhotoExist(selectedPhotos, photo)) return;
 
-        return;
-      }
-    }
+    const _index = getIndex(selectedPhotos, store.orderInfo.frameMode, store.orderInfo.frameType);
+    setStore((prevStore) => ({
+      ...prevStore,
+      orderInfo: {
+        ...prevStore.orderInfo,
+        selectedPhotos: [...prevStore.orderInfo.selectedPhotos, { photo: photo, index: _index }],
+      },
+    }));
   };
 
   const handleOnMoveTogglePhoto = (event: React.TouchEvent<HTMLDivElement>) => {
@@ -147,20 +159,20 @@ export default function SelectPhotos() {
 
   const handleOnTouchStartNextPage = async (event: React.TouchEvent<HTMLDivElement>) => {
     playSoundTouch(false);
-    if (store.orderInfo.selectedPhotos.length < store.orderInfo.quantitySelectedPhotos) return;
+    // if (store.orderInfo.selectedPhotos.length < store.orderInfo.quantitySelectedPhotos) return;
 
-    const base64String = await handleConvertCanvasToBase64(
-      store.orderInfo.width,
-      store.orderInfo.height,
-      store.orderInfo.frameMode,
-      store.orderInfo.frameType,
-      store.orderInfo.selectedPhotos,
-      CONST_POSITION_FRAMES,
-    );
-    setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, imageSelectPhoto: base64String } }));
-    setTimeout(() => {
-      navigate('/select-effect');
-    }, 300);
+    // const base64String = await handleConvertCanvasToBase64(
+    //   store.orderInfo.width,
+    //   store.orderInfo.height,
+    //   store.orderInfo.frameMode,
+    //   store.orderInfo.frameType,
+    //   store.orderInfo.selectedPhotos,
+    //   CONST_POSITION_FRAMES,
+    // );
+    // setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, imageSelectPhoto: base64String } }));
+    // setTimeout(() => {
+    //   navigate('/select-effect');
+    // }, 300);
   };
 
   const handleChoosePhotoOnCanvas = (event: React.TouchEvent<HTMLDivElement>) => {
@@ -174,10 +186,17 @@ export default function SelectPhotos() {
     const { x, y } = elementBounding;
     const _x = (clientX - x) * CONST_SCALE_PHOTOS;
     const _y = (clientY - y) * CONST_SCALE_PHOTOS;
-    console.log(clientX, clientY, x, y);
-    console.log(_x, _y);
-    const _index = getPhotoOnCanvas(store.orderInfo.frameMode, store.orderInfo.frameType, _x, _y);
-    console.log('_index', _index);
+    const index = getPhotoOnCanvas(store.orderInfo.frameMode, store.orderInfo.frameType, _x, _y);
+    if (!index) return;
+
+    setIndexForClean(index);
+    setStore((prevStore) => ({
+      ...prevStore,
+      orderInfo: {
+        ...prevStore.orderInfo,
+        selectedPhotos: prevStore.orderInfo.selectedPhotos.filter((item) => item.index !== index),
+      },
+    }));
   };
 
   useEffect(() => {
@@ -239,6 +258,7 @@ export default function SelectPhotos() {
                     pathUserPhotos={store.pathFolderUserPhotos}
                     frameMode={store.orderInfo.frameMode}
                     frameType={store.orderInfo.frameType}
+                    indexForClean={indexForClean}
                   />
                 </div>
               </div>
@@ -298,7 +318,7 @@ export default function SelectPhotos() {
                                   onTouchEnd={(event) => handleOnTouchEndTogglePhoto(event, photo)}
                                   onTouchMove={(event) => handleOnMoveTogglePhoto(event)}
                                 >
-                                  {store.orderInfo.selectedPhotos.includes(photo) ? (
+                                  {store.orderInfo.selectedPhotos.map((item) => item.photo).includes(photo) ? (
                                     <div className='relative h-full w-full'>
                                       <div
                                         className={`absolute -top-[32px] left-1/2 h-[30.8px] w-[34.8px] -translate-x-1/2`}

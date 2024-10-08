@@ -160,7 +160,7 @@ interface OrderInfoType {
   colorBase64: string;
   framePrice: number;
   grayscaleBase64: string;
-  selectedPhotos: string[];
+  selectedPhotos: { photo: string; index: number }[];
   imageSelectPhoto: string;
   imageSelectEffect: string;
   imageSelectSticker: string;
