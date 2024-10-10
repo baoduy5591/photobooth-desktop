@@ -118,7 +118,7 @@ export default function SelectShootingMode() {
             <div className='flex h-full items-center justify-center rounded-xl bg-custom-style-1 p-2'>
               <div className='flex h-full flex-col items-center justify-center gap-y-2 rounded-xl border-2 border-dashed border-custom-style-2-1 p-1'>
                 <span className='text-3xl font-bold'>Medium</span>
-                <span>Automatic shooting at intervals of 5 seconds</span>
+                <span>Automatic shooting at intervals of 10 seconds</span>
               </div>
             </div>
 
@@ -136,7 +136,7 @@ export default function SelectShootingMode() {
             <div className='flex h-full items-center justify-center rounded-xl bg-custom-style-1 p-2'>
               <div className='flex h-full flex-col items-center justify-center gap-y-2 rounded-xl border-2 border-dashed border-custom-style-2-1 p-1'>
                 <span className='text-3xl font-bold'>Slow</span>
-                <span>Automatic shooting at intervals of 10 seconds</span>
+                <span>Automatic shooting at intervals of 15 seconds</span>
               </div>
             </div>
 
