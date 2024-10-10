@@ -57,8 +57,10 @@ export default function Shooting() {
 
       if (data.action === 'takephoto') {
         if (data.result === 'OK') {
+          setIsShooting(false);
           setShootingPhotos((prevShootingPhoto) => {
             const newListShootingPhoto = [...prevShootingPhoto, data.message];
+            setIsShooting;
             if (newListShootingPhoto.length >= store.orderInfo.quantityShootingPhotos) {
               wsCamera.current.send('stoplv');
               navigate('/select-photos');
@@ -87,8 +89,6 @@ export default function Shooting() {
         wsCamera.current.send('takephoto');
       }
     }
-
-    setIsShooting(false);
   }, [isShooting]);
 
   return (
@@ -166,11 +166,13 @@ export default function Shooting() {
 
               <div className='absolute bottom-[23px] right-[180px] h-[90px]'>
                 {store.shootingMethod === CONST_COUNTDOWN_METHOD ? (
-                  <CountdownForShooting
-                    url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
-                    time={10}
-                    handleActionShootingByMethod={handleActionShootingByMethod}
-                  />
+                  !isShooting && (
+                    <CountdownForShooting
+                      url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
+                      time={store.shootingTime}
+                      handleActionShootingByMethod={handleActionShootingByMethod}
+                    />
+                  )
                 ) : (
                   <Countdown
                     url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
@@ -205,7 +207,7 @@ export default function Shooting() {
               </div>
 
               <div className='absolute inset-0 flex justify-center p-3'>
-                <div className='border-custom-style-6-1 relative h-[200px] w-[300px] overflow-hidden rounded-2xl border'>
+                <div className='relative h-[200px] w-[300px] overflow-hidden rounded-2xl border border-custom-style-6-1'>
                   {shootingPhotos.length > 0 && (
                     <DisplayImage src={store.pathFolderUserPhotos + '/' + shootingPhotos.slice(-1)[0]} />
                   )}
