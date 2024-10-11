@@ -71,3 +71,7 @@ export const getPhotoOnCanvas = (frameMode: string, frameType: string, _x: numbe
   }
   return null;
 };
+
+export const randomRangeValue = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min) + min);
+};

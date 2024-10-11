@@ -25,25 +25,35 @@ export default function SelectPhotos() {
   const navigate = useNavigate();
 
   const handleOnTouchStartPrev = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     playSoundTouch(false);
     setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
   };
 
   const handleOnTouchStartNext = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     playSoundTouch(false);
     setCurrentIndex((index) => (index + 1 >= resizedPhotos.length ? index : index + 1));
   };
 
   const handleOnTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     touchStartX.current = event.touches[0].clientX;
   };
 
   const handleOnTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     isTouchMove.current = true;
     touchEndX.current = event.touches[0].clientX;
   };
 
   const handleOnTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     if (!isTouchMove.current) return;
 
     if (touchEndX.current - touchStartX.current > 100) {
@@ -80,6 +90,8 @@ export default function SelectPhotos() {
   };
 
   const handleOnTouchEndChoosePhoto = (event: React.TouchEvent<HTMLDivElement>, photo: string) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     event.stopPropagation();
     playSoundTouch(false);
     if (isTouchMove.current) {
@@ -112,12 +124,16 @@ export default function SelectPhotos() {
     setIndexForClean(-1);
   };
 
-  const handleOnMoveTogglePhoto = (event: React.TouchEvent<HTMLDivElement>) => {
+  const handleOnMoveChoosePhoto = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     isTouchMove.current = true;
     touchEndX.current = event.touches[0].clientX;
   };
 
   const handleOnTouchChangeCurrentIndex = (event: React.TouchEvent<HTMLDivElement>, newIndex: number) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     playSoundTouch(false);
     setCurrentIndex(newIndex);
   };
@@ -159,6 +175,8 @@ export default function SelectPhotos() {
   };
 
   const handleOnTouchStartNextPage = async (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     playSoundTouch(false);
     if (store.orderInfo.selectedPhotos.length < store.orderInfo.quantitySelectedPhotos) return;
 
@@ -170,7 +188,6 @@ export default function SelectPhotos() {
       store.orderInfo.selectedPhotos,
       CONST_POSITION_FRAMES,
     );
-    console.log(base64String);
     setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, imageSelectPhoto: base64String } }));
     setTimeout(() => {
       navigate('/select-effect');
@@ -180,7 +197,7 @@ export default function SelectPhotos() {
   const handleOnTouchStartCleanPhoto = (event: React.TouchEvent<HTMLDivElement>) => {
     playSoundTouch(false);
     const touches = event.touches;
-    if (!allowWithQuantityTouches(Array.from(touches), 1)) return;
+    if (!!allowWithQuantityTouches(Array.from(touches), 1)) return;
 
     const touch = touches[0];
     const { clientX, clientY } = touch;
@@ -319,7 +336,7 @@ export default function SelectPhotos() {
                                   key={index}
                                   className='w-[270px h-[180px]'
                                   onTouchEnd={(event) => handleOnTouchEndChoosePhoto(event, photo)}
-                                  onTouchMove={(event) => handleOnMoveTogglePhoto(event)}
+                                  onTouchMove={(event) => handleOnMoveChoosePhoto(event)}
                                 >
                                   {store.orderInfo.selectedPhotos.map((item) => item.photo).includes(photo) ? (
                                     <div className='relative h-full w-full'>

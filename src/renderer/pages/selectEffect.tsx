@@ -3,7 +3,7 @@ import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
 import { CONST_LIST_EFFECTS } from '../libs/constants';
-import { checkIsTouch, loadImage } from '../libs/common';
+import { allowWithQuantityTouches, loadImage } from '../libs/common';
 import { useNavigate } from 'react-router-dom';
 import { Countdown } from '../components/countdown';
 import { useSound } from '../context/sound';
@@ -34,25 +34,35 @@ export default function SelectEffect() {
   const navigate = useNavigate();
 
   const handleOnTouchStartPrev = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     playSoundTouch(false);
     setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
   };
 
   const handleOnTouchStartNext = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     playSoundTouch(false);
     setCurrentIndex((index) => (index + 1 >= photoEffects.length ? index : index + 1));
   };
 
   const handleOnTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     touchStartX.current = event.touches[0].clientX;
   };
 
   const handleOnTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     isTouchMove.current = true;
     touchEndX.current = event.touches[0].clientX;
   };
 
   const handleOnTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     if (!isTouchMove.current) return;
 
     if (touchEndX.current - touchStartX.current > 100) {
@@ -72,6 +82,8 @@ export default function SelectEffect() {
     event: React.TouchEvent<HTMLDivElement>,
     effect: { name: string; className: string; style: string },
   ) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     event.stopPropagation();
     playSoundTouch(false);
     if (isTouchMove.current) {
@@ -92,11 +104,15 @@ export default function SelectEffect() {
   };
 
   const handleOnMoveTogglePhoto = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     isTouchMove.current = true;
     touchEndX.current = event.touches[0].clientX;
   };
 
   const handleOnTouchChangeCurrentIndex = (event: React.TouchEvent<HTMLDivElement>, newIndex: number) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     playSoundTouch(false);
     setCurrentIndex(newIndex);
   };
@@ -123,6 +139,8 @@ export default function SelectEffect() {
   };
 
   const handleOnTouchStartNextPage = async (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     playSoundTouch(false);
     const base64String = await handleConvertCanvasToBase64(
       store.orderInfo.imageSelectPhoto,
