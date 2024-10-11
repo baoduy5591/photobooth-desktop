@@ -543,7 +543,7 @@ export default function SelectSticker() {
                     <div className='absolute left-0 right-0 top-0 h-[40px] overflow-hidden'>
                       <div className='flex h-full w-full items-center justify-start text-center font-rokkitt text-[16px]'>
                         <div
-                          className={`polygonTab flex h-full min-w-[210px] -translate-x-[16px] justify-center gap-x-2 p-0.5 ${currentTabIndex === 0 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
+                          className={`polygon-tab flex h-full min-w-[210px] -translate-x-[16px] justify-center gap-x-2 p-0.5 ${currentTabIndex === 0 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
                           onTouchStart={(event) => handleOnTouchStartChangeTab(event, 0)}
                         >
                           <div className='h-[17px] w-[12px]'>
@@ -553,28 +553,28 @@ export default function SelectSticker() {
                         </div>
 
                         <div
-                          className={`polygonTab h-full min-w-[210px] -translate-x-[44px] p-0.5 ${currentTabIndex === 1 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
+                          className={`polygon-tab h-full min-w-[210px] -translate-x-[44px] p-0.5 ${currentTabIndex === 1 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
                           onTouchStart={(event) => handleOnTouchStartChangeTab(event, 1)}
                         >
                           <span>{CONST_LIST_TAB_STICKER[1]}</span>
                         </div>
 
                         <div
-                          className={`polygonTab h-full min-w-[210px] -translate-x-[72px] p-0.5 ${currentTabIndex === 2 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
+                          className={`polygon-tab h-full min-w-[210px] -translate-x-[72px] p-0.5 ${currentTabIndex === 2 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
                           onTouchStart={(event) => handleOnTouchStartChangeTab(event, 2)}
                         >
                           <span>{CONST_LIST_TAB_STICKER[2]}</span>
                         </div>
 
                         <div
-                          className={`polygonTab h-full min-w-[210px] -translate-x-[100px] p-0.5 ${currentTabIndex === 3 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
+                          className={`polygon-tab h-full min-w-[210px] -translate-x-[100px] p-0.5 ${currentTabIndex === 3 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
                           onTouchStart={(event) => handleOnTouchStartChangeTab(event, 3)}
                         >
                           <span>{CONST_LIST_TAB_STICKER[3]}</span>
                         </div>
 
                         <div
-                          className={`polygonTab h-full min-w-[210px] -translate-x-[128px] p-0.5 ${currentTabIndex === 4 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
+                          className={`polygon-tab h-full min-w-[210px] -translate-x-[128px] p-0.5 ${currentTabIndex === 4 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
                           onTouchStart={(event) => handleOnTouchStartChangeTab(event, 4)}
                         >
                           <span>{CONST_LIST_TAB_STICKER[4]}</span>
