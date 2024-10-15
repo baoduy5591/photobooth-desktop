@@ -166,7 +166,7 @@ export default function SelectSticker() {
     const deltaX = pageX - selectedSticker[index].currentPageX;
     const deltaY = pageY - selectedSticker[index].currentPageY;
     console.log(deltaX, deltaY);
-    if (Math.abs(deltaX) < 25 || Math.abs(deltaY) < 25) return;
+    if (Math.abs(deltaX) < 25 && Math.abs(deltaY) < 25) return;
 
     const frameRect = frameRef.current.getBoundingClientRect();
     if (!frameRect) return;
