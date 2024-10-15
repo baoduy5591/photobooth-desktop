@@ -307,14 +307,14 @@ export default function SelectPhotos() {
                         return (
                           <div
                             key={index}
-                            className='grid h-full min-w-full grid-cols-3 content-start justify-items-center gap-x-6 gap-y-20 transition-transform duration-300'
+                            className='grid h-full min-w-full grid-cols-3 content-start justify-items-center gap-x-4 gap-y-20 px-2 transition-transform duration-300'
                             style={{ transform: `translate3d(-${currentIndex * 100}%, 0, 0)` }}
                           >
                             {photos?.map((photo, index) => {
                               return (
                                 <div
                                   key={index}
-                                  style={{ height: '200px', width: `${200 * store.orderInfo.ratio}px` }}
+                                  style={{ height: '190px', width: `${190 * store.orderInfo.ratio}px` }}
                                   onTouchEnd={(event) => handleOnTouchEndChoosePhoto(event, photo)}
                                   onTouchMove={(event) => handleOnMoveChoosePhoto(event)}
                                 >
