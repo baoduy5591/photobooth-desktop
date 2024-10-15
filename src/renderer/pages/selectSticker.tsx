@@ -233,7 +233,7 @@ export default function SelectSticker() {
 
     const newPageY = rotatePositionY.current + sticker.height + 33; // 33 is height of icon rotate to icon sticker (center)
     const angle = Math.atan2(pageY - newPageY, pageX - sticker.currentPageX) * (180 / Math.PI);
-    if (Math.abs(angle - currentAngle.current) < CONST_THRESHOLD) return;
+    if (Math.abs(angle - currentAngle.current) < 30) return;
 
     if (angle - currentAngle.current > 0) {
       setSelectedSticker((prevSticker) =>
