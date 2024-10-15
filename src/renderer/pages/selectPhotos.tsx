@@ -109,8 +109,6 @@ export default function SelectPhotos() {
     }
 
     const { selectedPhotos } = store.orderInfo;
-    if (checkIsPhotoExist(selectedPhotos, photo)) return;
-
     const _index = getIndex(selectedPhotos, store.orderInfo.frameMode, store.orderInfo.frameType);
     if (_index === null) return;
 
@@ -197,7 +195,7 @@ export default function SelectPhotos() {
   const handleOnTouchStartCleanPhoto = (event: React.TouchEvent<HTMLDivElement>) => {
     playSoundTouch(false);
     const touches = event.touches;
-    if (!!allowWithQuantityTouches(Array.from(touches), 1)) return;
+    if (!allowWithQuantityTouches(Array.from(touches), 1)) return;
 
     const touch = touches[0];
     const { clientX, clientY } = touch;
