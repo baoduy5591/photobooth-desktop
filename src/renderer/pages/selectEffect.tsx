@@ -235,7 +235,7 @@ export default function SelectEffect() {
                               return (
                                 <div
                                   key={index}
-                                  style={{ height: '190px', width: `${190 * store.orderInfo.ratio}px` }}
+                                  style={{ height: '210px', width: `${210 * store.orderInfo.ratio}px` }}
                                   onTouchEnd={(event) => handleOnTouchEndTogglePhoto(event, eff)}
                                   onTouchMove={(event) => handleOnMoveTogglePhoto(event)}
                                 >
