@@ -302,7 +302,7 @@ export default function SelectPhotos() {
                     onTouchMove={(event) => handleOnTouchMove(event)}
                     onTouchEnd={(event) => handleOnTouchEnd(event)}
                   >
-                    <div className='flex flex-1 items-center overflow-x-hidden pb-2 pt-16'>
+                    <div className='flex h-full w-full flex-1 items-center overflow-x-hidden pb-2 pt-16'>
                       {resizedPhotos?.map((photos, index) => {
                         return (
                           <div

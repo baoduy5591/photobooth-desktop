@@ -223,7 +223,7 @@ export default function SelectEffect() {
                     onTouchMove={(event) => handleOnTouchMove(event)}
                     onTouchEnd={(event) => handleOnTouchEnd(event)}
                   >
-                    <div className='flex flex-1 items-center overflow-x-hidden pb-2 pt-16'>
+                    <div className='flex h-full w-full flex-1 items-center overflow-x-hidden pb-2 pt-16'>
                       {photoEffects?.map((effect, index) => {
                         return (
                           <div
