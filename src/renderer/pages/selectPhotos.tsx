@@ -314,7 +314,7 @@ export default function SelectPhotos() {
                               return (
                                 <div
                                   key={index}
-                                  className='w-[270px h-[180px]'
+                                  className='h-[180px] w-[270px]'
                                   onTouchEnd={(event) => handleOnTouchEndChoosePhoto(event, photo)}
                                   onTouchMove={(event) => handleOnMoveChoosePhoto(event)}
                                 >

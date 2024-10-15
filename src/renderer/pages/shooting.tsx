@@ -220,11 +220,11 @@ export default function Shooting() {
 
                   <div className='absolute inset-0 flex justify-between'>
                     <div
-                      className='h-full bg-custom-style-3-2'
+                      className='h-full bg-custom-style-1'
                       style={{ width: `${(300 - 200 * store.orderInfo.ratio) / 2}px` }}
                     ></div>
                     <div
-                      className='h-full bg-custom-style-3-2'
+                      className='h-full bg-custom-style-1'
                       style={{ width: `${(300 - 200 * store.orderInfo.ratio) / 2}px` }}
                     ></div>
                   </div>
