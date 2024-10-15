@@ -191,7 +191,7 @@ export const CONST_LIST_EFFECTS = [
 
 export const CONST_LIST_TAB_STICKER: string[] = ['Hot', 'Birthday', 'Flowers', 'Heart', 'Others'];
 
-export const CONST_THRESHOLD = 0;
+export const CONST_THRESHOLD = 5;
 
 export const CONST_RATIO_SCALE = 10;
 
