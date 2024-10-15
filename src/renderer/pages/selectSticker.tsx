@@ -464,7 +464,10 @@ export default function SelectSticker() {
                       onTouchMove={(event) => handleOnTouchMoveChooseStickerByIndex(event, index)}
                       onTouchEnd={(event) => handleOnTouchEndChooseStickerByIndex(event)}
                     >
-                      <div className='h-full w-full' style={{ transform: `rotate(${sticker.rotate}deg)` }}>
+                      <div
+                        className='h-full w-full'
+                        style={{ transform: `rotate(${sticker.rotate}deg)`, transition: 'transform 0.1s linear' }}
+                      >
                         <DisplayImage src={store.pathFolderAssets + sticker.relPath} />
                       </div>
 
