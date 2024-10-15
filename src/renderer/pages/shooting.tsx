@@ -42,6 +42,7 @@ export default function Shooting() {
   useEffect(() => {
     wsCamera.current = new WebSocket('ws://127.0.0.1:8080/camera');
     wsCamera.current.onopen = () => {
+      wsCamera.current.send('unlock');
       wsCamera.current.send(`setphoto-img:r=2;w=${store.orderInfo.ratio}`);
       wsCamera.current.send('startlv');
       wsCamera.current.send('record');
@@ -63,6 +64,7 @@ export default function Shooting() {
             setIsShooting;
             if (newListShootingPhoto.length >= store.orderInfo.quantityShootingPhotos) {
               wsCamera.current.send('stoplv');
+              wsCamera.current.send('lock');
               navigate('/select-photos');
               return newListShootingPhoto;
             }
