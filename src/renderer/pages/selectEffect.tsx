@@ -67,15 +67,11 @@ export default function SelectEffect() {
 
     if (touchEndX.current - touchStartX.current > 100) {
       setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
-      isTouchMove.current = false;
-      return;
+    } else if (touchEndX.current - touchStartX.current < -100) {
+      setCurrentIndex((index) => (index + 1 >= photoEffects.length ? index : index + 1));
     }
 
-    if (touchEndX.current - touchStartX.current < -100) {
-      setCurrentIndex((index) => (index + 1 >= photoEffects.length ? index : index + 1));
-      isTouchMove.current = false;
-      return;
-    }
+    isTouchMove.current = false;
   };
 
   const handleOnTouchEndTogglePhoto = (
@@ -84,21 +80,8 @@ export default function SelectEffect() {
   ) => {
     if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
 
-    event.stopPropagation();
     playSoundTouch(false);
-    if (isTouchMove.current) {
-      if (touchEndX.current - touchStartX.current > 100) {
-        setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
-        isTouchMove.current = false;
-        return;
-      }
-
-      if (touchEndX.current - touchStartX.current < -100) {
-        setCurrentIndex((index) => (index + 1 >= photoEffects.length ? index : index + 1));
-        isTouchMove.current = false;
-        return;
-      }
-    }
+    if (isTouchMove.current) return;
 
     setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, effect: effect } }));
   };

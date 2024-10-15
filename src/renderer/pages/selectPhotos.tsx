@@ -58,15 +58,10 @@ export default function SelectPhotos() {
 
     if (touchEndX.current - touchStartX.current > 100) {
       setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
-      isTouchMove.current = false;
-      return;
-    }
-
-    if (touchEndX.current - touchStartX.current < -100) {
+    } else if (touchEndX.current - touchStartX.current < -100) {
       setCurrentIndex((index) => (index + 1 >= resizedPhotos.length ? index : index + 1));
-      isTouchMove.current = false;
-      return;
     }
+    isTouchMove.current = false;
   };
 
   const checkIsPhotoExist = (selectedPhotos: { photo: string; index: number }[], photo: string) => {
@@ -92,21 +87,8 @@ export default function SelectPhotos() {
   const handleOnTouchEndChoosePhoto = (event: React.TouchEvent<HTMLDivElement>, photo: string) => {
     if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
 
-    event.stopPropagation();
     playSoundTouch(false);
-    if (isTouchMove.current) {
-      if (touchEndX.current - touchStartX.current > 100) {
-        setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
-        isTouchMove.current = false;
-        return;
-      }
-
-      if (touchEndX.current - touchStartX.current < -100) {
-        setCurrentIndex((index) => (index + 1 >= resizedPhotos.length ? index : index + 1));
-        isTouchMove.current = false;
-        return;
-      }
-    }
+    if (isTouchMove.current) return;
 
     const { selectedPhotos } = store.orderInfo;
     const _index = getIndex(selectedPhotos, store.orderInfo.frameMode, store.orderInfo.frameType);
