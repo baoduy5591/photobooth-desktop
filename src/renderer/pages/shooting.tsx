@@ -97,7 +97,7 @@ export default function Shooting() {
       <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />
 
       <div className='absolute inset-0'>
-        {isShooting && <div className='absolute inset-0 z-50 bg-custom-style-1 opacity-70'></div>}
+        {isShooting && <div className='absolute inset-0 z-50 bg-custom-style-1 opacity-80'></div>}
 
         <div className='flex h-full w-full items-center justify-center'>
           <div className='flex h-full w-[325px] flex-col items-center justify-end'>
