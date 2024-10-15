@@ -216,6 +216,7 @@ export default function SelectSticker() {
   const handleOnTouchStartRotate = (event: React.TouchEvent<HTMLDivElement>, index: number) => {
     if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
 
+    isChooseStickerByIndex.current = true;
     event.stopPropagation();
     playSoundTouch(false);
     const { pageX, pageY } = event.touches[0];
@@ -275,6 +276,12 @@ export default function SelectSticker() {
     currentAngle.current = angle;
   };
 
+  const handleTouchEndRotate = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
+    isChooseStickerByIndex.current = false;
+  };
+
   const handleOnTouchStartZoom = (event: React.TouchEvent<HTMLDivElement>, index: number) => {
     if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
 
@@ -319,6 +326,12 @@ export default function SelectSticker() {
         return sticker;
       }),
     );
+  };
+
+  const handleOnTouchEndZoom = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
+    isChooseStickerByIndex.current = false;
   };
 
   const handleOnTouchStartCancel = (event: React.TouchEvent<HTMLDivElement>, index: number) => {
@@ -478,6 +491,7 @@ export default function SelectSticker() {
                             className='absolute -left-[31px] -top-[54px] h-[60px] w-[60px] p-2'
                             onTouchStart={(event) => handleOnTouchStartRotate(event, index)}
                             onTouchMove={(event) => handleOnTouchMoveRotate(event, index)}
+                            onTouchEnd={(event) => handleTouchEndRotate(event)}
                           >
                             <div className='h-full w-full rounded-full bg-custom-style-1'>
                               <DisplayImage src={store.pathFolderAssets + store.resources.icons[56]?.relPath} />
@@ -502,6 +516,7 @@ export default function SelectSticker() {
                           className='absolute -bottom-8 -right-8 h-[70px] w-[70px] p-3'
                           onTouchStart={(event) => handleOnTouchStartZoom(event, index)}
                           onTouchMove={(event) => handleOnTouchMoveZoom(event, index)}
+                          onTouchEnd={(event) => handleOnTouchEndZoom(event)}
                         >
                           <div className='h-full w-full rounded-full bg-custom-style-1'>
                             <DisplayImage src={store.pathFolderAssets + store.resources.icons[55]?.relPath} />
