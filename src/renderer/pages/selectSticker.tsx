@@ -483,7 +483,7 @@ export default function SelectSticker() {
 
                       {currentChooseStickerIndex === index && (
                         <div
-                          className='absolute -right-8 -top-[-29px] h-[60px] w-[60px] p-2'
+                          className='absolute -right-8 -top-[29px] h-[60px] w-[60px] p-2'
                           onTouchStart={(event) => handleOnTouchStartCancel(event, index)}
                         >
                           <div className='h-full w-full rounded-full bg-custom-style-1'>
@@ -494,7 +494,7 @@ export default function SelectSticker() {
 
                       {currentChooseStickerIndex === index && (
                         <div
-                          className='absolute -bottom-[-29px] -right-8 h-[60px] w-[60px] p-2'
+                          className='absolute -bottom-[29px] -right-8 h-[60px] w-[60px] p-2'
                           onTouchStart={(event) => handleOnTouchStartZoom(event, index)}
                           onTouchMove={(event) => handleOnTouchMoveZoom(event, index)}
                           onTouchEnd={(event) => handleOnTouchEndZoom(event)}
