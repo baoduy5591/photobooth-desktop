@@ -165,7 +165,7 @@ export default function SelectSticker() {
     // check move is valid
     const deltaX = pageX - selectedSticker[index].currentPageX;
     const deltaY = pageY - selectedSticker[index].currentPageY;
-
+    console.log(deltaX, deltaY);
     const frameRect = frameRef.current.getBoundingClientRect();
     if (!frameRect) return;
 
