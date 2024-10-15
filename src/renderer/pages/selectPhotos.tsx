@@ -302,7 +302,7 @@ export default function SelectPhotos() {
                     onTouchMove={(event) => handleOnTouchMove(event)}
                     onTouchEnd={(event) => handleOnTouchEnd(event)}
                   >
-                    <div className='flex flex-1 items-center overflow-x-hidden pb-2 pt-10'>
+                    <div className='flex flex-1 items-center overflow-x-hidden pb-2 pt-16'>
                       {resizedPhotos?.map((photos, index) => {
                         return (
                           <div
@@ -373,7 +373,7 @@ export default function SelectPhotos() {
                   </div>
 
                   <div
-                    className='absolute left-[27px] top-[260px] h-[50px] w-[50px] p-1'
+                    className='absolute left-[27px] top-[274px] h-[50px] w-[50px] p-1'
                     onTouchStart={(event) => handleOnTouchStartPrev(event)}
                   >
                     <div className='h-full w-full'>
@@ -382,7 +382,7 @@ export default function SelectPhotos() {
                   </div>
 
                   <div
-                    className='absolute right-[27px] top-[260px] h-[50px] w-[50px] p-1'
+                    className='absolute right-[27px] top-[274px] h-[50px] w-[50px] p-1'
                     onTouchStart={(event) => handleOnTouchStartNext(event)}
                   >
                     <div className='h-full w-full'>
