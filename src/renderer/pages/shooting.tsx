@@ -167,7 +167,7 @@ export default function Shooting() {
 
               {store.shootingMethod === CONST_COUNTDOWN_METHOD ? (
                 !isShooting && (
-                  <div className='h-full w-full items-center justify-center'>
+                  <div className='absolute inset-0 items-center justify-center'>
                     <CountdownForShooting
                       url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
                       time={store.shootingTime}
