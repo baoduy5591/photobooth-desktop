@@ -111,6 +111,7 @@ export default function SelectSticker() {
   };
 
   const handleOnTouchEndChooseSticker = (event: React.TouchEvent<HTMLDivElement>, sticker: PathResourceType) => {
+    console.log(event);
     if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
 
     event.stopPropagation();
