@@ -286,9 +286,9 @@ export default function SelectSticker() {
     const average = (deltaX + deltaY) / 2;
     const newWidth = selectedSticker[index].width + average;
     const newHeight = selectedSticker[index].height + average;
-    if (newWidth < 50 || newWidth > 300) return;
+    if (newWidth < 50 || newWidth > 350) return;
 
-    if (newHeight < 50 || newHeight > 300) return;
+    if (newHeight < 50 || newHeight > 350) return;
 
     setSelectedSticker((prevSticker) =>
       prevSticker.map((sticker, _index) => {
@@ -467,7 +467,7 @@ export default function SelectSticker() {
                       </div>
 
                       {currentChooseStickerIndex === index && (
-                        <div className='absolute -top-[66px] left-1/2 h-16 border-l-2 border-dashed border-custom-style-2-1'>
+                        <div className='absolute -top-[66px] left-1/2 h-12 border-l-2 border-dashed border-custom-style-2-1'>
                           <div
                             className='absolute -left-[31px] -top-[54px] h-[60px] w-[60px] p-2'
                             onTouchStart={(event) => handleOnTouchStartRotate(event, index)}
@@ -483,7 +483,7 @@ export default function SelectSticker() {
 
                       {currentChooseStickerIndex === index && (
                         <div
-                          className='absolute -bottom-8 -left-8 h-[60px] w-[60px] p-3'
+                          className='absolute -right-8 -top-8 h-[40px] w-[40px] p-1'
                           onTouchStart={(event) => handleOnTouchStartCancel(event, index)}
                         >
                           <div className='h-full w-full rounded-full bg-custom-style-1'>
@@ -494,7 +494,7 @@ export default function SelectSticker() {
 
                       {currentChooseStickerIndex === index && (
                         <div
-                          className='absolute -bottom-8 -right-8 h-[70px] w-[70px] p-3'
+                          className='absolute -bottom-8 -right-8 h-[40px] w-[40px] p-1'
                           onTouchStart={(event) => handleOnTouchStartZoom(event, index)}
                           onTouchMove={(event) => handleOnTouchMoveZoom(event, index)}
                           onTouchEnd={(event) => handleOnTouchEndZoom(event)}
