@@ -369,7 +369,8 @@ export default function SelectSticker() {
   };
 
   const handleOnTouchStartCheckOutsideSticker = (event: React.TouchEvent<HTMLDivElement>) => {
-    console.log(event);
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
     playSoundTouch(false);
     const stickerElement = stickerRef.current;
 
