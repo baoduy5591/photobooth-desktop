@@ -92,15 +92,12 @@ export default function SelectSticker() {
 
     if (touchEndX.current - touchStartX.current > 100) {
       setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
-      isTouchMove.current = false;
-      return;
-    }
-
-    if (touchEndX.current - touchStartX.current < -100) {
+    } else if (touchEndX.current - touchStartX.current < -100) {
       setCurrentIndex((index) => (index + 1 >= itemsSticker.length ? index : index + 1));
-      isTouchMove.current = false;
-      return;
     }
+    touchStartX.current = 0;
+    touchEndX.current = 0;
+    isTouchMove.current = false;
   };
 
   const handleOnTouchChangeCurrentIndex = (event: React.TouchEvent<HTMLDivElement>, newIndex: number) => {
@@ -113,21 +110,8 @@ export default function SelectSticker() {
   const handleOnTouchEndChooseSticker = (event: React.TouchEvent<HTMLDivElement>, sticker: PathResourceType) => {
     if (!allowWithQuantityTouches(Array.from(event.touches), 1) || isChooseStickerByIndex.current) return;
 
-    event.stopPropagation();
     playSoundTouch(false);
-    if (isTouchMove.current) {
-      if (touchEndX.current - touchStartX.current > 100) {
-        setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
-        isTouchMove.current = false;
-        return;
-      }
-
-      if (touchEndX.current - touchStartX.current < -100) {
-        setCurrentIndex((index) => (index + 1 >= itemsSticker.length ? index : index + 1));
-        isTouchMove.current = false;
-        return;
-      }
-    }
+    if (isTouchMove.current) return;
 
     setSelectedSticker((prevSticker) => [
       ...prevSticker,
@@ -220,7 +204,6 @@ export default function SelectSticker() {
     playSoundTouch(false);
     const { pageX, pageY } = event.touches[0];
     rotatePositionY.current = pageY;
-    console.log(rotatePositionY.current);
     setSelectedSticker((prevSticker) =>
       prevSticker.map((sticker, _index) => {
         if (index === _index) {
