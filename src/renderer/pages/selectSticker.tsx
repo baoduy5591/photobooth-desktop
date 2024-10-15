@@ -220,6 +220,7 @@ export default function SelectSticker() {
     playSoundTouch(false);
     const { pageX, pageY } = event.touches[0];
     rotatePositionY.current = pageY;
+    console.log(rotatePositionY.current);
     setSelectedSticker((prevSticker) =>
       prevSticker.map((sticker, _index) => {
         if (index === _index) {
@@ -307,9 +308,9 @@ export default function SelectSticker() {
     const average = (deltaX + deltaY) / 2;
     const newWidth = selectedSticker[index].width + average;
     const newHeight = selectedSticker[index].height + average;
-    if (newWidth < 100 || newWidth > 545) return;
+    if (newWidth < 100 || newWidth > 500) return;
 
-    if (newHeight < 100 || newHeight > 545) return;
+    if (newHeight < 100 || newHeight > 500) return;
 
     setSelectedSticker((prevSticker) =>
       prevSticker.map((sticker, _index) => {
