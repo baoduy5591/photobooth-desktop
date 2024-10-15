@@ -8,6 +8,7 @@ import { allowWithQuantityTouches, loadImage, randomRangeValue } from '../libs/c
 import { useNavigate } from 'react-router-dom';
 import { INIT_STORE } from '../libs/initials';
 import { useSound } from '../context/sound';
+import { Stickers } from '../components/stickers';
 
 export default function SelectSticker() {
   const { store, setStore } = useStore();
@@ -285,9 +286,9 @@ export default function SelectSticker() {
     const average = (deltaX + deltaY) / 2;
     const newWidth = selectedSticker[index].width + average;
     const newHeight = selectedSticker[index].height + average;
-    if (newWidth < 100 || newWidth > 300) return;
+    if (newWidth < 50 || newWidth > 300) return;
 
-    if (newHeight < 100 || newHeight > 300) return;
+    if (newHeight < 50 || newHeight > 300) return;
 
     setSelectedSticker((prevSticker) =>
       prevSticker.map((sticker, _index) => {
@@ -586,7 +587,7 @@ export default function SelectSticker() {
                       <div className='absolute bottom-0 left-0 right-0 h-[12px] bg-custom-style-2-2'></div>
                     </div>
 
-                    <div className='flex h-full w-full items-center overflow-x-hidden py-16'>
+                    {/* <div className='flex h-full w-full items-center overflow-x-hidden py-16'>
                       {itemsSticker.map((stickers, index) => {
                         return (
                           <div
@@ -610,7 +611,13 @@ export default function SelectSticker() {
                           </div>
                         );
                       })}
-                    </div>
+                    </div> */}
+
+                    <Stickers
+                      itemsSticker={itemsSticker}
+                      currentIndex={currentIndex}
+                      handleOnTouchEndChooseSticker={handleOnTouchEndChooseSticker}
+                    />
 
                     <div className='absolute bottom-0 flex h-[100px] w-full items-center justify-center gap-x-4'>
                       {[...Array(itemsSticker.length)]
