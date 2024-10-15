@@ -250,6 +250,7 @@ export default function SelectSticker() {
 
     const newPageY = rotatePositionY.current + sticker.height + 33; // 33 is height of icon rotate to icon sticker (center)
     const angle = Math.atan2(pageY - newPageY, pageX - sticker.currentPageX) * (180 / Math.PI);
+    console.log(angle);
     if (Math.abs(angle) < CONST_THRESHOLD) return;
 
     if (angle - currentAngle.current > 0) {
