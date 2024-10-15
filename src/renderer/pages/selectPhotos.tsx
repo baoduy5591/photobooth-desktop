@@ -302,12 +302,12 @@ export default function SelectPhotos() {
                     onTouchMove={(event) => handleOnTouchMove(event)}
                     onTouchEnd={(event) => handleOnTouchEnd(event)}
                   >
-                    <div className='flex flex-1 items-center overflow-x-hidden pb-10 pt-16'>
+                    <div className='flex flex-1 items-center overflow-x-hidden px-2 py-8'>
                       {resizedPhotos?.map((photos, index) => {
                         return (
                           <div
                             key={index}
-                            className='grid h-full min-w-full grid-cols-3 content-start justify-items-center gap-x-6 gap-y-20 transition-transform duration-300'
+                            className='grid h-full min-w-full grid-cols-3 content-start justify-items-center gap-x-6 gap-y-16 transition-transform duration-300'
                             style={{ transform: `translate3d(-${currentIndex * 100}%, 0, 0)` }}
                           >
                             {photos?.map((photo, index) => {
