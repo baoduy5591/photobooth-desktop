@@ -166,14 +166,14 @@ export default function SelectSticker() {
     const deltaX = pageX - selectedSticker[index].currentPageX;
     const deltaY = pageY - selectedSticker[index].currentPageY;
     console.log(deltaX, deltaY);
+    if (Math.abs(deltaX) < 25 || Math.abs(deltaY) < 25) return;
+
     const frameRect = frameRef.current.getBoundingClientRect();
     if (!frameRect) return;
 
     const sticker = selectedSticker[index];
     const newX = pageX - frameRect.x - sticker.offsetX;
     const newY = pageY - frameRect.y - sticker.offsetY;
-    console.log(newX, newY);
-    if (Math.abs(newX) < CONST_THRESHOLD || Math.abs(newY) < CONST_THRESHOLD) return;
     setSelectedSticker((prevSticker) =>
       prevSticker.map((sticker, _index) => {
         if (index === _index) {
