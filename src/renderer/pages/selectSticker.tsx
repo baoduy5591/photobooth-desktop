@@ -163,7 +163,7 @@ export default function SelectSticker() {
     // check move is valid
     const deltaX = pageX - selectedSticker[index].currentPageX;
     const deltaY = pageY - selectedSticker[index].currentPageY;
-    if (Math.abs(deltaX) < CONST_THRESHOLD && Math.abs(deltaY) < CONST_THRESHOLD) return;
+    if (Math.abs(deltaX) < CONST_THRESHOLD || Math.abs(deltaY) < CONST_THRESHOLD) return;
 
     const frameRect = frameRef.current.getBoundingClientRect();
     if (!frameRect) return;
@@ -225,14 +225,8 @@ export default function SelectSticker() {
     event.stopPropagation();
     const { pageX, pageY } = event.touches[0];
     const sticker = selectedSticker[index];
-    const deltaX = pageX - sticker.currentPageX;
-    const deltaY = pageY - sticker.currentPageY;
-    // check delta valid
-    if (!checkDeltaValid(deltaX, deltaY)) return;
-
-    const newPageY = rotatePositionY.current + sticker.height; // 33 is height of icon rotate to icon sticker (center)
+    const newPageY = rotatePositionY.current + sticker.height;
     const angle = Math.atan2(pageY - newPageY, pageX - sticker.currentPageX) * (180 / Math.PI);
-    console.log(angle - currentAngle.current);
     if (Math.abs(angle - currentAngle.current) < CONST_THRESHOLD) return;
 
     if (angle - currentAngle.current > 0) {
