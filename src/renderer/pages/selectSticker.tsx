@@ -308,9 +308,9 @@ export default function SelectSticker() {
     const average = (deltaX + deltaY) / 2;
     const newWidth = selectedSticker[index].width + average;
     const newHeight = selectedSticker[index].height + average;
-    if (newWidth < 100 || newWidth > 500) return;
+    if (newWidth < 100 || newWidth > 300) return;
 
-    if (newHeight < 100 || newHeight > 500) return;
+    if (newHeight < 100 || newHeight > 300) return;
 
     setSelectedSticker((prevSticker) =>
       prevSticker.map((sticker, _index) => {
