@@ -137,11 +137,11 @@ export default function Shooting() {
               <div className='relative h-[828px] w-[1242px] bg-custom-style-3-2'>
                 <img ref={imgRef} className='h-full w-full' />
 
-                <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
+                {/* <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
                   <div className='h-[500px] w-[550px]'>
                     <DisplayImage src={store.pathFolderAssets + store.resources.icons[35]?.relPath} />
                   </div>
-                </div>
+                </div> */}
 
                 <div className='absolute inset-0 flex justify-between'>
                   <div
