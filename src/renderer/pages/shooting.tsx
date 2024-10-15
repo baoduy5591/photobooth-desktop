@@ -149,11 +149,11 @@ export default function Shooting() {
 
                 <div className='absolute inset-0 flex justify-between'>
                   <div
-                    className='h-full bg-custom-style-6-1'
+                    className='h-full bg-custom-style-3-2'
                     style={{ width: `${(1242 - 828 * store.orderInfo.ratio) / 2}px` }}
                   ></div>
                   <div
-                    className='h-full bg-custom-style-6-1'
+                    className='h-full bg-custom-style-3-2'
                     style={{ width: `${(1242 - 828 * store.orderInfo.ratio) / 2}px` }}
                   ></div>
                 </div>
@@ -220,11 +220,11 @@ export default function Shooting() {
 
                   <div className='absolute inset-0 flex justify-between'>
                     <div
-                      className='h-full bg-custom-style-6-1'
+                      className='h-full bg-custom-style-3-2'
                       style={{ width: `${(300 - 200 * store.orderInfo.ratio) / 2}px` }}
                     ></div>
                     <div
-                      className='h-full bg-custom-style-6-1'
+                      className='h-full bg-custom-style-3-2'
                       style={{ width: `${(300 - 200 * store.orderInfo.ratio) / 2}px` }}
                     ></div>
                   </div>
