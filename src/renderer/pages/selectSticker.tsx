@@ -29,7 +29,6 @@ export default function SelectSticker() {
   >([]);
   const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
   const [currentChooseStickerIndex, setCurrentChooseStickerIndex] = useState<number>(null);
-  const [isMoveRotate, setIsMoveRotate] = useState<boolean>(false);
 
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
@@ -216,8 +215,8 @@ export default function SelectSticker() {
   const handleOnTouchStartRotate = (event: React.TouchEvent<HTMLDivElement>, index: number) => {
     if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
 
-    isChooseStickerByIndex.current = true;
     event.stopPropagation();
+    isChooseStickerByIndex.current = true;
     playSoundTouch(false);
     const { pageX, pageY } = event.touches[0];
     rotatePositionY.current = pageY;
@@ -240,7 +239,6 @@ export default function SelectSticker() {
   const handleOnTouchMoveRotate = (event: React.TouchEvent<HTMLDivElement>, index: number) => {
     if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
 
-    setIsMoveRotate(true);
     event.stopPropagation();
     const { pageX, pageY } = event.touches[0];
     const sticker = selectedSticker[index];
@@ -286,6 +284,7 @@ export default function SelectSticker() {
     if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
 
     event.stopPropagation();
+    isChooseStickerByIndex.current = true;
     const { pageX, pageY } = event.touches[0];
     setSelectedSticker((prevSticker) =>
       prevSticker.map((sticker, _index) => {
