@@ -587,32 +587,6 @@ export default function SelectSticker() {
                       <div className='absolute bottom-0 left-0 right-0 h-[12px] bg-custom-style-2-2'></div>
                     </div>
 
-                    {/* <div className='flex h-full w-full items-center overflow-x-hidden py-16'>
-                      {itemsSticker.map((stickers, index) => {
-                        return (
-                          <div
-                            key={index}
-                            className='grid h-full min-w-full grid-cols-6 content-start justify-items-center gap-y-8 transition-transform duration-500'
-                            style={{ transform: `translate3d(-${currentIndex * 100}%, 0, 0)` }}
-                          >
-                            {stickers.map((sticker, index) => {
-                              return (
-                                <div
-                                  key={index}
-                                  className='h-[90px] w-[90px] rounded-full bg-custom-style-3-3 p-4'
-                                  onTouchEnd={(event) => handleOnTouchEndChooseSticker(event, sticker)}
-                                >
-                                  <div className='h-full w-full'>
-                                    <DisplayImage src={store.pathFolderAssets + sticker.relPath} />
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        );
-                      })}
-                    </div> */}
-
                     <Stickers
                       itemsSticker={itemsSticker}
                       currentIndex={currentIndex}
