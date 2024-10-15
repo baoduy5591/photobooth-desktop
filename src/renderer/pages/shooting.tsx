@@ -182,7 +182,7 @@ export default function Shooting() {
                 <div className='absolute bottom-[23px] right-[180px] h-[90px]'>
                   <Countdown
                     url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
-                    time={90}
+                    time={180}
                     routeGoToBack='/shooting-method'
                   />
                 </div>
