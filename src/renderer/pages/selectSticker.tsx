@@ -163,7 +163,7 @@ export default function SelectSticker() {
     // check move is valid
     const deltaX = pageX - selectedSticker[index].currentPageX;
     const deltaY = pageY - selectedSticker[index].currentPageY;
-    if (Math.abs(deltaX) < 20 && Math.abs(deltaY) < 20) return;
+    if (Math.abs(deltaX) < CONST_THRESHOLD && Math.abs(deltaY) < CONST_THRESHOLD) return;
 
     const frameRect = frameRef.current.getBoundingClientRect();
     if (!frameRect) return;
