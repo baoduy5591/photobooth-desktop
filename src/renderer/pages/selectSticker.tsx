@@ -95,8 +95,9 @@ export default function SelectSticker() {
     } else if (touchEndX.current - touchStartX.current < -100) {
       setCurrentIndex((index) => (index + 1 >= itemsSticker.length ? index : index + 1));
     }
-    touchStartX.current = 0;
-    touchEndX.current = 0;
+
+    // touchStartX.current = 0;
+    // touchEndX.current = 0;
     isTouchMove.current = false;
   };
 
