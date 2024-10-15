@@ -63,9 +63,9 @@ export default function EnterCode() {
     playSoundBackground(true);
   }, []);
 
-  // useEffect(() => {
-  //   navigate('/select-sticker');
-  // }, []);
+  useEffect(() => {
+    navigate('/select-sticker');
+  }, []);
 
   return (
     <div className='relative h-screen w-screen'>
