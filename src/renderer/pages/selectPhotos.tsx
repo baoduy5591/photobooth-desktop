@@ -258,7 +258,7 @@ export default function SelectPhotos() {
                   />
                 </div>
 
-                <div className='border-custom-style-3-1 border-1 pointer-events-none absolute inset-0'>
+                <div className='border-custom-style-3-1 pointer-events-none absolute inset-0 border'>
                   <DisplayImage src={store.pathFolderAssets + store.orderInfo.frameRelPath} />
                 </div>
               </div>

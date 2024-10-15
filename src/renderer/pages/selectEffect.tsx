@@ -180,7 +180,7 @@ export default function SelectEffect() {
                   <DisplayImage src={store.orderInfo.imageSelectPhoto} />
                 </div>
 
-                <div className='absolute inset-0'>
+                <div className='border-custom-style-3-1 absolute inset-0 border'>
                   <DisplayImage src={store.pathFolderAssets + store.orderInfo.frameRelPath} />
                 </div>
               </div>
@@ -207,7 +207,7 @@ export default function SelectEffect() {
               <div className='mb-3'>
                 <Countdown
                   url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
-                  time={90}
+                  time={180}
                   routeGoToBack='/select-photos'
                 />
               </div>
@@ -223,7 +223,7 @@ export default function SelectEffect() {
                     onTouchMove={(event) => handleOnTouchMove(event)}
                     onTouchEnd={(event) => handleOnTouchEnd(event)}
                   >
-                    <div className='flex flex-1 items-center overflow-x-hidden pb-10 pt-16'>
+                    <div className='flex flex-1 items-center overflow-x-hidden pb-2 pt-16'>
                       {photoEffects?.map((effect, index) => {
                         return (
                           <div
@@ -235,7 +235,7 @@ export default function SelectEffect() {
                               return (
                                 <div
                                   key={index}
-                                  className='w-[270px relative h-[180px]'
+                                  style={{ height: '190px', width: `${190 * store.orderInfo.ratio}px` }}
                                   onTouchEnd={(event) => handleOnTouchEndTogglePhoto(event, eff)}
                                   onTouchMove={(event) => handleOnMoveTogglePhoto(event)}
                                 >
@@ -302,7 +302,7 @@ export default function SelectEffect() {
                   </div>
 
                   <div
-                    className='absolute left-[27px] top-[260px] h-[50px] w-[50px] p-1'
+                    className='absolute left-[27px] top-[274px] h-[50px] w-[50px] p-1'
                     onTouchStart={(event) => handleOnTouchStartPrev(event)}
                   >
                     <div className='h-full w-full'>
@@ -311,7 +311,7 @@ export default function SelectEffect() {
                   </div>
 
                   <div
-                    className='absolute right-[27px] top-[260px] h-[50px] w-[50px] p-1'
+                    className='absolute right-[27px] top-[274px] h-[50px] w-[50px] p-1'
                     onTouchStart={(event) => handleOnTouchStartNext(event)}
                   >
                     <div className='h-full w-full'>
