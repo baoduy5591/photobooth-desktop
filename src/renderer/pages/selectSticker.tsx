@@ -39,6 +39,7 @@ export default function SelectSticker() {
   const stickerRef = useRef<HTMLDivElement>(null);
   const currentAngle = useRef<number>(0);
   const rotatePositionY = useRef<number>(0);
+  const isChooseStickerByIndex = useRef<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -153,6 +154,7 @@ export default function SelectSticker() {
     if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
 
     event.stopPropagation();
+    isChooseStickerByIndex.current = true;
     playSoundTouch(false);
     const touch = event.touches[0];
     const { pageX, pageY } = touch;
@@ -200,6 +202,8 @@ export default function SelectSticker() {
 
   const handleOnTouchEndChooseStickerByIndex = (event: React.TouchEvent<HTMLDivElement>) => {
     if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
+    isChooseStickerByIndex.current = false;
   };
 
   const handleOnTouchStartChangeTab = (event: React.TouchEvent<HTMLDivElement>, index: number) => {
@@ -463,6 +467,7 @@ export default function SelectSticker() {
                       }}
                       onTouchStart={(event) => handleOnTouchStartChooseStickerByIndex(event, index)}
                       onTouchMove={(event) => handleOnTouchMoveChooseStickerByIndex(event, index)}
+                      onTouchEnd={(event) => handleOnTouchEndChooseStickerByIndex(event)}
                     >
                       <div className='h-full w-full' style={{ transform: `rotate(${sticker.rotate}deg)` }}>
                         <DisplayImage src={store.pathFolderAssets + sticker.relPath} />
