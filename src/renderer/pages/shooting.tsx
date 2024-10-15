@@ -61,7 +61,6 @@ export default function Shooting() {
           setIsShooting(false);
           setShootingPhotos((prevShootingPhoto) => {
             const newListShootingPhoto = [...prevShootingPhoto, data.message];
-            setIsShooting;
             if (newListShootingPhoto.length >= store.orderInfo.quantityShootingPhotos) {
               wsCamera.current.send('stoplv');
               wsCamera.current.send('lock');
@@ -166,23 +165,25 @@ export default function Shooting() {
                 </div>
               </div>
 
-              <div className='absolute bottom-[23px] right-[180px] h-[90px]'>
-                {store.shootingMethod === CONST_COUNTDOWN_METHOD ? (
-                  !isShooting && (
+              {store.shootingMethod === CONST_COUNTDOWN_METHOD ? (
+                !isShooting && (
+                  <div className='h-full w-full items-center justify-center'>
                     <CountdownForShooting
                       url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
                       time={store.shootingTime}
                       handleActionShootingByMethod={handleActionShootingByMethod}
                     />
-                  )
-                ) : (
+                  </div>
+                )
+              ) : (
+                <div className='absolute bottom-[23px] right-[180px] h-[90px]'>
                   <Countdown
                     url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
                     time={90}
                     routeGoToBack='/shooting-method'
                   />
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
 
