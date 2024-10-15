@@ -96,8 +96,6 @@ export default function SelectSticker() {
       setCurrentIndex((index) => (index + 1 >= itemsSticker.length ? index : index + 1));
     }
 
-    // touchStartX.current = 0;
-    // touchEndX.current = 0;
     isTouchMove.current = false;
   };
 
@@ -177,7 +175,7 @@ export default function SelectSticker() {
     setSelectedSticker((prevSticker) =>
       prevSticker.map((sticker, _index) => {
         if (index === _index) {
-          return { ...sticker, top: newY, left: newX };
+          return { ...sticker, top: newY, left: newX, currentPageX: pageX, currentPageY: pageY };
         }
         return sticker;
       }),
