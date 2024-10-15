@@ -163,7 +163,6 @@ export default function SelectSticker() {
     // check move is valid
     const deltaX = pageX - selectedSticker[index].currentPageX;
     const deltaY = pageY - selectedSticker[index].currentPageY;
-    console.log(deltaX, deltaY);
     if (Math.abs(deltaX) < CONST_THRESHOLD && Math.abs(deltaY) < CONST_THRESHOLD) return;
 
     const frameRect = frameRef.current.getBoundingClientRect();
@@ -234,7 +233,7 @@ export default function SelectSticker() {
     const newPageY = rotatePositionY.current + sticker.height; // 33 is height of icon rotate to icon sticker (center)
     const angle = Math.atan2(pageY - newPageY, pageX - sticker.currentPageX) * (180 / Math.PI);
     console.log(angle - currentAngle.current);
-    if (Math.abs(angle - currentAngle.current) < 30) return;
+    if (Math.abs(angle - currentAngle.current) < CONST_THRESHOLD) return;
 
     if (angle - currentAngle.current > 0) {
       setSelectedSticker((prevSticker) =>
