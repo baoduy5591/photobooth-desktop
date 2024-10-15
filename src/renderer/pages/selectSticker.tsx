@@ -248,7 +248,7 @@ export default function SelectSticker() {
     // check delta valid
     if (!checkDeltaValid(deltaX, deltaY)) return;
 
-    const newPageY = rotatePositionY.current + sticker.height + 66; // 64 is height of icon rotate to icon sticker (center)
+    const newPageY = rotatePositionY.current + sticker.height + 33; // 33 is height of icon rotate to icon sticker (center)
     const angle = Math.atan2(pageY - newPageY, pageX - sticker.currentPageX) * (180 / Math.PI);
     if (Math.abs(angle) < CONST_THRESHOLD) return;
 
