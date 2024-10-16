@@ -180,7 +180,7 @@ export default function SelectEffect() {
                   <DisplayImage src={store.orderInfo.imageSelectPhoto} />
                 </div>
 
-                <div className='border-custom-style-3-1 absolute inset-0 border-2'>
+                <div className='absolute inset-0 border-2 border-custom-style-3-1'>
                   <DisplayImage src={store.pathFolderAssets + store.orderInfo.frameRelPath} />
                 </div>
               </div>
@@ -235,7 +235,7 @@ export default function SelectEffect() {
                               return (
                                 <div
                                   key={index}
-                                  style={{ height: '210px', width: `${210 * store.orderInfo.ratio}px` }}
+                                  style={{ height: '190px', width: `${190 * store.orderInfo.ratio}px` }}
                                   onTouchEnd={(event) => handleOnTouchEndTogglePhoto(event, eff)}
                                   onTouchMove={(event) => handleOnMoveTogglePhoto(event)}
                                 >

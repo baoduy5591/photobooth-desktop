@@ -258,7 +258,7 @@ export default function SelectPhotos() {
                   />
                 </div>
 
-                <div className='border-custom-style-3-1 pointer-events-none absolute inset-0 border-2'>
+                <div className='pointer-events-none absolute inset-0 border-2 border-custom-style-3-1'>
                   <DisplayImage src={store.pathFolderAssets + store.orderInfo.frameRelPath} />
                 </div>
               </div>
@@ -314,7 +314,7 @@ export default function SelectPhotos() {
                               return (
                                 <div
                                   key={index}
-                                  style={{ height: '210px', width: `${210 * store.orderInfo.ratio}px` }}
+                                  style={{ height: '190px', width: `${190 * store.orderInfo.ratio}px` }}
                                   onTouchEnd={(event) => handleOnTouchEndChoosePhoto(event, photo)}
                                   onTouchMove={(event) => handleOnMoveChoosePhoto(event)}
                                 >
