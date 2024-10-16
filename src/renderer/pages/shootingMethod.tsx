@@ -50,7 +50,7 @@ export default function ShootingMethod() {
           <Countdown
             url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
             time={300}
-            routeGoToBack='/confirm-frame'
+            routeGoToBack='/shooting'
           />
         </div>
 

@@ -1,4 +1,4 @@
-import React, { ReactNode, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
@@ -527,7 +527,7 @@ export default function SelectSticker() {
                 <Countdown
                   url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
                   time={300}
-                  routeGoToBack='/select-photos'
+                  routeGoToBack='/complete'
                 />
               </div>
             </div>

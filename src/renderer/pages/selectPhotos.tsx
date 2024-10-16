@@ -21,6 +21,8 @@ export default function SelectPhotos() {
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
   const isTouchMove = useRef<boolean>(false);
+  const flatResizedPhotos = useRef<string[]>([]);
+  const _selectedPhotos = useRef<{ photo: string; index: number }[]>([]); // fix temp TODO: investigate for flow useState not take data
 
   const navigate = useNavigate();
 
@@ -104,6 +106,7 @@ export default function SelectPhotos() {
           selectedPhotos: newSelectedPhotos,
         },
       }));
+      _selectedPhotos.current = newSelectedPhotos;
       setIndexForClean(indexForDelete);
     } else {
       const _index = getIndex(selectedPhotos, store.orderInfo.frameMode, store.orderInfo.frameType);
@@ -116,6 +119,7 @@ export default function SelectPhotos() {
           selectedPhotos: [...prevStore.orderInfo.selectedPhotos, { photo: photo, index: _index }],
         },
       }));
+      _selectedPhotos.current.push({ photo: photo, index: _index });
       setIndexForClean(-1);
     }
   };
@@ -213,12 +217,47 @@ export default function SelectPhotos() {
         selectedPhotos: prevStore.orderInfo.selectedPhotos.filter((item) => item.index !== _index),
       },
     }));
+    _selectedPhotos.current = _selectedPhotos.current.filter((item) => item.index !== _index);
+  };
+
+  const handleTimeout = () => {
+    if (_selectedPhotos.current.length < store.orderInfo.quantitySelectedPhotos) {
+      while (_selectedPhotos.current.length < store.orderInfo.quantitySelectedPhotos) {
+        const photosName = _selectedPhotos.current.map((item) => item.photo);
+        const getPhotosNotSelect = flatResizedPhotos.current.filter((photo) => !photosName.includes(photo));
+        if (getPhotosNotSelect.length === 0) return;
+
+        const _index = getIndex(_selectedPhotos.current, store.orderInfo.frameMode, store.orderInfo.frameType);
+        if (_index === null) return;
+
+        _selectedPhotos.current.push({ photo: getPhotosNotSelect[0], index: _index });
+      }
+      setStore((prevStore) => ({
+        ...prevStore,
+        orderInfo: {
+          ...prevStore.orderInfo,
+          selectedPhotos: _selectedPhotos.current,
+        },
+      }));
+      handleConvertCanvasToBase64(
+        store.orderInfo.width,
+        store.orderInfo.height,
+        store.orderInfo.frameMode,
+        store.orderInfo.frameType,
+        _selectedPhotos.current,
+        CONST_POSITION_FRAMES,
+      ).then((base64String) => {
+        setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, imageSelectPhoto: base64String } }));
+        navigate('/select-effect');
+      });
+    }
   };
 
   useEffect(() => {
     const getResizedPhotos = async () => {
-      const resizedPhotos = await window.api.getUserResizedPhotos();
-      const chunkPhotos = chunkItems(resizedPhotos, 6);
+      const _resizedPhotos = await window.api.getUserResizedPhotos();
+      flatResizedPhotos.current = _resizedPhotos;
+      const chunkPhotos = chunkItems(_resizedPhotos, 6);
       setResizedPhotos(chunkPhotos);
     };
 
@@ -302,8 +341,8 @@ export default function SelectPhotos() {
               <div className='mb-3'>
                 <Countdown
                   url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
-                  time={300}
-                  routeGoToBack='/home'
+                  time={10}
+                  handleTimeout={handleTimeout}
                 />
               </div>
             </div>

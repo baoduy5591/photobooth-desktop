@@ -6,7 +6,7 @@ import { useSound } from '../context/sound';
 interface CountdownProps {
   url: string;
   time: number;
-  routeGoToBack: string;
+  routeGoToBack?: string;
   handleTimeout?: () => void;
 }
 
@@ -26,7 +26,10 @@ export const Countdown = React.memo(
         if (handleTimeout) {
           handleTimeout();
         }
-        navigate(routeGoToBack);
+
+        if (routeGoToBack) {
+          navigate(routeGoToBack);
+        }
       }
 
       if (timeLeft <= 3) {
@@ -95,7 +98,7 @@ export const CountdownForShooting = React.memo(
 
     return (
       <div className='flex h-[363px] w-[363px] items-center justify-center rounded-full border-2 border-custom-style-1 p-2 font-rokkitt text-[250px] text-custom-style-1'>
-        <span className='shadow-2xl'>{timeLeft}</span>
+        <span style={{ textShadow: '0 10px 25px rgb(0 0 0 / 0.25)' }}>{timeLeft}</span>
       </div>
     );
   },

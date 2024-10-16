@@ -208,7 +208,7 @@ export default function SelectEffect() {
                 <Countdown
                   url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
                   time={300}
-                  routeGoToBack='/select-photos'
+                  routeGoToBack='/select-sticker'
                 />
               </div>
             </div>
