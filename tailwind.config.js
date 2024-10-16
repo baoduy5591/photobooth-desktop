@@ -4,12 +4,22 @@ module.exports = {
   theme: {
     extend: {
       filter: {
-        cool: 'brightness(1.1) contrast(1.1) sepia(0.3) hue-rotate(220deg)',
-        warm: 'brightness(1.1) contrast(1.1) sepia(0.5) hue-rotate(30deg)',
-        hot: 'brightness(1.2) contrast(1.2) sepia(0.7) hue-rotate(15deg)',
-        bright: 'brightness(1.5) contrast(1.2)',
-        'very-bright': 'brightness(2) contrast(1.3)',
-        'black-white': 'grayscale(100%) contrast(1.2)',
+        orange: 'brightness(120%) saturate(180%) sepia(20%)',
+        yellow: 'brightness(130%) saturate(150%) sepia(10%)',
+        blue: 'brightness(110%) saturate(160%) hue-rotate(200deg)',
+        pink: 'brightness(120%) saturate(170%) hue-rotate(330deg)',
+        green: 'brightness(115%) saturate(140%) hue-rotate(90deg)',
+        'sunny-yellow': 'brightness(140%) saturate(150%) sepia(5%)',
+        dynamic: 'brightness(125%) saturate(180%) hue-rotate(50deg)',
+        'orange-yellow': 'brightness(130%) saturate(170%) sepia(30%)',
+        aqua: 'brightness(120%) saturate(160%) hue-rotate(190deg)',
+        lavender: 'brightness(110%) saturate(150%) hue-rotate(270deg)',
+        'light-pink': 'brightness(125%) saturate(180%) hue-rotate(330deg)',
+        red: 'brightness(110%) saturate(160%) hue-rotate(15deg)',
+        'light-yellow': 'brightness(135%) saturate(140%) sepia(15%)',
+        'earth-tone': 'brightness(120%) saturate(130%) sepia(25%)',
+        'dark-blue': 'brightness(110%) saturate(160%) hue-rotate(210deg)',
+        'black-white': 'brightness(110%) grayscale(100%)',
       },
       textColor: {
         custom: {

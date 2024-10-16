@@ -440,6 +440,7 @@ export default function SelectSticker() {
                 {selectedSticker?.map((sticker, index) => {
                   return (
                     <div
+                      key={index}
                       className={`absolute z-40 flex items-center justify-center rounded-md border-2 p-6 ${currentChooseStickerIndex === index ? 'border-dashed border-custom-style-2-1' : 'border-transparent'}`}
                       style={{
                         top: `${sticker.top}px`,
@@ -451,7 +452,6 @@ export default function SelectSticker() {
                     >
                       <div
                         ref={stickerRef}
-                        key={index}
                         style={{
                           width: `${sticker.width}px`,
                           height: `${sticker.height}px`,

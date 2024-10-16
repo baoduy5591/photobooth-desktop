@@ -152,9 +152,9 @@ export const CONST_POSITION_FRAMES: PositionFramesType = {
 
 export const CONST_LIST_EFFECTS = [
   {
-    name: 'Cool',
-    className: 'filter-cool',
-    style: 'brightness(1.1) contrast(1.1) sepia(0.3) hue-rotate(220deg)',
+    name: 'Orange',
+    className: 'filter-orange',
+    style: 'brightness(120%) saturate(180%) sepia(20%)',
   },
   {
     name: 'Original',
@@ -162,30 +162,80 @@ export const CONST_LIST_EFFECTS = [
     style: 'none',
   },
   {
-    name: 'Warm',
-    className: 'filter-warm',
-    style: 'brightness(1.1) contrast(1.1) sepia(0.5) hue-rotate(30deg)',
+    name: 'Yellow',
+    className: 'filter-yellow',
+    style: 'brightness(130%) saturate(150%) sepia(10%)',
   },
   {
-    name: 'Hot',
-    className: 'filter-hot',
-    style: 'brightness(1.2) contrast(1.2) sepia(0.7) hue-rotate(15deg)',
+    name: 'Blue',
+    className: 'filter-blue',
+    style: 'brightness(110%) saturate(160%) hue-rotate(200deg)',
   },
   {
-    name: 'Bright',
-    className: 'filter-bright',
-    style: 'brightness(1.5) contrast(1.2)',
+    name: 'Pink',
+    className: 'filter-pink',
+    style: 'brightness(120%) saturate(170%) hue-rotate(330deg)',
   },
 
   {
     name: 'Black & White',
     className: 'filter-black-white',
-    style: 'grayscale(100%) contrast(1.2)',
+    style: 'brightness(110%) grayscale(100%)',
   },
   {
-    name: 'Very Bright',
-    className: 'filter-very-bright',
-    style: 'brightness(2) contrast(1.3)',
+    name: 'Green',
+    className: 'filter-green',
+    style: 'brightness(115%) saturate(140%) hue-rotate(90deg)',
+  },
+  {
+    name: 'Sunny Yellow',
+    className: 'filter-sunny-yellow',
+    style: 'brightness(140%) saturate(150%) sepia(5%)',
+  },
+  {
+    name: 'Dynamic',
+    className: 'filter-dynamic',
+    style: 'brightness(125%) saturate(180%) hue-rotate(50deg)',
+  },
+  {
+    name: 'Orange Yellow',
+    className: 'filter-orange-yellow',
+    style: 'brightness(130%) saturate(170%) sepia(30%)',
+  },
+  {
+    name: 'Aqua',
+    className: 'filter-aqua',
+    style: 'brightness(120%) saturate(160%) hue-rotate(190deg)',
+  },
+  {
+    name: 'Lavender',
+    className: 'filter-lavender',
+    style: 'brightness(110%) saturate(150%) hue-rotate(270deg)',
+  },
+  {
+    name: 'Light Pink',
+    className: 'filter-light-pink',
+    style: 'brightness(125%) saturate(180%) hue-rotate(330deg)',
+  },
+  {
+    name: 'Red',
+    className: 'filter-red',
+    style: 'brightness(110%) saturate(160%) hue-rotate(15deg)',
+  },
+  {
+    name: 'Light Yellow',
+    className: 'filter-light-yellow',
+    style: 'brightness(135%) saturate(140%) sepia(15%)',
+  },
+  {
+    name: 'Earth Tone',
+    className: 'filter-earth-tone',
+    style: 'brightness(120%) saturate(130%) sepia(25%)',
+  },
+  {
+    name: 'Dark Blue',
+    className: 'filter-dark-blue',
+    style: 'brightness(110%) saturate(160%) hue-rotate(210deg)',
   },
 ];
 
