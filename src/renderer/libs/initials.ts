@@ -3,6 +3,7 @@ export const INIT_STORE: StoreType = {
     defaultLanguage: '',
     backgroundAudio: '',
     touchAudio: '',
+    warningAudio: '',
     videoIntro: '',
     hardwareInfo: {
       camera: {

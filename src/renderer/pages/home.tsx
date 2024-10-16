@@ -104,9 +104,9 @@ export default function Home() {
             </div>
           </div>
 
-          <div className='absolute bottom-16 left-14'>
+          {/* <div className='absolute bottom-16 left-14'>
             <SelectLanguage language={userLanguage} handleOnTouchStart={handleChangeLanguage} />
-          </div>
+          </div> */}
 
           <div className='absolute bottom-1/2 left-28 h-[102px] w-[132px] -rotate-12'>
             <DisplayImage src={store.pathFolderAssets + store.resources.icons[4]?.relPath} />

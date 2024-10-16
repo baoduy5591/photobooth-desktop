@@ -54,6 +54,7 @@ ipcMain.handle('get-system-configs', async () => {
     videoIntro: 'videos/introduces/00000.mp4',
     backgroundAudio: 'audios/backgrounds/00000.mp3',
     touchAudio: 'audios/touch/00000.mp3',
+    warningAudio: 'audios/touch/00100.mp3',
   };
 });
 

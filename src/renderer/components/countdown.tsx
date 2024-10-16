@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DisplayImage } from './displayImage';
+import { useSound } from '../context/sound';
 
 interface CountdownProps {
   url: string;
@@ -13,6 +14,8 @@ export const Countdown = React.memo(
   function Countdown({ url, time, routeGoToBack, handleTimeout }: CountdownProps) {
     const [timeLeft, setTimeLeft] = useState<number>(time);
 
+    const { playSoundWarning } = useSound();
+
     const navigate = useNavigate();
 
     const minute = Math.floor(timeLeft / 60);
@@ -24,6 +27,10 @@ export const Countdown = React.memo(
           handleTimeout();
         }
         navigate(routeGoToBack);
+      }
+
+      if (timeLeft <= 3) {
+        playSoundWarning(false);
       }
 
       const id = setInterval(() => {
@@ -64,12 +71,18 @@ export const CountdownForShooting = React.memo(
   function CountdownForShooting({ time, handleActionShootingByMethod }: CountdownForShootingProps) {
     const [timeLeft, setTimeLeft] = useState<number>(time);
 
+    const { playSoundWarning } = useSound();
+
     useEffect(() => {
       if (timeLeft < 1) {
         setTimeout(() => {
           handleActionShootingByMethod();
           setTimeLeft(time);
         }, 500);
+      }
+
+      if (timeLeft <= 3) {
+        playSoundWarning(false);
       }
 
       const id = setTimeout(() => {

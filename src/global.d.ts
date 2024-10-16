@@ -142,6 +142,7 @@ interface SystemConfigsType {
   defaultLanguage: string;
   backgroundAudio: string;
   touchAudio: string;
+  warningAudio: string;
   videoIntro: string;
 }
 

@@ -3,6 +3,7 @@ import { useStore } from './store';
 
 interface SoundContextType {
   playSoundTouch: (isLoop: boolean) => void;
+  playSoundWarning: (isLoop: boolean) => void;
   playSoundBackground: (isLoop: boolean) => void;
 }
 
@@ -14,6 +15,10 @@ export const SoundContextProvider = ({ children }: { children: React.ReactNode }
   const soundTouch = useMemo(
     () => new Audio(store.pathFolderAssets + store.systemConfigs.touchAudio),
     [store.systemConfigs.touchAudio],
+  );
+  const soundWarning = useMemo(
+    () => new Audio(store.pathFolderAssets + store.systemConfigs.warningAudio),
+    [store.systemConfigs.warningAudio],
   );
   const soundBackground = useMemo(
     () => new Audio(store.pathFolderAssets + store.systemConfigs.backgroundAudio),
@@ -32,7 +37,17 @@ export const SoundContextProvider = ({ children }: { children: React.ReactNode }
     soundTouch.play();
   };
 
-  return <SoundContext.Provider value={{ playSoundBackground, playSoundTouch }}>{children}</SoundContext.Provider>;
+  const playSoundWarning = (isLoop: boolean) => {
+    soundWarning.loop = isLoop;
+    soundWarning.currentTime = 0;
+    soundWarning.play();
+  };
+
+  return (
+    <SoundContext.Provider value={{ playSoundBackground, playSoundTouch, playSoundWarning }}>
+      {children}
+    </SoundContext.Provider>
+  );
 };
 
 export const useSound = () => {
