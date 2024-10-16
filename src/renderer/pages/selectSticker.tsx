@@ -389,24 +389,24 @@ export default function SelectSticker() {
     const savePhoto = await window.api.saveImage({ imageBase64, orderInfo: store.orderInfo });
     if (savePhoto) {
       // reset store
-      setStore((prevStore) => ({
-        ...prevStore,
-        shootingMethod: '',
-        shootingTime: 10,
-        orderInfo: {
-          ...prevStore.orderInfo,
-          imageSelectEffect: '',
-          imageSelectPhoto: '',
-          imageSelectSticker: '',
-          frameMode: '',
-          frameType: '',
-          quantityShootingPhotos: null,
-          quantitySelectedPhotos: null,
-          selectedPhotos: [],
-          frameRelPath: '',
-          effect: { ...prevStore.orderInfo.effect, name: 'Original', className: '', style: '' },
-        },
-      }));
+      // setStore((prevStore) => ({
+      //   ...prevStore,
+      //   shootingMethod: '',
+      //   shootingTime: 10,
+      //   orderInfo: {
+      //     ...prevStore.orderInfo,
+      //     imageSelectEffect: '',
+      //     imageSelectPhoto: '',
+      //     imageSelectSticker: '',
+      //     frameMode: '',
+      //     frameType: '',
+      //     quantityShootingPhotos: null,
+      //     quantitySelectedPhotos: null,
+      //     selectedPhotos: [],
+      //     frameRelPath: '',
+      //     effect: { ...prevStore.orderInfo.effect, name: 'Original', className: '', style: '' },
+      //   },
+      // }));
       // navigate('/complete');
     }
   };
