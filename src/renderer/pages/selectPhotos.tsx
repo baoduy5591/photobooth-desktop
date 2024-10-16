@@ -341,7 +341,7 @@ export default function SelectPhotos() {
               <div className='mb-3'>
                 <Countdown
                   url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
-                  time={10}
+                  time={300}
                   handleTimeout={handleTimeout}
                 />
               </div>
