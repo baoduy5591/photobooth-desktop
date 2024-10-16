@@ -402,7 +402,7 @@ export default function SelectSticker() {
       //     frameType: '',
       //     quantityShootingPhotos: null,
       //     quantitySelectedPhotos: null,
-      //     selectedPhotos: [],
+      //     selectedPhotos: [],\
       //     frameRelPath: '',
       //     effect: { ...prevStore.orderInfo.effect, name: 'Original', className: '', style: '' },
       //   },
