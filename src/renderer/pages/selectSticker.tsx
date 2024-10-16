@@ -407,7 +407,7 @@ export default function SelectSticker() {
           effect: { ...prevStore.orderInfo.effect, name: 'Original', className: '', style: '' },
         },
       }));
-      navigate('/complete');
+      // navigate('/complete');
     }
   };
 
