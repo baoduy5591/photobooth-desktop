@@ -34,7 +34,6 @@ export default function SelectSticker() {
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
   const isTouchMove = useRef<boolean>(false);
-
   const frameRef = useRef<HTMLDivElement>(null);
   const stickerRef = useRef<HTMLDivElement>(null);
   const currentAngle = useRef<number>(0);
