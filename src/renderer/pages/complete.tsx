@@ -52,7 +52,7 @@ export default function Complete() {
 
           <Countdown
             url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
-            time={90}
+            time={900}
             routeGoToBack='/home'
             handleTimeout={handleTimeout}
           />
@@ -77,8 +77,14 @@ export default function Complete() {
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[50]?.relPath} />
               </div>
 
-              <div className='h-[102px] w-[186px]'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[52]?.relPath} />
+              <div className='relative h-[102px] w-[186px]'>
+                <div className='h-full w-full'>
+                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[52]?.relPath} />
+                </div>
+
+                <div className='absolute left-[44px] top-[32px] h-[40px] w-[40px]'>
+                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[57]?.relPath} />
+                </div>
               </div>
             </div>
           </div>

@@ -214,12 +214,6 @@ export default function SelectSticker() {
     );
   };
 
-  const checkDeltaValid = (deltaX: number, deltaY: number) => {
-    if (deltaX === 0 || deltaY === 0) return false;
-
-    return true;
-  };
-
   const handleOnTouchMoveRotate = (event: React.TouchEvent<HTMLDivElement>, index: number) => {
     if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
 
