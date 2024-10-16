@@ -347,7 +347,6 @@ export default function SelectSticker() {
       const w = selectedSticker[index].width * 2.8;
       const h = selectedSticker[index].height * 2.8;
       const angleInRadians = (selectedSticker[index].rotate * Math.PI) / 180;
-      console.log(x, y, w, h);
       context.save();
       context.translate(x + w / 2, y + h / 2);
       context.rotate(angleInRadians);
@@ -527,7 +526,7 @@ export default function SelectSticker() {
               <div className='mb-3'>
                 <Countdown
                   url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
-                  time={999}
+                  time={300}
                   routeGoToBack='/select-photos'
                 />
               </div>

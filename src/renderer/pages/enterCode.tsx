@@ -63,10 +63,6 @@ export default function EnterCode() {
     playSoundBackground(true);
   }, []);
 
-  useEffect(() => {
-    navigate('/complete');
-  }, []);
-
   return (
     <div className='relative h-screen w-screen'>
       <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />

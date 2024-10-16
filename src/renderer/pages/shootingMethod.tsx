@@ -49,7 +49,7 @@ export default function ShootingMethod() {
         <div className='absolute right-40 top-28'>
           <Countdown
             url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
-            time={900}
+            time={300}
             routeGoToBack='/confirm-frame'
           />
         </div>
@@ -88,7 +88,6 @@ export default function ShootingMethod() {
           <div className='ml-5 mt-9 flex h-full grow flex-col items-start justify-center gap-y-16'>
             <div
               onTouchStart={(event) => handleOnTouchStartChooseShootingMethod(event, CONST_COUNTDOWN_METHOD)}
-              // onMouseDown={(event) => handleOnTouchStartChooseShootingMethod(event, CONST_COUNTDOWN_METHOD)}
               className='flex flex-col items-center justify-center'
             >
               <div className='flex items-center justify-center gap-y-2'>
@@ -132,7 +131,6 @@ export default function ShootingMethod() {
 
             <div
               onTouchStart={(event) => handleOnTouchStartChooseShootingMethod(event, CONST_REMOTE_METHOD)}
-              // onMouseDown={(event) => handleOnTouchStartChooseShootingMethod(event, CONST_REMOTE_METHOD)}
               className='flex flex-col items-center justify-center'
             >
               <div className='flex items-center justify-center gap-y-2'>

@@ -52,7 +52,7 @@ export default function Complete() {
 
           <Countdown
             url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
-            time={900}
+            time={90}
             routeGoToBack='/home'
             handleTimeout={handleTimeout}
           />
