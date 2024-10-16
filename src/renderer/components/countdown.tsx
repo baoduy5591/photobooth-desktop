@@ -95,7 +95,7 @@ export const CountdownForShooting = React.memo(
 
     return (
       <div className='flex h-[363px] w-[363px] items-center justify-center rounded-full border-2 border-custom-style-1 p-2 font-rokkitt text-[250px] text-custom-style-1'>
-        <span>{timeLeft}</span>
+        <span className='shadow-2xl'>{timeLeft}</span>
       </div>
     );
   },
