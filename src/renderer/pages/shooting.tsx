@@ -56,6 +56,12 @@ export default function Shooting() {
         setIsStartLiveView(true);
       }
 
+      if (data.action === 'shooting-triggered') {
+        if (data.result === 'OK') {
+          setIsShooting(true);
+        }
+      }
+
       if (data.action === 'takephoto') {
         if (data.result === 'OK') {
           setIsShooting(false);
@@ -98,7 +104,7 @@ export default function Shooting() {
 
       <div className='absolute inset-0'>
         {isShooting && (
-          <div className='absolute inset-0 z-50 flex flex-col items-center justify-center gap-y-2 bg-custom-style-1 font-rokkitt text-4xl font-semibold tracking-wider text-custom-style-3-1 opacity-80'>
+          <div className='absolute inset-0 z-50 flex flex-col items-center justify-center gap-y-2 bg-custom-style-1 font-rokkitt text-5xl font-semibold tracking-wider text-custom-style-3-1 opacity-80'>
             <span>Saving...</span>
             <span>Please do not move for a better picture</span>
           </div>

@@ -448,7 +448,7 @@ export default function SelectSticker() {
                     <div
                       ref={stickerRef}
                       key={index}
-                      className={`absolute z-40 flex items-center justify-center rounded-md border-2 p-8 ${currentChooseStickerIndex === index ? 'border-dashed border-custom-style-2-1' : 'border-transparent'}`}
+                      className={`absolute z-40 flex items-center justify-center rounded-md border-2 p-0.5 ${currentChooseStickerIndex === index ? 'border-dashed border-custom-style-2-1' : 'border-transparent'}`}
                       style={{
                         top: `${sticker.top}px`,
                         left: `${sticker.left}px`,
