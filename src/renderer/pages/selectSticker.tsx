@@ -448,6 +448,9 @@ export default function SelectSticker() {
                   return (
                     <div
                       className={`absolute z-40 flex items-center justify-center rounded-md border-2 p-6 ${currentChooseStickerIndex === index ? 'border-dashed border-custom-style-2-1' : 'border-transparent'}`}
+                      onTouchStart={(event) => handleOnTouchStartChooseStickerByIndex(event, index)}
+                      onTouchMove={(event) => handleOnTouchMoveChooseStickerByIndex(event, index)}
+                      onTouchEnd={(event) => handleOnTouchEndChooseStickerByIndex(event)}
                     >
                       <div
                         ref={stickerRef}
@@ -458,9 +461,6 @@ export default function SelectSticker() {
                           width: `${sticker.width}px`,
                           height: `${sticker.height}px`,
                         }}
-                        onTouchStart={(event) => handleOnTouchStartChooseStickerByIndex(event, index)}
-                        onTouchMove={(event) => handleOnTouchMoveChooseStickerByIndex(event, index)}
-                        onTouchEnd={(event) => handleOnTouchEndChooseStickerByIndex(event)}
                       >
                         <div
                           className='h-full w-full'
