@@ -77,14 +77,12 @@ export default function Complete() {
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[50]?.relPath} />
               </div>
 
-              <div className='relative h-[102px] w-[186px]'>
-                <div className='h-full w-full'>
+              <div className='h-[120px] w-[102px]'>
+                {/* <div className='h-full w-full'>
                   <DisplayImage src={store.pathFolderAssets + store.resources.icons[52]?.relPath} />
-                </div>
+                </div> */}
 
-                <div className='absolute left-[44px] top-[32px] h-[40px] w-[40px]'>
-                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[57]?.relPath} />
-                </div>
+                <DisplayImage src={store.pathFolderAssets + store.resources.icons[57]?.relPath} />
               </div>
             </div>
           </div>
