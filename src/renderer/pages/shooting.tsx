@@ -4,7 +4,7 @@ import { DisplayImage } from '../components/displayImage';
 import { useStore } from '../context/store';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { CONST_COUNTDOWN_METHOD, CONST_MOCK_DATA_FRAME, CONST_REMOTE_METHOD } from '../libs/constants';
+import { CONST_COUNTDOWN_METHOD, CONST_REMOTE_METHOD } from '../libs/constants';
 
 export default function Shooting() {
   const { store } = useStore();

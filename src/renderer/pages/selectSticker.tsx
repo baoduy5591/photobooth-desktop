@@ -348,10 +348,10 @@ export default function SelectSticker() {
     const context = canvas.getContext('2d');
     context.drawImage(elementImageEffect, 0, 0, width, height);
     elementStickers.forEach((elementSticker, index) => {
-      const x = selectedSticker[index].left * 2.8;
-      const y = selectedSticker[index].top * 2.8;
-      const w = selectedSticker[index].width * 2.8;
-      const h = selectedSticker[index].height * 2.8;
+      const x = selectedSticker[index].left * 2.8 + 10 * 2.8;
+      const y = selectedSticker[index].top * 2.8 + 10 * 2.8;
+      const w = selectedSticker[index].width * 2.8 - 20 * 2.8;
+      const h = selectedSticker[index].height * 2.8 - 20 * 2.8;
       const angleInRadians = (selectedSticker[index].rotate * Math.PI) / 180;
       console.log(x, y, w, h);
       context.save();
