@@ -94,14 +94,30 @@ export default function SelectPhotos() {
     const _index = getIndex(selectedPhotos, store.orderInfo.frameMode, store.orderInfo.frameType);
     if (_index === null) return;
 
-    setStore((prevStore) => ({
-      ...prevStore,
-      orderInfo: {
-        ...prevStore.orderInfo,
-        selectedPhotos: [...prevStore.orderInfo.selectedPhotos, { photo: photo, index: _index }],
-      },
-    }));
-    setIndexForClean(-1);
+    if (checkIsPhotoExist(selectedPhotos, photo)) {
+      const deletedPhoto = selectedPhotos.filter((item) => item.photo === photo);
+      if (deletedPhoto.length > 1 || deletedPhoto.length === 0) return;
+
+      const indexForDelete = deletedPhoto[0].index;
+      const newSelectedPhotos = selectedPhotos.filter((item) => item.photo !== photo);
+      setStore((prevStore) => ({
+        ...prevStore,
+        orderInfo: {
+          ...prevStore.orderInfo,
+          selectedPhotos: newSelectedPhotos,
+        },
+      }));
+      setIndexForClean(indexForDelete);
+    } else {
+      setStore((prevStore) => ({
+        ...prevStore,
+        orderInfo: {
+          ...prevStore.orderInfo,
+          selectedPhotos: [...prevStore.orderInfo.selectedPhotos, { photo: photo, index: _index }],
+        },
+      }));
+      setIndexForClean(-1);
+    }
   };
 
   const handleOnMoveChoosePhoto = (event: React.TouchEvent<HTMLDivElement>) => {
