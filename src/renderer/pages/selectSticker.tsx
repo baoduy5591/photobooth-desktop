@@ -348,11 +348,12 @@ export default function SelectSticker() {
     const context = canvas.getContext('2d');
     context.drawImage(elementImageEffect, 0, 0, width, height);
     elementStickers.forEach((elementSticker, index) => {
-      const x = selectedSticker[index].left * 2.79 + 10 * 2.79;
-      const y = selectedSticker[index].top * 2.79 + 10 * 2.79;
-      const w = selectedSticker[index].width * 2.79 - 20 * 2.79;
-      const h = selectedSticker[index].height * 2.79 - 20 * 2.79;
+      const x = selectedSticker[index].left * 2.8;
+      const y = selectedSticker[index].top * 2.8;
+      const w = selectedSticker[index].width * 2.8;
+      const h = selectedSticker[index].height * 2.8;
       const angleInRadians = (selectedSticker[index].rotate * Math.PI) / 180;
+      console.log(x, y, w, h);
       context.save();
       context.translate(x + w / 2, y + h / 2);
       context.rotate(angleInRadians);
@@ -446,24 +447,27 @@ export default function SelectSticker() {
                 {selectedSticker?.map((sticker, index) => {
                   return (
                     <div
-                      ref={stickerRef}
-                      key={index}
-                      className={`absolute z-40 flex items-center justify-center rounded-md border-2 p-0.5 ${currentChooseStickerIndex === index ? 'border-dashed border-custom-style-2-1' : 'border-transparent'}`}
-                      style={{
-                        top: `${sticker.top}px`,
-                        left: `${sticker.left}px`,
-                        width: `${sticker.width}px`,
-                        height: `${sticker.height}px`,
-                      }}
-                      onTouchStart={(event) => handleOnTouchStartChooseStickerByIndex(event, index)}
-                      onTouchMove={(event) => handleOnTouchMoveChooseStickerByIndex(event, index)}
-                      onTouchEnd={(event) => handleOnTouchEndChooseStickerByIndex(event)}
+                      className={`absolute z-40 flex items-center justify-center rounded-md border-2 p-6 ${currentChooseStickerIndex === index ? 'border-dashed border-custom-style-2-1' : 'border-transparent'}`}
                     >
                       <div
-                        className='h-full w-full'
-                        style={{ transform: `rotate(${sticker.rotate}deg)`, transition: 'transform 0.1s linear' }}
+                        ref={stickerRef}
+                        key={index}
+                        style={{
+                          top: `${sticker.top}px`,
+                          left: `${sticker.left}px`,
+                          width: `${sticker.width}px`,
+                          height: `${sticker.height}px`,
+                        }}
+                        onTouchStart={(event) => handleOnTouchStartChooseStickerByIndex(event, index)}
+                        onTouchMove={(event) => handleOnTouchMoveChooseStickerByIndex(event, index)}
+                        onTouchEnd={(event) => handleOnTouchEndChooseStickerByIndex(event)}
                       >
-                        <DisplayImage src={store.pathFolderAssets + sticker.relPath} />
+                        <div
+                          className='h-full w-full'
+                          style={{ transform: `rotate(${sticker.rotate}deg)`, transition: 'transform 0.1s linear' }}
+                        >
+                          <DisplayImage src={store.pathFolderAssets + sticker.relPath} />
+                        </div>
                       </div>
 
                       {currentChooseStickerIndex === index && (

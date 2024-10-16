@@ -10,7 +10,8 @@ export default function Shooting() {
   const { store } = useStore();
   const [isStartLiveView, setIsStartLiveView] = useState<boolean>(false);
   const [shootingPhotos, setShootingPhotos] = useState<string[]>([]);
-  const [isShooting, setIsShooting] = useState<boolean>(false);
+  const [isShootingCountdown, setIsShooting] = useState<boolean>(false);
+  const [isShootingTriggered, setIsShootingTriggered] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -58,13 +59,14 @@ export default function Shooting() {
 
       if (data.action === 'shooting-triggered') {
         if (data.result === 'OK') {
-          setIsShooting(true);
+          setIsShootingTriggered(true);
         }
       }
 
       if (data.action === 'takephoto') {
         if (data.result === 'OK') {
           setIsShooting(false);
+          setIsShootingTriggered(false);
           setShootingPhotos((prevShootingPhoto) => {
             const newListShootingPhoto = [...prevShootingPhoto, data.message];
             if (newListShootingPhoto.length >= store.orderInfo.quantityShootingPhotos) {
@@ -91,24 +93,25 @@ export default function Shooting() {
   };
 
   useEffect(() => {
-    if (isShooting) {
+    if (isShootingCountdown) {
       if (wsCamera.current && wsCamera.current.readyState === WebSocket.OPEN) {
         wsCamera.current.send('takephoto');
       }
     }
-  }, [isShooting]);
+  }, [isShootingCountdown]);
 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
       <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />
 
       <div className='absolute inset-0'>
-        {isShooting && (
-          <div className='absolute inset-0 z-50 flex flex-col items-center justify-center gap-y-2 bg-custom-style-1 font-rokkitt text-5xl font-semibold tracking-wider text-custom-style-3-1 opacity-80'>
-            <span>Saving...</span>
-            <span>Please do not move for a better picture</span>
-          </div>
-        )}
+        {isShootingCountdown ||
+          (isShootingTriggered && (
+            <div className='absolute inset-0 z-50 flex flex-col items-center justify-center gap-y-2 bg-custom-style-1 font-rokkitt text-5xl font-semibold tracking-wider text-custom-style-3-1 opacity-80'>
+              <span>Saving...</span>
+              <span>Please do not move for a better picture</span>
+            </div>
+          ))}
 
         <div className='flex h-full w-full items-center justify-center'>
           <div className='flex h-full w-[325px] flex-col items-center justify-end'>
@@ -181,7 +184,7 @@ export default function Shooting() {
               </div>
 
               {store.shootingMethod === CONST_COUNTDOWN_METHOD ? (
-                !isShooting && (
+                !isShootingCountdown && (
                   <div className='absolute inset-0 flex items-center justify-center'>
                     <CountdownForShooting
                       time={store.shootingTime}
