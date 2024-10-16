@@ -34,6 +34,7 @@ export default function SelectSticker() {
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
   const isTouchMove = useRef<boolean>(false);
+
   const frameRef = useRef<HTMLDivElement>(null);
   const stickerRef = useRef<HTMLDivElement>(null);
   const currentAngle = useRef<number>(0);
@@ -285,9 +286,9 @@ export default function SelectSticker() {
     const average = (deltaX + deltaY) / 2;
     const newWidth = selectedSticker[index].width + average;
     const newHeight = selectedSticker[index].height + average;
-    if (newWidth < 50 || newWidth > 350) return;
+    if (newWidth < 20 || newWidth > 350) return;
 
-    if (newHeight < 50 || newHeight > 350) return;
+    if (newHeight < 20 || newHeight > 350) return;
 
     setSelectedSticker((prevSticker) =>
       prevSticker.map((sticker, _index) => {
