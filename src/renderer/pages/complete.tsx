@@ -77,7 +77,7 @@ export default function Complete() {
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[50]?.relPath} />
               </div>
 
-              <div className='h-[120px] w-[102px]'>
+              <div className='ml-6 h-[120px] w-[120px]'>
                 {/* <div className='h-full w-full'>
                   <DisplayImage src={store.pathFolderAssets + store.resources.icons[52]?.relPath} />
                 </div> */}
