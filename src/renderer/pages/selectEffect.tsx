@@ -223,7 +223,7 @@ export default function SelectEffect() {
                     onTouchMove={(event) => handleOnTouchMove(event)}
                     onTouchEnd={(event) => handleOnTouchEnd(event)}
                   >
-                    <div className='flex h-full w-full flex-1 items-center overflow-x-hidden pb-2 pt-8'>
+                    <div className='flex h-full w-full flex-1 items-center overflow-x-hidden pb-2 pt-16'>
                       {photoEffects?.map((effect, index) => {
                         return (
                           <div
@@ -264,10 +264,6 @@ export default function SelectEffect() {
                                       />
                                     </div>
                                   )}
-
-                                  <div className='absolute -bottom-8 left-0 right-0 select-none text-center font-rokkitt text-[18px]'>
-                                    <span>{eff.name}</span>
-                                  </div>
                                 </div>
                               );
                             })}

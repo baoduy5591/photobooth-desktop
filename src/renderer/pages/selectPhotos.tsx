@@ -91,9 +91,6 @@ export default function SelectPhotos() {
     if (isTouchMove.current) return;
 
     const { selectedPhotos } = store.orderInfo;
-    const _index = getIndex(selectedPhotos, store.orderInfo.frameMode, store.orderInfo.frameType);
-    if (_index === null) return;
-
     if (checkIsPhotoExist(selectedPhotos, photo)) {
       const deletedPhoto = selectedPhotos.filter((item) => item.photo === photo);
       if (deletedPhoto.length > 1 || deletedPhoto.length === 0) return;
@@ -109,6 +106,9 @@ export default function SelectPhotos() {
       }));
       setIndexForClean(indexForDelete);
     } else {
+      const _index = getIndex(selectedPhotos, store.orderInfo.frameMode, store.orderInfo.frameType);
+      if (_index === null) return;
+
       setStore((prevStore) => ({
         ...prevStore,
         orderInfo: {
