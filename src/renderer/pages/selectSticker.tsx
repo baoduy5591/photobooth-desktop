@@ -286,9 +286,9 @@ export default function SelectSticker() {
     const average = (deltaX + deltaY) / 2;
     const newWidth = selectedSticker[index].width + average;
     const newHeight = selectedSticker[index].height + average;
-    if (newWidth < 50 || newWidth > 350) return;
+    if (newWidth < 75 || newWidth > 350) return;
 
-    if (newHeight < 50 || newHeight > 350) return;
+    if (newHeight < 75 || newHeight > 350) return;
 
     setSelectedSticker((prevSticker) =>
       prevSticker.map((sticker, _index) => {
@@ -436,7 +436,7 @@ export default function SelectSticker() {
             >
               <div
                 ref={frameRef}
-                className='border-custom-style-3-1 relative flex items-center justify-center border-2'
+                className='relative flex items-center justify-center border-2 border-custom-style-3-1'
                 style={{ height: `${store.orderInfo.height / 2.8}px`, width: `${store.orderInfo.width / 2.8}px` }}
               >
                 <div className='h-full w-full'>
