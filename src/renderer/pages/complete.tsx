@@ -64,8 +64,8 @@ export default function Complete() {
               <DisplayImage src={store.pathFolderAssets + store.resources.icons[45]?.relPath} />
             </div>
 
-            <div className='h-[617px] w-[492px]'>
-              <DisplayImage src={store.pathFolderAssets + store.resources.icons[46]?.relPath} />
+            <div className='h-[617px] w-[556px]'>
+              <DisplayImage src={store.pathFolderAssets + store.resources.icons[58]?.relPath} />
             </div>
 
             <div className='flex w-full -translate-y-20 items-center justify-start gap-x-4'>
@@ -77,13 +77,13 @@ export default function Complete() {
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[50]?.relPath} />
               </div>
 
-              <div className='ml-6 h-[120px] w-[120px]'>
-                {/* <div className='h-full w-full'>
+              {/* <div className='ml-6 h-[120px] w-[120px]'>
+                <div className='h-full w-full'>
                   <DisplayImage src={store.pathFolderAssets + store.resources.icons[52]?.relPath} />
-                </div> */}
+                </div>
 
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[57]?.relPath} />
-              </div>
+              </div> */}
             </div>
           </div>
 
