@@ -250,7 +250,8 @@ export default function SelectEffect() {
                               return (
                                 <div
                                   key={index}
-                                  style={{ height: '190px', width: `${190 * store.orderInfo.ratio}px` }}
+                                  className='relative'
+                                  style={{ height: '180px', width: `${180 * store.orderInfo.ratio}px` }}
                                   onTouchEnd={(event) => handleOnTouchEndTogglePhoto(event, eff)}
                                   onTouchMove={(event) => handleOnMoveTogglePhoto(event)}
                                 >
@@ -279,6 +280,10 @@ export default function SelectEffect() {
                                       />
                                     </div>
                                   )}
+
+                                  <div className='absolute -bottom-10 left-1/2 min-w-max -translate-x-1/2 px-2 font-rokkitt text-2xl font-semibold text-custom-style-6-1'>
+                                    <span>{eff.name}</span>
+                                  </div>
                                 </div>
                               );
                             })}

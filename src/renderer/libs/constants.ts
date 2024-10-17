@@ -188,7 +188,7 @@ export const CONST_LIST_EFFECTS = [
     style: 'brightness(115%) saturate(140%) hue-rotate(90deg)',
   },
   {
-    name: 'Sunny Yellow',
+    name: 'Sunny & Yellow',
     className: 'filter-sunny-yellow',
     style: 'brightness(140%) saturate(150%) sepia(5%)',
   },
@@ -198,7 +198,7 @@ export const CONST_LIST_EFFECTS = [
     style: 'brightness(125%) saturate(180%) hue-rotate(50deg)',
   },
   {
-    name: 'Orange Yellow',
+    name: 'Orange & Yellow',
     className: 'filter-orange-yellow',
     style: 'brightness(130%) saturate(170%) sepia(30%)',
   },
@@ -213,7 +213,7 @@ export const CONST_LIST_EFFECTS = [
     style: 'brightness(110%) saturate(150%) hue-rotate(270deg)',
   },
   {
-    name: 'Light Pink',
+    name: 'Light & Pink',
     className: 'filter-light-pink',
     style: 'brightness(125%) saturate(180%) hue-rotate(330deg)',
   },
@@ -223,17 +223,17 @@ export const CONST_LIST_EFFECTS = [
     style: 'brightness(110%) saturate(160%) hue-rotate(15deg)',
   },
   {
-    name: 'Light Yellow',
+    name: 'Light & Yellow',
     className: 'filter-light-yellow',
     style: 'brightness(135%) saturate(140%) sepia(15%)',
   },
   {
-    name: 'Earth Tone',
+    name: 'Earth & Tone',
     className: 'filter-earth-tone',
     style: 'brightness(120%) saturate(130%) sepia(25%)',
   },
   {
-    name: 'Dark Blue',
+    name: 'Dark & Blue',
     className: 'filter-dark-blue',
     style: 'brightness(110%) saturate(160%) hue-rotate(210deg)',
   },
