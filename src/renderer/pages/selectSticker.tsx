@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
-import { CONST_LIST_TAB_STICKER, CONST_THRESHOLD } from '../libs/constants';
+import { CONST_LIST_TAB_STICKER, CONST_SCALE_PHOTOS, CONST_THRESHOLD } from '../libs/constants';
 import { Countdown } from '../components/countdown';
 import { allowWithQuantityTouches, loadImage, randomRangeValue } from '../libs/common';
 import { useNavigate } from 'react-router-dom';
@@ -371,10 +371,10 @@ export default function SelectSticker() {
     const context = canvas.getContext('2d');
     context.drawImage(elementImageEffect, 0, 0, width, height);
     elementStickers.forEach((elementSticker, index) => {
-      const x = selectedSticker[index].left * 2.8 + 30 * 2.8;
-      const y = selectedSticker[index].top * 2.8 + 30 * 2.8;
-      const w = selectedSticker[index].width * 2.8;
-      const h = selectedSticker[index].height * 2.8;
+      const x = selectedSticker[index].left * CONST_SCALE_PHOTOS + 24 * CONST_SCALE_PHOTOS; // 24 equal p-6, which distant from parent to icon
+      const y = selectedSticker[index].top * CONST_SCALE_PHOTOS + 24 * CONST_SCALE_PHOTOS; // / 24 equal p-6, which distant from parent to icon
+      const w = selectedSticker[index].width * CONST_SCALE_PHOTOS;
+      const h = selectedSticker[index].height * CONST_SCALE_PHOTOS;
       const angleInRadians = (selectedSticker[index].rotate * Math.PI) / 180;
       context.save();
       context.translate(x + w / 2, y + h / 2);
@@ -468,7 +468,10 @@ export default function SelectSticker() {
               <div
                 ref={frameRef}
                 className='relative flex items-center justify-center border-2 border-custom-style-3-1'
-                style={{ height: `${store.orderInfo.height / 2.8}px`, width: `${store.orderInfo.width / 2.8}px` }}
+                style={{
+                  height: `${store.orderInfo.height / CONST_SCALE_PHOTOS}px`,
+                  width: `${store.orderInfo.width / CONST_SCALE_PHOTOS}px`,
+                }}
               >
                 <div className='h-full w-full'>
                   <DisplayImage src={store.orderInfo.imageSelectEffect} />
