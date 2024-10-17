@@ -23,17 +23,11 @@ export default function Complete() {
   const handleTimeout = () => {
     setStore((prevStore) => ({
       ...prevStore,
-      orderInfo: {
-        ...prevStore.orderInfo,
-        imageSelectEffect: '',
-        imageSelectPhoto: '',
-        imageSelectSticker: '',
-        colorBase64: '',
-        grayscaleBase64: '',
-        selectedPhotos: [],
-        effect: { ...prevStore.orderInfo.effect, name: 'Original', className: '', style: '' },
-      },
+      shootingMethod: INIT_STORE.shootingMethod,
+      shootingTime: INIT_STORE.shootingTime,
+      orderInfo: { ...INIT_STORE.orderInfo },
     }));
+    navigate('/home');
   };
 
   return (
@@ -53,7 +47,6 @@ export default function Complete() {
           <Countdown
             url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
             time={90}
-            routeGoToBack='/home'
             handleTimeout={handleTimeout}
           />
         </div>

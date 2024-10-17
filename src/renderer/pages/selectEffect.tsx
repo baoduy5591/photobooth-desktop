@@ -30,6 +30,7 @@ export default function SelectEffect() {
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
   const isTouchMove = useRef<boolean>(false);
+  const _effect = useRef<{ name: string; className: string; style: string }>(store.orderInfo.effect);
 
   const navigate = useNavigate();
 
@@ -84,6 +85,7 @@ export default function SelectEffect() {
     if (isTouchMove.current) return;
 
     setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, effect: effect } }));
+    _effect.current = effect;
   };
 
   const handleOnMoveTogglePhoto = (event: React.TouchEvent<HTMLDivElement>) => {
@@ -137,6 +139,19 @@ export default function SelectEffect() {
     setTimeout(() => {
       navigate('/select-sticker');
     }, 500);
+  };
+
+  const handleTimeout = () => {
+    handleConvertCanvasToBase64(
+      store.orderInfo.imageSelectPhoto,
+      store.pathFolderAssets + store.orderInfo.frameRelPath,
+      _effect.current.style,
+      store.orderInfo.width,
+      store.orderInfo.height,
+    ).then((base64String) => {
+      setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, imageSelectEffect: base64String } }));
+      navigate('/select-sticker');
+    });
   };
 
   return (
@@ -208,7 +223,7 @@ export default function SelectEffect() {
                 <Countdown
                   url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
                   time={300}
-                  routeGoToBack='/select-sticker'
+                  handleTimeout={handleTimeout}
                 />
               </div>
             </div>

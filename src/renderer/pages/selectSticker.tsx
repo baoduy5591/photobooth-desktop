@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
-import { CONST_LIST_TAB_STICKER, CONST_RATIO_SCALE, CONST_THRESHOLD } from '../libs/constants';
+import { CONST_LIST_TAB_STICKER, CONST_THRESHOLD } from '../libs/constants';
 import { Countdown } from '../components/countdown';
 import { allowWithQuantityTouches, loadImage, randomRangeValue } from '../libs/common';
 import { useNavigate } from 'react-router-dom';
@@ -40,6 +40,19 @@ export default function SelectSticker() {
   const currentAngle = useRef<number>(0);
   const rotatePositionY = useRef<number>(0);
   const isChooseStickerByIndex = useRef<boolean>(false);
+  const _selectedSticker = useRef<
+    (PathResourceType & {
+      top: number;
+      left: number;
+      offsetX: number;
+      offsetY: number;
+      currentPageX: number;
+      currentPageY: number;
+      width: number;
+      height: number;
+      rotate: number;
+    })[]
+  >([]);
 
   const navigate = useNavigate();
 
@@ -128,6 +141,21 @@ export default function SelectSticker() {
         rotate: 0,
       },
     ]);
+    _selectedSticker.current = [
+      ..._selectedSticker.current,
+      {
+        ...sticker,
+        top: randomRangeValue(0, 50),
+        left: randomRangeValue(0, 50),
+        offsetX: 0,
+        offsetY: 0,
+        currentPageX: 0,
+        currentPageY: 0,
+        width: 160,
+        height: 160,
+        rotate: 0,
+      },
+    ];
 
     setCurrentChooseStickerIndex(selectedSticker.length);
   };
@@ -313,6 +341,7 @@ export default function SelectSticker() {
     playSoundTouch(false);
     const newSelectedSticker = selectedSticker.filter((sticker, _index) => _index !== index);
     setSelectedSticker(newSelectedSticker);
+    _selectedSticker.current = newSelectedSticker;
     setCurrentChooseStickerIndex(null);
   };
 
@@ -381,27 +410,35 @@ export default function SelectSticker() {
 
     const savePhoto = await window.api.saveImage({ imageBase64, orderInfo: store.orderInfo });
     if (savePhoto) {
-      // reset store
       setStore((prevStore) => ({
         ...prevStore,
-        shootingMethod: '',
-        shootingTime: 10,
-        orderInfo: {
-          ...prevStore.orderInfo,
-          imageSelectEffect: '',
-          imageSelectPhoto: '',
-          imageSelectSticker: '',
-          frameMode: '',
-          frameType: '',
-          quantityShootingPhotos: null,
-          quantitySelectedPhotos: null,
-          selectedPhotos: [],
-          frameRelPath: '',
-          effect: { ...prevStore.orderInfo.effect, name: 'Original', className: '', style: '' },
-        },
+        shootingMethod: INIT_STORE.shootingMethod,
+        shootingTime: INIT_STORE.shootingTime,
+        orderInfo: { ...INIT_STORE.orderInfo },
       }));
       navigate('/complete');
     }
+  };
+
+  const handleTimeout = () => {
+    handleConvertCanvasToBase64(
+      store.orderInfo.imageSelectEffect,
+      _selectedSticker.current,
+      store.orderInfo.width,
+      store.orderInfo.height,
+    ).then((imageBase64) => {
+      window.api.saveImage({ imageBase64, orderInfo: store.orderInfo }).then((rs: boolean) => {
+        if (rs) {
+          setStore((prevStore) => ({
+            ...prevStore,
+            shootingMethod: INIT_STORE.shootingMethod,
+            shootingTime: INIT_STORE.shootingTime,
+            orderInfo: { ...INIT_STORE.orderInfo },
+          }));
+          navigate('/complete');
+        }
+      });
+    });
   };
 
   return (
@@ -527,7 +564,7 @@ export default function SelectSticker() {
                 <Countdown
                   url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
                   time={300}
-                  routeGoToBack='/complete'
+                  handleTimeout={handleTimeout}
                 />
               </div>
             </div>
