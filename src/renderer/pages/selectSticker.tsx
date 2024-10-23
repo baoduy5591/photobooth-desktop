@@ -408,8 +408,8 @@ export default function SelectSticker() {
       store.orderInfo.height,
     );
 
-    const savePhoto = await window.api.saveImage({ imageBase64, orderInfo: store.orderInfo });
-    if (savePhoto) {
+    try {
+      const savePhoto = await window.api.saveImage({ imageBase64, orderInfo: store.orderInfo });
       setStore((prevStore) => ({
         ...prevStore,
         shootingMethod: INIT_STORE.shootingMethod,
@@ -417,6 +417,11 @@ export default function SelectSticker() {
         orderInfo: { ...INIT_STORE.orderInfo },
       }));
       navigate('/complete');
+    } catch (error) {
+      alert(
+        'Print command failed, please check the printer or contact the technical department. We apologize for the inconvenience !!!',
+      );
+      return;
     }
   };
 
