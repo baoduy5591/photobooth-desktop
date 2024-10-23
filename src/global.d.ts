@@ -226,12 +226,3 @@ interface PositionFramesType {
     typeB: { x: number; y: number; w: number; h: number }[][];
   };
 }
-
-interface BouncingType {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  top: number;
-  left: number;
-}
