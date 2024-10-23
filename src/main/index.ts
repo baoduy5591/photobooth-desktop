@@ -30,7 +30,7 @@ const createWindow = (): void => {
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
   // get configs machine
   ipcMain.handle('get-machine-configs', async () => {
@@ -125,6 +125,19 @@ ipcMain.handle('save-image', async (event, data) => {
     });
 
     // delete all file not folder
+    const files = fs.readdirSync(Paths.getFolderUserPhotos());
+    files.forEach((file) => {
+      fs.unlinkSync(path.join(Paths.getFolderUserPhotos(), file));
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+});
+
+ipcMain.handle('delete-files', async (event) => {
+  try {
     const files = fs.readdirSync(Paths.getFolderUserPhotos());
     files.forEach((file) => {
       fs.unlinkSync(path.join(Paths.getFolderUserPhotos(), file));

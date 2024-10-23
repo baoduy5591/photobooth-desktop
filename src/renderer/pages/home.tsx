@@ -52,6 +52,17 @@ export default function Home() {
     i18n.changeLanguage(userLanguage);
   }, [userLanguage]);
 
+  useEffect(() => {
+    const deleteFiles = async () => {
+      const _deleteFiles = await window.api.deleteFiles();
+      if (!_deleteFiles) {
+        alert('Something error !!!');
+      }
+    };
+
+    deleteFiles();
+  }, []);
+
   return (
     <div className='relative h-screen w-screen'>
       <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[0]?.relPath} />

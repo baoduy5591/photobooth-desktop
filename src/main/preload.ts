@@ -1,4 +1,4 @@
-import { ipcRenderer, contextBridge } from "electron";
+import { ipcRenderer, contextBridge } from 'electron';
 
 const WINDOW_API = {
   getResources: () => ipcRenderer.invoke('get-resources'),
@@ -8,7 +8,8 @@ const WINDOW_API = {
   getOrderInfoById: (value: string) => ipcRenderer.invoke('get-order-info-by-id', value),
   getMachineConfigs: () => ipcRenderer.invoke('get-machine-configs'),
   getUserResizedPhotos: () => ipcRenderer.invoke('get-user-resized-photos'),
-  saveImage: (data: { imageBase64: string, modeFrame: string }) => ipcRenderer.invoke('save-image', data),
-}
+  saveImage: (data: { imageBase64: string; modeFrame: string }) => ipcRenderer.invoke('save-image', data),
+  deleteFiles: () => ipcRenderer.invoke('delete-files'),
+};
 
 contextBridge.exposeInMainWorld('api', WINDOW_API);

@@ -19,6 +19,7 @@ interface Window {
     getMachineConfigs: () => Promise;
     getUserResizedPhotos: () => Promise;
     saveImage: (data: { imageBase64: string; orderInfo: {} }) => Promise;
+    deleteFiles: () => Promise;
   };
 }
 
@@ -224,4 +225,13 @@ interface PositionFramesType {
     typeA: { x: number; y: number; w: number; h: number }[][];
     typeB: { x: number; y: number; w: number; h: number }[][];
   };
+}
+
+interface BouncingType {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  top: number;
+  left: number;
 }
