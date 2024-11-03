@@ -4,8 +4,8 @@ import Home from './pages/home';
 import { useEffect } from 'react';
 import { useStore } from './context/store';
 import EnterCode from './pages/enterCode';
-import ConfirmFrame from './pages/confirmFrame';
-import ShootingMethod from './pages/shootingMethod';
+// import ConfirmFrame from './pages/confirmFrame';
+// import ShootingMethod from './pages/shootingMethod';
 import Shooting from './pages/shooting';
 import SelectPhotos from './pages/selectPhotos';
 import SelectEffect from './pages/selectEffect';
@@ -42,8 +42,8 @@ export default function App() {
         <Route path='/' element={<Splash />} />
         <Route path='/home' element={<Home />} />
         <Route path='/enter-code' element={<EnterCode />} />
-        <Route path='/confirm-frame' element={<ConfirmFrame />} />
-        <Route path='/shooting-method' element={<ShootingMethod />} />
+        {/* <Route path='/confirm-frame' element={<ConfirmFrame />} />÷ */}
+        {/* <Route path='/shooting-method' element={<ShootingMethod />} /> */}
         <Route path='/shooting' element={<Shooting />} />
         <Route path='/select-photos' element={<SelectPhotos />} />
         <Route path='/select-effect' element={<SelectEffect />} />

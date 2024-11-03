@@ -10,7 +10,7 @@ export default function Shooting() {
   const { store } = useStore();
   const [isStartLiveView, setIsStartLiveView] = useState<boolean>(false);
   const [shootingPhotos, setShootingPhotos] = useState<string[]>([]);
-  const [isShootingCountdown, setIsShooting] = useState<boolean>(false);
+  const [isShootingCountdown, setIsShootingCountdown] = useState<boolean>(false);
   const [isShootingTriggered, setIsShootingTriggered] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -47,9 +47,6 @@ export default function Shooting() {
       wsCamera.current.send(`setphoto-img:r=2;w=${store.orderInfo.ratio}`);
       wsCamera.current.send('startlv');
       wsCamera.current.send('record');
-      if (store.shootingMethod === CONST_COUNTDOWN_METHOD) {
-        wsCamera.current.send('lock');
-      }
     };
     wsCamera.current.onmessage = (event) => {
       const data = JSON.parse(event.data);
@@ -65,7 +62,7 @@ export default function Shooting() {
 
       if (data.action === 'takephoto') {
         if (data.result === 'OK') {
-          setIsShooting(false);
+          setIsShootingCountdown(false);
           setIsShootingTriggered(false);
           setShootingPhotos((prevShootingPhoto) => {
             const newListShootingPhoto = [...prevShootingPhoto, data.message];
@@ -89,7 +86,7 @@ export default function Shooting() {
   }, []);
 
   const handleActionShootingByMethod = () => {
-    setIsShooting(true);
+    setIsShootingCountdown(true);
   };
 
   useEffect(() => {
@@ -152,14 +149,6 @@ export default function Shooting() {
               <div className='relative h-[828px] w-[1242px] bg-custom-style-3-2'>
                 <img ref={imgRef} className='h-full w-full' />
 
-                {store.shootingMethod === CONST_REMOTE_METHOD && (
-                  <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
-                    <div className='h-[500px] w-[550px]'>
-                      <DisplayImage src={store.pathFolderAssets + store.resources.icons[35]?.relPath} />
-                    </div>
-                  </div>
-                )}
-
                 <div className='absolute inset-0 flex justify-between'>
                   <div
                     className='h-full bg-custom-style-3-2'
@@ -182,21 +171,11 @@ export default function Shooting() {
                 </div>
               </div>
 
-              {store.shootingMethod === CONST_COUNTDOWN_METHOD ? (
-                !isShootingCountdown && (
-                  <div className='absolute inset-0 flex items-center justify-center'>
-                    <CountdownForShooting
-                      time={store.shootingTime}
-                      handleActionShootingByMethod={handleActionShootingByMethod}
-                    />
-                  </div>
-                )
-              ) : (
-                <div className='absolute bottom-[23px] right-[180px] h-[90px]'>
-                  <Countdown
-                    url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
-                    time={300}
-                    routeGoToBack='/shooting-method'
+              {(!isShootingCountdown || !isShootingTriggered) && (
+                <div className='absolute inset-0 flex items-center justify-center'>
+                  <CountdownForShooting
+                    time={store.shootingTime}
+                    handleActionShootingByMethod={handleActionShootingByMethod}
                   />
                 </div>
               )}
