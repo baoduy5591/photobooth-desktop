@@ -63,7 +63,7 @@ ipcMain.handle('get-system-configs', async () => {
 
 ipcMain.handle('get-order-info-by-id', async (event, value) => {
   try {
-    const response = await axios.get(`http://192.168.1.72:3000/api/clientOrders/start/${value}`);
+    const response = await axios.get(`http://localhost:3001/api/clientOrders/start/${value}`);
     if (!response || response.status !== 200) return false;
 
     return response.data;
@@ -101,7 +101,7 @@ ipcMain.handle('save-image', async (event, data) => {
     delete orderInfo['imageSelectEffect'];
     delete orderInfo['imageSelectPhoto'];
     delete orderInfo['selectedPhotos'];
-    const response = await axios.post('http://192.168.1.72:3000/api/clientOrders/endOrder', orderInfo, {
+    const response = await axios.post('http://localhost:3001/api/clientOrders/endOrder', orderInfo, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -176,7 +176,7 @@ ipcMain.handle('delete-files', async (event) => {
 
 ipcMain.handle('get-qr-code', async (event, orderId) => {
   try {
-    const response = await axios.get(`http://192.168.1.72:3000/api/clientOrders/createQR/${orderId}`, {
+    const response = await axios.get(`http://localhost:3001/api/clientOrders/createQR/${orderId}`, {
       headers: {
         'Content-Type': 'application/json',
       },
