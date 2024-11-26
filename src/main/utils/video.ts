@@ -22,7 +22,6 @@ export function generateVideo(data: GenerateVideoType) {
   const ffmpeg = path.join(Paths.getFolderExternal(), 'ffmpeg');
   const folderUserPhotosPath = Paths.getFolderUserPhotos();
   const frameStickerImagePath = path.join(folderUserPhotosPath, CONST_FRAME_STICKER_IMAGE_NAME);
-  const outputVideoPath = path.join(folderUserPhotosPath, 'output-video.mp4');
   const widthImage = Math.floor(data.frameWidth / CONST_VIDEO_RATIO_WITH_FRAME);
   const heightImage = Math.floor(data.frameHeight / CONST_VIDEO_RATIO_WITH_FRAME);
   const videos: VideosType[] = [];

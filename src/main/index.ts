@@ -143,21 +143,6 @@ ipcMain.handle('generate-video', async (event, data) => {
   const _generateVideoToBase64 = generateVideo(data);
   if (!_generateVideoToBase64) return false;
 
-  // Chuyển đổi base64 thành nhị phân
-  const videoBuffer = Buffer.from(_generateVideoToBase64, 'base64');
-
-  // Định nghĩa đường dẫn và tên tệp mp4
-  const pathFolderUserPhotos = Paths.getFolderUserPhotos();
-  const videoPath = path.join(pathFolderUserPhotos, 'output_video11111.mp4');
-
-  // Ghi tệp video
-  fs.writeFile(videoPath, videoBuffer, (err) => {
-    if (err) {
-      console.error('Lỗi khi ghi video:', err);
-      return false;
-    }
-    console.log('Video đã được lưu tại:', videoPath);
-  });
   return _generateVideoToBase64;
 });
 
