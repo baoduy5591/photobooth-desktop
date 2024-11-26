@@ -12,6 +12,7 @@ export default function Shooting() {
   const [shootingPhotos, setShootingPhotos] = useState<string[]>([]);
   const [isShootingCountdown, setIsShootingCountdown] = useState<boolean>(false);
   const [isShootingTriggered, setIsShootingTriggered] = useState<boolean>(false);
+  const [isShooting, setIsShooting] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -58,6 +59,7 @@ export default function Shooting() {
         if (data.result === 'OK') {
           setIsShootingTriggered(true);
           setIsShootingCountdown(false);
+          setIsShooting(true);
         }
       }
 
@@ -65,6 +67,7 @@ export default function Shooting() {
         if (data.result === 'OK') {
           setIsShootingCountdown(false);
           setIsShootingTriggered(false);
+          setIsShooting(false);
           setShootingPhotos((prevShootingPhoto) => {
             const newListShootingPhoto = [...prevShootingPhoto, data.message];
             if (newListShootingPhoto.length >= store.orderInfo.quantityShootingPhotos) {
@@ -89,6 +92,7 @@ export default function Shooting() {
   const handleActionShootingByMethod = () => {
     setIsShootingCountdown(true);
     setIsShootingTriggered(false);
+    setIsShooting(true);
   };
 
   useEffect(() => {
@@ -173,7 +177,7 @@ export default function Shooting() {
                 </div>
               </div>
 
-              {(!isShootingCountdown || !isShootingTriggered || isStartLiveView) && (
+              {isStartLiveView && !isShooting && (!isShootingCountdown || !isShootingTriggered) && (
                 <div className='absolute inset-0 flex items-center justify-center'>
                   <CountdownForShooting
                     time={store.shootingTime}
