@@ -9,7 +9,9 @@ const WINDOW_API = {
   getMachineConfigs: () => ipcRenderer.invoke('get-machine-configs'),
   getUserResizedPhotos: () => ipcRenderer.invoke('get-user-resized-photos'),
   saveImage: (data: { imageBase64: string; modeFrame: string }) => ipcRenderer.invoke('save-image', data),
+  saveImageFrameSticker: (imageBase64: string) => ipcRenderer.invoke('save-image-frame-sticker', imageBase64),
   deleteFiles: () => ipcRenderer.invoke('delete-files'),
+  generateVideo: (data: GenerateVideoType) => ipcRenderer.invoke('generate-video', data),
 };
 
 contextBridge.exposeInMainWorld('api', WINDOW_API);

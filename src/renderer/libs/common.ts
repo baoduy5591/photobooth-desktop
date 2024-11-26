@@ -1,5 +1,4 @@
-import { FC } from 'react';
-import { CONST_POSITION_FRAMES } from './constants';
+import { CONST_FRAME_POSITIONS } from './constants';
 
 export const changeFontByName = (fontName: string) => {
   document.body.style.fontFamily = fontName;
@@ -42,7 +41,7 @@ export const loadImage = (pathImage: string): Promise<HTMLImageElement> => {
 };
 
 export const getRatioByFrameModeAndFrameType = (frameMode: string, frameType: string) => {
-  const _frameMode = CONST_POSITION_FRAMES[frameMode as keyof typeof CONST_POSITION_FRAMES];
+  const _frameMode = CONST_FRAME_POSITIONS[frameMode as keyof typeof CONST_FRAME_POSITIONS];
   const _frameType = _frameMode[frameType as keyof typeof _frameMode];
   const { w, h } = _frameType[0][0];
   return Math.round((w / h) * 10) / 10;
@@ -55,7 +54,7 @@ export const allowWithQuantityTouches = (touches: React.Touch[], quantityTouches
 };
 
 export const getPhotoOnCanvas = (frameMode: string, frameType: string, _x: number, _y: number) => {
-  const _frameMode = CONST_POSITION_FRAMES[frameMode as keyof typeof CONST_POSITION_FRAMES];
+  const _frameMode = CONST_FRAME_POSITIONS[frameMode as keyof typeof CONST_FRAME_POSITIONS];
   const _frameType = _frameMode[frameType as keyof typeof _frameMode];
   for (let index = 0; index < _frameType.length; index++) {
     for (let _index = 0; _index < _frameType[index].length; _index++) {
@@ -74,4 +73,14 @@ export const getPhotoOnCanvas = (frameMode: string, frameType: string, _x: numbe
 
 export const randomRangeValue = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min) + min);
+};
+
+export const getPositionByFrameModeAndFrameType = (
+  framePositions: FramePositionType,
+  frameMode: string,
+  frameType: string,
+) => {
+  const object = framePositions[frameMode as keyof typeof framePositions];
+  const position = object[frameType as keyof typeof object];
+  return position;
 };

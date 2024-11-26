@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { CONST_POSITION_FRAMES } from '../libs/constants';
+import { CONST_FRAME_POSITIONS } from '../libs/constants';
 
 interface CanvasProps {
   width: number;
@@ -16,7 +16,7 @@ export const Canvas = React.memo(
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     const getPositionList = () => {
-      const object = CONST_POSITION_FRAMES[frameMode as keyof typeof CONST_POSITION_FRAMES];
+      const object = CONST_FRAME_POSITIONS[frameMode as keyof typeof CONST_FRAME_POSITIONS];
       const positionList = object[frameType as keyof typeof object];
       return positionList;
     };

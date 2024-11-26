@@ -1,1 +1,0 @@
-C:\\Dev\\project\\outsource-photobooth\\.webpack\\renderer\\userPhotos

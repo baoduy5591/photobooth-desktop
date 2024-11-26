@@ -1,4 +1,4 @@
-import { app } from "electron";
+import { app } from 'electron';
 import path from 'path';
 import fs from 'fs';
 
@@ -30,7 +30,7 @@ class Paths {
       if (!fs.existsSync(userPhotos)) {
         fs.mkdirSync(userPhotos);
       }
-      
+
       return userPhotos;
     } else {
       return 'userPhotos/';
@@ -43,6 +43,15 @@ class Paths {
       return path.join(process.resourcesPath, 'assets');
     } else {
       return path.join(__dirname, '..', 'renderer', 'assets');
+    }
+  }
+
+  static getFolderExternal() {
+    const isPackaged = app.isPackaged;
+    if (isPackaged) {
+      return path.join(process.resourcesPath, 'external');
+    } else {
+      return path.join(__dirname, '..', '..', 'src', 'main', 'external');
     }
   }
 

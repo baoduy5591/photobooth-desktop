@@ -1,32 +1,17 @@
 export const CONST_REL_PATH_BACKGROUND_IMAGES = 'backgroundImages';
 
 export const CONST_REL_PATH_STICKERS = 'stickers';
-export const CONST_CHILD_FOLDER_OF_STICKERS: string[] = [
-  'birthday',
-  'flowers',
-  'heart',
-  'others'
-];
+export const CONST_CHILD_FOLDER_OF_STICKERS: string[] = ['birthday', 'flowers', 'heart', 'others'];
 
 export const CONST_REL_PATH_VIDEOS = 'videos';
-export const CONST_CHILD_FOLDER_OF_VIDEOS: string[] = [
-  'loading',
-  'introduces'
-];
+export const CONST_CHILD_FOLDER_OF_VIDEOS: string[] = ['loading', 'introduces'];
 
 export const CONST_REL_PATH_ICONS = 'icons';
 
 export const CONST_REL_PATH_AUDIOS = 'audios';
-export const CONST_CHILD_FOLDER_OF_AUDIOS: string[] = [
-  'backgrounds',
-  'touch'
-];
+export const CONST_CHILD_FOLDER_OF_AUDIOS: string[] = ['backgrounds', 'touch'];
 
-export const CONST_CHILD_FOLDER_OF_FRAMES_TYPE: string[] = [
-  'normal',
-  'season',
-  'special'
-];
+export const CONST_CHILD_FOLDER_OF_FRAMES_TYPE: string[] = ['normal', 'season', 'special'];
 
 export const CONST_REL_PATH_FRAMES_CUTTING_TYPE_A = 'frames/cutting/typeA';
 export const CONST_REL_PATH_FRAMES_CUTTING_TYPE_B = 'frames/cutting/typeB';
@@ -42,4 +27,8 @@ export const CONST_REL_PATH_FRAMES_REGULAR_TYPE_F = 'frames/regular/typeF';
 export const CONST_REL_PATH_FRAMES_WIDE_TYPE_A = 'frames/wide/typeA';
 export const CONST_REL_PATH_FRAMES_WIDE_TYPE_B = 'frames/wide/typeB';
 
+export const CONST_FRAME_STICKER_IMAGE_NAME = 'frame_sticker.png';
 
+export const CONST_VIDEO_RATIO_WITH_FRAME = 1.66666666; // (wFrame / wVideo) = 1.666666666
+
+export const CONST_MODE_CUTTING = 'cutting';

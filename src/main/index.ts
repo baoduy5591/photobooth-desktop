@@ -5,6 +5,9 @@ import UserPhotos from './utils/userPhotos';
 import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
+import { generateVideo } from './utils/video';
+import Images from './utils/images';
+import { CONST_FRAME_STICKER_IMAGE_NAME } from './libs/constants';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -62,27 +65,6 @@ ipcMain.handle('get-order-info-by-id', async (event, value) => {
   try {
     const response = await axios.get(`http://localhost:3001/api/clientOrders/${value}`);
     return response.data.order;
-
-    // _id: '66ffa0acc15de955d43cbe19',
-    //   printCount: 4,
-    //   grayScale: false,
-    //   frameType: 'typeA',
-    //   grayscaleBase64: '',
-    //   colorBase64: '',
-    //   frameMode: 'cutting',
-    //   framePrice: 80000,
-    //   frameStyle: 'normal',
-    //   frameOrder: 0,
-    //   quantityShootingPhotos: 6,
-    //   quantitySelectedPhotos: 4,
-    //   width: 1200,
-    //   height: 1800,
-    //   ratio: 1.5,
-    //   frameRelPath: '',
-    //   orderNumber: '123456',
-    //   createdAt: '2024-10-04T08:00:44.930Z',
-    //   updatedAt: '2024-10-04T08:00:44.930Z',
-    //   __v: 0
   } catch (error) {
     console.log('ERROR = ', error);
     return false;
@@ -115,6 +97,7 @@ ipcMain.handle('save-image', async (event, data) => {
     const orderInfo = data.orderInfo;
     orderInfo['colorBase64'] = imageBase64;
     orderInfo['orderStatus'] = 'COMPLETED';
+    // orderInfo['videoBase64']
     delete orderInfo['imageSelectEffect'];
     delete orderInfo['imageSelectPhoto'];
     delete orderInfo['selectedPhotos'];
@@ -131,9 +114,49 @@ ipcMain.handle('save-image', async (event, data) => {
     });
     return true;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
+});
+
+// save image frame + sticker
+ipcMain.handle('save-image-frame-sticker', async (event, imageBase64) => {
+  try {
+    const pathFolderUserPhotos = Paths.getFolderUserPhotos();
+    const imagePath = path.join(pathFolderUserPhotos, CONST_FRAME_STICKER_IMAGE_NAME);
+    const base64Data = imageBase64.replace(/^data:image\/png;base64,/, '');
+    const images = new Images(imagePath, base64Data);
+    const saveImage = images.saveImage();
+    if (!saveImage) return false;
+
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+});
+
+// ipcMain generateVideo
+ipcMain.handle('generate-video', async (event, data) => {
+  const _generateVideoToBase64 = generateVideo(data);
+  if (!_generateVideoToBase64) return false;
+
+  // Chuyển đổi base64 thành nhị phân
+  const videoBuffer = Buffer.from(_generateVideoToBase64, 'base64');
+
+  // Định nghĩa đường dẫn và tên tệp mp4
+  const pathFolderUserPhotos = Paths.getFolderUserPhotos();
+  const videoPath = path.join(pathFolderUserPhotos, 'output_video11111.mp4');
+
+  // Ghi tệp video
+  fs.writeFile(videoPath, videoBuffer, (err) => {
+    if (err) {
+      console.error('Lỗi khi ghi video:', err);
+      return false;
+    }
+    console.log('Video đã được lưu tại:', videoPath);
+  });
+  return _generateVideoToBase64;
 });
 
 ipcMain.handle('delete-files', async (event) => {

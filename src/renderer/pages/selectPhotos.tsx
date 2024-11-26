@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
-import { CONST_POSITION_FRAMES, CONST_SCALE_PHOTOS } from '../libs/constants';
+import { CONST_FRAME_POSITIONS, CONST_SCALE_PHOTOS } from '../libs/constants';
 import { Countdown } from '../components/countdown';
 import { allowWithQuantityTouches, chunkItems, getPhotoOnCanvas } from '../libs/common';
 import { Canvas } from '../components/canvas';
@@ -75,7 +75,7 @@ export default function SelectPhotos() {
   };
 
   const getIndex = (selectedPhotos: { photo: string; index: number }[], frameMode: string, frameType: string) => {
-    const _frameMode = CONST_POSITION_FRAMES[frameMode as keyof typeof CONST_POSITION_FRAMES];
+    const _frameMode = CONST_FRAME_POSITIONS[frameMode as keyof typeof CONST_FRAME_POSITIONS];
     const _frameType = _frameMode[frameType as keyof typeof _frameMode];
     const getAllIndexSelectedPhotos = selectedPhotos.map((item) => item.index);
     const getAllIndexPositionList = _frameType.map((_, index) => index);
@@ -144,7 +144,7 @@ export default function SelectPhotos() {
     frameMode: string,
     frameType: string,
     selectedPhotos: { photo: string; index: number }[],
-    positionFrames: PositionFramesType,
+    positionFrames: FramePositionType,
   ) => {
     const canvas = document.createElement('canvas');
     canvas.width = width;
@@ -186,7 +186,7 @@ export default function SelectPhotos() {
       store.orderInfo.frameMode,
       store.orderInfo.frameType,
       store.orderInfo.selectedPhotos,
-      CONST_POSITION_FRAMES,
+      CONST_FRAME_POSITIONS,
     );
     setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, imageSelectPhoto: base64String } }));
     setTimeout(() => {
@@ -245,7 +245,7 @@ export default function SelectPhotos() {
         store.orderInfo.frameMode,
         store.orderInfo.frameType,
         _selectedPhotos.current,
-        CONST_POSITION_FRAMES,
+        CONST_FRAME_POSITIONS,
       ).then((base64String) => {
         setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, imageSelectPhoto: base64String } }));
         navigate('/select-effect');

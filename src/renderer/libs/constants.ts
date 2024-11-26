@@ -36,7 +36,7 @@ export const CONST_MOCK_DATA_FRAME = {
   ratio: 1.5,
 };
 
-export const CONST_POSITION_FRAMES: PositionFramesType = {
+export const CONST_FRAME_POSITIONS: FramePositionType = {
   cutting: {
     typeA: [
       [
@@ -246,3 +246,43 @@ export const CONST_THRESHOLD = 10;
 export const CONST_RATIO_SCALE = 10;
 
 export const CONST_SCALE_PHOTOS = 2.8;
+
+export const COLORS: string[] = [
+  '#ff909d',
+  '#1e1e1e',
+  '#e7191f',
+  '#ffa629',
+  '#14ae5c',
+  '#9747ff',
+  '#0d99ff',
+  '#00f4cb',
+  '#61a0e8',
+  '#aaef57',
+  '#d25165',
+  '#e47586',
+  '#eeebfb',
+  '#f6f0e0',
+  '#f8f6f7',
+  '#fee37a',
+  '#fdfdc6',
+  '#ffb200',
+  '#ffffff',
+];
+
+export const keyDraw: {
+  thin: string;
+  medium: string;
+  thick: string;
+  erase: string;
+  cursor: string;
+  pickColor: string;
+  pickLineWidth: string;
+} = {
+  thin: 'thin',
+  medium: 'medium',
+  thick: 'thick',
+  erase: 'erase',
+  cursor: 'cursor',
+  pickColor: 'pickColor',
+  pickLineWidth: 'pickLineWidth',
+};

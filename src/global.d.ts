@@ -19,7 +19,9 @@ interface Window {
     getMachineConfigs: () => Promise;
     getUserResizedPhotos: () => Promise;
     saveImage: (data: { imageBase64: string; orderInfo: {} }) => Promise;
+    saveImageFrameSticker: (imageBase64) => Promise;
     deleteFiles: () => Promise;
+    generateVideo: (data: GenerateVideoType) => Promise;
   };
 }
 
@@ -165,7 +167,9 @@ interface OrderInfoType {
   selectedPhotos: { photo: string; index: number }[];
   imageSelectPhoto: string;
   imageSelectEffect: string;
-  imageSelectSticker: string;
+  imageFrameSticker: string;
+  imageFrameStickerDraw: string;
+  videoBase64: string;
   orderNumber: string;
   effect: {
     name: string;
@@ -207,7 +211,7 @@ interface StoreType {
   machineConfigs: MachineConfigsType;
 }
 
-interface PositionFramesType {
+interface FramePositionType {
   cutting: {
     typeA: { x: number; y: number; w: number; h: number }[][];
     typeB: { x: number; y: number; w: number; h: number }[][];
@@ -225,4 +229,30 @@ interface PositionFramesType {
     typeA: { x: number; y: number; w: number; h: number }[][];
     typeB: { x: number; y: number; w: number; h: number }[][];
   };
+}
+
+interface BouncingType {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  top: number;
+  left: number;
+}
+
+interface GenerateVideoType {
+  frameMode: string;
+  frameWidth: number;
+  frameHeight: number;
+  photos: {
+    photo: string;
+    index: number;
+  }[];
+  effectName: string;
+  positions: {
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+  }[][];
 }

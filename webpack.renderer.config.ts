@@ -9,19 +9,22 @@ import path from 'path';
 
 const env = process.env.NODE_ENV;
 
-const copyWebpackPlugin = env === 'development' ? new CopyPlugin({
-  patterns: [
-    {
-      from: path.join(__dirname, 'src', 'renderer', 'assets'),
-      to: 'assets/'
-    },
-    {
-      from: path.join(__dirname, 'src', 'renderer', 'userPhotos'),
-      force: true,
-      to: 'userPhotos/'
-    }
-  ]
-}) : null;
+const copyWebpackPlugin =
+  env === 'development'
+    ? new CopyPlugin({
+        patterns: [
+          {
+            from: path.join(__dirname, 'src', 'renderer', 'assets'),
+            to: 'assets/',
+          },
+          {
+            from: path.join(__dirname, 'src', 'renderer', 'userPhotos'),
+            force: true,
+            to: 'userPhotos/',
+          },
+        ],
+      })
+    : null;
 
 rules.push(
   {
@@ -33,25 +36,21 @@ rules.push(
     type: 'asset',
     parser: {
       dataUrlCondition: {
-        maxSize: 1000 * 1024
-      }
-    }
-  }
+        maxSize: 1000 * 1024,
+      },
+    },
+  },
 );
 
 export const rendererConfig: Configuration = {
   module: {
     rules,
   },
-  plugins: [
-    ...plugins,
-    copyWebpackPlugin
-  ],
+  plugins: [...plugins, copyWebpackPlugin],
   resolve: {
     alias: {
-      '~': path.resolve(__dirname, 'src/')
+      '~': path.resolve(__dirname, 'src/'),
     },
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
   },
-  
 };

@@ -13,7 +13,6 @@ import { Stickers } from '../components/stickers';
 export default function SelectSticker() {
   const { store, setStore } = useStore();
   const { playSoundTouch } = useSound();
-
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [selectedSticker, setSelectedSticker] = useState<
     (PathResourceType & {
@@ -30,6 +29,7 @@ export default function SelectSticker() {
   >([]);
   const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
   const [currentChooseStickerIndex, setCurrentChooseStickerIndex] = useState<number>(null);
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
@@ -346,7 +346,7 @@ export default function SelectSticker() {
   };
 
   const handleConvertCanvasToBase64 = async (
-    pathImageEffect: string,
+    pathImage: string,
     selectedSticker: (PathResourceType & {
       top: number;
       left: number;
@@ -362,7 +362,7 @@ export default function SelectSticker() {
     height: number,
   ) => {
     const listPromiseSticker = selectedSticker.map((sticker) => loadImage(store.pathFolderAssets + sticker.relPath));
-    const results = await Promise.all([loadImage(pathImageEffect), ...listPromiseSticker]);
+    const results = await Promise.all([loadImage(pathImage), ...listPromiseSticker]);
     const elementImageEffect = results[0];
     const elementStickers = results.slice(1, results.length);
     const canvas = document.createElement('canvas');
@@ -400,55 +400,95 @@ export default function SelectSticker() {
   const handleOnTouchStartNextPage = async (event: React.TouchEvent<HTMLDivElement>) => {
     if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
 
+    // setIsLoading(true);
     playSoundTouch(false);
-    const imageBase64 = await handleConvertCanvasToBase64(
-      store.orderInfo.imageSelectEffect,
+    // const imageBase64 = await handleConvertCanvasToBase64(
+    //   store.orderInfo.imageSelectEffect,
+    //   selectedSticker,
+    //   store.orderInfo.width,
+    //   store.orderInfo.height,
+    // );
+
+    const imageWithFrameAndStickerBase64 = await handleConvertCanvasToBase64(
+      store.pathFolderAssets + store.orderInfo.frameRelPath,
       selectedSticker,
       store.orderInfo.width,
       store.orderInfo.height,
     );
 
-    try {
-      const savePhoto = await window.api.saveImage({ imageBase64, orderInfo: store.orderInfo });
-      setStore((prevStore) => ({
-        ...prevStore,
-        shootingMethod: INIT_STORE.shootingMethod,
-        shootingTime: INIT_STORE.shootingTime,
-        orderInfo: { ...INIT_STORE.orderInfo },
-      }));
-      navigate('/complete');
-    } catch (error) {
-      alert(
-        'Print command failed, please check the printer or contact the technical department. We apologize for the inconvenience !!!',
-      );
-      return;
-    }
+    // const saveFrameSticker = await window.api.saveImageFrameSticker(imageWithFrameAndStickerBase64);
+    // if (!saveFrameSticker) {
+    //   alert(
+    //     'Save frame sticker image failed, please check the printer or contact the technical department. We apologize for the inconvenience !!!',
+    //   );
+    //   return;
+    // }
+
+    // const positions = getPositionByFrameModeAndFrameType(
+    //   CONST_FRAME_POSITIONS,
+    //   store.orderInfo.frameMode,
+    //   store.orderInfo.frameType,
+    // );
+    // const data = {
+    //   frameMode: store.orderInfo.frameMode,
+    //   frameWidth: store.orderInfo.width,
+    //   frameHeight: store.orderInfo.height,
+    //   photos: store.orderInfo.selectedPhotos,
+    //   effectName: store.orderInfo.effect.name,
+    //   positions: positions,
+    // };
+    // const generateVideo = await window.api.generateVideo(data);
+    // if (!generateVideo) {
+    //   alert(
+    //     'Save video failed, please check the printer or contact the technical department. We apologize for the inconvenience !!!',
+    //   );
+    //   return;
+    // }
+
+    // const savePhoto = await window.api.saveImage({ imageBase64, orderInfo: store.orderInfo });
+    // if (!savePhoto) {
+    //   alert(
+    //     'Printer failed, please check the printer or contact the technical department. We apologize for the inconvenience !!!',
+    //   );
+    //   return;
+    // }
+    // setStore((prevStore) => ({
+    //   ...prevStore,
+    //   shootingMethod: INIT_STORE.shootingMethod,
+    //   shootingTime: INIT_STORE.shootingTime,
+    //   orderInfo: { ...INIT_STORE.orderInfo },
+    // }));
+    setStore((prevStore) => ({
+      ...prevStore,
+      orderInfo: { ...prevStore.orderInfo, imageFrameSticker: imageWithFrameAndStickerBase64 },
+    }));
+    navigate('/draw');
   };
 
   const handleTimeout = () => {
+    // setIsLoading(true);
     handleConvertCanvasToBase64(
       store.orderInfo.imageSelectEffect,
       _selectedSticker.current,
       store.orderInfo.width,
       store.orderInfo.height,
-    ).then((imageBase64) => {
-      window.api.saveImage({ imageBase64, orderInfo: store.orderInfo }).then((rs: boolean) => {
-        if (rs) {
-          setStore((prevStore) => ({
-            ...prevStore,
-            shootingMethod: INIT_STORE.shootingMethod,
-            shootingTime: INIT_STORE.shootingTime,
-            orderInfo: { ...INIT_STORE.orderInfo },
-          }));
-          navigate('/complete');
-        }
-      });
+    ).then((imageWithFrameAndStickerBase64) => {
+      setStore((prevStore) => ({
+        ...prevStore,
+        orderInfo: { ...prevStore.orderInfo, imageFrameSticker: imageWithFrameAndStickerBase64 },
+      }));
+      navigate('/draw');
     });
   };
 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
       <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />
+      {/* {isLoading && (
+        <div className='fixed inset-0 z-50 flex items-center justify-center bg-custom-style-1 font-rokkitt text-4xl font-semibold opacity-80'>
+          <span className='animate-opacity-slow-infinite'>Please wait some minute . . .</span>
+        </div>
+      )} */}
 
       <div className='absolute inset-0 py-6'>
         <div className='flex h-full w-full items-center justify-center'>
