@@ -19,7 +19,7 @@ interface VideosType {
 }
 
 export function generateVideo(data: GenerateVideoType) {
-  const ffmpeg = path.join(Paths.getFolderExternal(), 'ffmpeg');
+  const ffmpeg = path.join(Paths.getFolderExternal(), 'ffmpeg.exe');
   const folderUserPhotosPath = Paths.getFolderUserPhotos();
   const frameStickerImagePath = path.join(folderUserPhotosPath, CONST_FRAME_STICKER_IMAGE_NAME);
   const widthImage = Math.floor(data.frameWidth / CONST_VIDEO_RATIO_WITH_FRAME);
