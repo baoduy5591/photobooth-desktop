@@ -27,7 +27,8 @@ export function generateVideo(data: GenerateVideoType) {
   const videos: VideosType[] = [];
   data.photos.forEach((photo, index) => {
     const positions = data.positions[index];
-    const videoName = photo.photo.split('photo').join('video').slice(0, -4) + '.mp4';
+    // const videoName = photo.photo.split('photo').join('record').slice(0, -8) + '.mp4';
+    const videoName = photo.photo.split('photo').join('record').split('_').slice(0, -1).join('_') + '.mp4';
     if (data.frameMode === CONST_MODE_CUTTING) {
       positions.forEach((position) => {
         const detailInfo = {
