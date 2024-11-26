@@ -57,6 +57,7 @@ export default function Shooting() {
       if (data.action === 'shooting-triggered') {
         if (data.result === 'OK') {
           setIsShootingTriggered(true);
+          setIsShootingCountdown(false);
         }
       }
 
@@ -87,6 +88,7 @@ export default function Shooting() {
 
   const handleActionShootingByMethod = () => {
     setIsShootingCountdown(true);
+    setIsShootingTriggered(false);
   };
 
   useEffect(() => {
@@ -171,7 +173,7 @@ export default function Shooting() {
                 </div>
               </div>
 
-              {(!isShootingCountdown || !isShootingTriggered) && (
+              {(!isShootingCountdown || !isShootingTriggered || isStartLiveView) && (
                 <div className='absolute inset-0 flex items-center justify-center'>
                   <CountdownForShooting
                     time={store.shootingTime}
