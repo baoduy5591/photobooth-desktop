@@ -354,20 +354,20 @@ export function Draw() {
     }
 
     store.orderInfo.videoBase64 = generateVideoToBase64;
-    const savePhoto = await window.api.saveImage({ imageBase64, orderInfo: store.orderInfo });
-    if (!savePhoto) {
-      setIsLoading(false);
-      alert(
-        'Printer failed, please check the printer or contact the technical department. We apologize for the inconvenience !!!',
-      );
-      return;
-    }
-    setStore((prevStore) => ({
-      ...prevStore,
-      shootingMethod: INIT_STORE.shootingMethod,
-      shootingTime: INIT_STORE.shootingTime,
-      orderInfo: { ...INIT_STORE.orderInfo },
-    }));
+    // const savePhoto = await window.api.saveImage({ imageBase64, orderInfo: store.orderInfo });
+    // if (!savePhoto) {
+    //   setIsLoading(false);
+    //   alert(
+    //     'Printer failed, please check the printer or contact the technical department. We apologize for the inconvenience !!!',
+    //   );
+    //   return;
+    // }
+    // setStore((prevStore) => ({
+    //   ...prevStore,
+    //   shootingMethod: INIT_STORE.shootingMethod,
+    //   shootingTime: INIT_STORE.shootingTime,
+    //   orderInfo: { ...INIT_STORE.orderInfo },
+    // }));
 
     navigate('/complete');
   };

@@ -2,9 +2,14 @@ import React, { useRef, useState } from 'react';
 import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
-import { CONST_LIST_TAB_STICKER, CONST_SCALE_PHOTOS, CONST_THRESHOLD } from '../libs/constants';
+import { CONST_FRAME_POSITIONS, CONST_LIST_TAB_STICKER, CONST_SCALE_PHOTOS, CONST_THRESHOLD } from '../libs/constants';
 import { Countdown } from '../components/countdown';
-import { allowWithQuantityTouches, loadImage, randomRangeValue } from '../libs/common';
+import {
+  allowWithQuantityTouches,
+  getPositionByFrameModeAndFrameType,
+  loadImage,
+  randomRangeValue,
+} from '../libs/common';
 import { useNavigate } from 'react-router-dom';
 import { INIT_STORE } from '../libs/initials';
 import { useSound } from '../context/sound';
@@ -29,7 +34,7 @@ export default function SelectSticker() {
   >([]);
   const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
   const [currentChooseStickerIndex, setCurrentChooseStickerIndex] = useState<number>(null);
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
@@ -397,17 +402,54 @@ export default function SelectSticker() {
     }
   };
 
+  const handleInsetQRCodeToFrame = async (
+    imageBase64: string,
+    qrCodeBase64: string,
+    frameMode: string,
+    frameType: string,
+    frameStyle: string,
+    width: number,
+    height: number,
+  ) => {
+    const results = await Promise.all([loadImage(imageBase64), loadImage(qrCodeBase64)]);
+    const [imageFrameElement, qrCodeElement] = results;
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext('2d');
+    context.drawImage(imageFrameElement, 0, 0, width, height);
+    context.drawImage(qrCodeElement, 1070, 1670, 120, 120);
+    const base64String = canvas.toDataURL('image/png');
+    return base64String;
+  };
+
   const handleOnTouchStartNextPage = async (event: React.TouchEvent<HTMLDivElement>) => {
     if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
 
+    const _getQRCode = await window.api.getQRCode(store.orderInfo._id);
+    if (!_getQRCode) {
+      alert('Get QR Code failed !!!');
+      return false;
+    }
+
     // setIsLoading(true);
     playSoundTouch(false);
-    // const imageBase64 = await handleConvertCanvasToBase64(
-    //   store.orderInfo.imageSelectEffect,
-    //   selectedSticker,
-    //   store.orderInfo.width,
-    //   store.orderInfo.height,
-    // );
+    const imageBase64 = await handleConvertCanvasToBase64(
+      store.orderInfo.imageSelectEffect,
+      selectedSticker,
+      store.orderInfo.width,
+      store.orderInfo.height,
+    );
+
+    const imageBase64WithQRCode = await handleInsetQRCodeToFrame(
+      imageBase64,
+      _getQRCode,
+      store.orderInfo.frameMode,
+      store.orderInfo.frameType,
+      store.orderInfo.frameStyle,
+      store.orderInfo.width,
+      store.orderInfo.height,
+    );
 
     const imageWithFrameAndStickerBase64 = await handleConvertCanvasToBase64(
       store.pathFolderAssets + store.orderInfo.frameRelPath,
@@ -416,57 +458,60 @@ export default function SelectSticker() {
       store.orderInfo.height,
     );
 
-    // const saveFrameSticker = await window.api.saveImageFrameSticker(imageWithFrameAndStickerBase64);
-    // if (!saveFrameSticker) {
-    //   alert(
-    //     'Save frame sticker image failed, please check the printer or contact the technical department. We apologize for the inconvenience !!!',
-    //   );
-    //   return;
-    // }
+    const saveFrameSticker = await window.api.saveImageFrameSticker(imageWithFrameAndStickerBase64);
+    if (!saveFrameSticker) {
+      alert(
+        'Save frame sticker image failed, please check the printer or contact the technical department. We apologize for the inconvenience !!!',
+      );
+      return;
+    }
 
-    // const positions = getPositionByFrameModeAndFrameType(
-    //   CONST_FRAME_POSITIONS,
-    //   store.orderInfo.frameMode,
-    //   store.orderInfo.frameType,
-    // );
-    // const data = {
-    //   frameMode: store.orderInfo.frameMode,
-    //   frameWidth: store.orderInfo.width,
-    //   frameHeight: store.orderInfo.height,
-    //   photos: store.orderInfo.selectedPhotos,
-    //   effectName: store.orderInfo.effect.name,
-    //   positions: positions,
-    // };
-    // const generateVideo = await window.api.generateVideo(data);
-    // if (!generateVideo) {
-    //   alert(
-    //     'Save video failed, please check the printer or contact the technical department. We apologize for the inconvenience !!!',
-    //   );
-    //   return;
-    // }
+    const positions = getPositionByFrameModeAndFrameType(
+      CONST_FRAME_POSITIONS,
+      store.orderInfo.frameMode,
+      store.orderInfo.frameType,
+    );
+    const data = {
+      frameMode: store.orderInfo.frameMode,
+      frameWidth: store.orderInfo.width,
+      frameHeight: store.orderInfo.height,
+      photos: store.orderInfo.selectedPhotos,
+      effectName: store.orderInfo.effect.name,
+      positions: positions,
+    };
+    const generateVideo = await window.api.generateVideo(data);
+    if (!generateVideo) {
+      alert(
+        'Save video failed, please check the printer or contact the technical department. We apologize for the inconvenience !!!',
+      );
+      return;
+    }
 
-    // const savePhoto = await window.api.saveImage({ imageBase64, orderInfo: store.orderInfo });
-    // if (!savePhoto) {
-    //   alert(
-    //     'Printer failed, please check the printer or contact the technical department. We apologize for the inconvenience !!!',
-    //   );
-    //   return;
-    // }
-    // setStore((prevStore) => ({
-    //   ...prevStore,
-    //   shootingMethod: INIT_STORE.shootingMethod,
-    //   shootingTime: INIT_STORE.shootingTime,
-    //   orderInfo: { ...INIT_STORE.orderInfo },
-    // }));
+    store.orderInfo['colorBase64'] = imageBase64WithQRCode;
+    store.orderInfo['originalBase64'] = imageBase64;
+    store.orderInfo['videoBase64'] = generateVideo;
+    const savePhoto = await window.api.saveImage({ orderInfo: store.orderInfo });
+    if (!savePhoto) {
+      alert(
+        'Printer failed, please check the printer or contact the technical department. We apologize for the inconvenience !!!',
+      );
+      return;
+    }
+    setStore((prevStore) => ({
+      ...prevStore,
+      shootingMethod: INIT_STORE.shootingMethod,
+      shootingTime: INIT_STORE.shootingTime,
+      orderInfo: { ...INIT_STORE.orderInfo },
+    }));
     setStore((prevStore) => ({
       ...prevStore,
       orderInfo: { ...prevStore.orderInfo, imageFrameSticker: imageWithFrameAndStickerBase64 },
     }));
-    navigate('/draw');
+    navigate('/complete');
   };
 
   const handleTimeout = () => {
-    // setIsLoading(true);
+    setIsLoading(true);
     handleConvertCanvasToBase64(
       store.orderInfo.imageSelectEffect,
       _selectedSticker.current,
@@ -477,18 +522,18 @@ export default function SelectSticker() {
         ...prevStore,
         orderInfo: { ...prevStore.orderInfo, imageFrameSticker: imageWithFrameAndStickerBase64 },
       }));
-      navigate('/draw');
+      navigate('/complete');
     });
   };
 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
       <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />
-      {/* {isLoading && (
+      {isLoading && (
         <div className='fixed inset-0 z-50 flex items-center justify-center bg-custom-style-1 font-rokkitt text-4xl font-semibold opacity-80'>
           <span className='animate-opacity-slow-infinite'>Please wait some minute . . .</span>
         </div>
-      )} */}
+      )}
 
       <div className='absolute inset-0 py-6'>
         <div className='flex h-full w-full items-center justify-center'>

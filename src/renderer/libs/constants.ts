@@ -286,3 +286,14 @@ export const keyDraw: {
   pickColor: 'pickColor',
   pickLineWidth: 'pickLineWidth',
 };
+
+export const constQRCodePositions = {
+  cutting: {
+    typeA: {
+      x: 940,
+      y: 1540,
+      w: 255,
+      h: 255,
+    },
+  },
+};

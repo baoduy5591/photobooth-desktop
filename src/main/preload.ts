@@ -12,6 +12,7 @@ const WINDOW_API = {
   saveImageFrameSticker: (imageBase64: string) => ipcRenderer.invoke('save-image-frame-sticker', imageBase64),
   deleteFiles: () => ipcRenderer.invoke('delete-files'),
   generateVideo: (data: GenerateVideoType) => ipcRenderer.invoke('generate-video', data),
+  getQRCode: (orderId: string) => ipcRenderer.invoke('get-qr-code', orderId),
 };
 
 contextBridge.exposeInMainWorld('api', WINDOW_API);

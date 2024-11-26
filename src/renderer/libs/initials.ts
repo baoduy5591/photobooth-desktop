@@ -110,6 +110,7 @@ export const INIT_STORE: StoreType = {
   pathFolderAssets: '',
   pathFolderUserPhotos: '',
   orderInfo: {
+    _id: '674594b8362a061f29b350b5',
     frameMode: 'cutting',
     frameType: 'typeC',
     frameStyle: 'season',
@@ -129,6 +130,7 @@ export const INIT_STORE: StoreType = {
     videoBase64: '',
     printCount: null,
     colorBase64: '',
+    originalBase64: '',
     grayscaleBase64: '',
     orderNumber: '',
     effect: {

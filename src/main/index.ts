@@ -63,8 +63,10 @@ ipcMain.handle('get-system-configs', async () => {
 
 ipcMain.handle('get-order-info-by-id', async (event, value) => {
   try {
-    const response = await axios.get(`http://localhost:3001/api/clientOrders/${value}`);
-    return response.data.order;
+    const response = await axios.get(`http://192.168.1.72:3000/api/clientOrders/start/${value}`);
+    if (!response || response.status !== 200) return false;
+
+    return response.data;
   } catch (error) {
     console.log('ERROR = ', error);
     return false;
@@ -93,19 +95,19 @@ ipcMain.handle('get-user-resized-photos', () => {
 // save image
 ipcMain.handle('save-image', async (event, data) => {
   try {
-    const imageBase64 = data.imageBase64;
     const orderInfo = data.orderInfo;
-    orderInfo['colorBase64'] = imageBase64;
     orderInfo['orderStatus'] = 'COMPLETED';
     // orderInfo['videoBase64']
     delete orderInfo['imageSelectEffect'];
     delete orderInfo['imageSelectPhoto'];
     delete orderInfo['selectedPhotos'];
-    const response = await axios.post('http://localhost:3001/api/clientOrders/update', orderInfo, {
+    const response = await axios.post('http://192.168.1.72:3000/api/clientOrders/endOrder', orderInfo, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
+
+    if (!response || response.status !== 200) return false;
 
     // delete all file not folder
     const files = fs.readdirSync(Paths.getFolderUserPhotos());
@@ -168,6 +170,23 @@ ipcMain.handle('delete-files', async (event) => {
     return true;
   } catch (error) {
     console.log(error);
+    return false;
+  }
+});
+
+ipcMain.handle('get-qr-code', async (event, orderId) => {
+  try {
+    const response = await axios.get(`http://192.168.1.72:3000/api/clientOrders/createQR/${orderId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response || response.status !== 200) return false;
+
+    return response.data.qrCode;
+  } catch (error) {
+    console.error('[api-get-qr]: ERROR = ', error);
     return false;
   }
 });

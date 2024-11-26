@@ -18,10 +18,11 @@ interface Window {
     getOrderInfoById: (value) => Promise;
     getMachineConfigs: () => Promise;
     getUserResizedPhotos: () => Promise;
-    saveImage: (data: { imageBase64: string; orderInfo: {} }) => Promise;
+    saveImage: (data: { orderInfo: {} }) => Promise;
     saveImageFrameSticker: (imageBase64) => Promise;
     deleteFiles: () => Promise;
     generateVideo: (data: GenerateVideoType) => Promise;
+    getQRCode: (orderId: string) => Promise;
   };
 }
 
@@ -162,6 +163,7 @@ interface OrderInfoType {
   height: number;
   printCount: number;
   colorBase64: string;
+  originalBase64: string;
   framePrice: number;
   grayscaleBase64: string;
   selectedPhotos: { photo: string; index: number }[];
@@ -176,6 +178,7 @@ interface OrderInfoType {
     className: string;
     style: string;
   };
+  _id: string;
 }
 
 // interface OrderInfoType {
