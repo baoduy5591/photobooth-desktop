@@ -74,7 +74,9 @@ export default function Shooting() {
               wsCamera.current.send('stoprecord');
               wsCamera.current.send('stoplv');
               wsCamera.current.send('lock');
-              navigate('/select-photos');
+              setTimeout(() => {
+                navigate('/select-photos');
+              }, 5000);
               return newListShootingPhoto;
             }
 
