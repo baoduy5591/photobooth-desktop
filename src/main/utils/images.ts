@@ -1,4 +1,8 @@
 import fs from 'fs';
+import Loggers from './loggers';
+
+const logger = new Loggers();
+const { mainLogger } = logger.getLoggers();
 
 class Images {
   imagePath: string;
@@ -14,7 +18,7 @@ class Images {
       fs.writeFileSync(this.imagePath, this.imageBase64, 'base64');
       return true;
     } catch (error) {
-      console.error('@Images.saveImage: ERROR = ', error);
+      mainLogger.error('@Images.saveImage: ERROR = ', error);
       return false;
     }
   }

@@ -14,7 +14,7 @@ import { getRatioByFrameModeAndFrameType } from '../libs/common';
 export default function EnterCode() {
   const { store, setStore } = useStore();
   const { t: translate } = useTranslation();
-  const { playSoundBackground, playSoundTouch } = useSound();
+  const { playSoundBackground, playSoundTouch, stopSoundBackground } = useSound();
 
   const navigate = useNavigate();
 
@@ -41,22 +41,34 @@ export default function EnterCode() {
 
   const handleOnTouchStart = () => {
     playSoundTouch(false);
+    stopSoundBackground();
     navigate('/home');
   };
 
+  // const handleOnTouchStartSubmit = async (value: string) => {
+  //   const data = await window.api.getOrderInfoById(value);
+  //   if (data) {
+  //     const { frameMode, frameType } = data;
+  //     const ratio = getRatioByFrameModeAndFrameType(frameMode, frameType);
+  //     setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, ...data, ratio: ratio } }));
+  //     setValues(CONST_PICTURE_TIME);
+  //     setTimeout(() => {
+  //       navigate('/shooting');
+  //     }, 1000);
+  //   } else {
+  //     setValues(CONST_ERROR);
+  //   }
+  // };
+
   const handleOnTouchStartSubmit = async (value: string) => {
-    const data = await window.api.getOrderInfoById(value);
-    if (data) {
-      const { frameMode, frameType } = data;
-      const ratio = getRatioByFrameModeAndFrameType(frameMode, frameType);
-      setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, ...data, ratio: ratio } }));
-      setValues(CONST_PICTURE_TIME);
-      setTimeout(() => {
-        navigate('/shooting');
-      }, 1000);
-    } else {
-      setValues(CONST_ERROR);
-    }
+    setValues(CONST_PICTURE_TIME);
+    setTimeout(() => {
+      navigate('/shooting');
+    }, 1000);
+  };
+
+  const handleTimeout = () => {
+    stopSoundBackground();
   };
 
   useEffect(() => {
@@ -85,6 +97,7 @@ export default function EnterCode() {
             url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
             time={90}
             routeGoToBack='/home'
+            handleTimeout={handleTimeout}
           />
         </div>
 
@@ -109,7 +122,9 @@ export default function EnterCode() {
               <DisplayImage src={store.pathFolderAssets + store.resources.icons[3]?.relPath} />
             </div>
 
-            <div className='h-[74px] w-[95px]'>
+            <div
+              className={`h-[74px] w-[95px] delay-300 duration-700 ${values === CONST_PICTURE_TIME ? 'z-50 scale-[30]' : ''}`}
+            >
               <DisplayImage src={store.pathFolderAssets + store.resources.icons[4]?.relPath} />
             </div>
 

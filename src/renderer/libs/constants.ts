@@ -1,12 +1,10 @@
-export const CONST_CONFIG_LANGUAGE: { en: number; vi: number; ja: number } = {
+export const CONST_CONFIG_LANGUAGE: { en: number; vi: number } = {
   en: 0,
-  ja: 1,
-  vi: 2,
+  vi: 1,
 };
 
-export const CONST_CONFIG_FONTS: { en: string; ja: string; vi: string } = {
+export const CONST_CONFIG_FONTS: { en: string; vi: string } = {
   en: 'MoreSugar',
-  ja: 'MochiyPopOne',
   vi: 'Baloo',
 };
 
@@ -24,6 +22,8 @@ export const CONST_REMOTE_METHOD = 'remote';
 
 export const CONST_WINDOW_OS = 'win32';
 export const CONST_DARWIN_OS = 'darwin';
+
+export const CONST_COMPLIMENT_MESSAGE: string[] = ['nice', 'great', 'perfect', 'good'];
 
 export const CONST_MOCK_DATA_FRAME = {
   modeFrame: 'cutting',

@@ -4,7 +4,8 @@ import { DisplayImage } from '../components/displayImage';
 import { useStore } from '../context/store';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { CONST_COUNTDOWN_METHOD, CONST_REMOTE_METHOD } from '../libs/constants';
+import { CONST_COMPLIMENT_MESSAGE, CONST_COUNTDOWN_METHOD, CONST_REMOTE_METHOD } from '../libs/constants';
+import { useTranslation } from 'react-i18next';
 
 export default function Shooting() {
   const { store } = useStore();
@@ -13,8 +14,18 @@ export default function Shooting() {
   const [isShootingCountdown, setIsShootingCountdown] = useState<boolean>(false);
   const [isShootingTriggered, setIsShootingTriggered] = useState<boolean>(false);
   const [isShooting, setIsShooting] = useState<boolean>(false);
+  const [isDoneShooting, setIsDoneShooting] = useState<boolean>(false);
+  const [isStart, setIsStart] = useState<boolean>(false);
+
+  const { t: translate } = useTranslation();
 
   const navigate = useNavigate();
+
+  const randomCompliment = CONST_COMPLIMENT_MESSAGE[Math.floor(Math.random() * CONST_COMPLIMENT_MESSAGE.length)] as
+    | 'nice'
+    | 'perfect'
+    | 'good'
+    | 'great';
 
   const imgRef = useRef<HTMLImageElement>(null);
   const wsVideo = useRef<WebSocket | null>(null);
@@ -65,6 +76,7 @@ export default function Shooting() {
 
       if (data.action === 'takephoto') {
         if (data.result === 'OK') {
+          setIsStart(true);
           setIsShootingCountdown(false);
           setIsShootingTriggered(false);
           setIsShooting(false);
@@ -74,9 +86,10 @@ export default function Shooting() {
               wsCamera.current.send('stoprecord');
               wsCamera.current.send('stoplv');
               wsCamera.current.send('lock');
+              setIsDoneShooting(true);
               setTimeout(() => {
                 navigate('/select-photos');
-              }, 5000);
+              }, 3000);
               return newListShootingPhoto;
             }
 
@@ -96,10 +109,12 @@ export default function Shooting() {
     setIsShootingCountdown(true);
     setIsShootingTriggered(false);
     setIsShooting(true);
+    setIsStart(true);
   };
 
   useEffect(() => {
     if (isShootingCountdown) {
+      setIsStart(true);
       if (wsCamera.current && wsCamera.current.readyState === WebSocket.OPEN) {
         wsCamera.current.send('takephoto');
       }
@@ -108,13 +123,19 @@ export default function Shooting() {
 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
+      {isDoneShooting && (
+        <div className='fixed inset-0 z-50 flex items-center justify-center bg-white/70 font-rokkitt text-4xl tracking-wider text-custom-style-3-1'>
+          <span>{translate('translation:loading')}</span>
+        </div>
+      )}
+
       <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />
 
       <div className='absolute inset-0'>
         {(isShootingCountdown || isShootingTriggered) && (
           <div className='absolute inset-0 z-50 flex flex-col items-center justify-center gap-y-2 bg-custom-style-1 font-rokkitt text-5xl font-semibold tracking-wider text-custom-style-3-1 opacity-80'>
-            <span>Saving...</span>
-            <span>Please do not move for a better picture</span>
+            <span>{translate('translation:shooting.saving')}</span>
+            <span>{translate('translation:shooting.warningMessageMove')}</span>
           </div>
         )}
 
@@ -125,8 +146,12 @@ export default function Shooting() {
                 <DisplayImage src={store.pathFolderAssets + store.resources.icons[25]?.relPath} />
               </div>
 
-              <div className='absolute left-[90px] top-[80px] text-[36px] text-custom-style-2-1'>
-                <span>Nice</span>
+              <div className='absolute left-1/2 top-[80px] -translate-x-1/2 text-[36px] text-custom-style-2-1'>
+                {!isStart ? (
+                  <span>{translate('translation:shooting.start')}</span>
+                ) : (
+                  <span>{translate(`translation:shooting.${randomCompliment}`)}</span>
+                )}
               </div>
             </div>
 

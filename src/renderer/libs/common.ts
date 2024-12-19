@@ -84,3 +84,18 @@ export const getPositionByFrameModeAndFrameType = (
   const position = object[frameType as keyof typeof object];
   return position;
 };
+
+export const getPositionByAngle = (x0: number, y0: number, x1: number, y1: number) => {
+  const distance = 400;
+  const dx = x1 - x0;
+  const dy = y1 - y0;
+  const angle = Math.atan2(dy, dx);
+  const angleInDegrees = angle * (180 / Math.PI);
+  const angleInRadian = (360 - angleInDegrees) * (Math.PI / 180);
+  const x2 = x1 + distance * Math.cos(angleInRadian);
+  const y2 = y1 + distance * Math.sin(angleInRadian);
+
+  return { x: x2, y: y2, angle: angleInDegrees };
+};
+
+export const getRectForQrCodeByFrameModeAndFrameType = (frameMode: string, frameType: string) => {};

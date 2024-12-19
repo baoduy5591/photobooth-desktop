@@ -2,12 +2,12 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import Resources from './utils/resources';
 import Paths from './utils/paths';
 import UserPhotos from './utils/userPhotos';
-import fs from 'fs';
 import path from 'path';
-import axios from 'axios';
 import { generateVideo } from './utils/video';
 import Images from './utils/images';
 import { CONST_FRAME_STICKER_IMAGE_NAME } from './libs/constants';
+import { deleteFileAndFolder } from './libs/common';
+import API from './utils/api';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -62,15 +62,11 @@ ipcMain.handle('get-system-configs', async () => {
 });
 
 ipcMain.handle('get-order-info-by-id', async (event, value) => {
-  try {
-    const response = await axios.get(`http://localhost:3001/api/clientOrders/start/${value}`);
-    if (!response || response.status !== 200) return false;
+  const api = new API();
+  const _getOrderInfoById = await api.getOrderInfoById(value);
+  if (!_getOrderInfoById) return false;
 
-    return response.data;
-  } catch (error) {
-    console.log('ERROR = ', error);
-    return false;
-  }
+  return _getOrderInfoById;
 });
 
 // get path folder assets
@@ -94,48 +90,32 @@ ipcMain.handle('get-user-resized-photos', () => {
 
 // save image
 ipcMain.handle('save-image', async (event, data) => {
-  try {
-    const orderInfo = data.orderInfo;
-    orderInfo['orderStatus'] = 'COMPLETED';
-    // orderInfo['videoBase64']
-    delete orderInfo['imageSelectEffect'];
-    delete orderInfo['imageSelectPhoto'];
-    delete orderInfo['selectedPhotos'];
-    const response = await axios.post('http://localhost:3001/api/clientOrders/endOrder', orderInfo, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+  const orderInfo = data.orderInfo;
+  orderInfo['orderStatus'] = 'COMPLETED';
+  delete orderInfo['imageSelectEffect'];
+  delete orderInfo['imageSelectPhoto'];
+  delete orderInfo['selectedPhotos'];
+  const api = new API();
+  const _saveImage = await api.saveImage(orderInfo);
+  if (!_saveImage) return false;
 
-    if (!response || response.status !== 200) return false;
+  const rootPath = Paths.getFolderUserPhotos();
+  const _deleteFileAndFolder = deleteFileAndFolder(rootPath);
+  if (!_deleteFileAndFolder) return false;
 
-    // delete all file not folder
-    const files = fs.readdirSync(Paths.getFolderUserPhotos());
-    files.forEach((file) => {
-      fs.unlinkSync(path.join(Paths.getFolderUserPhotos(), file));
-    });
-    return true;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
+  return true;
 });
 
 // save image frame + sticker
 ipcMain.handle('save-image-frame-sticker', async (event, imageBase64) => {
-  try {
-    const pathFolderUserPhotos = Paths.getFolderUserPhotos();
-    const imagePath = path.join(pathFolderUserPhotos, CONST_FRAME_STICKER_IMAGE_NAME);
-    const base64Data = imageBase64.replace(/^data:image\/png;base64,/, '');
-    const images = new Images(imagePath, base64Data);
-    const saveImage = images.saveImage();
-    if (!saveImage) return false;
+  const pathFolderUserPhotos = Paths.getFolderUserPhotos();
+  const imagePath = path.join(pathFolderUserPhotos, CONST_FRAME_STICKER_IMAGE_NAME);
+  const base64Data = imageBase64.replace(/^data:image\/png;base64,/, '');
+  const images = new Images(imagePath, base64Data);
+  const _saveImage = images.saveImage();
+  if (!_saveImage) return false;
 
-    return true;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
+  return true;
 });
 
 // ipcMain generateVideo
@@ -146,34 +126,20 @@ ipcMain.handle('generate-video', async (event, data) => {
   return _generateVideoToBase64;
 });
 
-ipcMain.handle('delete-files', async (event) => {
-  try {
-    const files = fs.readdirSync(Paths.getFolderUserPhotos());
-    files.forEach((file) => {
-      fs.unlinkSync(path.join(Paths.getFolderUserPhotos(), file));
-    });
-    return true;
-  } catch (error) {
-    console.log(error);
-    return false;
-  }
+ipcMain.handle('delete-files', async () => {
+  const rootPath = Paths.getFolderUserPhotos();
+  const _deleteFileAndFolder = deleteFileAndFolder(rootPath);
+  if (!_deleteFileAndFolder) return false;
+
+  return true;
 });
 
 ipcMain.handle('get-qr-code', async (event, orderId) => {
-  try {
-    const response = await axios.get(`http://localhost:3001/api/clientOrders/createQR/${orderId}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+  const api = new API();
+  const _getQrCodeByOrderId = await api.getQrCodeByOrderId(orderId);
+  if (!_getQrCodeByOrderId) return false;
 
-    if (!response || response.status !== 200) return false;
-
-    return response.data.qrCode;
-  } catch (error) {
-    console.error('[api-get-qr]: ERROR = ', error);
-    return false;
-  }
+  return _getQrCodeByOrderId;
 });
 
 app.on('ready', createWindow);

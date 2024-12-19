@@ -5,6 +5,7 @@ interface SoundContextType {
   playSoundTouch: (isLoop: boolean) => void;
   playSoundWarning: (isLoop: boolean) => void;
   playSoundBackground: (isLoop: boolean) => void;
+  stopSoundBackground: () => void;
 }
 
 const SoundContext = createContext<SoundContextType | undefined>(undefined);
@@ -31,6 +32,10 @@ export const SoundContextProvider = ({ children }: { children: React.ReactNode }
     soundBackground.play();
   };
 
+  const stopSoundBackground = () => {
+    soundBackground.pause();
+  };
+
   const playSoundTouch = (isLoop: boolean) => {
     soundTouch.loop = isLoop;
     soundTouch.currentTime = 0;
@@ -44,7 +49,7 @@ export const SoundContextProvider = ({ children }: { children: React.ReactNode }
   };
 
   return (
-    <SoundContext.Provider value={{ playSoundBackground, playSoundTouch, playSoundWarning }}>
+    <SoundContext.Provider value={{ playSoundBackground, stopSoundBackground, playSoundTouch, playSoundWarning }}>
       {children}
     </SoundContext.Provider>
   );

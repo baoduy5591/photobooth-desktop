@@ -5,6 +5,8 @@
     "ja": "日本"
   },
 
+  "loading": "Loading . . .",
+
   "home": {
     "companyName": "CAWAII PHOTO",
     "noteTouchAbove": "Touch the button above to Start",
@@ -34,5 +36,15 @@
     "remoteText1": "Click the Remote control",
     "remoteText2": "the moment you want!",
     "shootingMethodTitle": "Shooting Method"
+  },
+
+  "shooting": {
+    "saving": "Saving . . .",
+    "warningMessageMove": "Please do not move for a better picture",
+    "start": "Start !",
+    "nice": "Nice !",
+    "good": "Good !",
+    "perfect": "Perfect !",
+    "great": "Great !"
   }
 }

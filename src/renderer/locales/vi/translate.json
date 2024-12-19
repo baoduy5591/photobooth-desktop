@@ -5,6 +5,8 @@
     "ja": "日本"
   },
 
+  "loading": "Đang tải . . .",
+
   "home": {
     "companyName": "CAWAII PHOTO",
     "noteTouchAbove": "Chạm vào phía trên để Bắt đầu",
@@ -34,5 +36,15 @@
     "remoteText1": "Click the Remote control",
     "remoteText2": "the moment you want!",
     "shootingMethodTitle": "Shooting Method"
+  },
+
+  "shooting": {
+    "saving": "Đang lưu . . .",
+    "warningMessageMove": "Vui lòng không di chuyển cho bức ảnh của bạn đẹp hơn",
+    "start": "Bắt đầu !",
+    "nice": "Đẹp nha!",
+    "good": "Rất tốt !",
+    "perfect": "Hoàn hảo !",
+    "great": "Tuyệt vời !"
   }
 }

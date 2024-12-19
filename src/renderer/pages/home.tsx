@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useStore } from '../context/store';
 import { CONST_CONFIG_FONTS } from '../libs/constants';
-import { changeFontByName, checkIsTouch } from '../libs/common';
+import { changeFontByName, checkIsTouch, getPositionByAngle } from '../libs/common';
 import { BackgroundImage } from '../components/backgroundImage';
 import { SelectLanguage } from '../components/selectLanguage';
 import { useTranslation } from 'react-i18next';
@@ -16,6 +16,7 @@ export default function Home() {
   const { t: translate, i18n } = useTranslation();
   const [userLanguage, setUserLanguage] = useState<string>(store.systemConfigs.defaultLanguage);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(true);
+  const [isStart, setIsStart] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -34,9 +35,10 @@ export default function Home() {
     if (!checkIsTouch(event, isTouchShooting)) return;
 
     playSoundTouch(false);
+    setIsStart(true);
     setTimeout(() => {
       navigate('/enter-code');
-    }, 300);
+    }, 800);
   };
 
   const handleOnTouchCloseModal = (event: TouchEventAndMouseEventType) => {
@@ -46,6 +48,13 @@ export default function Home() {
     setIsOpenModal(false);
   };
 
+  const deleteFiles = async () => {
+    const _deleteFiles = await window.api.deleteFiles();
+    if (!_deleteFiles) {
+      alert('Something error, please check again !!!');
+    }
+  };
+
   useEffect(() => {
     const fontName = CONST_CONFIG_FONTS[userLanguage as keyof typeof CONST_CONFIG_FONTS];
     changeFontByName(fontName);
@@ -53,13 +62,6 @@ export default function Home() {
   }, [userLanguage]);
 
   useEffect(() => {
-    const deleteFiles = async () => {
-      const _deleteFiles = await window.api.deleteFiles();
-      if (!_deleteFiles) {
-        alert('Something error !!!');
-      }
-    };
-
     deleteFiles();
   }, []);
 
@@ -115,23 +117,90 @@ export default function Home() {
             </div>
           </div>
 
-          {/* <div className='absolute bottom-16 left-14'>
+          <div className='absolute bottom-16 left-14'>
             <SelectLanguage language={userLanguage} handleOnTouchStart={handleChangeLanguage} />
-          </div> */}
-
-          <div className='absolute bottom-1/2 left-28 h-[102px] w-[132px] -rotate-12'>
-            <DisplayImage src={store.pathFolderAssets + store.resources.icons[4]?.relPath} />
           </div>
 
-          <div className='absolute right-28 top-56 h-[102px] w-[132px]'>
-            <DisplayImage src={store.pathFolderAssets + store.resources.icons[3]?.relPath} />
-          </div>
+          <Mochi
+            src={store.pathFolderAssets + store.resources.icons[4]?.relPath}
+            x0={100}
+            y0={300}
+            wrapperPosition={{ left: 15, top: 5, bottom: 800, right: 250 }}
+            isStart={isStart}
+            customClassName={''}
+          />
 
-          <div className='absolute bottom-32 right-48 h-[102px] w-[132px] rotate-12'>
-            <DisplayImage src={store.pathFolderAssets + store.resources.icons[2]?.relPath} />
-          </div>
+          <Mochi
+            src={store.pathFolderAssets + store.resources.icons[3]?.relPath}
+            x0={1400}
+            y0={250}
+            wrapperPosition={{ left: 1200, top: 5, bottom: 350, right: 1500 }}
+            isStart={isStart}
+            customClassName={''}
+          />
+
+          <Mochi
+            src={store.pathFolderAssets + store.resources.icons[2]?.relPath}
+            x0={1300}
+            y0={850}
+            wrapperPosition={{ left: 1300, top: 600, bottom: 1000, right: 1500 }}
+            isStart={isStart}
+            customClassName={''}
+          />
         </div>
       </div>
+    </div>
+  );
+}
+
+interface MochiProps {
+  src: string;
+  x0: number;
+  y0: number;
+  wrapperPosition: { left: number; top: number; right: number; bottom: number };
+  customClassName: string;
+  isStart: boolean;
+}
+
+export function Mochi({ src, x0, y0, wrapperPosition, isStart, customClassName = '' }: MochiProps) {
+  let duration = 5;
+  const [position, setPosition] = useState<{ x: number; y: number }>({ x: x0, y: y0 });
+  const [isMove, setIsMove] = useState<boolean>(false);
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const { left, top, right, bottom } = wrapperPosition;
+    const x1 = Math.floor(Math.random() * (right - left + 1)) + left;
+    const y1 = Math.floor(Math.random() * (bottom - top + 1)) + top;
+    setPosition((prev) => ({ ...prev, x: x1, y: y1 }));
+  }, [isMove]);
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      const _getPositionByAngle = getPositionByAngle(x0, y0, position.x, position.y);
+      const x2 = _getPositionByAngle.x;
+      const y2 = _getPositionByAngle.y;
+      setPosition((prev) => ({ ...prev, x: x2, y: y2 }));
+      x0 = x2;
+      y0 = y2;
+      setIsMove(!isMove);
+    }, duration * 1000);
+
+    return () => clearTimeout(id);
+  }, [position]);
+  return (
+    <div
+      ref={elementRef}
+      className={`z-50 h-[102px] w-[132px] ${customClassName}`}
+      style={{
+        position: 'absolute',
+        top: isStart ? `${y0}px` : `${position.y}px`,
+        left: isStart ? `${x0}px` : `${position.x}px`,
+        transform: isStart ? 'scale(2000%)' : '',
+        transition: isStart ? 'transform 0.8s' : `top ${duration}s, left ${duration}s`,
+      }}
+    >
+      <DisplayImage src={src} />
     </div>
   );
 }
