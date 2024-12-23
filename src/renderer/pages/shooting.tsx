@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 export default function Shooting() {
   const { store } = useStore();
   const [isStartLiveView, setIsStartLiveView] = useState<boolean>(false);
+  const [isStartRecord, setIsStartRecord] = useState<boolean>(false);
   const [shootingPhotos, setShootingPhotos] = useState<string[]>([]);
   const [isShootingCountdown, setIsShootingCountdown] = useState<boolean>(false);
   const [isShootingTriggered, setIsShootingTriggered] = useState<boolean>(false);
@@ -32,7 +33,7 @@ export default function Shooting() {
   const wsCamera = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    if (!isStartLiveView) return;
+    if (!isStartLiveView || !isStartRecord) return;
 
     wsVideo.current = new WebSocket('ws://127.0.0.1:8080/video');
     wsVideo.current.binaryType = 'blob';
@@ -52,10 +53,11 @@ export default function Shooting() {
     };
   }, [isStartLiveView]);
 
+  const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
   useEffect(() => {
     wsCamera.current = new WebSocket('ws://127.0.0.1:8080/camera');
     wsCamera.current.onopen = () => {
-      wsCamera.current.send('unlock');
       wsCamera.current.send(`setphoto-img:r=2;w=${store.orderInfo.ratio}`);
       wsCamera.current.send('startlv');
       setTimeout(() => {
@@ -67,6 +69,15 @@ export default function Shooting() {
       const data = JSON.parse(event.data);
       if (data.action === 'startlv' && data.result === 'OK') {
         setIsStartLiveView(true);
+      }
+
+      if (data.action === 'record') {
+        if (data.result === 'OK') {
+          wsCamera.current.send('unlock');
+        } else {
+          wsCamera.current.send('record');
+          setIsStartRecord(true);
+        }
       }
 
       if (data.action === 'shooting-triggered') {
@@ -218,14 +229,19 @@ export default function Shooting() {
                 </div>
               </div>
 
-              {isStartLiveView && !isDoneShooting && !isShooting && !isShootingCountdown && !isShootingTriggered && (
-                <div className='absolute inset-0 flex items-center justify-center'>
-                  <CountdownForShooting
-                    time={store.orderInfo.shootingTime}
-                    handleActionShootingByMethod={handleActionShootingByMethod}
-                  />
-                </div>
-              )}
+              {isStartLiveView &&
+                isStartRecord &&
+                !isDoneShooting &&
+                !isShooting &&
+                !isShootingCountdown &&
+                !isShootingTriggered && (
+                  <div className='absolute inset-0 flex items-center justify-center'>
+                    <CountdownForShooting
+                      time={store.orderInfo.shootingTime}
+                      handleActionShootingByMethod={handleActionShootingByMethod}
+                    />
+                  </div>
+                )}
             </div>
           </div>
 
