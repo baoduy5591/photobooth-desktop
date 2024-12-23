@@ -51,7 +51,7 @@ export default function Shooting() {
     return () => {
       wsVideo.current.close();
     };
-  }, [isStartLiveView]);
+  }, [isStartLiveView, isStartRecord]);
 
   const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
