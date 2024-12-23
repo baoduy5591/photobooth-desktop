@@ -60,6 +60,7 @@ export default function Shooting() {
       wsCamera.current.send('startlv');
       wsCamera.current.send('record');
     };
+
     wsCamera.current.onmessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.action === 'startlv' && data.result === 'OK') {
@@ -89,6 +90,7 @@ export default function Shooting() {
           setIsShootingCountdown(false);
           setIsShootingTriggered(false);
           setIsShooting(false);
+          wsCamera.current.send('record');
           setShootingPhotos((prevShootingPhoto) => {
             const newListShootingPhoto = [...prevShootingPhoto, data.message];
             if (newListShootingPhoto.length >= store.orderInfo.quantityShootingPhotos) {
@@ -104,7 +106,6 @@ export default function Shooting() {
 
             return newListShootingPhoto;
           });
-          wsCamera.current.send('record');
         }
       }
     };

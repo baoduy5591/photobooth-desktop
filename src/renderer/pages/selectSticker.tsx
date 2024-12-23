@@ -23,7 +23,6 @@ export default function SelectSticker() {
   const [currentChooseStickerIndex, setCurrentChooseStickerIndex] = useState<number>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const isTouchMove = useRef<boolean>(false);
   const isTouchMoveScroll = useRef<boolean>(false);
 
   const frameRef = useRef<HTMLDivElement>(null);
