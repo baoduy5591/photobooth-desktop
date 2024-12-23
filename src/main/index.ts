@@ -83,7 +83,6 @@ ipcMain.handle('get-user-converted-photos', () => {
 // save image
 ipcMain.handle('save-image', async (event, data) => {
   const orderInfo = data.orderInfo;
-  orderInfo['orderStatus'] = 'COMPLETED';
   delete orderInfo['imageSelectEffect'];
   delete orderInfo['imageSelectPhoto'];
   delete orderInfo['selectedPhotos'];

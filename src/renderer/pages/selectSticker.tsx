@@ -521,7 +521,6 @@ export default function SelectSticker() {
       positions: positions,
     };
     const generateVideo = await window.api.generateVideo(data);
-    console.log('generateVideo', generateVideo);
     if (!generateVideo) {
       alert(
         'Save video failed, please check the printer or contact the technical department. We apologize for the inconvenience !!!',
@@ -532,7 +531,6 @@ export default function SelectSticker() {
     store.orderInfo['colorBase64'] = colorBase64;
     store.orderInfo['colorBase64NoQR'] = _mergeAllImagesSequentiallyNoQR;
     store.orderInfo['videoBase64'] = generateVideo;
-    console.log('store.orderInfo', store.orderInfo);
     const _saveImage = await window.api.saveImage({ orderInfo: store.orderInfo });
     if (!_saveImage) {
       alert(
