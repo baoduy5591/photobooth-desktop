@@ -23,8 +23,6 @@ export default function Complete() {
   const handleTimeout = () => {
     setStore((prevStore) => ({
       ...prevStore,
-      shootingMethod: INIT_STORE.shootingMethod,
-      shootingTime: INIT_STORE.shootingTime,
       orderInfo: { ...INIT_STORE.orderInfo },
     }));
     navigate('/home');
