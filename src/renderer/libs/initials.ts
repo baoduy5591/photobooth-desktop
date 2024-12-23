@@ -6,7 +6,7 @@ export const INIT_STORE: StoreType = {
     backgroundAudio: '/assets/audios/backgrounds/00000.mp3',
     touchAudio: '/assets/audios/touch/00000.mp3',
     videoIntro: '/assets/videos/introduces/00000.mp4',
-    warningAudio: '/assets/audios/touch/warning/00000.mp3',
+    warningAudio: '/assets/audios/touch/00100.mp3',
     hardwareInfo: {
       camera: {
         name: '',
