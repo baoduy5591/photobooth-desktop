@@ -49,11 +49,14 @@ export default function SelectSticker() {
   };
 
   const handleOnTouchEndChooseSticker = (event: React.TouchEvent<HTMLDivElement>, sticker: PathResourceType) => {
-    if (!allowWithQuantityTouches(Array.from(event.touches), 1) || isChooseStickerByIndex.current) return;
+    if (
+      !allowWithQuantityTouches(Array.from(event.touches), 1) ||
+      isChooseStickerByIndex.current ||
+      isTouchMoveScroll.current
+    )
+      return;
 
     playSoundTouch(false);
-    if (isTouchMove.current) return;
-
     setStore((prevStore) => ({
       ...prevStore,
       orderInfo: {

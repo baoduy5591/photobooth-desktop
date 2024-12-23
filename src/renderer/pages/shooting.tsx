@@ -74,6 +74,15 @@ export default function Shooting() {
         }
       }
 
+      if (data.action === 'shooting-triggered') {
+        if (data.result === 'OK') {
+          setIsStart(true);
+          setIsShootingCountdown(false);
+          setIsShootingTriggered(true);
+          setIsShooting(false);
+        }
+      }
+
       if (data.action === 'takephoto') {
         if (data.result === 'OK') {
           setIsStart(true);
