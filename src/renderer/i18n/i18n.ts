@@ -5,11 +5,11 @@ import TRANSLATE_VI from '../locales/vi/translate.json';
 
 export const resources = {
   en: {
-    translation: TRANSLATE_EN
+    translation: TRANSLATE_EN,
   },
   vi: {
-    translation: TRANSLATE_VI
-  }
+    translation: TRANSLATE_VI,
+  },
 };
 
 const defaultLng = 'en';
@@ -23,5 +23,5 @@ use(initReactI18next).init({
   fallbackLng: defaultLng,
   interpolation: {
     escapeValue: false,
-  }
-})
+  },
+});

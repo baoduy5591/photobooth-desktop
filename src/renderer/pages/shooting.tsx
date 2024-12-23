@@ -4,7 +4,12 @@ import { DisplayImage } from '../components/displayImage';
 import { useStore } from '../context/store';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { CONST_COMPLIMENT_MESSAGE, CONST_COUNTDOWN_METHOD, CONST_REMOTE_METHOD } from '../libs/constants';
+import {
+  CONST_COMPLIMENT_MESSAGE,
+  CONST_COUNTDOWN_METHOD,
+  CONST_MODE_WIDE,
+  CONST_REMOTE_METHOD,
+} from '../libs/constants';
 import { useTranslation } from 'react-i18next';
 
 export default function Shooting() {
@@ -174,9 +179,13 @@ export default function Shooting() {
 
               <div className='absolute left-1/2 top-[80px] -translate-x-1/2 text-[36px] text-custom-style-2-1'>
                 {!isStart ? (
-                  <span>{translate('translation:shooting.start')}</span>
+                  <div className='min-w-max'>
+                    <span>{translate('translation:shooting.start')}</span>
+                  </div>
                 ) : (
-                  <span>{translate(`translation:shooting.${randomCompliment}`)}</span>
+                  <div className='min-w-max'>
+                    <span>{translate(`translation:shooting.${randomCompliment}`)}</span>
+                  </div>
                 )}
               </div>
             </div>
@@ -209,16 +218,51 @@ export default function Shooting() {
               <div className='relative h-[828px] w-[1242px] bg-custom-style-3-2'>
                 <img ref={imgRef} className='h-full w-full' />
 
-                <div className='absolute inset-0 flex justify-between'>
-                  <div
-                    className='h-full bg-custom-style-3-2'
-                    style={{ width: `${(1242 - 828 * store.orderInfo.ratio) / 2}px` }}
-                  ></div>
-                  <div
-                    className='h-full bg-custom-style-3-2'
-                    style={{ width: `${(1242 - 828 * store.orderInfo.ratio) / 2}px` }}
-                  ></div>
-                </div>
+                {store.orderInfo.frameMode !== CONST_MODE_WIDE && (
+                  <div className='absolute inset-0 flex justify-between'>
+                    <div
+                      className='h-full bg-custom-style-3-1'
+                      style={{ width: `${(1242 - 828 * store.orderInfo.ratio) / 2}px` }}
+                    ></div>
+
+                    <div
+                      className='h-full bg-custom-style-3-1'
+                      style={{ width: `${(1242 - 828 * store.orderInfo.ratio) / 2}px` }}
+                    ></div>
+                  </div>
+                )}
+
+                {store.orderInfo.frameMode === CONST_MODE_WIDE && store.orderInfo.frameType === 'typeA' && (
+                  <div className='absolute inset-0 flex flex-col justify-between'>
+                    <div
+                      className='h-full bg-custom-style-3-1'
+                      style={{ height: `${(828 - 1242 / 2.82) / 2}px` }}
+                    ></div>
+
+                    <div
+                      className='h-full bg-custom-style-3-1'
+                      style={{ height: `${(828 - 1242 / 2.82) / 2}px` }}
+                    ></div>
+
+                    <div className='absolute left-1/2 h-full w-[27px] -translate-x-1/2 bg-custom-style-3-1'></div>
+                  </div>
+                )}
+
+                {store.orderInfo.frameMode === CONST_MODE_WIDE && store.orderInfo.frameType === 'typeB' && (
+                  <div className='absolute inset-0 flex flex-col justify-between'>
+                    <div
+                      className='h-full bg-custom-style-3-1'
+                      style={{ height: `${(828 - 1242 / 2.05) / 2}px` }}
+                    ></div>
+
+                    <div
+                      className='h-full bg-custom-style-3-1'
+                      style={{ height: `${(828 - 1242 / 2.05) / 2}px` }}
+                    ></div>
+
+                    <div className='absolute left-1/2 h-full w-[27px] -translate-x-1/2 bg-custom-style-3-1'></div>
+                  </div>
+                )}
               </div>
 
               <div className='w-[570px]] absolute bottom-[23px] left-[28px] h-[90px] font-rokkitt text-[30px] text-custom-style-3-1'>
@@ -275,16 +319,47 @@ export default function Shooting() {
                     <DisplayImage src={store.userPhotosFolderPath + shootingPhotos.slice(-1)[0]} />
                   )}
 
-                  <div className='absolute inset-0 flex justify-between'>
-                    <div
-                      className='h-full bg-custom-style-1'
-                      style={{ width: `${(300 - 200 * store.orderInfo.ratio) / 2}px` }}
-                    ></div>
-                    <div
-                      className='h-full bg-custom-style-1'
-                      style={{ width: `${(300 - 200 * store.orderInfo.ratio) / 2}px` }}
-                    ></div>
-                  </div>
+                  {store.orderInfo.frameMode !== CONST_MODE_WIDE && (
+                    <div className='absolute inset-0 flex justify-between'>
+                      <div
+                        className='h-full bg-custom-style-1'
+                        style={{ width: `${(300 - 200 * store.orderInfo.ratio) / 2}px` }}
+                      ></div>
+
+                      <div
+                        className='h-full bg-custom-style-1'
+                        style={{ width: `${(300 - 200 * store.orderInfo.ratio) / 2}px` }}
+                      ></div>
+                    </div>
+                  )}
+
+                  {store.orderInfo.frameMode === CONST_MODE_WIDE && store.orderInfo.frameType === 'typeA' && (
+                    <div className='absolute inset-0 flex flex-col justify-between'>
+                      <div
+                        className='h-full bg-custom-style-3-1'
+                        style={{ height: `${(200 - 300 / 2.82) / 2}px` }}
+                      ></div>
+
+                      <div
+                        className='h-full bg-custom-style-3-1'
+                        style={{ height: `${(200 - 300 / 2.82) / 2}px` }}
+                      ></div>
+                    </div>
+                  )}
+
+                  {store.orderInfo.frameMode === CONST_MODE_WIDE && store.orderInfo.frameType === 'typeB' && (
+                    <div className='absolute inset-0 flex flex-col justify-between'>
+                      <div
+                        className='h-full bg-custom-style-3-1'
+                        style={{ height: `${(200 - 300 / 2.05) / 2}px` }}
+                      ></div>
+
+                      <div
+                        className='h-full bg-custom-style-3-1'
+                        style={{ height: `${(200 - 300 / 2.05) / 2}px` }}
+                      ></div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

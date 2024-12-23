@@ -127,7 +127,7 @@ export const INIT_STORE: StoreType = {
     quantityShootingPhotos: 4,
     quantitySelectedPhotos: 2,
     frameRelPath: '/assets/frames/wide/typeA/season/00000.png',
-    ratio: 1.5,
+    ratio: 2.82,
     width: 1200,
     height: 1800,
     framePrice: 30000,
