@@ -58,7 +58,9 @@ export default function Shooting() {
       wsCamera.current.send('unlock');
       wsCamera.current.send(`setphoto-img:r=2;w=${store.orderInfo.ratio}`);
       wsCamera.current.send('startlv');
-      wsCamera.current.send('record');
+      setTimeout(() => {
+        wsCamera.current.send('record');
+      }, 500);
     };
 
     wsCamera.current.onmessage = (event) => {
