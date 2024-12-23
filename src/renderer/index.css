@@ -85,4 +85,26 @@ body {
     position: relative;
     z-index: 10;
   }
+
+  .hidden-scroll-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .visible-scroll-bar::-webkit-scrollbar {
+    display: block;
+    width: 20px;
+  }
+
+  .custom-scroll-bar::-webkit-scrollbar-track {
+    background-color: #ffe8f5;
+  }
+
+  .custom-scroll-bar-thumb::-webkit-scrollbar-thumb {
+    background-color: #ff909d;
+    border-radius: 30px;
+  }
+
+  .custom-scroll-bar-hidden-button::-webkit-scrollbar-button {
+    display: none;
+  }
 }

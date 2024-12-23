@@ -48,20 +48,20 @@ export default function ConfirmFrame() {
 
   return (
     <div className='relative h-screen w-screen'>
-      <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />
+      <BackgroundImage url={store.assetsFolderPath + store.resources.backgroundImages[1]?.relPath} />
 
       <div className='absolute left-0 top-0 h-[243px] w-[224px]'>
-        <DisplayImage src={store.pathFolderAssets + store.resources.icons[8]?.relPath} />
+        <DisplayImage src={store.assetsFolderPath + store.resources.icons[8]?.relPath} />
       </div>
 
       <div className='absolute bottom-0 right-0 h-[210px] w-[194px] rotate-180'>
-        <DisplayImage src={store.pathFolderAssets + store.resources.icons[8]?.relPath} />
+        <DisplayImage src={store.assetsFolderPath + store.resources.icons[8]?.relPath} />
       </div>
 
       <div className='absolute inset-0 p-40'>
         <div className='absolute right-40 top-28'>
           <Countdown
-            url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
+            url={store.assetsFolderPath + store.resources.icons[10]?.relPath}
             time={90}
             routeGoToBack='/enter-code'
           />
@@ -75,18 +75,18 @@ export default function ConfirmFrame() {
           >
             <div className='flex items-center justify-center'>
               <div className='z-10 h-[109px] w-[140px] translate-x-3 -rotate-12'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[3]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[3]?.relPath} />
               </div>
 
               <div className='h-[109px] w-[140px] -translate-x-3'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[4]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[4]?.relPath} />
               </div>
             </div>
 
             <div className='z-20 flex -translate-y-7 flex-col items-center justify-center gap-y-2'>
               <div className='relative h-[136px] w-[547px]'>
                 <div className='h-full w-full'>
-                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[9]?.relPath} />
+                  <DisplayImage src={store.assetsFolderPath + store.resources.icons[9]?.relPath} />
                 </div>
 
                 <div className='absolute inset-0 flex min-w-max items-center justify-center text-4xl text-custom-style-1'>
@@ -96,11 +96,11 @@ export default function ConfirmFrame() {
 
               <div className='relative h-[48px] w-[64px]'>
                 <div className='absolute right-1.5 top-0 h-full w-[61px] rotate-180'>
-                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[29]?.relPath} />
+                  <DisplayImage src={store.assetsFolderPath + store.resources.icons[29]?.relPath} />
                 </div>
 
                 <div className='absolute h-full w-full'>
-                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[1]?.relPath} />
+                  <DisplayImage src={store.assetsFolderPath + store.resources.icons[1]?.relPath} />
                 </div>
               </div>
 
@@ -114,17 +114,17 @@ export default function ConfirmFrame() {
                         {isDouble ? (
                           <div className='flex h-full w-full flex-col items-center justify-center'>
                             <div className={`h-[146px] w-[219px]`}>
-                              <DisplayImage src={store.pathFolderAssets + store.orderInfo.frameRelPath} />
+                              <DisplayImage src={store.assetsFolderPath + store.orderInfo.frameRelPath} />
                             </div>
 
                             <div className={`h-[146px] w-[219px]`}>
-                              <DisplayImage src={store.pathFolderAssets + store.orderInfo.frameRelPath} />
+                              <DisplayImage src={store.assetsFolderPath + store.orderInfo.frameRelPath} />
                             </div>
                           </div>
                         ) : (
                           <div className='flex items-center justify-center'>
                             <div className={`h-[292px] w-[195px]`}>
-                              <DisplayImage src={store.pathFolderAssets + store.orderInfo.frameRelPath} />
+                              <DisplayImage src={store.assetsFolderPath + store.orderInfo.frameRelPath} />
                             </div>
                           </div>
                         )}
@@ -142,7 +142,7 @@ export default function ConfirmFrame() {
                         </div>
 
                         <div className='h-[102px] w-[121px]'>
-                          <DisplayImage src={store.pathFolderAssets + store.resources.icons[20]?.relPath} />
+                          <DisplayImage src={store.assetsFolderPath + store.resources.icons[20]?.relPath} />
                         </div>
                       </div>
                     </div>
@@ -159,14 +159,14 @@ export default function ConfirmFrame() {
           >
             <div className='flex items-center justify-center gap-x-7'>
               <div className='h-[109px] w-[140px]'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[2]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[2]?.relPath} />
               </div>
             </div>
 
             <div className='flex -translate-y-7 flex-col items-center justify-center gap-y-2'>
               <div className='relative h-[136px] w-[547px]'>
                 <div className='h-full w-full'>
-                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[17]?.relPath} />
+                  <DisplayImage src={store.assetsFolderPath + store.resources.icons[17]?.relPath} />
                 </div>
 
                 <div className='absolute inset-0 flex min-w-max items-center justify-center text-4xl text-custom-style-1'>
@@ -176,11 +176,11 @@ export default function ConfirmFrame() {
 
               <div className='relative h-[48px] w-[64px]'>
                 <div className='absolute right-1.5 top-0 h-full w-[61px] rotate-180'>
-                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[29]?.relPath} />
+                  <DisplayImage src={store.assetsFolderPath + store.resources.icons[29]?.relPath} />
                 </div>
 
                 <div className='absolute h-full w-full'>
-                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[18]?.relPath} />
+                  <DisplayImage src={store.assetsFolderPath + store.resources.icons[18]?.relPath} />
                 </div>
               </div>
 
@@ -192,7 +192,7 @@ export default function ConfirmFrame() {
                     <div className='flex h-full w-full items-center justify-center'>
                       <div className='flex h-full w-1/2 items-center justify-center'>
                         <div className={`h-[292px] w-[100px]`}>
-                          <DisplayImage src={store.pathFolderAssets + store.resources.icons[19]?.relPath} />
+                          <DisplayImage src={store.assetsFolderPath + store.resources.icons[19]?.relPath} />
                         </div>
                       </div>
 
@@ -208,7 +208,7 @@ export default function ConfirmFrame() {
                         </div>
 
                         <div className='h-[102px] w-[121px]'>
-                          <DisplayImage src={store.pathFolderAssets + store.resources.icons[21]?.relPath} />
+                          <DisplayImage src={store.assetsFolderPath + store.resources.icons[21]?.relPath} />
                         </div>
                       </div>
                     </div>

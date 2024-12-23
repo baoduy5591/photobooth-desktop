@@ -5,7 +5,7 @@ interface SoundContextType {
   playSoundTouch: (isLoop: boolean) => void;
   playSoundWarning: (isLoop: boolean) => void;
   playSoundBackground: (isLoop: boolean) => void;
-  stopSoundBackground: () => void;
+  pauseSoundBackground: () => void;
 }
 
 const SoundContext = createContext<SoundContextType | undefined>(undefined);
@@ -14,16 +14,16 @@ export const SoundContextProvider = ({ children }: { children: React.ReactNode }
   const { store } = useStore();
 
   const soundTouch = useMemo(
-    () => new Audio(store.pathFolderAssets + store.systemConfigs.touchAudio),
-    [store.systemConfigs.touchAudio],
+    () => new Audio(store.assetsFolderPath + store.clientSetting.touchAudio),
+    [store.clientSetting.touchAudio, store.assetsFolderPath],
   );
   const soundWarning = useMemo(
-    () => new Audio(store.pathFolderAssets + store.systemConfigs.warningAudio),
-    [store.systemConfigs.warningAudio],
+    () => new Audio(store.assetsFolderPath + store.clientSetting.warningAudio),
+    [store.clientSetting.warningAudio, store.assetsFolderPath],
   );
   const soundBackground = useMemo(
-    () => new Audio(store.pathFolderAssets + store.systemConfigs.backgroundAudio),
-    [store.systemConfigs.backgroundAudio],
+    () => new Audio(store.assetsFolderPath + store.clientSetting.backgroundAudio),
+    [store.clientSetting.backgroundAudio, store.assetsFolderPath],
   );
 
   const playSoundBackground = (isLoop: boolean) => {
@@ -32,7 +32,7 @@ export const SoundContextProvider = ({ children }: { children: React.ReactNode }
     soundBackground.play();
   };
 
-  const stopSoundBackground = () => {
+  const pauseSoundBackground = () => {
     soundBackground.pause();
   };
 
@@ -49,7 +49,7 @@ export const SoundContextProvider = ({ children }: { children: React.ReactNode }
   };
 
   return (
-    <SoundContext.Provider value={{ playSoundBackground, stopSoundBackground, playSoundTouch, playSoundWarning }}>
+    <SoundContext.Provider value={{ playSoundBackground, pauseSoundBackground, playSoundTouch, playSoundWarning }}>
       {children}
     </SoundContext.Provider>
   );

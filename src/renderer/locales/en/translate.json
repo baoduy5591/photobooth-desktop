@@ -28,6 +28,13 @@
     "isChooseAgainText2": "to choose frame again"
   },
 
+  "selectPhotos": {
+    "title1": "Select",
+    "title2": "Photos To Print",
+    "note1": "Scroll to see more photos",
+    "note2": "To deselect, touch the photo you want to cancel"
+  },
+
   "shootingMethod": {
     "countdownTitle": "Countdown",
     "countdownText1": "A photo is taken automatically",

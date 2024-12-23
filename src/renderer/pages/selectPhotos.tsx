@@ -8,63 +8,21 @@ import { allowWithQuantityTouches, chunkItems, getPhotoOnCanvas } from '../libs/
 import { Canvas } from '../components/canvas';
 import { useNavigate } from 'react-router-dom';
 import { useSound } from '../context/sound';
+import { useTranslation } from 'react-i18next';
 
 export default function SelectPhotos() {
   const { store, setStore } = useStore();
-
+  const { t: translate } = useTranslation();
   const { playSoundTouch } = useSound();
 
-  const [resizedPhotos, setResizedPhotos] = useState<string[][]>([[]]);
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [convertedPhotos, setConvertedPhotos] = useState<string[]>([]);
   const [indexForClean, setIndexForClean] = useState<number>(-1);
 
-  const touchStartX = useRef<number>(0);
-  const touchEndX = useRef<number>(0);
-  const isTouchMove = useRef<boolean>(false);
-  const flatResizedPhotos = useRef<string[]>([]);
-  const _selectedPhotos = useRef<{ photo: string; index: number }[]>([]); // fix temp TODO: investigate for flow useState not take data
+  const isTouchMoveScroll = useRef<boolean>(false);
+  const flatConvertedPhotos = useRef<string[]>([]);
+  const _selectedPhotos = useRef<{ photo: string; index: number }[]>([]);
 
   const navigate = useNavigate();
-
-  const handleOnTouchStartPrev = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
-
-    playSoundTouch(false);
-    setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
-  };
-
-  const handleOnTouchStartNext = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
-
-    playSoundTouch(false);
-    setCurrentIndex((index) => (index + 1 >= resizedPhotos.length ? index : index + 1));
-  };
-
-  const handleOnTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
-
-    touchStartX.current = event.touches[0].clientX;
-  };
-
-  const handleOnTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
-
-    isTouchMove.current = true;
-    touchEndX.current = event.touches[0].clientX;
-  };
-
-  const handleOnTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
-
-    if (!isTouchMove.current) return;
-
-    if (touchEndX.current - touchStartX.current > 100) {
-      setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
-    } else if (touchEndX.current - touchStartX.current < -100) {
-      setCurrentIndex((index) => (index + 1 >= resizedPhotos.length ? index : index + 1));
-    }
-    isTouchMove.current = false;
-  };
 
   const checkIsPhotoExist = (selectedPhotos: { photo: string; index: number }[], photo: string) => {
     for (let i = 0; i < selectedPhotos.length; i++) {
@@ -87,18 +45,17 @@ export default function SelectPhotos() {
   };
 
   const handleOnTouchEndChoosePhoto = (event: React.TouchEvent<HTMLDivElement>, photo: string) => {
-    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1) || isTouchMoveScroll.current) return;
 
     playSoundTouch(false);
-    if (isTouchMove.current) return;
-
-    const { selectedPhotos } = store.orderInfo;
+    const selectedPhotos = _selectedPhotos.current;
     if (checkIsPhotoExist(selectedPhotos, photo)) {
       const deletedPhoto = selectedPhotos.filter((item) => item.photo === photo);
       if (deletedPhoto.length > 1 || deletedPhoto.length === 0) return;
 
       const indexForDelete = deletedPhoto[0].index;
       const newSelectedPhotos = selectedPhotos.filter((item) => item.photo !== photo);
+      _selectedPhotos.current = newSelectedPhotos;
       setStore((prevStore) => ({
         ...prevStore,
         orderInfo: {
@@ -106,12 +63,12 @@ export default function SelectPhotos() {
           selectedPhotos: newSelectedPhotos,
         },
       }));
-      _selectedPhotos.current = newSelectedPhotos;
       setIndexForClean(indexForDelete);
     } else {
       const _index = getIndex(selectedPhotos, store.orderInfo.frameMode, store.orderInfo.frameType);
       if (_index === null) return;
 
+      _selectedPhotos.current.push({ photo: photo, index: _index });
       setStore((prevStore) => ({
         ...prevStore,
         orderInfo: {
@@ -119,23 +76,8 @@ export default function SelectPhotos() {
           selectedPhotos: [...prevStore.orderInfo.selectedPhotos, { photo: photo, index: _index }],
         },
       }));
-      _selectedPhotos.current.push({ photo: photo, index: _index });
       setIndexForClean(-1);
     }
-  };
-
-  const handleOnMoveChoosePhoto = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
-
-    isTouchMove.current = true;
-    touchEndX.current = event.touches[0].clientX;
-  };
-
-  const handleOnTouchChangeCurrentIndex = (event: React.TouchEvent<HTMLDivElement>, newIndex: number) => {
-    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
-
-    playSoundTouch(false);
-    setCurrentIndex(newIndex);
   };
 
   const handleConvertCanvasToBase64 = async (
@@ -157,7 +99,7 @@ export default function SelectPhotos() {
     const loadImage = (photo: string, index: number): Promise<void> => {
       return new Promise((resolve) => {
         const image = new Image();
-        image.src = store.pathFolderUserPhotos + photo;
+        image.src = store.userPhotosFolderPath + photo;
         image.onload = () => {
           const position = listPosition[index];
           position?.forEach((p) => {
@@ -188,7 +130,7 @@ export default function SelectPhotos() {
       store.orderInfo.selectedPhotos,
       CONST_FRAME_POSITIONS,
     );
-    setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, imageSelectPhoto: base64String } }));
+    setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, originalBase64: base64String } }));
     setTimeout(() => {
       navigate('/select-effect');
     }, 300);
@@ -220,11 +162,19 @@ export default function SelectPhotos() {
     _selectedPhotos.current = _selectedPhotos.current.filter((item) => item.index !== _index);
   };
 
+  const handleOnTouchMoveScrollPhotos = () => {
+    isTouchMoveScroll.current = true;
+  };
+
+  const handleOnTouchEndScrollPhotos = () => {
+    isTouchMoveScroll.current = false;
+  };
+
   const handleTimeout = () => {
     if (_selectedPhotos.current.length < store.orderInfo.quantitySelectedPhotos) {
       while (_selectedPhotos.current.length < store.orderInfo.quantitySelectedPhotos) {
         const photosName = _selectedPhotos.current.map((item) => item.photo);
-        const getPhotosNotSelect = flatResizedPhotos.current.filter((photo) => !photosName.includes(photo));
+        const getPhotosNotSelect = flatConvertedPhotos.current.filter((photo) => !photosName.includes(photo));
         if (getPhotosNotSelect.length === 0) return;
 
         const _index = getIndex(_selectedPhotos.current, store.orderInfo.frameMode, store.orderInfo.frameType);
@@ -247,7 +197,7 @@ export default function SelectPhotos() {
         _selectedPhotos.current,
         CONST_FRAME_POSITIONS,
       ).then((base64String) => {
-        setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, imageSelectPhoto: base64String } }));
+        setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, originalBase64: base64String } }));
         navigate('/select-effect');
       });
     }
@@ -255,10 +205,8 @@ export default function SelectPhotos() {
 
   useEffect(() => {
     const getResizedPhotos = async () => {
-      const _resizedPhotos = await window.api.getUserResizedPhotos();
-      flatResizedPhotos.current = _resizedPhotos;
-      const chunkPhotos = chunkItems(_resizedPhotos, 6);
-      setResizedPhotos(chunkPhotos);
+      const _convertedPhotos = await window.api.getUserConvertedPhotos();
+      setConvertedPhotos(_convertedPhotos);
     };
 
     getResizedPhotos();
@@ -266,14 +214,14 @@ export default function SelectPhotos() {
 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
-      <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />
+      <BackgroundImage url={store.assetsFolderPath + store.clientSetting.backgroundImageSecondary} />
 
       <div className='absolute inset-0 py-6'>
         <div className='flex h-full w-full items-center justify-center'>
           <div className='flex h-full w-[650px] flex-col items-center justify-center'>
             <div className='relative h-[143.2px] w-[276.8px]'>
               <div className='h-full w-full'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[37]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[37]?.relPath} />
               </div>
 
               <div className='absolute left-[110px] top-[30px] text-[32px] text-custom-style-1'>
@@ -285,11 +233,11 @@ export default function SelectPhotos() {
 
             <div className='flex items-center justify-center gap-x-8'>
               <div className='h-[78.6px] w-[101.3px] -rotate-6'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[3]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[3]?.relPath} />
               </div>
 
               <div className='h-[78.6px] w-[101.3px] rotate-6'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[2]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[2]?.relPath} />
               </div>
             </div>
 
@@ -306,7 +254,7 @@ export default function SelectPhotos() {
                     width={store.orderInfo.width}
                     height={store.orderInfo.height}
                     selectedPhotos={store.orderInfo.selectedPhotos}
-                    pathUserPhotos={store.pathFolderUserPhotos}
+                    pathUserPhotos={store.userPhotosFolderPath}
                     frameMode={store.orderInfo.frameMode}
                     frameType={store.orderInfo.frameType}
                     indexForClean={indexForClean}
@@ -314,7 +262,7 @@ export default function SelectPhotos() {
                 </div>
 
                 <div className='pointer-events-none absolute inset-0 border-2 border-custom-style-3-1'>
-                  <DisplayImage src={store.pathFolderAssets + store.orderInfo.frameRelPath} />
+                  <DisplayImage src={store.assetsFolderPath + store.orderInfo.frameRelPath} />
                 </div>
               </div>
             </div>
@@ -322,25 +270,25 @@ export default function SelectPhotos() {
 
           <div className='relative flex h-full grow flex-col items-center justify-center gap-y-8'>
             <div className='absolute left-[80px] top-[150px] h-[80.1px] w-[103.2px]'>
-              <DisplayImage src={store.pathFolderAssets + store.resources.icons[4]?.relPath} />
+              <DisplayImage src={store.assetsFolderPath + store.resources.icons[4]?.relPath} />
             </div>
 
             <div className='flex w-full translate-x-0 translate-y-0 items-center justify-end gap-x-6 px-10'>
               <div className='relative h-[99.5px] w-[668.7px]'>
                 <div className='h-full w-full'>
-                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[39]?.relPath} />
+                  <DisplayImage src={store.assetsFolderPath + store.resources.icons[39]?.relPath} />
                 </div>
 
                 <div className='absolute left-[170px] top-[26px] font-rokkitt text-[32px] font-bold tracking-wider'>
-                  <span>Select </span>
+                  <span>{translate('translation:selectPhotos.title1')} </span>
                   <span className='text-custom-style-2-1'>{store.orderInfo.quantitySelectedPhotos} </span>
-                  <span>Photos To Print</span>
+                  <span>{translate('translation:selectPhotos.title2')}</span>
                 </div>
               </div>
 
               <div className='mb-3'>
                 <Countdown
-                  url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
+                  url={store.assetsFolderPath + store.resources.icons[10]?.relPath}
                   time={300}
                   handleTimeout={handleTimeout}
                 />
@@ -349,104 +297,44 @@ export default function SelectPhotos() {
 
             <div className='z-10 h-[750.4px] w-[1041.6px] rounded-xl bg-custom-style-3-1'>
               <div className='flex h-full w-full flex-col items-center justify-center'>
-                <div className='my-4 h-[22px] w-[140px] rounded-full bg-custom-style-1'></div>
-                <div className='relative h-full w-full px-6'>
+                <div className='mt-4 h-[22px] w-[140px] rounded-full bg-custom-style-1'></div>
+
+                <div className='relative h-full w-full overflow-hidden p-4'>
                   <div
-                    className='flex h-full w-full flex-col items-center justify-between bg-custom-style-1 px-10'
-                    onTouchStart={(event) => handleOnTouchStart(event)}
-                    onTouchMove={(event) => handleOnTouchMove(event)}
-                    onTouchEnd={(event) => handleOnTouchEnd(event)}
+                    className='custom-scroll-bar visible-scroll-bar custom-scroll-bar-thumb custom-scroll-bar-hidden-button grid h-full w-full grid-cols-3 overflow-x-hidden overflow-y-scroll rounded-xl bg-custom-style-1 px-4'
+                    onTouchEnd={handleOnTouchEndScrollPhotos}
+                    onTouchMove={handleOnTouchMoveScrollPhotos}
                   >
-                    <div className='flex h-full w-full flex-1 items-center overflow-x-hidden pb-2 pt-16'>
-                      {resizedPhotos?.map((photos, index) => {
-                        return (
-                          <div
-                            key={index}
-                            className='grid h-full min-w-full grid-cols-3 content-start justify-items-center gap-x-4 gap-y-12 px-2 transition-transform duration-300'
-                            style={{ transform: `translate3d(-${currentIndex * 100}%, 0, 0)` }}
-                          >
-                            {photos?.map((photo, index) => {
-                              return (
-                                <div
-                                  key={index}
-                                  style={{ height: '190px', width: `${190 * store.orderInfo.ratio}px` }}
-                                  onTouchEnd={(event) => handleOnTouchEndChoosePhoto(event, photo)}
-                                  onTouchMove={(event) => handleOnMoveChoosePhoto(event)}
-                                >
-                                  {store.orderInfo.selectedPhotos.map((item) => item.photo).includes(photo) ? (
-                                    <div className='relative h-full w-full'>
-                                      <div
-                                        className={`absolute -top-[32px] left-1/2 h-[30.8px] w-[34.8px] -translate-x-1/2`}
-                                      >
-                                        <DisplayImage
-                                          src={store.pathFolderAssets + store.resources.icons[43]?.relPath}
-                                        />
-                                      </div>
-
-                                      <div className='h-full w-full rounded-lg border-4 border-dashed border-custom-style-2-1 p-1'>
-                                        <div className='h-full w-full'>
-                                          <DisplayImage src={store.pathFolderUserPhotos + photo} />
-                                        </div>
-                                      </div>
-                                    </div>
-                                  ) : (
-                                    <div className='h-full w-full border-4 border-transparent'>
-                                      <DisplayImage src={store.pathFolderUserPhotos + photo} />
-                                    </div>
-                                  )}
-                                </div>
-                              );
-                            })}
-                          </div>
-                        );
-                      })}
-                    </div>
-
-                    <div className='flex h-[75px] w-full items-center justify-center gap-x-4'>
-                      {[...Array(resizedPhotos.length)]
-                        .map((_, i) => i)
-                        .map((item, index) => {
-                          if (item === currentIndex) {
-                            return (
-                              <div key={index} className='h-[42px] w-[44px]'>
-                                <DisplayImage src={store.pathFolderAssets + store.resources.icons[40]?.relPath} />
+                    {convertedPhotos?.map((photo, index) => {
+                      return (
+                        <div
+                          className='mb-3 mt-9'
+                          key={index}
+                          style={{ width: '290px', height: `${290 / store.orderInfo.ratio}px` }}
+                          onTouchEnd={(event) => handleOnTouchEndChoosePhoto(event, photo)}
+                        >
+                          <div className='relative h-full w-full'>
+                            {store.orderInfo.selectedPhotos.map((item) => item.photo).includes(photo) && (
+                              <div className={`absolute -top-[32px] left-1/2 h-[30.8px] w-[34.8px] -translate-x-1/2`}>
+                                <DisplayImage src={store.assetsFolderPath + store.resources.icons[43]?.relPath} />
                               </div>
-                            );
-                          }
+                            )}
 
-                          return (
                             <div
-                              key={index}
-                              className='h-[30px] w-[30px]'
-                              onTouchStart={(event) => handleOnTouchChangeCurrentIndex(event, index)}
+                              className={`h-full w-full rounded-lg border-4 p-1 ${store.orderInfo.selectedPhotos.map((item) => item.photo).includes(photo) ? 'border-dashed border-custom-style-2-1' : 'border-transparent'}`}
                             >
-                              <DisplayImage src={store.pathFolderAssets + store.resources.icons[41]?.relPath} />
+                              <div className='h-full w-full'>
+                                <DisplayImage src={store.userPhotosFolderPath + photo} />
+                              </div>
                             </div>
-                          );
-                        })}
-                    </div>
-                  </div>
-
-                  <div
-                    className='absolute left-[27px] top-[274px] h-[50px] w-[50px] p-1'
-                    onTouchStart={(event) => handleOnTouchStartPrev(event)}
-                  >
-                    <div className='h-full w-full'>
-                      <DisplayImage src={store.pathFolderAssets + store.resources.icons[42]?.relPath} />
-                    </div>
-                  </div>
-
-                  <div
-                    className='absolute right-[27px] top-[274px] h-[50px] w-[50px] p-1'
-                    onTouchStart={(event) => handleOnTouchStartNext(event)}
-                  >
-                    <div className='h-full w-full'>
-                      <DisplayImage src={store.pathFolderAssets + store.resources.icons[38]?.relPath} />
-                    </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
 
-                <div className='my-4 min-h-[45px] min-w-[45px] rounded-full bg-custom-style-1 p-1.5'>
+                <div className='my-3 min-h-[45px] min-w-[45px] rounded-full bg-custom-style-1 p-1.5'>
                   <div className='h-full w-full rounded-full bg-custom-style-3-1'></div>
                 </div>
               </div>
@@ -454,10 +342,10 @@ export default function SelectPhotos() {
 
             <div className='absolute bottom-0 left-0 right-0 text-center font-rokkitt text-[24px] text-custom-style-3-1'>
               <div className='h-[30px] min-w-max'>
-                <span>※ Slide to see more photos</span>
+                <span>※ {translate('translation:selectPhotos.note1')}</span>
               </div>
               <div className='h-[30px] min-w-max'>
-                <span>※ To deselect, touch the picture you want to cancel</span>
+                <span>※ {translate('translation:selectPhotos.note2')}</span>
               </div>
             </div>
           </div>
@@ -467,7 +355,7 @@ export default function SelectPhotos() {
             onTouchStart={(event) => handleOnTouchStartNextPage(event)}
           >
             <div className='h-[79.8px] w-[79.8px]'>
-              <DisplayImage src={store.pathFolderAssets + store.resources.icons[38]?.relPath} />
+              <DisplayImage src={store.assetsFolderPath + store.resources.icons[38]?.relPath} />
             </div>
           </div>
         </div>

@@ -403,18 +403,18 @@ export function Draw() {
         </div>
       )}
 
-      <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />
+      <BackgroundImage url={store.assetsFolderPath + store.resources.backgroundImages[1]?.relPath} />
 
       <div className='absolute right-60 top-40'>
         <Countdown
-          url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
+          url={store.assetsFolderPath + store.resources.icons[10]?.relPath}
           time={300}
           handleTimeout={handleTimeout}
         />
       </div>
 
       <div className='absolute bottom-0 right-0 h-[440px] w-[406px] rotate-180'>
-        <DisplayImage src={store.pathFolderAssets + store.resources.icons[8]?.relPath} />
+        <DisplayImage src={store.assetsFolderPath + store.resources.icons[8]?.relPath} />
       </div>
 
       <div className='absolute left-1 top-1/2 z-10 flex h-[700px] w-[130px] -translate-y-1/2 flex-col justify-around rounded-2xl border border-custom-style-3-2 bg-custom-style-1 py-6 shadow-2xl'>
@@ -568,7 +568,7 @@ export function Draw() {
         onTouchStart={(event) => handleOnTouchStartNextPage(event)}
       >
         <div className='h-[79.8px] w-[79.8px]'>
-          <DisplayImage src={store.pathFolderAssets + store.resources.icons[38]?.relPath} />
+          <DisplayImage src={store.assetsFolderPath + store.resources.icons[38]?.relPath} />
         </div>
       </div>
     </div>

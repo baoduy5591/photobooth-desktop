@@ -31,24 +31,24 @@ export default function ShootingMethod() {
 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
-      <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />
+      <BackgroundImage url={store.assetsFolderPath + store.resources.backgroundImages[1]?.relPath} />
 
       <div className='absolute -left-20 top-8 h-[200.6px] w-[535px]'>
-        <DisplayImage src={store.pathFolderAssets + store.resources.icons[22]?.relPath} />
+        <DisplayImage src={store.assetsFolderPath + store.resources.icons[22]?.relPath} />
       </div>
 
       <div className='absolute -bottom-6 right-0 h-[321.7px] w-[300px]'>
-        <DisplayImage src={store.pathFolderAssets + store.resources.icons[28]?.relPath} />
+        <DisplayImage src={store.assetsFolderPath + store.resources.icons[28]?.relPath} />
       </div>
 
       <div className='absolute -bottom-12 -left-10 h-[199px] w-[585px]'>
-        <DisplayImage src={store.pathFolderAssets + store.resources.icons[23]?.relPath} />
+        <DisplayImage src={store.assetsFolderPath + store.resources.icons[23]?.relPath} />
       </div>
 
       <div className='absolute inset-0 px-40 py-16'>
         <div className='absolute right-40 top-28'>
           <Countdown
-            url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
+            url={store.assetsFolderPath + store.resources.icons[10]?.relPath}
             time={300}
             routeGoToBack='/shooting'
           />
@@ -58,7 +58,7 @@ export default function ShootingMethod() {
           <div className='flex h-full w-5/12 flex-col items-center justify-center'>
             <div className='relative h-[432px] w-[466.4px]'>
               <div className='h-full w-full'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[25]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[25]?.relPath} />
               </div>
 
               <div className='absolute left-[140px] top-[150px] max-w-min text-[48px] leading-none text-custom-style-2-1'>
@@ -68,20 +68,20 @@ export default function ShootingMethod() {
 
             <div className='mr-10 flex items-center justify-center'>
               <div className='z-20 h-[147.5px] w-[190px] translate-x-8 -rotate-12'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[3]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[3]?.relPath} />
               </div>
 
               <div className='z-10 h-[147.5px] w-[190px]'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[4]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[4]?.relPath} />
               </div>
 
               <div className='h-[147.5px] w-[190px] -translate-x-2 rotate-12'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[2]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[2]?.relPath} />
               </div>
             </div>
 
             <div className='mt-4 h-[65px] w-[442px]'>
-              <DisplayImage src={store.pathFolderAssets + store.resources.icons[24]?.relPath} />
+              <DisplayImage src={store.assetsFolderPath + store.resources.icons[24]?.relPath} />
             </div>
           </div>
 
@@ -93,11 +93,11 @@ export default function ShootingMethod() {
               <div className='flex items-center justify-center gap-y-2'>
                 <div className='relative h-[60.3px] w-[80px]'>
                   <div className='absolute left-1 top-1.5 h-full w-[75px] rotate-90'>
-                    <DisplayImage src={store.pathFolderAssets + store.resources.icons[29]?.relPath} />
+                    <DisplayImage src={store.assetsFolderPath + store.resources.icons[29]?.relPath} />
                   </div>
 
                   <div className='absolute left-0 top-0 h-full w-full -rotate-90'>
-                    <DisplayImage src={store.pathFolderAssets + store.resources.icons[1]?.relPath} />
+                    <DisplayImage src={store.assetsFolderPath + store.resources.icons[1]?.relPath} />
                   </div>
                 </div>
 
@@ -121,7 +121,7 @@ export default function ShootingMethod() {
                       </div>
 
                       <div className='h-[101px] w-[101px]'>
-                        <DisplayImage src={store.pathFolderAssets + store.resources.icons[26]?.relPath} />
+                        <DisplayImage src={store.assetsFolderPath + store.resources.icons[26]?.relPath} />
                       </div>
                     </div>
                   </div>
@@ -136,11 +136,11 @@ export default function ShootingMethod() {
               <div className='flex items-center justify-center gap-y-2'>
                 <div className='relative h-[60.3px] w-[80px]'>
                   <div className='absolute left-1 top-1.5 h-full w-[75px] rotate-90'>
-                    <DisplayImage src={store.pathFolderAssets + store.resources.icons[29]?.relPath} />
+                    <DisplayImage src={store.assetsFolderPath + store.resources.icons[29]?.relPath} />
                   </div>
 
                   <div className='absolute left-0 top-0 h-full w-full -rotate-90'>
-                    <DisplayImage src={store.pathFolderAssets + store.resources.icons[18]?.relPath} />
+                    <DisplayImage src={store.assetsFolderPath + store.resources.icons[18]?.relPath} />
                   </div>
                 </div>
 
@@ -164,7 +164,7 @@ export default function ShootingMethod() {
                       </div>
 
                       <div className='h-[101px] w-[101px]'>
-                        <DisplayImage src={store.pathFolderAssets + store.resources.icons[27]?.relPath} />
+                        <DisplayImage src={store.assetsFolderPath + store.resources.icons[27]?.relPath} />
                       </div>
                     </div>
                   </div>

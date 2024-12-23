@@ -8,7 +8,7 @@ const { mainLogger } = logger.getLoggers();
 
 export const deleteFileAndFolder = (rootPath: string) => {
   try {
-    const files = fs.readdirSync(Paths.getFolderUserPhotos());
+    const files = fs.readdirSync(Paths.getUserPhotosFolderPathForMain());
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const filePath = path.join(rootPath, file);

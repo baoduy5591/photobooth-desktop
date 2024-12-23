@@ -11,13 +11,13 @@ declare module '*.png' {
 interface Window {
   api: {
     getResources: () => Promise;
-    getSystemConfigs: () => Promise;
+    getClientSetting: () => Promise;
     getResolution: () => Promise;
     getPathFolderAssets: () => Promise;
     getPathFolderUserPhotos: () => Promise;
     getOrderInfoById: (value) => Promise;
     getMachineConfigs: () => Promise;
-    getUserResizedPhotos: () => Promise;
+    getUserConvertedPhotos: () => Promise;
     saveImage: (data: { orderInfo: {} }) => Promise;
     saveImageFrameSticker: (imageBase64) => Promise;
     deleteFiles: () => Promise;
@@ -43,6 +43,22 @@ interface PathResourceType {
   relPath: string;
   isNew: boolean;
   thumb: string;
+}
+
+interface StickerPositionType {
+  name: PathResourceType['name'];
+  relPath: PathResourceType['relPath'];
+  isNew: PathResourceType['isNew'];
+  thumb: PathResourceType['thumb'];
+  top: number;
+  left: number;
+  offsetX: number;
+  offsetY: number;
+  currentPageX: number;
+  currentPageY: number;
+  width: number;
+  height: number;
+  rotate: number;
 }
 
 interface StickerType {
@@ -134,16 +150,11 @@ interface ResourcesType {
   };
 }
 
-interface HardwareInfoType {
-  camera: { name: string; serial: string; isOk: boolean };
-  network: { ipV4: string; mac: string; monitorIP: string; isOk: boolean };
-  screen: { width: number; height: number };
-  disk: number;
-}
-
-interface SystemConfigsType {
+interface ClientSettingType {
   hardwareInfo: HardwareInfoType;
   defaultLanguage: string;
+  backgroundImagePrimary: string;
+  backgroundImageSecondary: string;
   backgroundAudio: string;
   touchAudio: string;
   warningAudio: string;
@@ -151,67 +162,65 @@ interface SystemConfigsType {
 }
 
 interface OrderInfoType {
+  _id: string;
+  orderNumber: string;
+  orderType: string;
+  orderBase: string;
+  printCount: number;
+  isGrayScale: boolean;
+  grayScaleBase64: string;
+  paymentMethod: string;
+  paymentStatus: string;
+  orderStatus: string;
+  originalPrice: number;
+  finalPrice: number;
+  couponCode: string;
+  discountPrice: number;
+  effect: {
+    name: string;
+    className: string;
+    style: string;
+  };
+  stickers: StickerPositionType[];
   frameMode: string;
   frameType: string;
   frameStyle: string;
-  frameOrder: number;
+  frameNumber: number;
   quantityShootingPhotos: number;
   quantitySelectedPhotos: number;
   frameRelPath: string;
   ratio: number;
   width: number;
   height: number;
-  printCount: number;
   colorBase64: string;
+  colorBase64NoQR: string;
   originalBase64: string;
   framePrice: number;
-  grayscaleBase64: string;
   selectedPhotos: { photo: string; index: number }[];
   imageSelectPhoto: string;
   imageSelectEffect: string;
+  imageSelectSticker: string;
   imageFrameSticker: string;
   imageFrameStickerDraw: string;
   videoBase64: string;
-  orderNumber: string;
-  effect: {
-    name: string;
-    className: string;
-    style: string;
-  };
-  _id: string;
-}
-
-// interface OrderInfoType {
-//   frameMode: string;
-//   frameType: string;
-//   frameStyle: string;
-//   quantityShootingPhotos: number;
-//   quantitySelectedPhotos: number;
-//   frameOrder: number;
-//   frameRelPath: string;
-//   ratio: number;
-//   width: number;
-//   height: number;
-//   printCount: number;
-//   grayscaleBase64: string;
-//   colorBase64: string;
-//   framePrice: number;
-// }
-
-interface MachineConfigsType {
-  platform: string;
+  isVideoUploaded: boolean;
+  isImageUploaded: boolean;
+  currentPrintCount: number;
+  timeCode: string;
+  shootingMethod: string;
+  shootingTime: number;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface StoreType {
-  systemConfigs: SystemConfigsType;
+  clientSetting: ClientSettingType;
   resources: ResourcesType;
   isLoading: boolean;
-  pathFolderAssets: string;
-  pathFolderUserPhotos: string;
+  assetsFolderPath: string;
+  userPhotosFolderPath: string;
   orderInfo: OrderInfoType;
-  shootingMethod: string;
-  shootingTime: number;
-  machineConfigs: MachineConfigsType;
 }
 
 interface FramePositionType {

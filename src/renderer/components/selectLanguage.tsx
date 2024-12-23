@@ -18,12 +18,12 @@ export const SelectLanguage = React.memo(
     const { store } = useStore();
 
     return (
-      <div className='text-custom-style-1 flex select-none items-center justify-center gap-x-4 text-center font-rokkitt font-medium tracking-widest'>
+      <div className='flex select-none items-center justify-center gap-x-4 text-center font-rokkitt font-medium tracking-widest text-custom-style-1'>
         {Object.keys(CONST_CONFIG_LANGUAGE).map((lang: string, index: number) => {
           return (
             <div key={index} className='flex flex-col items-center'>
               <div className='h-[26px] w-[34px]'>
-                {language === lang && <DisplayImage src={store.pathFolderAssets + store.resources.icons[1]?.relPath} />}
+                {language === lang && <DisplayImage src={store.assetsFolderPath + store.resources.icons[1]?.relPath} />}
               </div>
 
               <div
@@ -31,7 +31,7 @@ export const SelectLanguage = React.memo(
                 onTouchStart={(event) => handleOnTouchStart(event, lang)}
                 onMouseDown={(event) => handleOnTouchStart(event, lang)}
               >
-                <div className='border-custom-style-1 flex h-full w-full items-center justify-center rounded-md border border-dashed text-[21px]'>
+                <div className='flex h-full w-full items-center justify-center rounded-md border border-dashed border-custom-style-1 text-[21px]'>
                   <span>{translate(`translation:languages.${lang as keyof typeof CONST_CONFIG_LANGUAGE}`)}</span>
                 </div>
               </div>

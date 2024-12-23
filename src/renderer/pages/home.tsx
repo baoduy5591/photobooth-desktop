@@ -12,9 +12,9 @@ import { useSound } from '../context/sound';
 
 export default function Home() {
   const { store } = useStore();
-  const { playSoundTouch } = useSound();
+  const { playSoundTouch, pauseSoundBackground } = useSound();
   const { t: translate, i18n } = useTranslation();
-  const [userLanguage, setUserLanguage] = useState<string>(store.systemConfigs.defaultLanguage);
+  const [userLanguage, setUserLanguage] = useState<string>(store.clientSetting.defaultLanguage);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(true);
   const [isStart, setIsStart] = useState<boolean>(false);
 
@@ -62,16 +62,17 @@ export default function Home() {
   }, [userLanguage]);
 
   useEffect(() => {
+    pauseSoundBackground();
     deleteFiles();
   }, []);
 
   return (
     <div className='relative h-screen w-screen'>
-      <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[0]?.relPath} />
+      <BackgroundImage url={store.assetsFolderPath + store.clientSetting.backgroundImagePrimary} />
 
       {isOpenModal && (
         <div className='absolute left-1/2 top-1/2 z-10 mt-3 h-[540px] w-[960px] -translate-x-1/2 -translate-y-1/2 rounded-md border-4 border-dashed border-custom-style-2-1 bg-custom-style-1 p-1'>
-          <DisplayVideo src={store.pathFolderAssets + store.systemConfigs.videoIntro} />
+          <DisplayVideo src={store.assetsFolderPath + store.clientSetting.videoIntro} />
 
           <div className='absolute -bottom-20 left-0 right-0 text-center font-rokkitt text-[27px] tracking-wider text-custom-style-3-1'>
             <span>{translate('translation:home.closeVideo')}</span>
@@ -83,7 +84,7 @@ export default function Home() {
             className='absolute -right-[42px] -top-[42px] h-20 w-20 p-4'
           >
             <div className='h-[46px] w-[46px]'>
-              <DisplayImage src={store.pathFolderAssets + store.resources.icons[7]?.relPath} />
+              <DisplayImage src={store.assetsFolderPath + store.resources.icons[7]?.relPath} />
             </div>
           </div>
         </div>
@@ -94,7 +95,7 @@ export default function Home() {
           <div className='tracking-wider'>
             <div className='relative my-24 flex h-40 items-center justify-center'>
               <div className='flex h-[142px] w-[565px] items-center justify-center'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[0]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[0]?.relPath} />
               </div>
 
               <div className='absolute left-1/2 top-1/2 mt-2 min-w-max -translate-x-1/2 -translate-y-1/2 font-moreSugar text-[46px] text-custom-style-1'>
@@ -108,7 +109,7 @@ export default function Home() {
                 onTouchStart={(event) => handleOnTouchStart(event)}
                 onMouseDown={(event) => handleOnTouchStart(event)}
               >
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[6]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[6]?.relPath} />
               </div>
 
               <div className='text-[27px] text-custom-style-3-1'>
@@ -122,7 +123,7 @@ export default function Home() {
           </div>
 
           <Mochi
-            src={store.pathFolderAssets + store.resources.icons[4]?.relPath}
+            src={store.assetsFolderPath + store.resources.icons[4]?.relPath}
             x0={100}
             y0={300}
             wrapperPosition={{ left: 15, top: 5, bottom: 800, right: 250 }}
@@ -131,7 +132,7 @@ export default function Home() {
           />
 
           <Mochi
-            src={store.pathFolderAssets + store.resources.icons[3]?.relPath}
+            src={store.assetsFolderPath + store.resources.icons[3]?.relPath}
             x0={1400}
             y0={250}
             wrapperPosition={{ left: 1200, top: 5, bottom: 350, right: 1500 }}
@@ -140,7 +141,7 @@ export default function Home() {
           />
 
           <Mochi
-            src={store.pathFolderAssets + store.resources.icons[2]?.relPath}
+            src={store.assetsFolderPath + store.resources.icons[2]?.relPath}
             x0={1300}
             y0={850}
             wrapperPosition={{ left: 1300, top: 600, bottom: 1000, right: 1500 }}
@@ -188,10 +189,11 @@ export function Mochi({ src, x0, y0, wrapperPosition, isStart, customClassName =
 
     return () => clearTimeout(id);
   }, [position]);
+
   return (
     <div
       ref={elementRef}
-      className={`z-50 h-[102px] w-[132px] ${customClassName}`}
+      className={`pointer-events-none z-50 h-[102px] w-[132px] ${customClassName}`}
       style={{
         position: 'absolute',
         top: isStart ? `${y0}px` : `${position.y}px`,

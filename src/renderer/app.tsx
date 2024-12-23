@@ -16,19 +16,23 @@ export default function App() {
 
   const getResourcesAndSystemConfigs = async () => {
     const resources = await window.api.getResources();
-    const systemConfigs = await window.api.getSystemConfigs();
-    const pathFolderAssets = await window.api.getPathFolderAssets();
-    const pathFolderUserPhotos = await window.api.getPathFolderUserPhotos();
-    const machineConfigs = await window.api.getMachineConfigs();
-    setStore((store: StoreType) => ({
-      ...store,
-      systemConfigs: { ...store.systemConfigs, ...systemConfigs },
-      resources: { ...store.resources, ...resources },
-      pathFolderAssets,
-      pathFolderUserPhotos,
+    const assetsFolderPath = await window.api.getPathFolderAssets();
+    const userPhotosFolderPath = await window.api.getPathFolderUserPhotos();
+    setStore((prevStore: StoreType) => ({
+      ...prevStore,
+      resources: { ...prevStore.resources, ...resources },
+      assetsFolderPath,
+      userPhotosFolderPath,
       isLoading: true,
-      machineConfigs: { ...store.machineConfigs, ...machineConfigs },
     }));
+
+    const clientSetting = await window.api.getClientSetting();
+    if (clientSetting) {
+      setStore((prevStore: StoreType) => ({
+        ...prevStore,
+        clientSetting: { ...prevStore.clientSetting, ...clientSetting },
+      }));
+    }
   };
 
   useEffect(() => {
@@ -38,15 +42,15 @@ export default function App() {
   return (
     <HashRouter>
       <Routes>
-        <Route path='/' element={<Splash />} />
-        {/* <Route path='/' element={<SelectPhotos />} /> */}
+        {/* <Route path='/' element={<Splash />} /> */}
+        <Route path='/' element={<SelectPhotos />} />
         <Route path='/home' element={<Home />} />
         <Route path='/enter-code' element={<EnterCode />} />
         <Route path='/shooting' element={<Shooting />} />
         <Route path='/select-photos' element={<SelectPhotos />} />
         <Route path='/select-effect' element={<SelectEffect />} />
         <Route path='/select-sticker' element={<SelectSticker />} />
-        <Route path='/draw' element={<Draw />} />
+        {/* <Route path='/draw' element={<Draw />} /> */}
         <Route path='/complete' element={<Complete />} />
       </Routes>
     </HashRouter>

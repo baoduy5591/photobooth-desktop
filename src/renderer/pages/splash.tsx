@@ -17,10 +17,10 @@ export function Splash() {
   useEffect(() => {
     if (!store.isLoading) return;
 
-    const defaultLanguage = store.systemConfigs.defaultLanguage;
+    const defaultLanguage = store.clientSetting.defaultLanguage;
     const index = CONST_CONFIG_LANGUAGE[defaultLanguage as keyof typeof CONST_CONFIG_LANGUAGE];
-    setVideoLoading(store.pathFolderAssets + store.resources.videos.loading[index].relPath);
-  }, [store.systemConfigs.defaultLanguage]);
+    setVideoLoading(store.assetsFolderPath + store.resources.videos.loading[index].relPath);
+  }, [store]);
 
   return (
     <div className='h-screen w-screen'>

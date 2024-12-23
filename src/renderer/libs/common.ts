@@ -98,4 +98,6 @@ export const getPositionByAngle = (x0: number, y0: number, x1: number, y1: numbe
   return { x: x2, y: y2, angle: angleInDegrees };
 };
 
-export const getRectForQrCodeByFrameModeAndFrameType = (frameMode: string, frameType: string) => {};
+export const getPositionForQrCodeByFrameModeAndFrameType = (frameMode: string, frameType: string) => {
+  return { x: 1070, y: 1670, w: 120, h: 120 };
+};

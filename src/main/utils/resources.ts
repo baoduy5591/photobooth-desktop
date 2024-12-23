@@ -27,15 +27,15 @@ const loggers = new Loggers(true);
 const { mainLogger } = loggers.getLoggers();
 
 class Resources {
-  pathFolderAssets: string;
+  assetsFolderPath: string;
 
   constructor() {
-    this.pathFolderAssets = Paths.getFolderAssets();
+    this.assetsFolderPath = Paths.getAssetsFolderPathForMain();
   }
 
   async getRelPathFiles(relPath: string, extensions = ['.jpg', '.png', '.svg']) {
     try {
-      const _path = path.join(this.pathFolderAssets, relPath);
+      const _path = path.join(this.assetsFolderPath, relPath);
       const files = fs.readdirSync(_path);
       const filesFiltered = files.filter((file) => {
         if (file.length !== 9 && file.length !== 15) return false;

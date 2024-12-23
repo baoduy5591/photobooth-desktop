@@ -7,6 +7,7 @@ import { Countdown } from '../components/countdown';
 import {
   allowWithQuantityTouches,
   getPositionByFrameModeAndFrameType,
+  getPositionForQrCodeByFrameModeAndFrameType,
   loadImage,
   randomRangeValue,
 } from '../libs/common';
@@ -18,111 +19,33 @@ import { Stickers } from '../components/stickers';
 export default function SelectSticker() {
   const { store, setStore } = useStore();
   const { playSoundTouch } = useSound();
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [selectedSticker, setSelectedSticker] = useState<
-    (PathResourceType & {
-      top: number;
-      left: number;
-      offsetX: number;
-      offsetY: number;
-      currentPageX: number;
-      currentPageY: number;
-      width: number;
-      height: number;
-      rotate: number;
-    })[]
-  >([]);
   const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
   const [currentChooseStickerIndex, setCurrentChooseStickerIndex] = useState<number>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const touchStartX = useRef<number>(0);
-  const touchEndX = useRef<number>(0);
   const isTouchMove = useRef<boolean>(false);
+  const isTouchMoveScroll = useRef<boolean>(false);
 
   const frameRef = useRef<HTMLDivElement>(null);
   const stickerRef = useRef<HTMLDivElement>(null);
   const currentAngle = useRef<number>(0);
   const rotatePositionY = useRef<number>(0);
   const isChooseStickerByIndex = useRef<boolean>(false);
-  const _selectedSticker = useRef<
-    (PathResourceType & {
-      top: number;
-      left: number;
-      offsetX: number;
-      offsetY: number;
-      currentPageX: number;
-      currentPageY: number;
-      width: number;
-      height: number;
-      rotate: number;
-    })[]
-  >([]);
+  const _selectedSticker = useRef<StickerPositionType[]>([]);
 
   const navigate = useNavigate();
 
-  const chunkItemSticker = (items: PathResourceType[], size: number) => {
-    const _list = [];
-    const _length = items.length;
-    for (let i = 0; i < _length; i += size) {
-      _list.push(items.slice(i, i + size));
-    }
-    return _list;
-  };
-
-  const itemsSticker = chunkItemSticker(
+  const itemsSticker =
     store.resources.stickers[
       CONST_LIST_TAB_STICKER[currentTabIndex].toLowerCase() as keyof typeof INIT_STORE.resources.stickers
-    ],
-    24,
-  );
+    ];
 
-  const handleOnTouchStartPrev = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
-
-    playSoundTouch(false);
-    setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
+  const handleOnTouchMoveScrollPhotos = () => {
+    isTouchMoveScroll.current = true;
   };
 
-  const handleOnTouchStartNext = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
-
-    playSoundTouch(false);
-    setCurrentIndex((index) => (index + 1 >= itemsSticker.length ? index : index + 1));
-  };
-
-  const handleOnTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
-
-    touchStartX.current = event.touches[0].clientX;
-  };
-
-  const handleOnTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
-
-    isTouchMove.current = true;
-    touchEndX.current = event.touches[0].clientX;
-  };
-
-  const handleOnTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
-
-    if (!isTouchMove.current) return;
-
-    if (touchEndX.current - touchStartX.current > 100) {
-      setCurrentIndex((index) => (index - 1 <= 0 ? 0 : index - 1));
-    } else if (touchEndX.current - touchStartX.current < -100) {
-      setCurrentIndex((index) => (index + 1 >= itemsSticker.length ? index : index + 1));
-    }
-
-    isTouchMove.current = false;
-  };
-
-  const handleOnTouchChangeCurrentIndex = (event: React.TouchEvent<HTMLDivElement>, newIndex: number) => {
-    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
-
-    playSoundTouch(false);
-    setCurrentIndex(newIndex);
+  const handleOnTouchEndScrollPhotos = () => {
+    isTouchMoveScroll.current = false;
   };
 
   const handleOnTouchEndChooseSticker = (event: React.TouchEvent<HTMLDivElement>, sticker: PathResourceType) => {
@@ -131,21 +54,28 @@ export default function SelectSticker() {
     playSoundTouch(false);
     if (isTouchMove.current) return;
 
-    setSelectedSticker((prevSticker) => [
-      ...prevSticker,
-      {
-        ...sticker,
-        top: randomRangeValue(0, 50),
-        left: randomRangeValue(0, 50),
-        offsetX: 0,
-        offsetY: 0,
-        currentPageX: 0,
-        currentPageY: 0,
-        width: 160,
-        height: 160,
-        rotate: 0,
+    setStore((prevStore) => ({
+      ...prevStore,
+      orderInfo: {
+        ...prevStore.orderInfo,
+        stickers: [
+          ...prevStore.orderInfo.stickers,
+          {
+            ...sticker,
+            top: randomRangeValue(0, 50),
+            left: randomRangeValue(0, 50),
+            offsetX: 0,
+            offsetY: 0,
+            currentPageX: 0,
+            currentPageY: 0,
+            width: 160,
+            height: 160,
+            rotate: 0,
+          },
+        ],
       },
-    ]);
+    }));
+
     _selectedSticker.current = [
       ..._selectedSticker.current,
       {
@@ -162,7 +92,7 @@ export default function SelectSticker() {
       },
     ];
 
-    setCurrentChooseStickerIndex(selectedSticker.length);
+    setCurrentChooseStickerIndex(_selectedSticker.current.length);
   };
 
   const handleOnTouchStartChooseStickerByIndex = (event: React.TouchEvent<HTMLDivElement>, index: number) => {
@@ -177,14 +107,28 @@ export default function SelectSticker() {
     const stickerRect = event.currentTarget.getBoundingClientRect();
     const offsetX = pageX - stickerRect.left;
     const offsetY = pageY - stickerRect.top;
-    setSelectedSticker((prevSticker) =>
-      prevSticker.map((sticker, _index) => {
-        if (index === _index) {
-          return { ...sticker, offsetX, offsetY, currentPageX: pageX, currentPageY: pageY };
-        }
-        return sticker;
-      }),
-    );
+    setStore((prevStore) => ({
+      ...prevStore,
+      orderInfo: {
+        ...prevStore.orderInfo,
+        stickers: prevStore.orderInfo.stickers.map((sticker, _index) => {
+          if (index === _index) {
+            return { ...sticker, offsetX, offsetY, currentPageX: pageX, currentPageY: pageY };
+          }
+
+          return sticker;
+        }),
+      },
+    }));
+
+    _selectedSticker.current = _selectedSticker.current.map((sticker, _index) => {
+      if (index === _index) {
+        return { ...sticker, offsetX, offsetY, currentPageX: pageX, currentPageY: pageY };
+      }
+
+      return sticker;
+    });
+
     setCurrentChooseStickerIndex(index);
   };
 
@@ -195,24 +139,37 @@ export default function SelectSticker() {
     const { pageX, pageY } = touch;
 
     // check move is valid
-    const deltaX = pageX - selectedSticker[index].currentPageX;
-    const deltaY = pageY - selectedSticker[index].currentPageY;
+    const deltaX = pageX - _selectedSticker.current[index].currentPageX;
+    const deltaY = pageY - _selectedSticker.current[index].currentPageY;
     if (Math.abs(deltaX) < CONST_THRESHOLD && Math.abs(deltaY) < CONST_THRESHOLD) return;
 
     const frameRect = frameRef.current.getBoundingClientRect();
     if (!frameRect) return;
 
-    const sticker = selectedSticker[index];
+    const sticker = _selectedSticker.current[index];
     const newX = pageX - frameRect.x - sticker.offsetX;
     const newY = pageY - frameRect.y - sticker.offsetY;
-    setSelectedSticker((prevSticker) =>
-      prevSticker.map((sticker, _index) => {
-        if (index === _index) {
-          return { ...sticker, top: newY, left: newX, currentPageX: pageX, currentPageY: pageY };
-        }
-        return sticker;
-      }),
-    );
+    setStore((prevStore) => ({
+      ...prevStore,
+      orderInfo: {
+        ...prevStore.orderInfo,
+        stickers: prevStore.orderInfo.stickers.map((sticker, _index) => {
+          if (index === _index) {
+            return { ...sticker, top: newY, left: newX, currentPageX: pageX, currentPageY: pageY };
+          }
+
+          return sticker;
+        }),
+      },
+    }));
+
+    _selectedSticker.current = _selectedSticker.current.map((sticker, _index) => {
+      if (index === _index) {
+        return { ...sticker, top: newY, left: newX, currentPageX: pageX, currentPageY: pageY };
+      }
+
+      return sticker;
+    });
   };
 
   const handleOnTouchEndChooseStickerByIndex = (event: React.TouchEvent<HTMLDivElement>) => {
@@ -225,7 +182,6 @@ export default function SelectSticker() {
     if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
 
     playSoundTouch(false);
-    setCurrentIndex(0);
     setCurrentTabIndex(index);
   };
 
@@ -237,14 +193,27 @@ export default function SelectSticker() {
     playSoundTouch(false);
     const { pageX, pageY } = event.touches[0];
     rotatePositionY.current = pageY;
-    setSelectedSticker((prevSticker) =>
-      prevSticker.map((sticker, _index) => {
-        if (index === _index) {
-          return { ...sticker, currentPageX: pageX, currentPageY: pageY };
-        }
-        return sticker;
-      }),
-    );
+    setStore((prevStore) => ({
+      ...prevStore,
+      orderInfo: {
+        ...prevStore.orderInfo,
+        stickers: prevStore.orderInfo.stickers.map((sticker, _index) => {
+          if (index === _index) {
+            return { ...sticker, currentPageX: pageX, currentPageY: pageY };
+          }
+
+          return sticker;
+        }),
+      },
+    }));
+
+    _selectedSticker.current = _selectedSticker.current.map((sticker, _index) => {
+      if (index === _index) {
+        return { ...sticker, currentPageX: pageX, currentPageY: pageY };
+      }
+
+      return sticker;
+    });
   };
 
   const handleOnTouchMoveRotate = (event: React.TouchEvent<HTMLDivElement>, index: number) => {
@@ -252,29 +221,55 @@ export default function SelectSticker() {
 
     event.stopPropagation();
     const { pageX, pageY } = event.touches[0];
-    const sticker = selectedSticker[index];
+    const sticker = _selectedSticker.current[index];
     const newPageY = rotatePositionY.current + sticker.height;
     const angle = Math.atan2(pageY - newPageY, pageX - sticker.currentPageX) * (180 / Math.PI);
     if (Math.abs(angle - currentAngle.current) < CONST_THRESHOLD) return;
 
     if (angle - currentAngle.current > 0) {
-      setSelectedSticker((prevSticker) =>
-        prevSticker.map((sticker, _index) => {
-          if (index === _index) {
-            return { ...sticker, rotate: sticker.rotate + 10 };
-          }
-          return sticker;
-        }),
-      );
+      setStore((prevStore) => ({
+        ...prevStore,
+        orderInfo: {
+          ...prevStore.orderInfo,
+          stickers: prevStore.orderInfo.stickers.map((sticker, _index) => {
+            if (index === _index) {
+              return { ...sticker, rotate: sticker.rotate + 10 };
+            }
+
+            return sticker;
+          }),
+        },
+      }));
+
+      _selectedSticker.current = _selectedSticker.current.map((sticker, _index) => {
+        if (index === _index) {
+          return { ...sticker, rotate: sticker.rotate + 10 };
+        }
+
+        return sticker;
+      });
     } else {
-      setSelectedSticker((prevSticker) =>
-        prevSticker.map((sticker, _index) => {
-          if (index === _index) {
-            return { ...sticker, rotate: sticker.rotate - 10 };
-          }
-          return sticker;
-        }),
-      );
+      setStore((prevStore) => ({
+        ...prevStore,
+        orderInfo: {
+          ...prevStore.orderInfo,
+          stickers: prevStore.orderInfo.stickers.map((sticker, _index) => {
+            if (index === _index) {
+              return { ...sticker, rotate: sticker.rotate - 10 };
+            }
+
+            return sticker;
+          }),
+        },
+      }));
+
+      _selectedSticker.current = _selectedSticker.current.map((sticker, _index) => {
+        if (index === _index) {
+          return { ...sticker, rotate: sticker.rotate - 10 };
+        }
+
+        return sticker;
+      });
     }
 
     currentAngle.current = angle;
@@ -292,45 +287,77 @@ export default function SelectSticker() {
     event.stopPropagation();
     isChooseStickerByIndex.current = true;
     const { pageX, pageY } = event.touches[0];
-    setSelectedSticker((prevSticker) =>
-      prevSticker.map((sticker, _index) => {
-        if (index === _index) {
-          return { ...sticker, currentPageX: pageX, currentPageY: pageY };
-        }
-        return sticker;
-      }),
-    );
+    setStore((prevStore) => ({
+      ...prevStore,
+      orderInfo: {
+        ...prevStore.orderInfo,
+        stickers: prevStore.orderInfo.stickers.map((sticker, _index) => {
+          if (index === _index) {
+            return { ...sticker, currentPageX: pageX, currentPageY: pageY };
+          }
+
+          return sticker;
+        }),
+      },
+    }));
+
+    _selectedSticker.current = _selectedSticker.current.map((sticker, _index) => {
+      if (index === _index) {
+        return { ...sticker, currentPageX: pageX, currentPageY: pageY };
+      }
+
+      return sticker;
+    });
   };
   const handleOnTouchMoveZoom = (event: React.TouchEvent<HTMLDivElement>, index: number) => {
     if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
 
     event.stopPropagation();
     const { pageX, pageY } = event.touches[0];
-    const deltaX = pageX - selectedSticker[index].currentPageX;
-    const deltaY = pageY - selectedSticker[index].currentPageY;
+    const deltaX = pageX - _selectedSticker.current[index].currentPageX;
+    const deltaY = pageY - _selectedSticker.current[index].currentPageY;
     if (Math.abs(deltaX) < CONST_THRESHOLD || Math.abs(deltaY) < CONST_THRESHOLD) return;
 
     const average = (deltaX + deltaY) / 2;
-    const newWidth = selectedSticker[index].width + average;
-    const newHeight = selectedSticker[index].height + average;
+    const newWidth = _selectedSticker.current[index].width + average;
+    const newHeight = _selectedSticker.current[index].height + average;
     if (newWidth < 20 || newWidth > 350) return;
 
     if (newHeight < 20 || newHeight > 350) return;
 
-    setSelectedSticker((prevSticker) =>
-      prevSticker.map((sticker, _index) => {
-        if (index === _index) {
-          return {
-            ...sticker,
-            currentPageX: pageX,
-            currentPageY: pageY,
-            width: sticker.width + average,
-            height: sticker.height + average,
-          };
-        }
-        return sticker;
-      }),
-    );
+    setStore((prevStore) => ({
+      ...prevStore,
+      orderInfo: {
+        ...prevStore.orderInfo,
+        stickers: prevStore.orderInfo.stickers.map((sticker, _index) => {
+          if (index === _index) {
+            return {
+              ...sticker,
+              currentPageX: pageX,
+              currentPageY: pageY,
+              width: sticker.width + average,
+              height: sticker.height + average,
+            };
+          }
+
+          return sticker;
+        }),
+      },
+    }));
+
+    _selectedSticker.current = _selectedSticker.current.map((sticker, _index) => {
+      if (index === _index) {
+        return {
+          ...sticker,
+          currentPageX: pageX,
+          currentPageY: pageY,
+          width: sticker.width + average,
+          height: sticker.height + average,
+        };
+      }
+
+      return sticker;
+    });
   };
 
   const handleOnTouchEndZoom = (event: React.TouchEvent<HTMLDivElement>) => {
@@ -344,14 +371,31 @@ export default function SelectSticker() {
 
     event.stopPropagation();
     playSoundTouch(false);
-    const newSelectedSticker = selectedSticker.filter((sticker, _index) => _index !== index);
-    setSelectedSticker(newSelectedSticker);
+    const newSelectedSticker = _selectedSticker.current.filter((sticker, _index) => _index !== index);
+    setStore((prevStore) => ({
+      ...prevStore,
+      orderInfo: {
+        ...prevStore.orderInfo,
+        stickers: newSelectedSticker,
+      },
+    }));
+
     _selectedSticker.current = newSelectedSticker;
     setCurrentChooseStickerIndex(null);
   };
 
-  const handleConvertCanvasToBase64 = async (
-    pathImage: string,
+  const handleOnTouchStartCheckOutsideSticker = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
+    playSoundTouch(false);
+    const stickerElement = stickerRef.current;
+    if (stickerElement && !stickerElement.contains(event.target as Node)) {
+      setCurrentChooseStickerIndex(null);
+    }
+  };
+
+  const convertStickersAndFrameToBase64 = async (
+    framePath: string,
     selectedSticker: (PathResourceType & {
       top: number;
       left: number;
@@ -366,8 +410,8 @@ export default function SelectSticker() {
     width: number,
     height: number,
   ) => {
-    const listPromiseSticker = selectedSticker.map((sticker) => loadImage(store.pathFolderAssets + sticker.relPath));
-    const results = await Promise.all([loadImage(pathImage), ...listPromiseSticker]);
+    const listPromiseSticker = selectedSticker.map((sticker) => loadImage(store.assetsFolderPath + sticker.relPath));
+    const results = await Promise.all([loadImage(framePath), ...listPromiseSticker]);
     const elementImageEffect = results[0];
     const elementStickers = results.slice(1, results.length);
     const canvas = document.createElement('canvas');
@@ -391,40 +435,70 @@ export default function SelectSticker() {
     return base64String;
   };
 
-  const handleOnTouchStartCheckOutsideSticker = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
-
-    playSoundTouch(false);
-    const stickerElement = stickerRef.current;
-
-    if (stickerElement && !stickerElement.contains(event.target as Node)) {
-      setCurrentChooseStickerIndex(null);
-    }
-  };
-
-  const handleInsetQRCodeToFrame = async (
-    imageBase64: string,
-    qrCodeBase64: string,
-    frameMode: string,
-    frameType: string,
-    frameStyle: string,
+  const mergeAllImagesSequentiallyNoQR = async (
+    imageSelectEffect: string,
+    imageStickerAndFrameBase64: string,
     width: number,
     height: number,
   ) => {
-    const results = await Promise.all([loadImage(imageBase64), loadImage(qrCodeBase64)]);
-    const [imageFrameElement, qrCodeElement] = results;
+    const promises = [loadImage(imageSelectEffect), loadImage(imageStickerAndFrameBase64)];
+    const results = await Promise.all(promises);
+    const [effectImageElement, stickerAndFrameElement] = results;
     const canvas = document.createElement('canvas');
     canvas.width = width;
     canvas.height = height;
     const context = canvas.getContext('2d');
-    context.drawImage(imageFrameElement, 0, 0, width, height);
-    context.drawImage(qrCodeElement, 1070, 1670, 120, 120);
+    context.drawImage(effectImageElement, 0, 0, width, height);
+    context.drawImage(stickerAndFrameElement, 0, 0, width, height);
     const base64String = canvas.toDataURL('image/png');
     return base64String;
   };
 
-  const handleOnTouchStartNextPage = async (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+  const insertQrToImage = async (
+    colorBase64NoQR: string,
+    qrImage: string,
+    width: number,
+    height: number,
+    qrPosition: { x: number; y: number; w: number; h: number },
+  ) => {
+    const promises = [loadImage(colorBase64NoQR), loadImage(qrImage)];
+    const results = await Promise.all(promises);
+    const [elementColorBase64, elementQr] = results;
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext('2d');
+    context.drawImage(elementColorBase64, 0, 0, width, height);
+    const { x, y, w, h } = qrPosition;
+    context.drawImage(elementQr, x, y, w, h);
+    const base64String = canvas.toDataURL('image/png');
+    return base64String;
+  };
+
+  const processComplete = async () => {
+    const { imageSelectEffect, frameRelPath, width, height, frameMode, frameType, selectedPhotos, effect } =
+      store.orderInfo;
+    const imageStickerAndFrameBase64 = await convertStickersAndFrameToBase64(
+      store.assetsFolderPath + frameRelPath,
+      _selectedSticker.current,
+      store.orderInfo.width,
+      store.orderInfo.height,
+    );
+
+    const _mergeAllImagesSequentiallyNoQR = await mergeAllImagesSequentiallyNoQR(
+      imageSelectEffect,
+      imageStickerAndFrameBase64,
+      width,
+      height,
+    );
+
+    const _saveImageFrameSticker = await window.api.saveImageFrameSticker(imageStickerAndFrameBase64);
+    if (!_saveImageFrameSticker) {
+      alert(
+        'Save frame sticker image failed, please check the printer or contact the technical department. We apologize for the inconvenience !!!',
+      );
+      return false;
+    }
 
     const _getQRCode = await window.api.getQRCode(store.orderInfo._id);
     if (!_getQRCode) {
@@ -432,51 +506,16 @@ export default function SelectSticker() {
       return false;
     }
 
-    // setIsLoading(true);
-    playSoundTouch(false);
-    const imageBase64 = await handleConvertCanvasToBase64(
-      store.orderInfo.imageSelectEffect,
-      selectedSticker,
-      store.orderInfo.width,
-      store.orderInfo.height,
-    );
+    const qrPosition = getPositionForQrCodeByFrameModeAndFrameType(frameMode, frameType);
+    const colorBase64 = await insertQrToImage(_mergeAllImagesSequentiallyNoQR, _getQRCode, width, height, qrPosition);
 
-    const imageBase64WithQRCode = await handleInsetQRCodeToFrame(
-      imageBase64,
-      _getQRCode,
-      store.orderInfo.frameMode,
-      store.orderInfo.frameType,
-      store.orderInfo.frameStyle,
-      store.orderInfo.width,
-      store.orderInfo.height,
-    );
-
-    const imageWithFrameAndStickerBase64 = await handleConvertCanvasToBase64(
-      store.pathFolderAssets + store.orderInfo.frameRelPath,
-      selectedSticker,
-      store.orderInfo.width,
-      store.orderInfo.height,
-    );
-
-    const saveFrameSticker = await window.api.saveImageFrameSticker(imageWithFrameAndStickerBase64);
-    if (!saveFrameSticker) {
-      alert(
-        'Save frame sticker image failed, please check the printer or contact the technical department. We apologize for the inconvenience !!!',
-      );
-      return;
-    }
-
-    const positions = getPositionByFrameModeAndFrameType(
-      CONST_FRAME_POSITIONS,
-      store.orderInfo.frameMode,
-      store.orderInfo.frameType,
-    );
+    const positions = getPositionByFrameModeAndFrameType(CONST_FRAME_POSITIONS, frameMode, frameType);
     const data = {
-      frameMode: store.orderInfo.frameMode,
-      frameWidth: store.orderInfo.width,
-      frameHeight: store.orderInfo.height,
-      photos: store.orderInfo.selectedPhotos,
-      effectName: store.orderInfo.effect.name,
+      frameMode: frameMode,
+      frameWidth: width,
+      frameHeight: height,
+      photos: selectedPhotos,
+      effectName: effect.name,
       positions: positions,
     };
     const generateVideo = await window.api.generateVideo(data);
@@ -484,51 +523,54 @@ export default function SelectSticker() {
       alert(
         'Save video failed, please check the printer or contact the technical department. We apologize for the inconvenience !!!',
       );
-      return;
+      return false;
     }
 
-    store.orderInfo['colorBase64'] = imageBase64WithQRCode;
-    store.orderInfo['originalBase64'] = imageBase64;
+    store.orderInfo['colorBase64'] = colorBase64;
+    store.orderInfo['colorBase64NoQR'] = _mergeAllImagesSequentiallyNoQR;
     store.orderInfo['videoBase64'] = generateVideo;
-    const savePhoto = await window.api.saveImage({ orderInfo: store.orderInfo });
-    if (!savePhoto) {
+    const _saveImage = await window.api.saveImage({ orderInfo: store.orderInfo });
+    if (!_saveImage) {
       alert(
         'Printer failed, please check the printer or contact the technical department. We apologize for the inconvenience !!!',
       );
-      return;
+      return false;
     }
+
+    return true;
+  };
+
+  const handleOnTouchStartNextPage = async (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
+
+    playSoundTouch(false);
+    const _processComplete = await processComplete();
+    if (!_processComplete) return false;
+
     setStore((prevStore) => ({
       ...prevStore,
-      shootingMethod: INIT_STORE.shootingMethod,
-      shootingTime: INIT_STORE.shootingTime,
-      orderInfo: { ...INIT_STORE.orderInfo },
+      orderInfo: { ...prevStore.orderInfo, ...INIT_STORE.orderInfo },
     }));
-    setStore((prevStore) => ({
-      ...prevStore,
-      orderInfo: { ...prevStore.orderInfo, imageFrameSticker: imageWithFrameAndStickerBase64 },
-    }));
+
     navigate('/complete');
   };
 
-  const handleTimeout = () => {
+  const handleTimeout = async () => {
     setIsLoading(true);
-    handleConvertCanvasToBase64(
-      store.orderInfo.imageSelectEffect,
-      _selectedSticker.current,
-      store.orderInfo.width,
-      store.orderInfo.height,
-    ).then((imageWithFrameAndStickerBase64) => {
-      setStore((prevStore) => ({
-        ...prevStore,
-        orderInfo: { ...prevStore.orderInfo, imageFrameSticker: imageWithFrameAndStickerBase64 },
-      }));
-      navigate('/complete');
-    });
+    const _processComplete = await processComplete();
+    if (!_processComplete) return false;
+
+    setStore((prevStore) => ({
+      ...prevStore,
+      orderInfo: { ...prevStore.orderInfo, ...INIT_STORE.orderInfo },
+    }));
+
+    navigate('/complete');
   };
 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
-      <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />
+      <BackgroundImage url={store.assetsFolderPath + store.resources.backgroundImages[1]?.relPath} />
       {isLoading && (
         <div className='fixed inset-0 z-50 flex items-center justify-center bg-custom-style-1 font-rokkitt text-4xl font-semibold opacity-80'>
           <span className='animate-opacity-slow-infinite'>Please wait some minute . . .</span>
@@ -540,15 +582,15 @@ export default function SelectSticker() {
           <div className='flex h-full w-[650px] flex-col items-center justify-center'>
             <div className='flex items-center justify-center'>
               <div className='z-20 h-[80.1px] w-[103.2px] translate-x-5 -rotate-6'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[3]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[3]?.relPath} />
               </div>
 
               <div className='z-10 h-[80.1px] w-[103.2px]'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[4]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[4]?.relPath} />
               </div>
 
               <div className='h-[80.1px] w-[103.2px] -translate-x-4 rotate-12'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[2]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[2]?.relPath} />
               </div>
             </div>
             <div
@@ -567,7 +609,11 @@ export default function SelectSticker() {
                   <DisplayImage src={store.orderInfo.imageSelectEffect} />
                 </div>
 
-                {selectedSticker?.map((sticker, index) => {
+                <div className='absolute inset-0'>
+                  <DisplayImage src={store.assetsFolderPath + store.orderInfo.frameRelPath} />
+                </div>
+
+                {_selectedSticker.current?.map((sticker, index) => {
                   return (
                     <div
                       key={index}
@@ -591,7 +637,7 @@ export default function SelectSticker() {
                           className='h-full w-full'
                           style={{ transform: `rotate(${sticker.rotate}deg)`, transition: 'transform 0.1s linear' }}
                         >
-                          <DisplayImage src={store.pathFolderAssets + sticker.relPath} />
+                          <DisplayImage src={store.assetsFolderPath + sticker.relPath} />
                         </div>
                       </div>
 
@@ -604,7 +650,7 @@ export default function SelectSticker() {
                             onTouchEnd={(event) => handleTouchEndRotate(event)}
                           >
                             <div className='h-full w-full rounded-full bg-custom-style-1'>
-                              <DisplayImage src={store.pathFolderAssets + store.resources.icons[56]?.relPath} />
+                              <DisplayImage src={store.assetsFolderPath + store.resources.icons[56]?.relPath} />
                             </div>
                           </div>
                         </div>
@@ -616,20 +662,20 @@ export default function SelectSticker() {
                           onTouchStart={(event) => handleOnTouchStartCancel(event, index)}
                         >
                           <div className='h-full w-full rounded-full bg-custom-style-1'>
-                            <DisplayImage src={store.pathFolderAssets + store.resources.icons[55]?.relPath} />
+                            <DisplayImage src={store.assetsFolderPath + store.resources.icons[55]?.relPath} />
                           </div>
                         </div>
                       )}
 
                       {currentChooseStickerIndex === index && (
                         <div
-                          className='absolute -bottom-[24px] -right-[28px] h-[60px] w-[60px] p-2'
+                          className='absolute -bottom-[22px] -right-[26px] h-[55px] w-[55px] p-2'
                           onTouchStart={(event) => handleOnTouchStartZoom(event, index)}
                           onTouchMove={(event) => handleOnTouchMoveZoom(event, index)}
                           onTouchEnd={(event) => handleOnTouchEndZoom(event)}
                         >
                           <div className='h-full w-full rounded-full bg-custom-style-1'>
-                            <DisplayImage src={store.pathFolderAssets + store.resources.icons[54]?.relPath} />
+                            <DisplayImage src={store.assetsFolderPath + store.resources.icons[54]?.relPath} />
                           </div>
                         </div>
                       )}
@@ -644,7 +690,7 @@ export default function SelectSticker() {
             <div className='flex w-full items-center justify-end gap-x-6 px-10'>
               <div className='relative h-[99.5px] w-[668.7px]'>
                 <div className='h-full w-full'>
-                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[39]?.relPath} />
+                  <DisplayImage src={store.assetsFolderPath + store.resources.icons[39]?.relPath} />
                 </div>
 
                 <div className='absolute left-[180px] top-[26px] font-rokkitt text-[32px] font-bold tracking-wider'>
@@ -655,114 +701,69 @@ export default function SelectSticker() {
 
               <div className='mb-3'>
                 <Countdown
-                  url={store.pathFolderAssets + store.resources.icons[10]?.relPath}
+                  url={store.assetsFolderPath + store.resources.icons[10]?.relPath}
                   time={300}
-                  handleTimeout={handleTimeout}
+                  // handleTimeout={handleTimeout}
                 />
               </div>
             </div>
 
             <div className='z-10 h-[750.4px] w-[1041.6px] rounded-xl bg-custom-style-3-1'>
-              <div className='flex h-full w-full flex-col items-center justify-center'>
+              <div className='flex h-full w-full flex-col items-center justify-center px-4'>
                 <div className='my-4 h-[22px] w-[140px] rounded-full bg-custom-style-1'></div>
-                <div className='relative h-full w-full px-6'>
-                  <div
-                    className='relative flex h-full w-full flex-col items-center justify-between bg-custom-style-1 px-10'
-                    onTouchStart={(event) => handleOnTouchStart(event)}
-                    onTouchMove={(event) => handleOnTouchMove(event)}
-                    onTouchEnd={(event) => handleOnTouchEnd(event)}
-                  >
-                    <div className='absolute left-0 right-0 top-0 h-[40px] overflow-hidden'>
-                      <div className='flex h-full w-full items-center justify-start text-center font-rokkitt text-[16px]'>
-                        <div
-                          className={`polygon-tab flex h-full min-w-[210px] -translate-x-[16px] justify-center gap-x-2 p-0.5 ${currentTabIndex === 0 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
-                          onTouchStart={(event) => handleOnTouchStartChangeTab(event, 0)}
-                        >
-                          <div className='h-[17px] w-[12px]'>
-                            <DisplayImage src={store.pathFolderAssets + store.resources.icons[44]?.relPath} />
-                          </div>
-                          <span>{CONST_LIST_TAB_STICKER[0]}</span>
-                        </div>
 
-                        <div
-                          className={`polygon-tab h-full min-w-[210px] -translate-x-[44px] p-0.5 ${currentTabIndex === 1 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
-                          onTouchStart={(event) => handleOnTouchStartChangeTab(event, 1)}
-                        >
-                          <span>{CONST_LIST_TAB_STICKER[1]}</span>
-                        </div>
-
-                        <div
-                          className={`polygon-tab h-full min-w-[210px] -translate-x-[72px] p-0.5 ${currentTabIndex === 2 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
-                          onTouchStart={(event) => handleOnTouchStartChangeTab(event, 2)}
-                        >
-                          <span>{CONST_LIST_TAB_STICKER[2]}</span>
-                        </div>
-
-                        <div
-                          className={`polygon-tab h-full min-w-[210px] -translate-x-[100px] p-0.5 ${currentTabIndex === 3 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
-                          onTouchStart={(event) => handleOnTouchStartChangeTab(event, 3)}
-                        >
-                          <span>{CONST_LIST_TAB_STICKER[3]}</span>
-                        </div>
-
-                        <div
-                          className={`polygon-tab h-full min-w-[210px] -translate-x-[128px] p-0.5 ${currentTabIndex === 4 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
-                          onTouchStart={(event) => handleOnTouchStartChangeTab(event, 4)}
-                        >
-                          <span>{CONST_LIST_TAB_STICKER[4]}</span>
-                        </div>
+                <div className='h-full w-full flex-1 overflow-hidden bg-custom-style-1'>
+                  <div className='relative flex h-12 items-center justify-start bg-custom-style-1 text-center font-rokkitt text-[16px]'>
+                    <div
+                      className={`polygon-tab flex h-full min-w-[210px] -translate-x-[16px] justify-center gap-x-2 p-0.5 ${currentTabIndex === 0 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
+                      onTouchStart={(event) => handleOnTouchStartChangeTab(event, 0)}
+                    >
+                      <div className='h-[17px] w-[12px]'>
+                        <DisplayImage src={store.assetsFolderPath + store.resources.icons[44]?.relPath} />
                       </div>
-
-                      <div className='absolute bottom-0 left-0 right-0 h-[12px] bg-custom-style-2-2'></div>
+                      <span>{CONST_LIST_TAB_STICKER[0]}</span>
                     </div>
 
+                    <div
+                      className={`polygon-tab h-full min-w-[210px] -translate-x-[44px] p-0.5 ${currentTabIndex === 1 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
+                      onTouchStart={(event) => handleOnTouchStartChangeTab(event, 1)}
+                    >
+                      <span>{CONST_LIST_TAB_STICKER[1]}</span>
+                    </div>
+
+                    <div
+                      className={`polygon-tab h-full min-w-[210px] -translate-x-[72px] p-0.5 ${currentTabIndex === 2 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
+                      onTouchStart={(event) => handleOnTouchStartChangeTab(event, 2)}
+                    >
+                      <span>{CONST_LIST_TAB_STICKER[2]}</span>
+                    </div>
+
+                    <div
+                      className={`polygon-tab h-full min-w-[210px] -translate-x-[100px] p-0.5 ${currentTabIndex === 3 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
+                      onTouchStart={(event) => handleOnTouchStartChangeTab(event, 3)}
+                    >
+                      <span>{CONST_LIST_TAB_STICKER[3]}</span>
+                    </div>
+
+                    <div
+                      className={`polygon-tab h-full min-w-[210px] -translate-x-[128px] p-0.5 ${currentTabIndex === 4 ? 'z-10 bg-custom-style-2-2' : 'bg-custom-style-2-1'}`}
+                      onTouchStart={(event) => handleOnTouchStartChangeTab(event, 4)}
+                    >
+                      <span>{CONST_LIST_TAB_STICKER[4]}</span>
+                    </div>
+
+                    <div className='absolute bottom-0 left-0 right-0 h-[12px] bg-custom-style-2-2'></div>
+                  </div>
+
+                  <div
+                    className='custom-scroll-bar visible-scroll-bar custom-scroll-bar-thumb custom-scroll-bar-hidden-button h-full w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-custom-style-1'
+                    onTouchEnd={handleOnTouchEndScrollPhotos}
+                    onTouchMove={handleOnTouchMoveScrollPhotos}
+                  >
                     <Stickers
                       itemsSticker={itemsSticker}
-                      currentIndex={currentIndex}
                       handleOnTouchEndChooseSticker={handleOnTouchEndChooseSticker}
                     />
-
-                    <div className='absolute bottom-0 flex h-[100px] w-full items-center justify-center gap-x-4'>
-                      {[...Array(itemsSticker.length)]
-                        .map((_, i) => i)
-                        .map((item, index) => {
-                          if (item === currentIndex) {
-                            return (
-                              <div key={index} className='h-[42px] w-[44px]'>
-                                <DisplayImage src={store.pathFolderAssets + store.resources.icons[40]?.relPath} />
-                              </div>
-                            );
-                          }
-
-                          return (
-                            <div
-                              key={index}
-                              className='h-[30px] w-[30px]'
-                              onTouchStart={(event) => handleOnTouchChangeCurrentIndex(event, index)}
-                            >
-                              <DisplayImage src={store.pathFolderAssets + store.resources.icons[41]?.relPath} />
-                            </div>
-                          );
-                        })}
-                    </div>
-                  </div>
-
-                  <div
-                    className='absolute left-[27px] top-[260px] h-[50px] w-[50px] p-1'
-                    onTouchStart={(event) => handleOnTouchStartPrev(event)}
-                  >
-                    <div className='h-full w-full'>
-                      <DisplayImage src={store.pathFolderAssets + store.resources.icons[42]?.relPath} />
-                    </div>
-                  </div>
-
-                  <div
-                    className='absolute right-[27px] top-[260px] h-[50px] w-[50px] p-1'
-                    onTouchStart={(event) => handleOnTouchStartNext(event)}
-                  >
-                    <div className='h-full w-full'>
-                      <DisplayImage src={store.pathFolderAssets + store.resources.icons[38]?.relPath} />
-                    </div>
                   </div>
                 </div>
 
@@ -787,7 +788,7 @@ export default function SelectSticker() {
             onTouchStart={(event) => handleOnTouchStartNextPage(event)}
           >
             <div className='h-[79.8px] w-[79.8px]'>
-              <DisplayImage src={store.pathFolderAssets + store.resources.icons[38]?.relPath} />
+              <DisplayImage src={store.assetsFolderPath + store.resources.icons[38]?.relPath} />
             </div>
           </div>
         </div>

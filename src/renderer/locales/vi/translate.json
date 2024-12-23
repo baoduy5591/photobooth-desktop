@@ -28,6 +28,13 @@
     "isChooseAgainText2": "chọn lại frame lần nữa"
   },
 
+  "selectPhotos": {
+    "title1": "Chọn",
+    "title2": "hình ảnh để in",
+    "note1": "Vuốt xuống để thấy nhiều hình hơn",
+    "note2": "Để bỏ chọn, hãy chạm vào hình ảnh một lần nữa"
+  },
+
   "shootingMethod": {
     "countdownTitle": "Countdown",
     "countdownText1": "A photo is taken automatically",

@@ -34,13 +34,6 @@ const createWindow = (): void => {
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
-
-  // get configs machine
-  ipcMain.handle('get-machine-configs', async () => {
-    return {
-      platform: process.platform,
-    };
-  });
 };
 
 // ipcMain get resources
@@ -51,14 +44,13 @@ ipcMain.handle('get-resources', async () => {
 });
 
 // get system configs (call api)
-ipcMain.handle('get-system-configs', async () => {
-  return {
-    defaultLanguage: 'en',
-    videoIntro: 'videos/introduces/00000.mp4',
-    backgroundAudio: 'audios/backgrounds/00000.mp3',
-    touchAudio: 'audios/touch/00000.mp3',
-    warningAudio: 'audios/touch/00100.mp3',
-  };
+ipcMain.handle('get-client-setting', async () => {
+  const machineId = '13aef054-c3e9-4bec-8414-ade3bf4bcfcb'; // replace with new machine
+  const api = new API();
+  const _getClientSettingByMachineId = await api.getClientSettingByMachineId(machineId);
+  if (!_getClientSettingByMachineId) return false;
+
+  return _getClientSettingByMachineId;
 });
 
 ipcMain.handle('get-order-info-by-id', async (event, value) => {
@@ -70,21 +62,21 @@ ipcMain.handle('get-order-info-by-id', async (event, value) => {
 });
 
 // get path folder assets
-ipcMain.handle('get-path-folder-assets', () => {
-  const pathFolderAssets = Paths.getFolderAssetsForRenderer();
-  return pathFolderAssets;
+ipcMain.handle('get-assets-folder-path', () => {
+  const assetsFolderPath = Paths.getAssetsFolderPathForRenderer();
+  return assetsFolderPath;
 });
 
 // get path folder userPhotos
-ipcMain.handle('get-path-folder-userPhotos', () => {
-  const pathFolderUserPhotos = Paths.getFolderUserPhotosForRenderer();
-  return pathFolderUserPhotos;
+ipcMain.handle('get-user-photos-folder-path', () => {
+  const userPhotosFolderPath = Paths.getUserPhotosFolderPathForRenderer();
+  return userPhotosFolderPath;
 });
 
 //
-ipcMain.handle('get-user-resized-photos', () => {
+ipcMain.handle('get-user-converted-photos', () => {
   const userPhotos = new UserPhotos();
-  const resizedPhotos = userPhotos.getPhotosResized();
+  const resizedPhotos = userPhotos.getConvertedPhotos();
   return resizedPhotos;
 });
 
@@ -99,7 +91,7 @@ ipcMain.handle('save-image', async (event, data) => {
   const _saveImage = await api.saveImage(orderInfo);
   if (!_saveImage) return false;
 
-  const rootPath = Paths.getFolderUserPhotos();
+  const rootPath = Paths.getUserPhotosFolderPathForMain();
   const _deleteFileAndFolder = deleteFileAndFolder(rootPath);
   if (!_deleteFileAndFolder) return false;
 
@@ -108,8 +100,8 @@ ipcMain.handle('save-image', async (event, data) => {
 
 // save image frame + sticker
 ipcMain.handle('save-image-frame-sticker', async (event, imageBase64) => {
-  const pathFolderUserPhotos = Paths.getFolderUserPhotos();
-  const imagePath = path.join(pathFolderUserPhotos, CONST_FRAME_STICKER_IMAGE_NAME);
+  const userPhotosFolderPath = Paths.getUserPhotosFolderPathForMain();
+  const imagePath = path.join(userPhotosFolderPath, CONST_FRAME_STICKER_IMAGE_NAME);
   const base64Data = imageBase64.replace(/^data:image\/png;base64,/, '');
   const images = new Images(imagePath, base64Data);
   const _saveImage = images.saveImage();
@@ -127,7 +119,7 @@ ipcMain.handle('generate-video', async (event, data) => {
 });
 
 ipcMain.handle('delete-files', async () => {
-  const rootPath = Paths.getFolderUserPhotos();
+  const rootPath = Paths.getUserPhotosFolderPathForMain();
   const _deleteFileAndFolder = deleteFileAndFolder(rootPath);
   if (!_deleteFileAndFolder) return false;
 

@@ -129,7 +129,7 @@ export default function Shooting() {
         </div>
       )}
 
-      <BackgroundImage url={store.pathFolderAssets + store.resources.backgroundImages[1]?.relPath} />
+      <BackgroundImage url={store.assetsFolderPath + store.clientSetting.backgroundImageSecondary} />
 
       <div className='absolute inset-0'>
         {(isShootingCountdown || isShootingTriggered) && (
@@ -143,7 +143,7 @@ export default function Shooting() {
           <div className='flex h-full w-[325px] flex-col items-center justify-end'>
             <div className='relative h-[251px] w-[271px]'>
               <div className='h-full w-full scale-x-[-1]'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[25]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[25]?.relPath} />
               </div>
 
               <div className='absolute left-1/2 top-[80px] -translate-x-1/2 text-[36px] text-custom-style-2-1'>
@@ -157,27 +157,27 @@ export default function Shooting() {
 
             <div className='relative h-[200px] w-full'>
               <div className='absolute -top-[35px] left-[55px] h-[98.4px] w-[98.4px]'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[30]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[30]?.relPath} />
               </div>
 
               <div className='absolute bottom-[5px] left-[35px] h-[109.4px] w-[141px] -rotate-12'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[3]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[3]?.relPath} />
               </div>
 
               <div className='absolute right-[10px] top-[10px] h-[109.4px] w-[141px] rotate-6'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[2]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[2]?.relPath} />
               </div>
             </div>
 
             <div className='mb-20 mt-4 h-[38.4px] w-[272.5px]'>
-              <DisplayImage src={store.pathFolderAssets + store.resources.icons[24]?.relPath} />
+              <DisplayImage src={store.assetsFolderPath + store.resources.icons[24]?.relPath} />
             </div>
           </div>
 
           <div className='h-full grow'>
             <div className='relative flex h-full w-full flex-col items-center overflow-hidden rounded-[40px] bg-custom-style-6-1'>
               <div className='mb-6 mt-4 h-[70px] w-[70px]'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[34]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[34]?.relPath} />
               </div>
 
               <div className='relative h-[828px] w-[1242px] bg-custom-style-3-2'>
@@ -197,7 +197,7 @@ export default function Shooting() {
 
               <div className='w-[570px]] absolute bottom-[23px] left-[28px] h-[90px] font-rokkitt text-[30px] text-custom-style-3-1'>
                 <div className='h-full w-full'>
-                  <DisplayImage src={store.pathFolderAssets + store.resources.icons[36]?.relPath} />
+                  <DisplayImage src={store.assetsFolderPath + store.resources.icons[36]?.relPath} />
                 </div>
 
                 <div className='absolute left-[90px] top-[20px]'>
@@ -219,7 +219,7 @@ export default function Shooting() {
           <div className='flex h-full w-[325px] flex-col items-center justify-center'>
             <div className='relative h-[150px] w-[276.8px]'>
               <div className='h-full w-full'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[31]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[31]?.relPath} />
               </div>
 
               <div className='absolute left-[109px] top-[20px] text-[36px] text-custom-style-1'>
@@ -230,18 +230,18 @@ export default function Shooting() {
             </div>
 
             <div className='w-[141px]] h-[109.4px]'>
-              <DisplayImage src={store.pathFolderAssets + store.resources.icons[4]?.relPath} />
+              <DisplayImage src={store.assetsFolderPath + store.resources.icons[4]?.relPath} />
             </div>
 
             <div className='h-[320px] w-[320px] -translate-y-5'>
               <div className='h-full w-full'>
-                <DisplayImage src={store.pathFolderAssets + store.resources.icons[32]?.relPath} />
+                <DisplayImage src={store.assetsFolderPath + store.resources.icons[32]?.relPath} />
               </div>
 
               <div className='absolute inset-0 flex justify-center p-3'>
                 <div className='relative h-[200px] w-[300px] overflow-hidden rounded-2xl border border-custom-style-6-1'>
                   {shootingPhotos.length > 0 && (
-                    <DisplayImage src={store.pathFolderUserPhotos + '/' + shootingPhotos.slice(-1)[0]} />
+                    <DisplayImage src={store.userPhotosFolderPath + shootingPhotos.slice(-1)[0]} />
                   )}
 
                   <div className='absolute inset-0 flex justify-between'>

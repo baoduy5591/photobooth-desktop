@@ -3,8 +3,7 @@ import winston from 'winston';
 import Paths from './paths';
 import DailyRotateFile from 'winston-daily-rotate-file';
 
-const {combine, timestamp, json, prettyPrint, errors } = winston.format;
-
+const { combine, timestamp, json, prettyPrint, errors } = winston.format;
 
 class Loggers {
   isShowConsole: boolean;
@@ -23,47 +22,37 @@ class Loggers {
   }
 
   getFolderLoggers() {
-    const pathLogger = Paths.getFolderAppData() + "/loggers";
+    const pathLogger = Paths.getAppDataFolderPath() + '/loggers';
     if (!fs.existsSync(pathLogger)) {
       fs.mkdirSync(pathLogger);
     }
 
     return pathLogger;
   }
-  
+
   configsDailyRotateTransport(pathFile: string) {
     return new DailyRotateFile({
       filename: pathFile,
       datePattern: 'YYYY-MM-DD',
       maxFiles: '30d',
-    })
+    });
   }
-  
+
   configsTransport(pathFile: string) {
     if (this.isShowConsole) {
-      return [
-        new winston.transports.Console(),
-        this.configsDailyRotateTransport(pathFile)
-      ]
+      return [new winston.transports.Console(), this.configsDailyRotateTransport(pathFile)];
     }
 
-    return [
-      this.configsDailyRotateTransport(pathFile)
-    ]
+    return [this.configsDailyRotateTransport(pathFile)];
   }
 
   configs(server: string, pathFile: string) {
     return {
       level: 'info',
-      format: combine(
-        errors({ stack: true }),
-        timestamp(),
-        json(),
-        prettyPrint()
-      ),
+      format: combine(errors({ stack: true }), timestamp(), json(), prettyPrint()),
       transports: this.configsTransport(pathFile),
-      defaultMeta: {server: server}
-    }
+      defaultMeta: { server: server },
+    };
   }
 
   registryLoggers() {
@@ -76,11 +65,9 @@ class Loggers {
     const rendererLogger = winston.loggers.get(this.rendererId);
     return {
       mainLogger,
-      rendererLogger
-    }
+      rendererLogger,
+    };
   }
 }
 
 export default Loggers;
-
-

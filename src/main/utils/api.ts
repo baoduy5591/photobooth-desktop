@@ -4,7 +4,7 @@ import Loggers from './loggers';
 const logger = new Loggers();
 const { mainLogger } = logger.getLoggers();
 
-const ROOT = 'http://localhost:3001';
+const ROOT = 'http://10.22.23.3:3000';
 
 class API {
   headers: { headers: Record<string, string> };
@@ -41,6 +41,18 @@ class API {
       return response.data.qrCode;
     } catch (error) {
       mainLogger.error('@API.getQrCodeByOrderId: ERROR = ', error);
+      return false;
+    }
+  }
+
+  async getClientSettingByMachineId(machineId: string) {
+    try {
+      const response = await axios.get(`${ROOT}/api/clientSettings/${machineId}`);
+      if (!response.data.data.clientSetting) return false;
+
+      return response.data.data.clientSetting;
+    } catch (error) {
+      mainLogger.error('@API.getClientSettingByMachineId: ERROR = ', error);
       return false;
     }
   }
