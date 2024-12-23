@@ -54,8 +54,6 @@ export default function Shooting() {
     };
   }, [isStartLiveView, isStartRecord]);
 
-  const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
   useEffect(() => {
     wsCamera.current = new WebSocket('ws://127.0.0.1:8080/camera');
     wsCamera.current.onopen = () => {
