@@ -90,7 +90,6 @@ export default function Shooting() {
           setIsShootingCountdown(false);
           setIsShootingTriggered(false);
           setIsShooting(false);
-          wsCamera.current.send('record');
           setShootingPhotos((prevShootingPhoto) => {
             const newListShootingPhoto = [...prevShootingPhoto, data.message];
             if (newListShootingPhoto.length >= store.orderInfo.quantityShootingPhotos) {
@@ -106,6 +105,8 @@ export default function Shooting() {
 
             return newListShootingPhoto;
           });
+
+          wsCamera.current.send('record');
         }
       }
     };
@@ -215,7 +216,7 @@ export default function Shooting() {
                 </div>
               </div>
 
-              {isStartLiveView && !isShooting && (!isShootingCountdown || !isShootingTriggered) && (
+              {isStartLiveView && !isDoneShooting && !isShooting && !isShootingCountdown && !isShootingTriggered && (
                 <div className='absolute inset-0 flex items-center justify-center'>
                   <CountdownForShooting
                     time={store.orderInfo.shootingTime}
