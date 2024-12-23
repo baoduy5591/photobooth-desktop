@@ -74,9 +74,9 @@ export default function Shooting() {
       if (data.action === 'record') {
         if (data.result === 'OK') {
           wsCamera.current.send('unlock');
+          setIsStartRecord(true);
         } else {
           wsCamera.current.send('record');
-          setIsStartRecord(true);
         }
       }
 
