@@ -31,6 +31,7 @@ export default function Shooting() {
   const imgRef = useRef<HTMLImageElement>(null);
   const wsVideo = useRef<WebSocket | null>(null);
   const wsCamera = useRef<WebSocket | null>(null);
+  const isDoneRef = useRef<boolean>(false);
 
   useEffect(() => {
     if (!isStartLiveView || !isStartRecord) return;
@@ -73,8 +74,10 @@ export default function Shooting() {
 
       if (data.action === 'record') {
         if (data.result === 'OK') {
-          wsCamera.current.send('unlock');
-          setIsStartRecord(true);
+          if (!isDoneRef.current) {
+            wsCamera.current.send('unlock');
+            setIsStartRecord(true);
+          }
         } else {
           wsCamera.current.send('record');
         }
@@ -109,6 +112,7 @@ export default function Shooting() {
               wsCamera.current.send('stoprecord');
               wsCamera.current.send('stoplv');
               wsCamera.current.send('lock');
+              isDoneRef.current = true;
               setIsDoneShooting(true);
               setTimeout(() => {
                 navigate('/select-photos');
