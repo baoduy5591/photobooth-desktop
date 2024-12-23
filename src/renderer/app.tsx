@@ -42,8 +42,8 @@ export default function App() {
   return (
     <HashRouter>
       <Routes>
-        {/* <Route path='/' element={<Splash />} /> */}
-        <Route path='/' element={<SelectPhotos />} />
+        <Route path='/' element={<Splash />} />
+        {/* <Route path='/' element={<SelectPhotos />} /> */}
         <Route path='/home' element={<Home />} />
         <Route path='/enter-code' element={<EnterCode />} />
         <Route path='/shooting' element={<Shooting />} />
