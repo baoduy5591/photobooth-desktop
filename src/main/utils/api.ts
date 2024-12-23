@@ -4,7 +4,7 @@ import Loggers from './loggers';
 const logger = new Loggers();
 const { mainLogger } = logger.getLoggers();
 
-const ROOT = 'http://10.22.23.3:3000';
+const ROOT = 'http://172.16.50.20:3000';
 
 class API {
   headers: { headers: Record<string, string> };
