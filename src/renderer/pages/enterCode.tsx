@@ -60,7 +60,7 @@ export default function EnterCode() {
   };
 
   useEffect(() => {
-    // playSoundBackground(true);
+    playSoundBackground(true);
   }, []);
 
   return (
