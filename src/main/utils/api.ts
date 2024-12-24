@@ -4,7 +4,7 @@ import Loggers from './loggers';
 const logger = new Loggers();
 const { mainLogger } = logger.getLoggers();
 
-const ROOT = 'http://172.16.50.20:3000';
+const BASE_URL = 'http://172.16.50.20:3000';
 
 class API {
   headers: { headers: Record<string, string> };
@@ -15,7 +15,7 @@ class API {
 
   async getOrderInfoById(value: string): Promise<false | unknown> {
     try {
-      const response = await axios.get(`${ROOT}/api/clientOrders/start/${value}`, this.headers);
+      const response = await axios.get(`${BASE_URL}/api/clientOrders/start/${value}`, this.headers);
       return response.data;
     } catch (error) {
       mainLogger.error('@API.getOrderInfoById: ERROR = ', error);
@@ -25,7 +25,7 @@ class API {
 
   async saveImage(orderInfo: Record<string, string | number | boolean>): Promise<false | unknown> {
     try {
-      const response = await axios.post(`${ROOT}/api/clientOrders/endOrder`, orderInfo, this.headers);
+      const response = await axios.post(`${BASE_URL}/api/clientOrders/endOrder`, orderInfo, this.headers);
       return response;
     } catch (error) {
       mainLogger.error('@API.saveImage: ERROR = ', error);
@@ -35,7 +35,7 @@ class API {
 
   async getQrCodeByOrderId(orderId: string): Promise<false | string> {
     try {
-      const response = await axios.get(`${ROOT}/api/clientOrders/createQR/${orderId}`, this.headers);
+      const response = await axios.get(`${BASE_URL}/api/clientOrders/createQR/${orderId}`, this.headers);
       if (!response.data || !response.data.qrCode) return false;
 
       return response.data.qrCode;
@@ -47,7 +47,7 @@ class API {
 
   async getClientSettingByMachineId(machineId: string) {
     try {
-      const response = await axios.get(`${ROOT}/api/clientSettings/${machineId}`);
+      const response = await axios.get(`${BASE_URL}/api/clientSettings/${machineId}`);
       if (!response.data.data.clientSetting) return false;
 
       return response.data.data.clientSetting;
