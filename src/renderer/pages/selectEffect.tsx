@@ -194,7 +194,7 @@ export default function SelectEffect() {
                             <div
                               style={{
                                 transitionDuration: '0.3s',
-                                transform: `${store.orderInfo.effect.name === effect.name ? 'scale(1.3)' : 'scale(1)'} `,
+                                transform: `${store.orderInfo.effect.name === effect.name ? 'scale(1.1)' : 'scale(1)'} `,
                                 fontWeight: `${store.orderInfo.effect.name === effect.name ? '700' : '400'} `,
                               }}
                             >
