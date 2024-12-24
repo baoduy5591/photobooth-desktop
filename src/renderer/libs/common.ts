@@ -35,9 +35,7 @@ export const loadImage = (pathImage: string): Promise<HTMLImageElement> => {
     const image = new Image();
     image.src = pathImage;
     image.onload = () => {
-      setTimeout(() => {
-        resolve(image);
-      }, 2000);
+      resolve(image);
     };
   });
 };
