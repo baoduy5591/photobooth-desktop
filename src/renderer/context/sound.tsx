@@ -13,6 +13,7 @@ const SoundContext = createContext<SoundContextType | undefined>(undefined);
 export const SoundContextProvider = ({ children }: { children: React.ReactNode }) => {
   const { store } = useStore();
 
+  console.log(store);
   const soundTouch = useMemo(
     () => new Audio(store.assetsFolderPath + store.clientSetting.touchAudio),
     [store.clientSetting.touchAudio, store.assetsFolderPath],
