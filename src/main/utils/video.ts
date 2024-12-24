@@ -1,9 +1,13 @@
 import { exec, execSync } from 'child_process';
 import path from 'path';
 import Paths from './paths';
-import { CONST_FRAME_STICKER_IMAGE_NAME, CONST_MODE_CUTTING, CONST_VIDEO_RATIO_WITH_FRAME } from '../libs/constants';
+import {
+  CONST_FFMPEG_ZIP_NAME,
+  CONST_FRAME_STICKER_IMAGE_NAME,
+  CONST_MODE_CUTTING,
+  CONST_VIDEO_RATIO_WITH_FRAME,
+} from '../libs/constants';
 import Loggers from './loggers';
-import fs from 'fs';
 
 const loggers = new Loggers(true);
 const { mainLogger } = loggers.getLoggers();
@@ -19,7 +23,7 @@ interface VideosType {
 }
 
 export function generateVideo(data: GenerateVideoType) {
-  const ffmpeg = path.join(Paths.getFolderExternal(), 'ffmpeg.exe');
+  const ffmpeg = path.join(Paths.getExternalFolderPath(), CONST_FFMPEG_ZIP_NAME);
   const folderUserPhotosPath = Paths.getUserPhotosFolderPathForMain();
   const frameStickerImagePath = path.join(folderUserPhotosPath, CONST_FRAME_STICKER_IMAGE_NAME);
   const widthImage = Math.floor(data.frameWidth / CONST_VIDEO_RATIO_WITH_FRAME);

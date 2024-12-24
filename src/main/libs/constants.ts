@@ -32,3 +32,5 @@ export const CONST_FRAME_STICKER_IMAGE_NAME = 'frame_sticker.png';
 export const CONST_VIDEO_RATIO_WITH_FRAME = 1.66666666; // (wFrame / wVideo) = 1.666666666
 
 export const CONST_MODE_CUTTING = 'cutting';
+
+export const CONST_FFMPEG_NAME = 'ffmpeg.exe';

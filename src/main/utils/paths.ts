@@ -37,7 +37,7 @@ class Paths {
     }
   }
 
-  static getFolderExternal() {
+  static getExternalFolderPath() {
     const isPackaged = app.isPackaged;
     if (isPackaged) {
       return path.join(process.resourcesPath, 'external');
