@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { loadImage } from '../libs/common';
+import React, { useState } from 'react';
 
 interface DisplayImageProps {
   src: string;
@@ -9,9 +8,9 @@ export const DisplayImage = React.memo(
   function DisplayImage({ src }: DisplayImageProps) {
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    useEffect(() => {
-      loadImage(src).then((image) => setIsLoading(false));
-    }, []);
+    const handleOnloadImage = () => {
+      setIsLoading(false);
+    };
 
     return (
       <div className='relative h-full w-full'>
@@ -30,7 +29,7 @@ export const DisplayImage = React.memo(
           </div>
         )}
 
-        <img src={src} alt='image' className='h-full w-full' />
+        <img src={src} onLoad={handleOnloadImage} alt='image' className='h-full w-full' />
       </div>
     );
   },
