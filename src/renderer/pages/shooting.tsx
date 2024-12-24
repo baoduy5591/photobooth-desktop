@@ -183,9 +183,11 @@ export default function Shooting() {
                     <span>{translate('translation:shooting.start')}</span>
                   </div>
                 ) : (
-                  <div className='min-w-max'>
-                    <span>{translate(`translation:shooting.${randomCompliment}`)}</span>
-                  </div>
+                  !isShooting && (
+                    <div className='min-w-max'>
+                      <span>{translate(`translation:shooting.${randomCompliment}`)}</span>
+                    </div>
+                  )
                 )}
               </div>
             </div>
