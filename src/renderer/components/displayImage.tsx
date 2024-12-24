@@ -6,6 +6,7 @@ interface DisplayImageProps {
 
 export const DisplayImage = React.memo(
   function DisplayImage({ src }: DisplayImageProps) {
+    console.log('src', src);
     return <img src={src} alt='image' className='h-full w-full' />;
   },
   (prevProps, nextProps) => {
