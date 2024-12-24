@@ -22,6 +22,7 @@ export default function SelectSticker() {
   const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
   const [currentChooseStickerIndex, setCurrentChooseStickerIndex] = useState<number>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [imageQRTest, setImageQRTest] = useState<string>('');
 
   const isTouchMoveScroll = useRef<boolean>(false);
 
@@ -510,6 +511,7 @@ export default function SelectSticker() {
 
     const qrPosition = getPositionForQrCodeByFrameModeAndFrameType(frameMode, frameType);
     const colorBase64 = await insertQrToImage(_mergeAllImagesSequentiallyNoQR, _getQRCode, width, height, qrPosition);
+    setImageQRTest(colorBase64); // delete after test
 
     const positions = getPositionByFrameModeAndFrameType(CONST_FRAME_POSITIONS, frameMode, frameType);
     const data = {
@@ -705,7 +707,7 @@ export default function SelectSticker() {
                 <Countdown
                   url={store.assetsFolderPath + store.resources.icons[10]?.relPath}
                   time={300}
-                  // handleTimeout={handleTimeout}
+                  handleTimeout={handleTimeout}
                 />
               </div>
             </div>
@@ -795,6 +797,12 @@ export default function SelectSticker() {
           </div>
         </div>
       </div>
+
+      {imageQRTest && (
+        <div style={{ width: `${store.orderInfo.width / 2}px`, height: `${store.orderInfo.height / 2}px` }}>
+          <DisplayImage src={imageQRTest} />
+        </div>
+      )}
     </div>
   );
 }
