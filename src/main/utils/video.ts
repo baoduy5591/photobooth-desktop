@@ -1,8 +1,8 @@
-import { exec, execSync } from 'child_process';
+import { execSync } from 'child_process';
 import path from 'path';
 import Paths from './paths';
 import {
-  CONST_FFMPEG_ZIP_NAME,
+  CONST_FFMPEG_NAME,
   CONST_FRAME_STICKER_IMAGE_NAME,
   CONST_MODE_CUTTING,
   CONST_VIDEO_RATIO_WITH_FRAME,
@@ -23,7 +23,7 @@ interface VideosType {
 }
 
 export function generateVideo(data: GenerateVideoType) {
-  const ffmpeg = path.join(Paths.getExternalFolderPath(), CONST_FFMPEG_ZIP_NAME);
+  const ffmpeg = path.join(Paths.getExternalFolderPath(), CONST_FFMPEG_NAME);
   const folderUserPhotosPath = Paths.getUserPhotosFolderPathForMain();
   const frameStickerImagePath = path.join(folderUserPhotosPath, CONST_FRAME_STICKER_IMAGE_NAME);
   const widthImage = Math.floor(data.frameWidth / CONST_VIDEO_RATIO_WITH_FRAME);
@@ -31,7 +31,6 @@ export function generateVideo(data: GenerateVideoType) {
   const videos: VideosType[] = [];
   data.photos.forEach((photo, index) => {
     const positions = data.positions[index];
-    // const videoName = photo.photo.split('photo').join('record').slice(0, -8) + '.mp4';
     const videoName = photo.photo.split('photo').join('record').split('_').slice(0, -1).join('_') + '.mp4';
     if (data.frameMode === CONST_MODE_CUTTING) {
       positions.forEach((position) => {
