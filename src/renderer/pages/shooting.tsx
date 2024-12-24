@@ -94,15 +94,6 @@ export default function Shooting() {
         }
       }
 
-      if (data.action === 'shooting-triggered') {
-        if (data.result === 'OK') {
-          setIsStart(true);
-          setIsShootingCountdown(false);
-          setIsShootingTriggered(true);
-          setIsShooting(false);
-        }
-      }
-
       if (data.action === 'takephoto') {
         if (data.result === 'OK') {
           setIsStart(true);
@@ -140,12 +131,10 @@ export default function Shooting() {
     setIsShootingCountdown(true);
     setIsShootingTriggered(false);
     setIsShooting(true);
-    setIsStart(true);
   };
 
   useEffect(() => {
     if (isShootingCountdown) {
-      setIsStart(true);
       if (wsCamera.current && wsCamera.current.readyState === WebSocket.OPEN) {
         wsCamera.current.send('takephoto');
       }
