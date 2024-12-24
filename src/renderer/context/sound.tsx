@@ -14,10 +14,14 @@ export const SoundContextProvider = ({ children }: { children: React.ReactNode }
   const { store } = useStore();
 
   console.log(store);
-  const soundTouch = useMemo(
-    () => new Audio(store.assetsFolderPath + store.clientSetting.touchAudio),
-    [store.clientSetting.touchAudio, store.assetsFolderPath],
-  );
+  const soundTouch = useMemo(() => {
+    console.log(
+      'store.assetsFolderPath + store.clientSetting.touchAudio',
+      store.assetsFolderPath + store.clientSetting.touchAudio,
+    );
+    const audio = new Audio(store.assetsFolderPath + store.clientSetting.touchAudio);
+    return audio;
+  }, [store.clientSetting.touchAudio, store.assetsFolderPath]);
   const soundWarning = useMemo(
     () => new Audio(store.assetsFolderPath + store.clientSetting.warningAudio),
     [store.clientSetting.warningAudio, store.assetsFolderPath],
