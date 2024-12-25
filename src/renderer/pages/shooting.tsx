@@ -62,6 +62,7 @@ export default function Shooting() {
   useEffect(() => {
     wsCamera.current = new WebSocket('ws://127.0.0.1:8080/camera');
     wsCamera.current.onopen = () => {
+      console.log(store.orderInfo.ratio);
       wsCamera.current.send(`setphoto-img:r=2;w=${store.orderInfo.ratio}`);
       wsCamera.current.send('startlv');
       setTimeout(() => {
@@ -227,12 +228,12 @@ export default function Shooting() {
                   <div className='absolute inset-0 flex flex-col justify-between'>
                     <div
                       className='h-full bg-custom-style-3-1'
-                      style={{ height: `${(828 - 1242 / 2.82) / 2}px` }}
+                      style={{ height: `${(828 - 1242 / store.orderInfo.ratio) / 2}px` }}
                     ></div>
 
                     <div
                       className='h-full bg-custom-style-3-1'
-                      style={{ height: `${(828 - 1242 / 2.82) / 2}px` }}
+                      style={{ height: `${(828 - 1242 / store.orderInfo.ratio) / 2}px` }}
                     ></div>
 
                     <div className='absolute left-1/2 h-full w-[27px] -translate-x-1/2 bg-custom-style-3-1'></div>
@@ -243,12 +244,12 @@ export default function Shooting() {
                   <div className='absolute inset-0 flex flex-col justify-between'>
                     <div
                       className='h-full bg-custom-style-3-1'
-                      style={{ height: `${(828 - 1242 / 2.05) / 2}px` }}
+                      style={{ height: `${(828 - 1242 / store.orderInfo.ratio) / 2}px` }}
                     ></div>
 
                     <div
                       className='h-full bg-custom-style-3-1'
-                      style={{ height: `${(828 - 1242 / 2.05) / 2}px` }}
+                      style={{ height: `${(828 - 1242 / store.orderInfo.ratio) / 2}px` }}
                     ></div>
 
                     <div className='absolute left-1/2 h-full w-[27px] -translate-x-1/2 bg-custom-style-3-1'></div>
