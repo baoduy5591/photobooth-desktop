@@ -344,7 +344,7 @@ export default function SelectPhotos() {
                           <div
                             className='mb-3 mt-9'
                             key={index}
-                            style={{ width: '480px', height: `${480 / store.orderInfo.ratio}px` }}
+                            style={{ width: '450px', height: `${450 / store.orderInfo.ratio}px` }}
                             onTouchEnd={(event) => handleOnTouchEndChoosePhoto(event, photo)}
                           >
                             <div className='relative h-full w-full'>

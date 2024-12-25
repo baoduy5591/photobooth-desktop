@@ -217,7 +217,7 @@ export default function SelectEffect() {
                           <div
                             key={index}
                             className='relative mb-6 mt-14'
-                            style={{ width: '480px', height: `${480 / store.orderInfo.ratio}px` }}
+                            style={{ width: '450px', height: `${450 / store.orderInfo.ratio}px` }}
                             onTouchEnd={(event) => handleOnTouchEndTogglePhoto(event, effect)}
                           >
                             <div className='relative h-full w-full'>
