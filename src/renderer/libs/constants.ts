@@ -133,7 +133,7 @@ export const CONST_FRAME_POSITIONS: FramePositionType = {
       [{ x: 40, y: 53, w: 1160, h: 392 }],
       [{ x: 40, y: 462, w: 1160, h: 392 }],
       [{ x: 40, y: 870, w: 1160, h: 392 }],
-      [{ x: 40, y: 1280, w: 1160, h: 392 }],
+      [{ x: 40, y: 1278, w: 1160, h: 392 }],
     ],
     typeB: [
       [{ x: 40, y: 51, w: 1160, h: 540 }],
