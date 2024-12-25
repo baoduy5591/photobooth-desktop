@@ -1,4 +1,4 @@
-import { CONST_FRAME_POSITIONS } from './constants';
+import { CONST_FRAME_POSITIONS, CONST_MODE_CUTTING, CONST_MODE_REGULAR, CONST_MODE_WIDE } from './constants';
 
 export const changeFontByName = (fontName: string) => {
   document.body.style.fontFamily = fontName;
@@ -98,6 +98,169 @@ export const getPositionByAngle = (x0: number, y0: number, x1: number, y1: numbe
   return { x: x2, y: y2, angle: angleInDegrees };
 };
 
-export const getPositionForQrCodeByFrameModeAndFrameType = (frameMode: string, frameType: string) => {
-  return { x: 1070, y: 1670, w: 120, h: 120 };
+export const getCurrentDateToString = () => {
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  let date = `${currentDate.getDate()}`;
+  let month = `${currentDate.getMonth() + 1}`;
+  if (date.length < 2) {
+    date = `0${date}`;
+  }
+
+  if (month.length < 2) {
+    month = `0${month}`;
+  }
+
+  return `${date}-${month}-${year}`;
+};
+
+export const getDetailForQrCodeByFrameModeAndFrameType = (frameMode: string, frameType: string) => {
+  switch (frameMode) {
+    case CONST_MODE_CUTTING:
+      return [
+        {
+          x: 1120,
+          y: 1720,
+          w: 70,
+          h: 70,
+          xDate: 1120,
+          yDate: 1715,
+          fontDate: '14px Arial',
+          fillStyleDate: '#a7a9ac',
+          xOrderNumber: 5,
+          yOrderNumber: 10,
+          fontOrderNumber: '10px Arial',
+          fillStyleOrderNumber: '#a7a9ac',
+        },
+        {
+          x: 500,
+          y: 1720,
+          w: 70,
+          h: 70,
+          xDate: 500,
+          yDate: 1715,
+          fontDate: '14px Arial',
+          fillStyleDate: '#a7a9ac',
+          xOrderNumber: 605,
+          yOrderNumber: 10,
+          fontOrderNumber: '10px Arial',
+          fillStyleOrderNumber: '#a7a9ac',
+        },
+      ];
+
+    case CONST_MODE_REGULAR:
+      if (frameType === 'typeA') {
+        return [
+          {
+            x: 1120,
+            y: 1720,
+            w: 70,
+            h: 70,
+            xDate: 1120,
+            yDate: 1715,
+            fontDate: '14px Arial',
+            fillStyleDate: '#a7a9ac',
+            xOrderNumber: 5,
+            yOrderNumber: 10,
+            fontOrderNumber: '10px Arial',
+            fillStyleOrderNumber: '#a7a9ac',
+          },
+        ];
+      }
+
+      if (frameType === 'typeB') {
+        return [
+          {
+            x: 1120,
+            y: 10,
+            w: 70,
+            h: 70,
+            xDate: 1120,
+            yDate: 95,
+            fontDate: '14px Arial',
+            fillStyleDate: '#a7a9ac',
+            xOrderNumber: 5,
+            yOrderNumber: 1790,
+            fontOrderNumber: '10px Arial',
+            fillStyleOrderNumber: '#a7a9ac',
+          },
+        ];
+      }
+
+      if (frameType === 'typeC' || frameType === 'typeE' || frameType === 'typeF') {
+        return [
+          {
+            x: 1720,
+            y: 1120,
+            w: 70,
+            h: 70,
+            xDate: 1720,
+            yDate: 1115,
+            fontDate: '14px Arial',
+            fillStyleDate: '#a7a9ac',
+            xOrderNumber: 5,
+            yOrderNumber: 10,
+            fontOrderNumber: '10px Arial',
+            fillStyleOrderNumber: '#a7a9ac',
+          },
+        ];
+      }
+
+      if (frameType === 'typeD') {
+        return [
+          {
+            x: 10,
+            y: 1720,
+            w: 70,
+            h: 70,
+            xDate: 10,
+            yDate: 1715,
+            fontDate: '14px Arial',
+            fillStyleDate: '#a7a9ac',
+            xOrderNumber: 1180,
+            yOrderNumber: 10,
+            fontOrderNumber: '10px Arial',
+            fillStyleOrderNumber: '#a7a9ac',
+          },
+        ];
+      }
+    case CONST_MODE_WIDE:
+      if (frameType === 'typeA') {
+        return [
+          {
+            x: 1120,
+            y: 1720,
+            w: 70,
+            h: 70,
+            xDate: 1120,
+            yDate: 1715,
+            fontDate: '14px Arial',
+            fillStyleDate: '#a7a9ac',
+            xOrderNumber: 5,
+            yOrderNumber: 10,
+            fontOrderNumber: '10px Arial',
+            fillStyleOrderNumber: '#a7a9ac',
+          },
+        ];
+      }
+
+      if (frameType === 'typeB') {
+        return [
+          {
+            x: 1120,
+            y: 1720,
+            w: 70,
+            h: 70,
+            xDate: 1120,
+            yDate: 1715,
+            fontDate: '14px Arial',
+            fillStyleDate: '#a7a9ac',
+            xOrderNumber: 5,
+            yOrderNumber: 10,
+            fontOrderNumber: '10px Arial',
+            fillStyleOrderNumber: '#a7a9ac',
+          },
+        ];
+      }
+  }
 };

@@ -268,3 +268,18 @@ interface GenerateVideoType {
     h: number;
   }[][];
 }
+
+interface QrDetailType {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  xDate: number;
+  yDate: number;
+  fontDate: string;
+  fillStyleDate: string;
+  xOrderNumber: number;
+  yOrderNumber: number;
+  fontOrderNumber: string;
+  fillStyleOrderNumber: string;
+}
