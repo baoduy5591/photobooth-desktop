@@ -130,7 +130,7 @@ export const CONST_FRAME_POSITIONS: FramePositionType = {
 
   wide: {
     typeA: [
-      [{ x: 40, y: 51, w: 1160, h: 392 }],
+      [{ x: 40, y: 52, w: 1160, h: 392 }],
       [{ x: 40, y: 462, w: 1160, h: 392 }],
       [{ x: 40, y: 872, w: 1160, h: 392 }],
       [{ x: 40, y: 1282, w: 1160, h: 392 }],
