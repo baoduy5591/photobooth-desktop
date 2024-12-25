@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
-import { CONST_FRAME_POSITIONS, CONST_SCALE_PHOTOS } from '../libs/constants';
+import { CONST_FRAME_POSITIONS, CONST_MODE_WIDE, CONST_SCALE_PHOTOS } from '../libs/constants';
 import { Countdown } from '../components/countdown';
 import { allowWithQuantityTouches, chunkItems, getPhotoOnCanvas } from '../libs/common';
 import { Canvas } from '../components/canvas';
@@ -300,38 +300,73 @@ export default function SelectPhotos() {
                 <div className='mt-4 h-[22px] w-[140px] rounded-full bg-custom-style-1'></div>
 
                 <div className='relative h-full w-full overflow-hidden p-4'>
-                  <div
-                    className='custom-scroll-bar visible-scroll-bar custom-scroll-bar-thumb custom-scroll-bar-hidden-button grid h-full w-full grid-cols-3 overflow-x-hidden overflow-y-scroll rounded-xl bg-custom-style-1 px-4'
-                    onTouchEnd={handleOnTouchEndScrollPhotos}
-                    onTouchMove={handleOnTouchMoveScrollPhotos}
-                  >
-                    {convertedPhotos?.map((photo, index) => {
-                      return (
-                        <div
-                          className='mb-3 mt-9'
-                          key={index}
-                          style={{ width: '290px', height: `${290 / store.orderInfo.ratio}px` }}
-                          onTouchEnd={(event) => handleOnTouchEndChoosePhoto(event, photo)}
-                        >
-                          <div className='relative h-full w-full'>
-                            {store.orderInfo.selectedPhotos.map((item) => item.photo).includes(photo) && (
-                              <div className={`absolute -top-[32px] left-1/2 h-[30.8px] w-[34.8px] -translate-x-1/2`}>
-                                <DisplayImage src={store.assetsFolderPath + store.resources.icons[43]?.relPath} />
-                              </div>
-                            )}
+                  {store.orderInfo.frameMode !== CONST_MODE_WIDE ? (
+                    <div
+                      className='custom-scroll-bar visible-scroll-bar custom-scroll-bar-thumb custom-scroll-bar-hidden-button grid h-full w-full grid-cols-3 overflow-x-hidden overflow-y-scroll rounded-xl bg-custom-style-1 px-4'
+                      onTouchEnd={handleOnTouchEndScrollPhotos}
+                      onTouchMove={handleOnTouchMoveScrollPhotos}
+                    >
+                      {convertedPhotos?.map((photo, index) => {
+                        return (
+                          <div
+                            className='mb-2 mt-8'
+                            key={index}
+                            style={{ width: '290px', height: `${290 / store.orderInfo.ratio}px` }}
+                            onTouchEnd={(event) => handleOnTouchEndChoosePhoto(event, photo)}
+                          >
+                            <div className='relative h-full w-full'>
+                              {store.orderInfo.selectedPhotos.map((item) => item.photo).includes(photo) && (
+                                <div className={`absolute -top-[32px] left-1/2 h-[30.8px] w-[34.8px] -translate-x-1/2`}>
+                                  <DisplayImage src={store.assetsFolderPath + store.resources.icons[43]?.relPath} />
+                                </div>
+                              )}
 
-                            <div
-                              className={`h-full w-full rounded-lg border-4 p-1 ${store.orderInfo.selectedPhotos.map((item) => item.photo).includes(photo) ? 'border-dashed border-custom-style-2-1' : 'border-transparent'}`}
-                            >
-                              <div className='h-full w-full'>
-                                <DisplayImage src={store.userPhotosFolderPath + photo} />
+                              <div
+                                className={`h-full w-full rounded-lg border-4 p-1 ${store.orderInfo.selectedPhotos.map((item) => item.photo).includes(photo) ? 'border-dashed border-custom-style-2-1' : 'border-transparent'}`}
+                              >
+                                <div className='h-full w-full'>
+                                  <DisplayImage src={store.userPhotosFolderPath + photo} />
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div
+                      className='custom-scroll-bar visible-scroll-bar custom-scroll-bar-thumb custom-scroll-bar-hidden-button grid h-full w-full grid-cols-2 overflow-x-hidden overflow-y-scroll rounded-xl bg-custom-style-1 px-4'
+                      onTouchEnd={handleOnTouchEndScrollPhotos}
+                      onTouchMove={handleOnTouchMoveScrollPhotos}
+                    >
+                      {convertedPhotos?.map((photo, index) => {
+                        return (
+                          <div
+                            className='mb-2 mt-8'
+                            key={index}
+                            style={{ width: '480px', height: `${480 / store.orderInfo.ratio}px` }}
+                            onTouchEnd={(event) => handleOnTouchEndChoosePhoto(event, photo)}
+                          >
+                            <div className='relative h-full w-full'>
+                              {store.orderInfo.selectedPhotos.map((item) => item.photo).includes(photo) && (
+                                <div className={`absolute -top-[32px] left-1/2 h-[30.8px] w-[34.8px] -translate-x-1/2`}>
+                                  <DisplayImage src={store.assetsFolderPath + store.resources.icons[43]?.relPath} />
+                                </div>
+                              )}
+
+                              <div
+                                className={`h-full w-full rounded-lg border-4 p-1 ${store.orderInfo.selectedPhotos.map((item) => item.photo).includes(photo) ? 'border-dashed border-custom-style-2-1' : 'border-transparent'}`}
+                              >
+                                <div className='h-full w-full'>
+                                  <DisplayImage src={store.userPhotosFolderPath + photo} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
 
                 <div className='my-3 min-h-[45px] min-w-[45px] rounded-full bg-custom-style-1 p-1.5'>
