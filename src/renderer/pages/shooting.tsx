@@ -57,7 +57,6 @@ export default function Shooting() {
   useEffect(() => {
     wsCamera.current = new WebSocket('ws://127.0.0.1:8080/camera');
     wsCamera.current.onopen = () => {
-      console.log(store.orderInfo.ratio);
       wsCamera.current.send(`setphoto-img:r=2;w=${store.orderInfo.ratio}`);
       wsCamera.current.send('startlv');
       setTimeout(() => {
