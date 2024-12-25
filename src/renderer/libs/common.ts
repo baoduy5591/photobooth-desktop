@@ -44,7 +44,7 @@ export const getRatioByFrameModeAndFrameType = (frameMode: string, frameType: st
   const _frameMode = CONST_FRAME_POSITIONS[frameMode as keyof typeof CONST_FRAME_POSITIONS];
   const _frameType = _frameMode[frameType as keyof typeof _frameMode];
   const { w, h } = _frameType[0][0];
-  return Math.round((w / h) * 10) / 10;
+  return Math.floor((w / h) * 10) / 10;
 };
 
 export const allowWithQuantityTouches = (touches: React.Touch[], quantityTouches: number) => {
