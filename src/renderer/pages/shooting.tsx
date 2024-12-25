@@ -1,15 +1,10 @@
 import { BackgroundImage } from '../components/backgroundImage';
-import { Countdown, CountdownForShooting } from '../components/countdown';
+import { CountdownForShooting } from '../components/countdown';
 import { DisplayImage } from '../components/displayImage';
 import { useStore } from '../context/store';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import {
-  CONST_COMPLIMENT_MESSAGE,
-  CONST_COUNTDOWN_METHOD,
-  CONST_MODE_WIDE,
-  CONST_REMOTE_METHOD,
-} from '../libs/constants';
+import { CONST_COMPLIMENT_MESSAGE, CONST_MODE_WIDE } from '../libs/constants';
 import { useTranslation } from 'react-i18next';
 
 export default function Shooting() {
