@@ -309,7 +309,7 @@ export default function SelectPhotos() {
                       {convertedPhotos?.map((photo, index) => {
                         return (
                           <div
-                            className='mb-2 mt-8'
+                            className='mb-3 mt-9'
                             key={index}
                             style={{ width: '290px', height: `${290 / store.orderInfo.ratio}px` }}
                             onTouchEnd={(event) => handleOnTouchEndChoosePhoto(event, photo)}
@@ -342,7 +342,7 @@ export default function SelectPhotos() {
                       {convertedPhotos?.map((photo, index) => {
                         return (
                           <div
-                            className='mb-2 mt-8'
+                            className='mb-3 mt-9'
                             key={index}
                             style={{ width: '480px', height: `${480 / store.orderInfo.ratio}px` }}
                             onTouchEnd={(event) => handleOnTouchEndChoosePhoto(event, photo)}

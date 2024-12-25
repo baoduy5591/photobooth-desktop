@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
-import { CONST_LIST_EFFECTS } from '../libs/constants';
+import { CONST_LIST_EFFECTS, CONST_MODE_WIDE } from '../libs/constants';
 import { allowWithQuantityTouches, loadImage } from '../libs/common';
 import { useNavigate } from 'react-router-dom';
 import { Countdown } from '../components/countdown';
@@ -160,51 +160,99 @@ export default function SelectEffect() {
               <div className='flex h-full w-full flex-col items-center justify-center'>
                 <div className='mt-4 h-[22px] w-[140px] rounded-full bg-custom-style-1'></div>
                 <div className='relative h-full w-full overflow-hidden p-4'>
-                  <div
-                    className='custom-scroll-bar visible-scroll-bar custom-scroll-bar-thumb custom-scroll-bar-hidden-button grid h-full w-full grid-cols-3 overflow-x-hidden overflow-y-scroll rounded-xl bg-custom-style-1 px-4'
-                    onTouchEnd={handleOnTouchEndScrollPhotos}
-                    onTouchMove={handleOnTouchMoveScrollPhotos}
-                  >
-                    {CONST_LIST_EFFECTS?.map((effect, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className='relative mb-6 mt-14'
-                          style={{ width: '290px', height: `${290 / store.orderInfo.ratio}px` }}
-                          onTouchEnd={(event) => handleOnTouchEndTogglePhoto(event, effect)}
-                        >
-                          <div className='relative h-full w-full'>
-                            {store.orderInfo.effect.name === effect.name && (
-                              <div className={`absolute -top-[32px] left-1/2 h-[30.8px] w-[34.8px] -translate-x-1/2`}>
-                                <DisplayImage src={store.assetsFolderPath + store.resources.icons[43]?.relPath} />
-                              </div>
-                            )}
-                            <div
-                              className={`h-full w-full rounded-lg border-4 p-1 ${store.orderInfo.effect.name === effect.name ? 'border-dashed border-custom-style-2-1' : 'border-transparent'}`}
-                            >
-                              <div className='${effect.className} h-full w-full' style={{ filter: effect.style }}>
-                                <DisplayImage
-                                  src={store.userPhotosFolderPath + store.orderInfo.selectedPhotos[0].photo}
-                                />
+                  {store.orderInfo.frameMode !== CONST_MODE_WIDE ? (
+                    <div
+                      className='custom-scroll-bar visible-scroll-bar custom-scroll-bar-thumb custom-scroll-bar-hidden-button grid h-full w-full grid-cols-3 overflow-x-hidden overflow-y-scroll rounded-xl bg-custom-style-1 px-4'
+                      onTouchEnd={handleOnTouchEndScrollPhotos}
+                      onTouchMove={handleOnTouchMoveScrollPhotos}
+                    >
+                      {CONST_LIST_EFFECTS?.map((effect, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className='relative mb-6 mt-14'
+                            style={{ width: '290px', height: `${290 / store.orderInfo.ratio}px` }}
+                            onTouchEnd={(event) => handleOnTouchEndTogglePhoto(event, effect)}
+                          >
+                            <div className='relative h-full w-full'>
+                              {store.orderInfo.effect.name === effect.name && (
+                                <div className={`absolute -top-[32px] left-1/2 h-[30.8px] w-[34.8px] -translate-x-1/2`}>
+                                  <DisplayImage src={store.assetsFolderPath + store.resources.icons[43]?.relPath} />
+                                </div>
+                              )}
+                              <div
+                                className={`h-full w-full rounded-lg border-4 p-1 ${store.orderInfo.effect.name === effect.name ? 'border-dashed border-custom-style-2-1' : 'border-transparent'}`}
+                              >
+                                <div className='${effect.className} h-full w-full' style={{ filter: effect.style }}>
+                                  <DisplayImage
+                                    src={store.userPhotosFolderPath + store.orderInfo.selectedPhotos[0].photo}
+                                  />
+                                </div>
                               </div>
                             </div>
-                          </div>
 
-                          <div className='absolute -bottom-10 left-1/2 min-w-max -translate-x-1/2 px-2 font-rokkitt text-2xl text-custom-style-6-1 duration-300'>
-                            <div
-                              style={{
-                                transitionDuration: '0.3s',
-                                transform: `${store.orderInfo.effect.name === effect.name ? 'scale(1.1)' : 'scale(1)'} `,
-                                fontWeight: `${store.orderInfo.effect.name === effect.name ? '700' : '400'} `,
-                              }}
-                            >
-                              {effect.name}
+                            <div className='absolute -bottom-10 left-1/2 min-w-max -translate-x-1/2 px-2 font-rokkitt text-2xl text-custom-style-6-1 duration-300'>
+                              <div
+                                style={{
+                                  transitionDuration: '0.3s',
+                                  transform: `${store.orderInfo.effect.name === effect.name ? 'scale(1.1)' : 'scale(1)'} `,
+                                  fontWeight: `${store.orderInfo.effect.name === effect.name ? '700' : '400'} `,
+                                }}
+                              >
+                                {effect.name}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div
+                      className='custom-scroll-bar visible-scroll-bar custom-scroll-bar-thumb custom-scroll-bar-hidden-button grid h-full w-full grid-cols-2 overflow-x-hidden overflow-y-scroll rounded-xl bg-custom-style-1 px-4'
+                      onTouchEnd={handleOnTouchEndScrollPhotos}
+                      onTouchMove={handleOnTouchMoveScrollPhotos}
+                    >
+                      {CONST_LIST_EFFECTS?.map((effect, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className='relative mb-6 mt-14'
+                            style={{ width: '480px', height: `${480 / store.orderInfo.ratio}px` }}
+                            onTouchEnd={(event) => handleOnTouchEndTogglePhoto(event, effect)}
+                          >
+                            <div className='relative h-full w-full'>
+                              {store.orderInfo.effect.name === effect.name && (
+                                <div className={`absolute -top-[32px] left-1/2 h-[30.8px] w-[34.8px] -translate-x-1/2`}>
+                                  <DisplayImage src={store.assetsFolderPath + store.resources.icons[43]?.relPath} />
+                                </div>
+                              )}
+                              <div
+                                className={`h-full w-full rounded-lg border-4 p-1 ${store.orderInfo.effect.name === effect.name ? 'border-dashed border-custom-style-2-1' : 'border-transparent'}`}
+                              >
+                                <div className='${effect.className} h-full w-full' style={{ filter: effect.style }}>
+                                  <DisplayImage
+                                    src={store.userPhotosFolderPath + store.orderInfo.selectedPhotos[0].photo}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className='absolute -bottom-10 left-1/2 min-w-max -translate-x-1/2 px-2 font-rokkitt text-2xl text-custom-style-6-1 duration-300'>
+                              <div
+                                style={{
+                                  transitionDuration: '0.3s',
+                                  transform: `${store.orderInfo.effect.name === effect.name ? 'scale(1.1)' : 'scale(1)'} `,
+                                  fontWeight: `${store.orderInfo.effect.name === effect.name ? '700' : '400'} `,
+                                }}
+                              >
+                                {effect.name}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
 
                 <div className='mb-4 mt-3 min-h-[45px] min-w-[45px] rounded-full bg-custom-style-1 p-1.5'>
