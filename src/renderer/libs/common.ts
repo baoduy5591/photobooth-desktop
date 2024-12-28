@@ -119,10 +119,10 @@ export const getDetailForQrCodeByFrameModeAndFrameType = (frameMode: string, fra
     case CONST_MODE_CUTTING:
       return [
         {
-          x: 1120,
-          y: 1720,
-          w: 70,
-          h: 70,
+          x: 1065,
+          y: 1670,
+          w: 100,
+          h: 100,
           xDate: 1120,
           yDate: 1715,
           fontDate: '14px Arial',
@@ -132,20 +132,20 @@ export const getDetailForQrCodeByFrameModeAndFrameType = (frameMode: string, fra
           fontOrderNumber: '10px Arial',
           fillStyleOrderNumber: '#a7a9ac',
         },
-        {
-          x: 500,
-          y: 1720,
-          w: 70,
-          h: 70,
-          xDate: 500,
-          yDate: 1715,
-          fontDate: '14px Arial',
-          fillStyleDate: '#a7a9ac',
-          xOrderNumber: 605,
-          yOrderNumber: 10,
-          fontOrderNumber: '10px Arial',
-          fillStyleOrderNumber: '#a7a9ac',
-        },
+        // {
+        //   x: 400,
+        //   y: 1640,
+        //   w: 100,
+        //   h: 100,
+        //   xDate: 500,
+        //   yDate: 1715,
+        //   fontDate: '14px Arial',
+        //   fillStyleDate: '#a7a9ac',
+        //   xOrderNumber: 605,
+        //   yOrderNumber: 10,
+        //   fontOrderNumber: '10px Arial',
+        //   fillStyleOrderNumber: '#a7a9ac',
+        // },
       ];
 
     case CONST_MODE_REGULAR:

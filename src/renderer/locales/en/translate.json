@@ -35,6 +35,20 @@
     "note2": "To deselect, touch the photo you want to cancel"
   },
 
+  "selectEffect": {
+    "title1": "Select",
+    "title2": "Your",
+    "title3": "Effect",
+    "note": "Scroll to see more effects"
+  },
+
+  "selectSticker": {
+    "title1": "Decorate",
+    "title2": "Your Photo More",
+    "note1": "Scroll to see more stickers",
+    "note2": "Move the sticker to the position you like"
+  },
+
   "shootingMethod": {
     "countdownTitle": "Countdown",
     "countdownText1": "A photo is taken automatically",

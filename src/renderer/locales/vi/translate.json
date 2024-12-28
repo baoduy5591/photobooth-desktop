@@ -31,8 +31,22 @@
   "selectPhotos": {
     "title1": "Chọn",
     "title2": "hình ảnh để in",
-    "note1": "Vuốt xuống để thấy nhiều hình hơn",
+    "note1": "Cuộn xuống để thấy nhiều hình ảnh hơn",
     "note2": "Để bỏ chọn, hãy chạm vào hình ảnh một lần nữa"
+  },
+
+  "selectEffect": {
+    "title1": "Chọn",
+    "title2": "hiệu ứng",
+    "title3": "của bạn",
+    "note": "Cuộn xuống để thấy nhiều hiệu ứng hơn"
+  },
+
+  "selectSticker": {
+    "title1": "Trang trí",
+    "title2": "hình ảnh của bạn",
+    "note1": "Cuộn xuống để thấy nhiều sticker hơn",
+    "note2": "Nhấn chọn và di chuyển sticker đến vị trí bạn muốn"
   },
 
   "shootingMethod": {

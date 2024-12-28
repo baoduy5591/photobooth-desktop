@@ -4,7 +4,7 @@ import Loggers from './loggers';
 const logger = new Loggers();
 const { mainLogger } = logger.getLoggers();
 
-const BASE_URL = 'http://172.16.50.20:3000';
+const BASE_URL = 'http://192.168.1.253:3001';
 
 class API {
   headers: { headers: Record<string, string> };

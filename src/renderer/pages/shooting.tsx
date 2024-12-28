@@ -59,9 +59,7 @@ export default function Shooting() {
     wsCamera.current.onopen = () => {
       wsCamera.current.send(`setphoto-img:r=2;w=${store.orderInfo.ratio}`);
       wsCamera.current.send('startlv');
-      setTimeout(() => {
-        wsCamera.current.send('record');
-      }, 500);
+      wsCamera.current.send('record');
     };
 
     wsCamera.current.onmessage = (event) => {

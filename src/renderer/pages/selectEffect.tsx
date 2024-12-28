@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { BackgroundImage } from '../components/backgroundImage';
 import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
@@ -7,10 +7,12 @@ import { allowWithQuantityTouches, loadImage } from '../libs/common';
 import { useNavigate } from 'react-router-dom';
 import { Countdown } from '../components/countdown';
 import { useSound } from '../context/sound';
+import { useTranslation } from 'react-i18next';
 
 export default function SelectEffect() {
   const { store, setStore } = useStore();
   const { playSoundTouch } = useSound();
+  const { t: translate, i18n } = useTranslation();
 
   const isTouchMoveScroll = useRef<boolean>(false);
   const _effect = useRef<{ name: string; className: string; style: string }>(store.orderInfo.effect);
@@ -82,6 +84,10 @@ export default function SelectEffect() {
     });
   };
 
+  useEffect(() => {
+    i18n.changeLanguage('vi');
+  }, []);
+
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
       <BackgroundImage url={store.assetsFolderPath + store.resources.backgroundImages[1]?.relPath} />
@@ -141,10 +147,22 @@ export default function SelectEffect() {
                   <DisplayImage src={store.assetsFolderPath + store.resources.icons[39]?.relPath} />
                 </div>
 
-                <div className='absolute left-[230px] top-[29px] font-rokkitt text-[32px] font-bold tracking-wider'>
-                  <span>Select Your </span>
-                  <span className='text-custom-style-2-1'>Effect</span>
-                </div>
+                {i18n.language === 'en' && (
+                  <div className='absolute left-[230px] top-[29px] font-rokkitt text-[32px] font-bold tracking-wider'>
+                    <span>
+                      {translate('translation:selectEffect.title1')} {translate('translation:selectEffect.title2')}{' '}
+                    </span>
+                    <span className='text-custom-style-2-1'>{translate('translation:selectEffect.title3')}</span>
+                  </div>
+                )}
+
+                {i18n.language === 'vi' && (
+                  <div className='absolute left-[230px] top-[29px] font-rokkitt text-[32px] font-bold tracking-wider'>
+                    <span>{translate('translation:selectEffect.title1')} </span>
+                    <span className='text-custom-style-2-1'>{translate('translation:selectEffect.title2')} </span>
+                    <span>{translate('translation:selectEffect.title3')}</span>
+                  </div>
+                )}
               </div>
 
               <div className='mb-3'>
@@ -261,12 +279,9 @@ export default function SelectEffect() {
               </div>
             </div>
 
-            <div className='absolute bottom-0 left-0 right-0 text-center font-rokkitt text-[24px] text-custom-style-3-1'>
-              <div className='h-[30px] min-w-max'>
-                <span>※ Slide to see more effects</span>
-              </div>
-              <div className='h-[30px] min-w-max'>
-                <span>※ To deselect, touch the effect you want to cancel</span>
+            <div className='absolute bottom-4 left-0 right-0 text-center font-rokkitt text-[24px] text-custom-style-3-1'>
+              <div className='h-8 min-w-max'>
+                <span>※ {translate('translation:selectEffect.note')}</span>
               </div>
             </div>
           </div>

@@ -16,14 +16,16 @@ import { useNavigate } from 'react-router-dom';
 import { INIT_STORE } from '../libs/initials';
 import { useSound } from '../context/sound';
 import { Stickers } from '../components/stickers';
+import { useTranslation } from 'react-i18next';
 
 export default function SelectSticker() {
   const { store, setStore } = useStore();
   const { playSoundTouch } = useSound();
+  const { t: translate, i18n } = useTranslation();
+
   const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
   const [currentChooseStickerIndex, setCurrentChooseStickerIndex] = useState<number>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [imageQRTest, setImageQRTest] = useState<string>('');
 
   const isTouchMoveScroll = useRef<boolean>(false);
 
@@ -484,7 +486,7 @@ export default function SelectSticker() {
       context.drawImage(elementQr, qr.x, qr.y, qr.w, qr.h);
       context.font = qr.fontOrderNumber;
       context.fillStyle = qr.fillStyleOrderNumber;
-      context.fillText('087', qr.xOrderNumber, qr.yOrderNumber);
+      context.fillText(orderNumber, qr.xOrderNumber, qr.yOrderNumber);
     }
 
     const base64String = canvas.toDataURL('image/png');
@@ -562,32 +564,10 @@ export default function SelectSticker() {
     return true;
   };
 
-  // const processComplete = async () => {
-  //   // delete after test
-  //   const { frameRelPath, width, height, frameMode, frameType } = store.orderInfo;
-
-  //   const _getQRCode =
-  //     'data:image/png;base64,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';
-  //   if (!_getQRCode) {
-  //     alert('Get QR Code failed !!!');
-  //     return false;
-  //   }
-
-  //   const qrDetail = getDetailForQrCodeByFrameModeAndFrameType(frameMode, frameType);
-  //   const colorBase64 = await insertQrToImage(
-  //     store.assetsFolderPath + frameRelPath,
-  //     _getQRCode,
-  //     width,
-  //     height,
-  //     qrDetail,
-  //     store.orderInfo.orderNumber,
-  //   );
-  //   setImageQRTest(colorBase64);
-  // };
-
   const handleOnTouchStartNextPage = async (event: React.TouchEvent<HTMLDivElement>) => {
     if (!allowWithQuantityTouches(Array.from(event.touches), 1)) return;
 
+    setIsLoading(true);
     playSoundTouch(false);
     const _processComplete = await processComplete();
     if (!_processComplete) return false;
@@ -739,8 +719,8 @@ export default function SelectSticker() {
                 </div>
 
                 <div className='absolute left-[180px] top-[26px] font-rokkitt text-[32px] font-bold tracking-wider'>
-                  <span className='text-custom-style-2-1'>Decorate </span>
-                  <span>Your Photo More</span>
+                  <span className='text-custom-style-2-1'>{translate('translation:selectSticker.title1')} </span>
+                  <span>{translate('translation:selectSticker.title2')}</span>
                 </div>
               </div>
 
@@ -820,10 +800,10 @@ export default function SelectSticker() {
 
             <div className='absolute bottom-0 left-0 right-0 text-center font-rokkitt text-[24px] text-custom-style-3-1'>
               <div className='h-[30px] min-w-max'>
-                <span>※ Slide to see more sticker</span>
+                <span>※ {translate('translation:selectSticker.note1')}</span>
               </div>
               <div className='h-[30px] min-w-max'>
-                <span>※ Move the sticker to the position you like</span>
+                <span>※ {translate('translation:selectSticker.note2')}</span>
               </div>
             </div>
           </div>
@@ -839,14 +819,14 @@ export default function SelectSticker() {
         </div>
       </div>
 
-      {imageQRTest && (
+      {/* {store.orderInfo.colorBase64 && (
         <div
           className='absolute left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2'
           style={{ width: `${store.orderInfo.width / 2}px`, height: `${store.orderInfo.height / 2}px` }}
         >
-          <DisplayImage src={imageQRTest} />
+          <DisplayImage src={store.orderInfo.colorBase64} />
         </div>
-      )}
+      )} */}
     </div>
   );
 }
