@@ -47,12 +47,16 @@ export default function EnterCode() {
   const handleOnTouchStartSubmit = async (value: string) => {
     const _getOrderInfoById = await window.api.getOrderInfoById(value);
     if (_getOrderInfoById) {
-      const { frameMode, frameType } = _getOrderInfoById;
+      const { frameMode, frameType, isFreeTimeMode } = _getOrderInfoById;
       const ratio = getRatioByFrameModeAndFrameType(frameMode, frameType);
       setStore((store) => ({ ...store, orderInfo: { ...store.orderInfo, ..._getOrderInfoById, ratio: ratio } }));
       setValues(CONST_PICTURE_TIME);
       setTimeout(() => {
-        navigate('/shooting');
+        if (isFreeTimeMode) {
+          navigate('/select-frame-type');
+        } else {
+          navigate('/shooting');
+        }
       }, 1000);
     } else {
       setValues(CONST_ERROR);

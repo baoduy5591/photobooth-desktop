@@ -40,6 +40,7 @@ module.exports = {
           'style-4-1': 'var(--picker-color-style-4-1)',
           'style-5-1': 'var(--picker-color-style-5-1)',
           'style-5-3': 'var(--picker-color-style-5-3)',
+          'style-5-4': 'var(--picker-color-style-5-4)',
           'style-6-1': 'var(--picker-color-style-6-1)',
           'style-7-1': 'var(--picker-color-style-7-1)',
           'style-8-1': 'var(--picker-color-style-8-1)',
@@ -64,6 +65,7 @@ module.exports = {
           'style-5-1': 'var(--picker-color-style-5-1)',
           'style-5-2': 'var(--picker-color-style-5-2)',
           'style-5-3': 'var(--picker-color-style-5-3)',
+          'style-5-4': 'var(--picker-color-style-5-4)',
           'style-6-1': 'var(--picker-color-style-6-1)',
         },
       },
@@ -83,6 +85,12 @@ module.exports = {
         13: '13px',
         14: '14px',
         15: '15px',
+      },
+      borderRadius: {
+        '4xl': '2rem',
+        '5xl': '2.5rem',
+        '6xl': '3rem',
+        '7xl': '3.6rem',
       },
       animation: {
         'opacity-slow-infinite': 'opacity-slow 3s ease-in-out infinite',

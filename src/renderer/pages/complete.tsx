@@ -56,7 +56,7 @@ export default function Complete() {
             </div>
 
             <div className='h-[617px] w-[556px]'>
-              <DisplayImage src={store.assetsFolderPath + store.resources.icons[58]?.relPath} />
+              <DisplayImage src={store.assetsFolderPath + store.resources.icons[57]?.relPath} />
             </div>
 
             <div className='flex w-full -translate-y-20 items-center justify-start gap-x-4'>

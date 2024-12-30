@@ -8,6 +8,7 @@ import Images from './utils/images';
 import { CONST_FRAME_STICKER_IMAGE_NAME } from './libs/constants';
 import { deleteFileAndFolder } from './libs/common';
 import API from './utils/api';
+import Effect from './utils/effect';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -35,6 +36,9 @@ const createWindow = (): void => {
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 };
+
+// const effect = new Effect();
+// effect.lut3D();
 
 // ipcMain get resources
 ipcMain.handle('get-resources', async () => {
@@ -98,7 +102,7 @@ ipcMain.handle('save-image', async (event, data) => {
 });
 
 // save image frame + sticker
-ipcMain.handle('save-image-frame-sticker', async (event, imageBase64) => {
+ipcMain.handle('save-image-frame-sticker', (event, imageBase64) => {
   const userPhotosFolderPath = Paths.getUserPhotosFolderPathForMain();
   const imagePath = path.join(userPhotosFolderPath, CONST_FRAME_STICKER_IMAGE_NAME);
   const base64Data = imageBase64.replace(/^data:image\/png;base64,/, '');
@@ -110,7 +114,7 @@ ipcMain.handle('save-image-frame-sticker', async (event, imageBase64) => {
 });
 
 // ipcMain generateVideo
-ipcMain.handle('generate-video', async (event, data) => {
+ipcMain.handle('generate-video', (event, data) => {
   const _generateVideoToBase64 = generateVideo(data);
   if (!_generateVideoToBase64) return false;
 

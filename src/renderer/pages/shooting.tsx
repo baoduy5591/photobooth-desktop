@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 export default function Shooting() {
   const { store } = useStore();
   const [isStartLiveView, setIsStartLiveView] = useState<boolean>(false);
-  const [isStartRecord, setIsStartRecord] = useState<boolean>(false);
   const [shootingPhotos, setShootingPhotos] = useState<string[]>([]);
   const [isShootingCountdown, setIsShootingCountdown] = useState<boolean>(false);
   const [isShootingTriggered, setIsShootingTriggered] = useState<boolean>(false);
@@ -34,7 +33,7 @@ export default function Shooting() {
   const isDoneRef = useRef<boolean>(false);
 
   useEffect(() => {
-    if (!isStartLiveView || !isStartRecord) return;
+    if (!isStartLiveView) return;
 
     wsVideo.current = new WebSocket('ws://127.0.0.1:8080/video');
     wsVideo.current.binaryType = 'blob';
@@ -52,31 +51,20 @@ export default function Shooting() {
     return () => {
       wsVideo.current.close();
     };
-  }, [isStartLiveView, isStartRecord]);
+  }, [isStartLiveView]);
 
   useEffect(() => {
     wsCamera.current = new WebSocket('ws://127.0.0.1:8080/camera');
     wsCamera.current.onopen = () => {
-      wsCamera.current.send(`setphoto-img:r=2;w=${store.orderInfo.ratio}`);
+      wsCamera.current.send(`maxPhoto=${store.orderInfo.quantityShootingPhotos}`);
+      wsCamera.current.send(`scaleW=${store.orderInfo.ratio}`);
       wsCamera.current.send('startlv');
-      wsCamera.current.send('record');
     };
 
     wsCamera.current.onmessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.action === 'startlv' && data.result === 'OK') {
         setIsStartLiveView(true);
-      }
-
-      if (data.action === 'record') {
-        if (data.result === 'OK') {
-          if (!isDoneRef.current) {
-            wsCamera.current.send('unlock');
-            setIsStartRecord(true);
-          }
-        } else {
-          wsCamera.current.send('record');
-        }
       }
 
       if (data.action === 'shooting-triggered') {
@@ -96,21 +84,14 @@ export default function Shooting() {
           setShootingPhotos((prevShootingPhoto) => {
             const newListShootingPhoto = [...prevShootingPhoto, data.message];
             if (newListShootingPhoto.length >= store.orderInfo.quantityShootingPhotos) {
-              wsCamera.current.send('stoprecord');
-              wsCamera.current.send('stoplv');
-              wsCamera.current.send('lock');
               isDoneRef.current = true;
               setIsDoneShooting(true);
-              setTimeout(() => {
-                navigate('/select-photos');
-              }, 3000);
+              navigate('/select-photos');
               return newListShootingPhoto;
             }
 
             return newListShootingPhoto;
           });
-
-          wsCamera.current.send('record');
         }
       }
     };
@@ -259,19 +240,14 @@ export default function Shooting() {
                 </div>
               </div>
 
-              {isStartLiveView &&
-                isStartRecord &&
-                !isDoneShooting &&
-                !isShooting &&
-                !isShootingCountdown &&
-                !isShootingTriggered && (
-                  <div className='absolute inset-0 flex items-center justify-center'>
-                    <CountdownForShooting
-                      time={store.orderInfo.shootingTime}
-                      handleActionShootingByMethod={handleActionShootingByMethod}
-                    />
-                  </div>
-                )}
+              {isStartLiveView && !isDoneShooting && !isShooting && !isShootingCountdown && !isShootingTriggered && (
+                <div className='absolute inset-0 flex items-center justify-center'>
+                  <CountdownForShooting
+                    time={store.orderInfo.shootingTime}
+                    handleActionShootingByMethod={handleActionShootingByMethod}
+                  />
+                </div>
+              )}
             </div>
           </div>
 

@@ -19,6 +19,37 @@
     "enterAgain": "Nhập lại"
   },
 
+  "selectFrameType": {
+    "title": "Chọn loại khung",
+    "cutting": "Cắt đôi",
+    "regular": "Thông thường",
+    "wide": "Bản rộng",
+    "8PhotosLayout": "Kiểu 8 ảnh",
+    "6PhotosLayout": "Kiểu 6 ảnh",
+    "4PhotosLayout": "Kiểu 4 ảnh",
+    "3PhotosLayout": "Kiểu 3 ảnh",
+    "2PhotosLayout": "Kiểu 2 ảnh"
+  },
+
+  "selectFrameDesign": {
+    "title1": "Chọn kiểu ",
+    "title2": "Thiết kế",
+    "preview": "Xem trước",
+    "note": "Cuộn để để thấy nhiều kiểu hơn",
+    "normal": "Normal",
+    "season": "Season",
+    "special": "Special"
+  },
+
+  "selectPrintQuantity": {
+    "title1": "Chọn",
+    "title2": "số lượng",
+    "title3": "bản In",
+    "total": "tổng",
+    "note1": "Bạn sẽ nhận được",
+    "note2": "tấm sau khi in."
+  },
+
   "confirmFrame": {
     "confirm": "Đây là frame của bạn",
     "chooseAgain": "Chọn lại",

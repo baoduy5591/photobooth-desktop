@@ -147,7 +147,7 @@ export const CONST_LIST_EFFECTS = [
   {
     name: 'Orange',
     className: 'filter-orange',
-    style: 'brightness(120%) saturate(180%) sepia(20%)',
+    style: 'saturate(70%)',
   },
   {
     name: 'Original',
@@ -290,3 +290,5 @@ export const constQRCodePositions = {
     },
   },
 };
+
+export const CONST_DATA_TYPES = ['normal', 'season', 'special'];

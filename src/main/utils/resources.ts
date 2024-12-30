@@ -62,11 +62,12 @@ class Resources {
         const path = item.slice(0, -9);
         const isNew = name['4'] === '1';
         let thumb = path + name.slice(0, -4) + '_thumb' + ext;
+        const order = Number(name.slice(0, 3));
         if (!items.includes(thumb)) {
           thumb = '';
         }
 
-        return { name, relPath: item, isNew, thumb };
+        return { name, relPath: item, isNew, thumb, order };
       }
 
       return null;

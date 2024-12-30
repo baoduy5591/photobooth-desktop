@@ -264,3 +264,30 @@ export const getDetailForQrCodeByFrameModeAndFrameType = (frameMode: string, fra
       }
   }
 };
+
+export const getQuantitySelectedImages = (frameMode: string, frameType: string) => {
+  let quantity = 4;
+  if (frameMode === CONST_MODE_CUTTING) {
+    if (frameType === 'typeB') {
+      quantity = 3;
+    } else if (frameType === 'typeC') {
+      quantity = 2;
+    }
+  } else if (frameMode === CONST_MODE_REGULAR) {
+    if (frameType === 'typeB' || frameType === 'typeE') {
+      quantity = 6;
+    } else if (frameType === 'typeC') {
+      quantity = 3;
+    } else if (frameType === 'typeF') {
+      quantity = 8;
+    }
+  } else if (frameMode === CONST_MODE_WIDE) {
+    if (frameType === 'typeA') {
+      quantity = 4;
+    } else if (frameType === 'typeB') {
+      quantity = 3;
+    }
+  }
+
+  return quantity;
+};

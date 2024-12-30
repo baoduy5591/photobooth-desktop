@@ -4,7 +4,7 @@ import { useStore } from '../context/store';
 import { DisplayImage } from '../components/displayImage';
 import { CONST_FRAME_POSITIONS, CONST_MODE_WIDE, CONST_SCALE_PHOTOS } from '../libs/constants';
 import { Countdown } from '../components/countdown';
-import { allowWithQuantityTouches, chunkItems, getPhotoOnCanvas } from '../libs/common';
+import { allowWithQuantityTouches, getPhotoOnCanvas } from '../libs/common';
 import { Canvas } from '../components/canvas';
 import { useNavigate } from 'react-router-dom';
 import { useSound } from '../context/sound';
@@ -21,6 +21,7 @@ export default function SelectPhotos() {
   const isTouchMoveScroll = useRef<boolean>(false);
   const flatConvertedPhotos = useRef<string[]>([]);
   const _selectedPhotos = useRef<{ photo: string; index: number }[]>([]);
+  const coordinateY = useRef<number>(0);
 
   const navigate = useNavigate();
 
@@ -45,13 +46,14 @@ export default function SelectPhotos() {
   };
 
   const handleOnTouchEndChoosePhoto = (event: React.TouchEvent<HTMLDivElement>, photo: string) => {
+    console.log('vao day khonog ', isTouchMoveScroll.current);
     if (!allowWithQuantityTouches(Array.from(event.touches), 1) || isTouchMoveScroll.current) return;
 
     playSoundTouch(false);
     const selectedPhotos = _selectedPhotos.current;
     if (checkIsPhotoExist(selectedPhotos, photo)) {
       const deletedPhoto = selectedPhotos.filter((item) => item.photo === photo);
-      if (deletedPhoto.length > 1 || deletedPhoto.length === 0) return;
+      if (deletedPhoto.length === 0) return;
 
       const indexForDelete = deletedPhoto[0].index;
       const newSelectedPhotos = selectedPhotos.filter((item) => item.photo !== photo);
@@ -68,12 +70,13 @@ export default function SelectPhotos() {
       const _index = getIndex(selectedPhotos, store.orderInfo.frameMode, store.orderInfo.frameType);
       if (_index === null) return;
 
-      _selectedPhotos.current.push({ photo: photo, index: _index });
+      const newSelectedPhotos = [...selectedPhotos, { photo: photo, index: _index }];
+      _selectedPhotos.current = newSelectedPhotos;
       setStore((prevStore) => ({
         ...prevStore,
         orderInfo: {
           ...prevStore.orderInfo,
-          selectedPhotos: [...prevStore.orderInfo.selectedPhotos, { photo: photo, index: _index }],
+          selectedPhotos: newSelectedPhotos,
         },
       }));
       setIndexForClean(-1);
@@ -162,11 +165,25 @@ export default function SelectPhotos() {
     _selectedPhotos.current = _selectedPhotos.current.filter((item) => item.index !== _index);
   };
 
-  const handleOnTouchMoveScrollPhotos = () => {
-    isTouchMoveScroll.current = true;
+  const handleOnTouchStartScrollPhotos = (event: React.TouchEvent<HTMLDivElement>) => {
+    const touches = event.touches;
+    if (!allowWithQuantityTouches(Array.from(touches), 1)) return;
+
+    const { clientY } = touches[0];
+    coordinateY.current = clientY;
   };
 
-  const handleOnTouchEndScrollPhotos = () => {
+  const handleOnTouchMoveScrollPhotos = (event: React.TouchEvent<HTMLDivElement>) => {
+    const touches = event.touches;
+    if (!allowWithQuantityTouches(Array.from(touches), 1)) return;
+
+    const { clientY } = touches[0];
+    if (Math.abs(clientY - coordinateY.current) > 100) {
+      isTouchMoveScroll.current = true;
+    }
+  };
+
+  const handleOnTouchEndScrollPhotos = (event: React.TouchEvent<HTMLDivElement>) => {
     isTouchMoveScroll.current = false;
   };
 
@@ -303,8 +320,9 @@ export default function SelectPhotos() {
                   {store.orderInfo.frameMode !== CONST_MODE_WIDE ? (
                     <div
                       className='custom-scroll-bar visible-scroll-bar custom-scroll-bar-thumb custom-scroll-bar-hidden-button grid h-full w-full grid-cols-3 overflow-x-hidden overflow-y-scroll rounded-xl bg-custom-style-1 px-4'
-                      onTouchEnd={handleOnTouchEndScrollPhotos}
-                      onTouchMove={handleOnTouchMoveScrollPhotos}
+                      onTouchEnd={(event) => handleOnTouchEndScrollPhotos(event)}
+                      onTouchMove={(event) => handleOnTouchMoveScrollPhotos(event)}
+                      onTouchStart={(event) => handleOnTouchStartScrollPhotos(event)}
                     >
                       {convertedPhotos?.map((photo, index) => {
                         return (
@@ -336,8 +354,9 @@ export default function SelectPhotos() {
                   ) : (
                     <div
                       className='custom-scroll-bar visible-scroll-bar custom-scroll-bar-thumb custom-scroll-bar-hidden-button grid h-full w-full grid-cols-2 overflow-x-hidden overflow-y-scroll rounded-xl bg-custom-style-1 px-4'
-                      onTouchEnd={handleOnTouchEndScrollPhotos}
-                      onTouchMove={handleOnTouchMoveScrollPhotos}
+                      onTouchEnd={(event) => handleOnTouchEndScrollPhotos(event)}
+                      onTouchMove={(event) => handleOnTouchMoveScrollPhotos(event)}
+                      onTouchStart={(event) => handleOnTouchStartScrollPhotos(event)}
                     >
                       {convertedPhotos?.map((photo, index) => {
                         return (

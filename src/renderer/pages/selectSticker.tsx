@@ -35,6 +35,7 @@ export default function SelectSticker() {
   const rotatePositionY = useRef<number>(0);
   const isChooseStickerByIndex = useRef<boolean>(false);
   const _selectedSticker = useRef<StickerPositionType[]>([]);
+  const coordinateY = useRef<number>(0);
 
   const navigate = useNavigate();
 
@@ -43,11 +44,25 @@ export default function SelectSticker() {
       CONST_LIST_TAB_STICKER[currentTabIndex].toLowerCase() as keyof typeof INIT_STORE.resources.stickers
     ];
 
-  const handleOnTouchMoveScrollPhotos = () => {
-    isTouchMoveScroll.current = true;
+  const handleOnTouchStartScrollPhotos = (event: React.TouchEvent<HTMLDivElement>) => {
+    const touches = event.touches;
+    if (!allowWithQuantityTouches(Array.from(touches), 1)) return;
+
+    const { clientY } = touches[0];
+    coordinateY.current = clientY;
   };
 
-  const handleOnTouchEndScrollPhotos = () => {
+  const handleOnTouchMoveScrollPhotos = (event: React.TouchEvent<HTMLDivElement>) => {
+    const touches = event.touches;
+    if (!allowWithQuantityTouches(Array.from(touches), 1)) return;
+
+    const { clientY } = touches[0];
+    if (Math.abs(clientY - coordinateY.current) > 100) {
+      isTouchMoveScroll.current = true;
+    }
+  };
+
+  const handleOnTouchEndScrollPhotos = (event: React.TouchEvent<HTMLDivElement>) => {
     isTouchMoveScroll.current = false;
   };
 
@@ -425,18 +440,20 @@ export default function SelectSticker() {
     canvas.height = height;
     const context = canvas.getContext('2d');
     context.drawImage(elementImageEffect, 0, 0, width, height);
-    elementStickers.forEach((elementSticker, index) => {
-      const x = selectedSticker[index].left * CONST_SCALE_PHOTOS + 24 * CONST_SCALE_PHOTOS; // 24 equal p-6, which distant from parent to icon
-      const y = selectedSticker[index].top * CONST_SCALE_PHOTOS + 24 * CONST_SCALE_PHOTOS; // / 24 equal p-6, which distant from parent to icon
-      const w = selectedSticker[index].width * CONST_SCALE_PHOTOS;
-      const h = selectedSticker[index].height * CONST_SCALE_PHOTOS;
-      const angleInRadians = (selectedSticker[index].rotate * Math.PI) / 180;
-      context.save();
-      context.translate(x + w / 2, y + h / 2);
-      context.rotate(angleInRadians);
-      context.drawImage(elementSticker, -w / 2, -h / 2, w, h);
-      context.restore();
-    });
+    if (elementStickers.length > 0) {
+      elementStickers.forEach((elementSticker, index) => {
+        const x = selectedSticker[index].left * CONST_SCALE_PHOTOS + 24 * CONST_SCALE_PHOTOS; // 24 equal p-6, which distant from parent to icon
+        const y = selectedSticker[index].top * CONST_SCALE_PHOTOS + 24 * CONST_SCALE_PHOTOS; // / 24 equal p-6, which distant from parent to icon
+        const w = selectedSticker[index].width * CONST_SCALE_PHOTOS;
+        const h = selectedSticker[index].height * CONST_SCALE_PHOTOS;
+        const angleInRadians = (selectedSticker[index].rotate * Math.PI) / 180;
+        context.save();
+        context.translate(x + w / 2, y + h / 2);
+        context.rotate(angleInRadians);
+        context.drawImage(elementSticker, -w / 2, -h / 2, w, h);
+        context.restore();
+      });
+    }
     const base64String = canvas.toDataURL('image/png');
     return base64String;
   };
@@ -570,7 +587,11 @@ export default function SelectSticker() {
     setIsLoading(true);
     playSoundTouch(false);
     const _processComplete = await processComplete();
-    if (!_processComplete) return false;
+    if (!_processComplete) {
+      setIsLoading(false);
+      alert('Some thing error !!!');
+      return false;
+    }
 
     setStore((prevStore) => ({
       ...prevStore,
@@ -782,8 +803,9 @@ export default function SelectSticker() {
 
                   <div
                     className='custom-scroll-bar visible-scroll-bar custom-scroll-bar-thumb custom-scroll-bar-hidden-button h-full w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-custom-style-1'
-                    onTouchEnd={handleOnTouchEndScrollPhotos}
-                    onTouchMove={handleOnTouchMoveScrollPhotos}
+                    onTouchEnd={(event) => handleOnTouchEndScrollPhotos(event)}
+                    onTouchMove={(event) => handleOnTouchMoveScrollPhotos(event)}
+                    onTouchStart={(event) => handleOnTouchStartScrollPhotos(event)}
                   >
                     <Stickers
                       itemsSticker={itemsSticker}

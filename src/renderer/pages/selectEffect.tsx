@@ -16,14 +16,29 @@ export default function SelectEffect() {
 
   const isTouchMoveScroll = useRef<boolean>(false);
   const _effect = useRef<{ name: string; className: string; style: string }>(store.orderInfo.effect);
+  const coordinateY = useRef<number>(0);
 
   const navigate = useNavigate();
 
-  const handleOnTouchMoveScrollPhotos = () => {
-    isTouchMoveScroll.current = true;
+  const handleOnTouchStartScrollPhotos = (event: React.TouchEvent<HTMLDivElement>) => {
+    const touches = event.touches;
+    if (!allowWithQuantityTouches(Array.from(touches), 1)) return;
+
+    const { clientY } = touches[0];
+    coordinateY.current = clientY;
   };
 
-  const handleOnTouchEndScrollPhotos = () => {
+  const handleOnTouchMoveScrollPhotos = (event: React.TouchEvent<HTMLDivElement>) => {
+    const touches = event.touches;
+    if (!allowWithQuantityTouches(Array.from(touches), 1)) return;
+
+    const { clientY } = touches[0];
+    if (Math.abs(clientY - coordinateY.current) > 100) {
+      isTouchMoveScroll.current = true;
+    }
+  };
+
+  const handleOnTouchEndScrollPhotos = (event: React.TouchEvent<HTMLDivElement>) => {
     isTouchMoveScroll.current = false;
   };
 
@@ -181,8 +196,9 @@ export default function SelectEffect() {
                   {store.orderInfo.frameMode !== CONST_MODE_WIDE ? (
                     <div
                       className='custom-scroll-bar visible-scroll-bar custom-scroll-bar-thumb custom-scroll-bar-hidden-button grid h-full w-full grid-cols-3 overflow-x-hidden overflow-y-scroll rounded-xl bg-custom-style-1 px-4'
-                      onTouchEnd={handleOnTouchEndScrollPhotos}
-                      onTouchMove={handleOnTouchMoveScrollPhotos}
+                      onTouchEnd={(event) => handleOnTouchEndScrollPhotos(event)}
+                      onTouchMove={(event) => handleOnTouchMoveScrollPhotos(event)}
+                      onTouchStart={(event) => handleOnTouchStartScrollPhotos(event)}
                     >
                       {CONST_LIST_EFFECTS?.map((effect, index) => {
                         return (
@@ -227,8 +243,9 @@ export default function SelectEffect() {
                   ) : (
                     <div
                       className='custom-scroll-bar visible-scroll-bar custom-scroll-bar-thumb custom-scroll-bar-hidden-button grid h-full w-full grid-cols-2 overflow-x-hidden overflow-y-scroll rounded-xl bg-custom-style-1 px-4'
-                      onTouchEnd={handleOnTouchEndScrollPhotos}
-                      onTouchMove={handleOnTouchMoveScrollPhotos}
+                      onTouchEnd={(event) => handleOnTouchEndScrollPhotos(event)}
+                      onTouchMove={(event) => handleOnTouchMoveScrollPhotos(event)}
+                      onTouchStart={(event) => handleOnTouchStartScrollPhotos(event)}
                     >
                       {CONST_LIST_EFFECTS?.map((effect, index) => {
                         return (

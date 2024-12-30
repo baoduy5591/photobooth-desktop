@@ -19,6 +19,37 @@
     "enterAgain": "Enter Again"
   },
 
+  "selectFrameType": {
+    "title": "Select Frame Type",
+    "cutting": "Cutting",
+    "regular": "Regular",
+    "wide": "Wide",
+    "8PhotosLayout": "8 - Photos Layout",
+    "6PhotosLayout": "6 - Photos Layout",
+    "4PhotosLayout": "4 - Photos Layout",
+    "3PhotosLayout": "3 - Photos Layout",
+    "2PhotosLayout": "2 - Photos Layout"
+  },
+
+  "selectFrameDesign": {
+    "title1": "Select frame ",
+    "title2": "Design",
+    "preview": "Preview",
+    "note": "Scroll to see more style",
+    "normal": "Normal",
+    "season": "Season",
+    "special": "Special"
+  },
+
+  "selectPrintQuantity": {
+    "title1": "Select",
+    "title2": "Print",
+    "title3": "Quantity",
+    "total": "total",
+    "note1": "You will receive",
+    "note2": "sheets after printing"
+  },
+
   "confirmFrame": {
     "confirm": "This is your frame",
     "chooseAgain": "Choose again",

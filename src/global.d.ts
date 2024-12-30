@@ -43,6 +43,7 @@ interface PathResourceType {
   relPath: string;
   isNew: boolean;
   thumb: string;
+  order: number;
 }
 
 interface StickerPositionType {
@@ -50,6 +51,7 @@ interface StickerPositionType {
   relPath: PathResourceType['relPath'];
   isNew: PathResourceType['isNew'];
   thumb: PathResourceType['thumb'];
+  order: number;
   top: number;
   left: number;
   offsetX: number;
@@ -210,6 +212,9 @@ interface OrderInfoType {
   shootingMethod: string;
   shootingTime: number;
   isDeleted: boolean;
+  isFreeTimeMode: boolean;
+  isDark: boolean;
+  step: string;
   createdAt: string;
   updatedAt: string;
 }
